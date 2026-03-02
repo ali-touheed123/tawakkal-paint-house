@@ -189,7 +189,7 @@ export const BRAND_LOGOS: Record<string, string> = {
   'Saasi': '/images/brands/saasi.png',
   'Brighto': '/images/brands/brighto.png',
   'Choice': '/images/brands/choice.png',
-  'Dior': '/images/brands/dior.jpeg',
+  'Dior': '/images/brands/dior.png',
   'Rozzilac': '/images/brands/rozzi.png',
   'Reliance': '/images/brands/reliance.png',
   'Reliable': '/images/brands/reliable.png'
