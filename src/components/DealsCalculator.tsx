@@ -53,7 +53,7 @@ const PACKAGES = [
         name: 'Premium Quality',
         icon: Crown,
         description: 'The ultimate luxury paint experience',
-        includes: ['Matt', 'Weather', 'Emulsion', 'Oil Paint'],
+        includes: ['Filling', 'Matt', 'Weather', 'Emulsion', 'Oil Paint'],
         color: 'text-purple-500',
         bg: 'bg-purple-50',
         border: 'border-purple-200'
