@@ -25,10 +25,10 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
     return product.image_url;
   };
 
-  const price = selectedSize === 'quarter' 
-    ? product.price_quarter 
-    : selectedSize === 'gallon' 
-      ? product.price_gallon 
+  const price = selectedSize === 'quarter'
+    ? product.price_quarter
+    : selectedSize === 'gallon'
+      ? product.price_gallon
       : product.price_drum;
 
   const handleAddToCart = () => {
@@ -47,12 +47,12 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
       className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow border border-gold/10 group"
     >
       {/* Image */}
-      <div className="relative aspect-square overflow-hidden bg-gray-100">
+      <div className="relative aspect-square overflow-hidden bg-white border-b border-gray-100">
         <img
           src={getImageUrl()}
           alt={product.name}
           onError={() => setImgError(true)}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 p-2"
         />
         {!product.in_stock && (
           <div className="absolute inset-0 bg-navy/60 flex items-center justify-center">
@@ -73,23 +73,22 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
         {/* Size Toggle */}
         <div className="flex gap-1.5 mb-3">
           {sizes.map((size) => {
-            const sizePrice = size === 'quarter' 
-              ? product.price_quarter 
-              : size === 'gallon' 
-                ? product.price_gallon 
+            const sizePrice = size === 'quarter'
+              ? product.price_quarter
+              : size === 'gallon'
+                ? product.price_gallon
                 : product.price_drum;
-            
+
             if (sizePrice === 0) return null;
-            
+
             return (
               <button
                 key={size}
                 onClick={() => setSelectedSize(size)}
-                className={`flex-1 py-1.5 px-2 rounded-md text-[11px] font-medium transition-all ${
-                  selectedSize === size
+                className={`flex-1 py-1.5 px-2 rounded-md text-[11px] font-medium transition-all ${selectedSize === size
                     ? 'bg-gold text-navy'
                     : 'bg-gray-100 text-gray-600 hover:bg-gold-pale'
-                }`}
+                  }`}
               >
                 {size.charAt(0).toUpperCase() + size.slice(1)}
               </button>
@@ -113,7 +112,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
             <MessageCircle size={14} />
             <span className="hidden sm:inline">Inquiry</span>
           </Link>
-          
+
           {product.in_stock ? (
             <button
               onClick={handleAddToCart}
