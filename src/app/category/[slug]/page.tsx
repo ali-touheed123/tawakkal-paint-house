@@ -134,65 +134,70 @@ export default function CategoryPage() {
       {/* Filters */}
       <section className="sticky top-[70px] z-30 bg-white shadow-md border-b border-gold/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          {/* Brand Filter */}
-          <div className="mb-4">
-            <p className="text-xs font-semibold text-gray-500 mb-2">Choose Your Desired Brand</p>
-            <div className="flex flex-wrap gap-2">
-              <button
-                onClick={() => handleBrandChange('all')}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${selectedBrand === 'all'
-                  ? 'bg-gold text-navy'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gold-pale'
-                  }`}
-              >
-                All Brands
-              </button>
-              {BRANDS.map((brand) => {
-                const logoUrl = BRAND_LOGOS[brand];
-                const isActive = selectedBrand === brand.toLowerCase().replace("'", '');
-
-                return (
-                  <button
-                    key={brand}
-                    onClick={() => handleBrandChange(brand.toLowerCase().replace("'", ''))}
-                    className={`h-12 px-4 rounded-lg border-2 transition-all flex items-center justify-center bg-white ${isActive
-                      ? 'border-gold shadow-md scale-105'
-                      : 'border-gray-100 hover:border-gold/50 grayscale opacity-70 hover:grayscale-0 hover:opacity-100'
-                      }`}
-                    title={brand}
-                  >
-                    {logoUrl ? (
-                      <img
-                        src={logoUrl}
-                        alt={brand}
-                        className={`h-full w-auto object-contain pointer-events-none p-1 ${brand === 'Dior' ? 'scale-110' : ''}`}
-                      />
-                    ) : (
-                      <span className="text-sm font-medium">{brand}</span>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Sub-category Filter - Only for Decorative */}
-          {category === 'decorative' && (
-            <div className="flex flex-wrap gap-2">
-              {subCategories.map((sub) => (
+          <div className="flex flex-col gap-6">
+            {/* Brand Filter */}
+            <div className="space-y-3">
+              <h3 className="text-xs font-bold text-navy/40 uppercase tracking-widest pl-1">Filter by Brand</h3>
+              <div className="flex overflow-x-auto pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide snap-x gap-3 lg:flex-wrap lg:overflow-visible">
                 <button
-                  key={sub.id}
-                  onClick={() => handleSubChange(sub.id)}
-                  className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-all ${selectedSub === sub.id
-                    ? 'bg-navy text-white'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  onClick={() => handleBrandChange('all')}
+                  className={`snap-start shrink-0 h-14 px-6 rounded-xl text-sm font-semibold transition-all border-2 flex items-center justify-center ${selectedBrand === 'all'
+                    ? 'bg-gold border-gold text-navy shadow-lg shadow-gold/20 scale-105'
+                    : 'bg-white border-gray-100 text-gray-400 hover:border-gold/30 hover:text-gold'
                     }`}
                 >
-                  {sub.label}
+                  All Brands
                 </button>
-              ))}
+                {BRANDS.map((brand) => {
+                  const logoUrl = BRAND_LOGOS[brand];
+                  const isActive = selectedBrand === brand.toLowerCase().replace("'", '');
+
+                  return (
+                    <button
+                      key={brand}
+                      onClick={() => handleBrandChange(brand.toLowerCase().replace("'", ''))}
+                      className={`snap-start shrink-0 h-14 w-28 px-4 rounded-xl border-2 transition-all flex items-center justify-center bg-white ${isActive
+                        ? 'border-gold shadow-lg shadow-gold/10 scale-105 z-10'
+                        : 'border-gray-100 hover:border-gold/30 grayscale opacity-60 hover:grayscale-0 hover:opacity-100'
+                        }`}
+                      title={brand}
+                    >
+                      {logoUrl ? (
+                        <img
+                          src={logoUrl}
+                          alt={brand}
+                          className={`h-full w-auto object-contain pointer-events-none p-2 ${brand === 'Dior' ? 'scale-110' : ''}`}
+                        />
+                      ) : (
+                        <span className="text-sm font-bold text-navy/60">{brand}</span>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-          )}
+
+            {/* Sub-category Filter - Only for Decorative */}
+            {category === 'decorative' && (
+              <div className="space-y-3">
+                <h3 className="text-xs font-bold text-navy/40 uppercase tracking-widest pl-1">Filter by Category</h3>
+                <div className="flex overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide snap-x gap-2 lg:flex-wrap lg:overflow-visible">
+                  {subCategories.map((sub) => (
+                    <button
+                      key={sub.id}
+                      onClick={() => handleSubChange(sub.id)}
+                      className={`snap-start shrink-0 px-5 py-2.5 rounded-xl text-sm font-semibold whitespace-nowrap transition-all border-2 ${selectedSub === sub.id
+                        ? 'bg-navy border-navy text-white shadow-lg shadow-navy/20'
+                        : 'bg-white border-gray-100 text-gray-500 hover:border-navy/30 hover:text-navy'
+                        }`}
+                    >
+                      {sub.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </section>
 
