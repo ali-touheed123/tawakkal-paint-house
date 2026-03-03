@@ -176,21 +176,23 @@ export default function CategoryPage() {
             </div>
           </div>
 
-          {/* Sub-category Filter */}
-          <div className="flex flex-wrap gap-2">
-            {subCategories.map((sub) => (
-              <button
-                key={sub.id}
-                onClick={() => handleSubChange(sub.id)}
-                className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-all ${selectedSub === sub.id
-                  ? 'bg-navy text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                  }`}
-              >
-                {sub.label}
-              </button>
-            ))}
-          </div>
+          {/* Sub-category Filter - Only for Decorative */}
+          {category === 'decorative' && (
+            <div className="flex flex-wrap gap-2">
+              {subCategories.map((sub) => (
+                <button
+                  key={sub.id}
+                  onClick={() => handleSubChange(sub.id)}
+                  className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-all ${selectedSub === sub.id
+                    ? 'bg-navy text-white'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                >
+                  {sub.label}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

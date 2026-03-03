@@ -213,10 +213,10 @@ export function Navbar() {
                           {/* Static Deals & Projects Link */}
                           <Link
                             href="/deals"
-                            className="flex items-center justify-between px-6 py-3 text-sm text-gold font-semibold hover:bg-white/5 transition-all border-t border-gold/10"
+                            className="flex items-center justify-between px-6 py-3 text-sm text-white/80 hover:text-gold hover:bg-white/5 transition-all border-t border-white/10"
                           >
                             Deals & Projects
-                            <ChevronRight size={14} className="opacity-100" />
+                            <ChevronRight size={14} className="opacity-40 group-hover:opacity-100" />
                           </Link>
                         </div>
                       </motion.div>
@@ -360,7 +360,7 @@ export function Navbar() {
                               {/* Static Deals & Projects Link for Mobile */}
                               <Link
                                 href="/deals"
-                                className="block py-3 text-sm text-gold font-semibold border-t border-gold/10 mt-2"
+                                className="block py-3 text-sm text-white/80 border-t border-white/10 mt-2"
                                 onClick={() => setMobileMenuOpen(false)}
                               >
                                 Deals & Projects
