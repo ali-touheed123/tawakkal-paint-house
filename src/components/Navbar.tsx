@@ -95,14 +95,16 @@ export function Navbar() {
 
   return (
     <>
-      <motion.nav
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+      <nav
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${scrolled ? 'glassmorphism border-b border-gold/20' : 'bg-navy'
           }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+        >
           <div className="flex items-center justify-between h-[70px] md:h-[70px]">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2">
@@ -299,7 +301,7 @@ export function Navbar() {
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
-        </div>
+        </motion.div>
 
         {/* Mobile Menu */}
         <AnimatePresence>
@@ -445,7 +447,7 @@ export function Navbar() {
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.nav>
+      </nav>
 
       {/* Spacer for fixed navbar */}
       <div className="h-[70px]" />
