@@ -143,71 +143,75 @@ export function Navbar() {
                             <div
                               key={cat.slug}
                               className="relative group"
-                              onMouseEnter={() => setActiveCategory(cat.slug)}
-                              onMouseLeave={() => setActiveCategory(null)}
+                              onMouseEnter={() => cat.slug === 'decorative' && setActiveCategory(cat.slug)}
+                              onMouseLeave={() => cat.slug === 'decorative' && setActiveCategory(null)}
                             >
                               <Link
                                 href={`/category/${cat.slug}`}
                                 className="flex items-center justify-between px-6 py-3 text-sm text-white/80 hover:text-gold hover:bg-white/5 transition-all"
                               >
                                 {cat.name}
-                                <ChevronRight size={14} className="opacity-40 group-hover:opacity-100" />
+                                {cat.slug === 'decorative' && (
+                                  <ChevronRight size={14} className="opacity-40 group-hover:opacity-100" />
+                                )}
                               </Link>
 
-                              {/* Level 2: Brands */}
-                              <AnimatePresence>
-                                {activeCategory === cat.slug && (
-                                  <motion.div
-                                    initial={{ opacity: 0, x: -10 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: -10 }}
-                                    className="absolute top-0 left-[calc(100%-2px)] w-64 pl-1 z-[110]"
-                                  >
-                                    <div className="bg-navy border border-gold/20 shadow-2xl py-2">
-                                      {productData.brands.map((brand) => (
-                                        <div
-                                          key={brand.slug}
-                                          className="relative group/brand"
-                                          onMouseEnter={() => setActiveBrand(brand.slug)}
-                                          onMouseLeave={() => setActiveBrand(null)}
-                                        >
-                                          <Link
-                                            href={`/category/${cat.slug}?brand=${brand.name}`}
-                                            className="flex items-center justify-between px-6 py-3 text-sm text-white/80 hover:text-gold hover:bg-white/5 transition-all"
+                              {/* Level 2: Brands - Only for Decorative */}
+                              {cat.slug === 'decorative' && (
+                                <AnimatePresence>
+                                  {activeCategory === cat.slug && (
+                                    <motion.div
+                                      initial={{ opacity: 0, x: -10 }}
+                                      animate={{ opacity: 1, x: 0 }}
+                                      exit={{ opacity: 0, x: -10 }}
+                                      className="absolute top-0 left-[calc(100%-2px)] w-64 pl-1 z-[110]"
+                                    >
+                                      <div className="bg-navy border border-gold/20 shadow-2xl py-2">
+                                        {productData.brands.map((brand) => (
+                                          <div
+                                            key={brand.slug}
+                                            className="relative group/brand"
+                                            onMouseEnter={() => setActiveBrand(brand.slug)}
+                                            onMouseLeave={() => setActiveBrand(null)}
                                           >
-                                            {brand.name}
-                                            <ChevronRight size={14} className="opacity-40 group-hover/brand:opacity-100" />
-                                          </Link>
+                                            <Link
+                                              href={`/category/${cat.slug}?brand=${brand.name}`}
+                                              className="flex items-center justify-between px-6 py-3 text-sm text-white/80 hover:text-gold hover:bg-white/5 transition-all"
+                                            >
+                                              {brand.name}
+                                              <ChevronRight size={14} className="opacity-40 group-hover/brand:opacity-100" />
+                                            </Link>
 
-                                          {/* Level 3: Sub-categories */}
-                                          <AnimatePresence>
-                                            {activeBrand === brand.slug && (
-                                              <motion.div
-                                                initial={{ opacity: 0, x: -10 }}
-                                                animate={{ opacity: 1, x: 0 }}
-                                                exit={{ opacity: 0, x: -10 }}
-                                                className="absolute top-0 left-[calc(100%-2px)] w-64 pl-1 z-[120]"
-                                              >
-                                                <div className="bg-navy border border-gold/20 shadow-2xl py-2">
-                                                  {productData.subs.map((sub) => (
-                                                    <Link
-                                                      key={sub.slug}
-                                                      href={`/category/${cat.slug}?brand=${brand.name}&sub=${sub.slug}`}
-                                                      className="block px-6 py-3 text-sm text-white/80 hover:text-gold hover:bg-white/5 transition-all"
-                                                    >
-                                                      {sub.name}
-                                                    </Link>
-                                                  ))}
-                                                </div>
-                                              </motion.div>
-                                            )}
-                                          </AnimatePresence>
-                                        </div>
-                                      ))}
-                                    </div>
-                                  </motion.div>
-                                )}
-                              </AnimatePresence>
+                                            {/* Level 3: Sub-categories */}
+                                            <AnimatePresence>
+                                              {activeBrand === brand.slug && (
+                                                <motion.div
+                                                  initial={{ opacity: 0, x: -10 }}
+                                                  animate={{ opacity: 1, x: 0 }}
+                                                  exit={{ opacity: 0, x: -10 }}
+                                                  className="absolute top-0 left-[calc(100%-2px)] w-64 pl-1 z-[120]"
+                                                >
+                                                  <div className="bg-navy border border-gold/20 shadow-2xl py-2">
+                                                    {productData.subs.map((sub) => (
+                                                      <Link
+                                                        key={sub.slug}
+                                                        href={`/category/${cat.slug}?brand=${brand.name}&sub=${sub.slug}`}
+                                                        className="block px-6 py-3 text-sm text-white/80 hover:text-gold hover:bg-white/5 transition-all"
+                                                      >
+                                                        {sub.name}
+                                                      </Link>
+                                                    ))}
+                                                  </div>
+                                                </motion.div>
+                                              )}
+                                            </AnimatePresence>
+                                          </div>
+                                        ))}
+                                      </div>
+                                    </motion.div>
+                                  )}
+                                </AnimatePresence>
+                              )}
                             </div>
                           ))}
                           {/* Static Deals & Projects Link */}
@@ -326,35 +330,47 @@ export function Navbar() {
                             >
                               {productData.categories.map((cat) => (
                                 <div key={cat.slug}>
-                                  <button
-                                    onClick={() => setActiveBrand(activeBrand === cat.slug ? null : cat.slug)}
-                                    className="flex items-center justify-between w-full py-2 text-sm text-white/60"
-                                  >
-                                    {cat.name}
-                                    <ChevronDown size={12} className={`transition-transform ${activeBrand === cat.slug ? 'rotate-180' : ''}`} />
-                                  </button>
-
-                                  <AnimatePresence>
-                                    {activeBrand === cat.slug && (
-                                      <motion.div
-                                        initial={{ height: 0, opacity: 0 }}
-                                        animate={{ height: 'auto', opacity: 1 }}
-                                        exit={{ height: 0, opacity: 0 }}
-                                        className="overflow-hidden pl-4 space-y-1 mt-1 border-l border-gold/10"
+                                  {cat.slug === 'decorative' ? (
+                                    <>
+                                      <button
+                                        onClick={() => setActiveBrand(activeBrand === cat.slug ? null : cat.slug)}
+                                        className="flex items-center justify-between w-full py-2 text-sm text-white/60"
                                       >
-                                        {productData.brands.map((brand) => (
-                                          <Link
-                                            key={brand.slug}
-                                            href={`/category/${cat.slug}?brand=${brand.name}`}
-                                            className="block py-2 text-xs text-white/40 hover:text-gold"
-                                            onClick={() => setMobileMenuOpen(false)}
+                                        {cat.name}
+                                        <ChevronDown size={12} className={`transition-transform ${activeBrand === cat.slug ? 'rotate-180' : ''}`} />
+                                      </button>
+
+                                      <AnimatePresence>
+                                        {activeBrand === cat.slug && (
+                                          <motion.div
+                                            initial={{ height: 0, opacity: 0 }}
+                                            animate={{ height: 'auto', opacity: 1 }}
+                                            exit={{ height: 0, opacity: 0 }}
+                                            className="overflow-hidden pl-4 space-y-1 mt-1 border-l border-gold/10"
                                           >
-                                            {brand.name}
-                                          </Link>
-                                        ))}
-                                      </motion.div>
-                                    )}
-                                  </AnimatePresence>
+                                            {productData.brands.map((brand) => (
+                                              <Link
+                                                key={brand.slug}
+                                                href={`/category/${cat.slug}?brand=${brand.name}`}
+                                                className="block py-2 text-xs text-white/40 hover:text-gold"
+                                                onClick={() => setMobileMenuOpen(false)}
+                                              >
+                                                {brand.name}
+                                              </Link>
+                                            ))}
+                                          </motion.div>
+                                        )}
+                                      </AnimatePresence>
+                                    </>
+                                  ) : (
+                                    <Link
+                                      href={`/category/${cat.slug}`}
+                                      className="block py-2 text-sm text-white/60"
+                                      onClick={() => setMobileMenuOpen(false)}
+                                    >
+                                      {cat.name}
+                                    </Link>
+                                  )}
                                 </div>
                               ))}
                               {/* Static Deals & Projects Link for Mobile */}
