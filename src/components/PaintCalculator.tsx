@@ -28,13 +28,8 @@ export function PaintCalculator() {
       wallArea = directArea;
     }
 
-    const isDeduction = ['wall', 'primer', 'putty'].includes(paintType.id);
     const adjustmentArea = (numDoors * 21) + (numWindows * 15);
-
-    // For wood/metal, wallArea logic is often not needed, but we keep it for flexibility.
-    // If it's wood/metal, we assume wallArea starts at 0 if no dimensions are provided.
-    const baseArea = (dimensionsMode === 'dimensions' && ['wood', 'metal'].includes(paintType.id)) ? 0 : wallArea;
-    const netArea = isDeduction ? Math.max(0, baseArea - adjustmentArea) : baseArea + adjustmentArea;
+    const netArea = wallArea + adjustmentArea;
 
     const totalArea = netArea * coats * rooms;
     const amount = totalArea / coverageRate;
@@ -56,11 +51,9 @@ export function PaintCalculator() {
       totalArea,
       breakdown: breakdown.trim()
     };
-  }, [dimensionsMode, length, width, height, directArea, coats, rooms, numDoors, numWindows, coverageRate, paintType.id]);
+  }, [dimensionsMode, length, width, height, directArea, coats, rooms, numDoors, numWindows, coverageRate]);
 
   const whatsappMessage = `Hi! The calculator says I need ${calculation.litres} litres of ${paintType.label} for ${calculation.totalArea} sq/ft. Please help me choose the right product.`;
-
-  const showDimensionsInput = !(dimensionsMode === 'dimensions' && ['wood', 'metal'].includes(paintType.id));
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -106,7 +99,7 @@ export function PaintCalculator() {
           </div>
 
           {/* Dimensions Mode */}
-          <div className="mb-8">
+          <div className="mb-8 border-b border-gray-100 pb-8">
             <label className="block text-sm font-semibold text-navy mb-3">Calculation Mode</label>
             <div className="flex gap-4 mb-4">
               <button
@@ -130,42 +123,38 @@ export function PaintCalculator() {
             </div>
 
             {dimensionsMode === 'dimensions' ? (
-              showDimensionsInput ? (
-                <div className="grid grid-cols-3 gap-4">
-                  <div>
-                    <label className="block text-xs text-gray-500 mb-1">Length (ft)</label>
-                    <input
-                      type="number"
-                      value={length}
-                      onChange={(e) => setLength(Number(e.target.value))}
-                      className="w-full p-3 border border-gray-200 rounded-lg focus:border-gold focus:outline-none"
-                      min="1"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs text-gray-500 mb-1">Width (ft)</label>
-                    <input
-                      type="number"
-                      value={width}
-                      onChange={(e) => setWidth(Number(e.target.value))}
-                      className="w-full p-3 border border-gray-200 rounded-lg focus:border-gold focus:outline-none"
-                      min="1"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs text-gray-500 mb-1">Height (ft)</label>
-                    <input
-                      type="number"
-                      value={height}
-                      onChange={(e) => setHeight(Number(e.target.value))}
-                      className="w-full p-3 border border-gray-200 rounded-lg focus:border-gold focus:outline-none"
-                      min="1"
-                    />
-                  </div>
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-xs text-gray-500 mb-1">Length (ft)</label>
+                  <input
+                    type="number"
+                    value={length}
+                    onChange={(e) => setLength(Number(e.target.value))}
+                    className="w-full p-3 border border-gray-200 rounded-lg focus:border-gold focus:outline-none"
+                    min="1"
+                  />
                 </div>
-              ) : (
-                <p className="text-sm text-gray-500 italic">Dimensions input is typically not used for {paintType.label} paint. Consider using "Direct sq/ft" mode or adding doors/windows.</p>
-              )
+                <div>
+                  <label className="block text-xs text-gray-500 mb-1">Width (ft)</label>
+                  <input
+                    type="number"
+                    value={width}
+                    onChange={(e) => setWidth(Number(e.target.value))}
+                    className="w-full p-3 border border-gray-200 rounded-lg focus:border-gold focus:outline-none"
+                    min="1"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs text-gray-500 mb-1">Height (ft)</label>
+                  <input
+                    type="number"
+                    value={height}
+                    onChange={(e) => setHeight(Number(e.target.value))}
+                    className="w-full p-3 border border-gray-200 rounded-lg focus:border-gold focus:outline-none"
+                    min="1"
+                  />
+                </div>
+              </div>
             ) : (
               <div>
                 <label className="block text-xs text-gray-500 mb-1">Total Wall Area (sq/ft)</label>
@@ -249,8 +238,8 @@ export function PaintCalculator() {
                   </button>
                 </div>
                 {numDoors > 0 && (
-                  <span className={`text-[10px] font-medium italic ${['wall', 'primer', 'putty'].includes(paintType.id) ? 'text-red-400' : 'text-green-400'}`}>
-                    {['wall', 'primer', 'putty'].includes(paintType.id) ? '-' : '+'}{numDoors * 21} sq/ft
+                  <span className="text-[10px] font-medium italic text-green-400">
+                    +{numDoors * 21} sq/ft
                   </span>
                 )}
               </div>
@@ -284,8 +273,8 @@ export function PaintCalculator() {
                   </button>
                 </div>
                 {numWindows > 0 && (
-                  <span className={`text-[10px] font-medium italic ${['wall', 'primer', 'putty'].includes(paintType.id) ? 'text-red-400' : 'text-green-400'}`}>
-                    {['wall', 'primer', 'putty'].includes(paintType.id) ? '-' : '+'}{numWindows * 15} sq/ft
+                  <span className="text-[10px] font-medium italic text-green-400">
+                    +{numWindows * 15} sq/ft
                   </span>
                 )}
               </div>
