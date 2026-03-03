@@ -62,7 +62,9 @@ export default function HomePage() {
       const { data } = await supabase
         .from('products')
         .select('*')
-        .limit(8);
+        .or('brand.ilike.%Rozzilac%,brand.ilike.%Gobi%,brand.ilike.%Reliable%')
+        .or('name.ilike.%Matt%,name.ilike.%Weather%,name.ilike.%Enamel%,name.ilike.%Emulsion%')
+        .limit(10);
       if (data) setProducts(data as Product[]);
       setLoading(false);
     };
