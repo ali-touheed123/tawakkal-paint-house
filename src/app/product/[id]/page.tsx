@@ -21,6 +21,7 @@ import { useCartStore } from '@/lib/store';
 import { ShadeSelector } from '@/components/ShadeSelector';
 import { SimpleVisualizer } from '@/components/SimpleVisualizer';
 import Link from 'next/link';
+import { BRIGHTO_SHADES } from '@/constants/shades';
 
 // Full list of Brighto Super Emulsion shades (65 total)
 const BRIGHTO_SHADES: Shade[] = [
@@ -195,6 +196,7 @@ export default function ProductDetailPage() {
                                 <SimpleVisualizer
                                     color={selectedShade?.hex || '#FFFFFF'}
                                     name={selectedShade?.name || 'Standard'}
+                                    onSelect={(s) => setSelectedShade(s)}
                                 />
                             ) : (
                                 <div className="aspect-[16/9] flex items-center justify-center p-8">
