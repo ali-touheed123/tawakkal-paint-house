@@ -18,6 +18,15 @@ interface ShadeSelectorProps {
     onSelect: (shade: Shade) => void;
 }
 
+// Helper to determine if a color is light or dark
+function isLightColor(hex: string) {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+    return brightness > 155;
+}
+
 export function ShadeSelector({ shades, selectedSize, onSelect }: ShadeSelectorProps) {
     const [selectedShadeId, setSelectedShadeId] = useState<string | null>(null);
 
@@ -60,7 +69,7 @@ export function ShadeSelector({ shades, selectedSize, onSelect }: ShadeSelectorP
                 )}
             </div>
 
-            <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 gap-2.5 max-h-[400px] overflow-y-auto pr-2 scrollbar-hide py-2">
+            <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 gap-2.5 max-h-[400px] overflow-y-auto pr-2 scrollbar-hide py-2 aspect-square sm:aspect-auto">
                 <AnimatePresence mode="popLayout">
                     {filteredShades.map((shade) => (
                         <motion.button
@@ -81,7 +90,10 @@ export function ShadeSelector({ shades, selectedSize, onSelect }: ShadeSelectorP
                                 style={{ backgroundColor: shade.hex }}
                             >
                                 {selectedShadeId === shade.id && (
-                                    <Check size={12} className="text-white drop-shadow-md" />
+                                    <Check
+                                        size={12}
+                                        className={`drop-shadow-md ${isLightColor(shade.hex) ? 'text-navy' : 'text-white'}`}
+                                    />
                                 )}
                             </div>
                         </motion.button>

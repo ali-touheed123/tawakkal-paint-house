@@ -27,8 +27,8 @@ export function SimpleVisualizer({ color, name }: SimpleVisualizerProps) {
                 style={{
                     mixBlendMode: 'multiply',
                     opacity: 0.75,
-                    // Accurate clip-path for the new room base image (adjusting to wall area)
-                    clipPath: 'polygon(0% 0%, 100% 0%, 100% 64%, 82% 64%, 82% 90%, 0% 90%)',
+                    // Precise wall clip-path excluding furniture and left pillar
+                    clipPath: 'polygon(5% 0%, 100% 0%, 100% 74%, 82% 74%, 82% 58%, 18% 58%, 18% 74%, 5% 74%)',
                 }}
             />
 
