@@ -25,12 +25,10 @@ export function SimpleVisualizer({ color, name }: SimpleVisualizerProps) {
                 transition={{ duration: 0.5 }}
                 className="absolute inset-0"
                 style={{
-                    // This mix-blend-mode allows the shadows and highlights of the base image to show through
                     mixBlendMode: 'multiply',
-                    opacity: 0.8,
-                    // We mask this to only the wall area. For a simple version, we can use a clip-path
-                    // This clip-path is a placeholder and should be adjusted to match the actual wall area in the image
-                    clipPath: 'polygon(0% 0%, 100% 0%, 100% 70%, 0% 70%)',
+                    opacity: 0.75,
+                    // Accurate clip-path for the new room base image (adjusting to wall area)
+                    clipPath: 'polygon(0% 0%, 100% 0%, 100% 64%, 82% 64%, 82% 90%, 0% 90%)',
                 }}
             />
 

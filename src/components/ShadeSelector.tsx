@@ -44,10 +44,15 @@ export function ShadeSelector({ shades, selectedSize, onSelect }: ShadeSelectorP
 
     return (
         <div className="space-y-6">
-            <div className="flex items-center justify-between">
-                <h3 className="text-sm font-bold text-navy uppercase tracking-widest">
-                    Available Shades
-                </h3>
+            <div className="flex items-center justify-between mb-4">
+                <div className="flex items-baseline gap-2">
+                    <h3 className="text-sm font-bold text-navy uppercase tracking-widest">
+                        Choose Color
+                    </h3>
+                    {selectedShade && (
+                        <span className="text-sm font-medium text-gray-500">: {selectedShade.name}</span>
+                    )}
+                </div>
                 {selectedSize === 'drum' && (
                     <span className="text-[10px] font-bold text-gold uppercase bg-gold/10 px-2 py-1 rounded">
                         Only 3 Shades for Drum
@@ -55,7 +60,7 @@ export function ShadeSelector({ shades, selectedSize, onSelect }: ShadeSelectorP
                 )}
             </div>
 
-            <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-3 max-h-[300px] overflow-y-auto pr-2 scrollbar-hide">
+            <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 gap-2.5 max-h-[400px] overflow-y-auto pr-2 scrollbar-hide py-2">
                 <AnimatePresence mode="popLayout">
                     {filteredShades.map((shade) => (
                         <motion.button
@@ -66,8 +71,8 @@ export function ShadeSelector({ shades, selectedSize, onSelect }: ShadeSelectorP
                             exit={{ opacity: 0, scale: 0.8 }}
                             onClick={() => handleSelect(shade)}
                             className={`relative aspect-square rounded-full border-2 transition-all p-0.5 ${selectedShadeId === shade.id
-                                    ? 'border-gold shadow-lg scale-110 z-10'
-                                    : 'border-gray-100 hover:border-gold/30'
+                                ? 'border-navy shadow-lg scale-110 z-10'
+                                : 'border-transparent hover:border-navy/20'
                                 }`}
                             title={`${shade.name} (${shade.code})`}
                         >
@@ -76,10 +81,7 @@ export function ShadeSelector({ shades, selectedSize, onSelect }: ShadeSelectorP
                                 style={{ backgroundColor: shade.hex }}
                             >
                                 {selectedShadeId === shade.id && (
-                                    <Check size={16} className={
-                                        // Conditional check for icon color based on background lightness
-                                        'text-white drop-shadow-sm'
-                                    } />
+                                    <Check size={12} className="text-white drop-shadow-md" />
                                 )}
                             </div>
                         </motion.button>
