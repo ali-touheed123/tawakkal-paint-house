@@ -34,6 +34,11 @@ export interface Product {
   price_gallon: number;
   price_drum: number;
   in_stock: boolean;
+  selectedShade?: {
+    name: string;
+    code: string;
+    hex: string;
+  };
   created_at: string;
 }
 
