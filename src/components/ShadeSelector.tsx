@@ -4,13 +4,7 @@ import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check } from 'lucide-react';
 
-export interface Shade {
-    id: string;
-    name: string;
-    code: string;
-    hex: string;
-    is_drum_available: boolean;
-}
+import { Shade } from '@/types';
 
 interface ShadeSelectorProps {
     shades: Shade[];

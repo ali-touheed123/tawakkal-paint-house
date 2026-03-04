@@ -247,7 +247,7 @@ export default function ProductDetailPage() {
                             <ShadeSelector
                                 shades={shades}
                                 selectedSize={selectedSize}
-                                onSelect={setSelectedShade}
+                                onSelect={(s) => setSelectedShade(s)}
                             />
                         )}
 
