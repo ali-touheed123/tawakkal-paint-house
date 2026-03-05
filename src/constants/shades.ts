@@ -67,3 +67,78 @@ export const BRIGHTO_SHADES: Shade[] = [
     { id: '9698', product_id: '', name: 'Terracotta', code: '9698', hex: '#E2725B', is_drum_available: false },
     { id: '9810', product_id: '', name: 'Black', code: '9810', hex: '#000000', is_drum_available: false }
 ];
+
+// Brighto Synthetic Enamel shades (extracted from official 2025 shade card PDF)
+export const BRIGHTO_ENAMEL_SHADES: Shade[] = [
+    // Whites & Creams
+    { id: 'e3000', product_id: '', name: 'Brilliant White', code: '3000', hex: '#FFFFFF', is_drum_available: true },
+    { id: 'e3101', product_id: '', name: 'Off White', code: '3101', hex: '#FAF0E6', is_drum_available: true },
+    { id: 'e3051', product_id: '', name: 'Bone White', code: '3051', hex: '#F9F6EE', is_drum_available: false },
+    { id: 'e3001', product_id: '', name: 'Cream', code: '3001', hex: '#FFFDD0', is_drum_available: false },
+    { id: 'e3071', product_id: '', name: 'Pale Cream', code: '3071', hex: '#FFF8DC', is_drum_available: false },
+    { id: 'e3410', product_id: '', name: 'Antique White', code: '3410', hex: '#FAEBD7', is_drum_available: false },
+    { id: 'e3042', product_id: '', name: 'Ash White', code: '3042', hex: '#E8E8E8', is_drum_available: false },
+    { id: 'e3411', product_id: '', name: 'Antique Ash', code: '3411', hex: '#D5D5D0', is_drum_available: false },
+    // Beiges & Browns
+    { id: 'e3078', product_id: '', name: 'Diyar', code: '3078', hex: '#C19A6B', is_drum_available: false },
+    { id: 'e3050', product_id: '', name: 'Beige', code: '3050', hex: '#F5F5DC', is_drum_available: false },
+    { id: 'e3086', product_id: '', name: 'Yellow Oxide', code: '3086', hex: '#E49B0F', is_drum_available: false },
+    { id: 'e3088', product_id: '', name: 'Caterpillar', code: '3088', hex: '#FFC300', is_drum_available: false },
+    { id: 'e3055', product_id: '', name: 'Clay', code: '3055', hex: '#B66A50', is_drum_available: false },
+    { id: 'e3077', product_id: '', name: 'Champagne', code: '3077', hex: '#F7E7CE', is_drum_available: false },
+    { id: 'e3029', product_id: '', name: 'Ochre', code: '3029', hex: '#CC7722', is_drum_available: false },
+    { id: 'e3403', product_id: '', name: 'Teak', code: '3403', hex: '#B08A53', is_drum_available: false },
+    { id: 'e3404', product_id: '', name: 'Sheesham', code: '3404', hex: '#8B6914', is_drum_available: false },
+    { id: 'e3031', product_id: '', name: 'Brighto Brown', code: '3031', hex: '#654321', is_drum_available: false },
+    { id: 'e3074', product_id: '', name: 'Golden Brown', code: '3074', hex: '#996515', is_drum_available: false },
+    { id: 'e3075', product_id: '', name: 'Dark Brown', code: '3075', hex: '#5C4033', is_drum_available: false },
+    { id: 'e3402', product_id: '', name: 'Brown', code: '3402', hex: '#8B4513', is_drum_available: false },
+    { id: 'e3084', product_id: '', name: 'Antelope', code: '3084', hex: '#A38459', is_drum_available: false },
+    { id: 'e3030', product_id: '', name: 'Coriander', code: '3030', hex: '#8B8B00', is_drum_available: false },
+    // Greys
+    { id: 'e3004', product_id: '', name: 'Dark Grey', code: '3004', hex: '#555555', is_drum_available: false },
+    { id: 'e3019', product_id: '', name: 'Scarab', code: '3019', hex: '#3B3C36', is_drum_available: false },
+    { id: 'e3409', product_id: '', name: 'Antique Grey', code: '3409', hex: '#8A8A7A', is_drum_available: false },
+    { id: 'e3072', product_id: '', name: 'Oyster', code: '3072', hex: '#DED3C4', is_drum_available: false },
+    { id: 'e3080', product_id: '', name: 'Court Grey', code: '3080', hex: '#9B9B9B', is_drum_available: false },
+    { id: 'e3087', product_id: '', name: 'Sleek Grey', code: '3087', hex: '#708090', is_drum_available: false },
+    { id: 'e3005', product_id: '', name: 'Brighto Grey', code: '3005', hex: '#808080', is_drum_available: false },
+    { id: 'e3003', product_id: '', name: 'Light Grey', code: '3003', hex: '#D3D3D3', is_drum_available: false },
+    { id: 'e3105', product_id: '', name: 'Smoke Grey', code: '3105', hex: '#738678', is_drum_available: false },
+    // Greens
+    { id: 'e3085', product_id: '', name: 'Deep Ocean', code: '3085', hex: '#003B46', is_drum_available: false },
+    { id: 'e3073', product_id: '', name: 'Eau-De-Nil', code: '3073', hex: '#99C5C4', is_drum_available: false },
+    { id: 'e3028', product_id: '', name: 'Spring Green', code: '3028', hex: '#00FF7F', is_drum_available: false },
+    { id: 'e3022', product_id: '', name: 'Emerald', code: '3022', hex: '#50C878', is_drum_available: false },
+    { id: 'e3023', product_id: '', name: 'Adams Green', code: '3023', hex: '#355E3B', is_drum_available: false },
+    { id: 'e3027', product_id: '', name: 'Sea Green', code: '3027', hex: '#2E8B57', is_drum_available: false },
+    { id: 'e3041', product_id: '', name: 'Royal Green', code: '3041', hex: '#136207', is_drum_available: false },
+    // Blues
+    { id: 'e3018', product_id: '', name: 'Royal Blue', code: '3018', hex: '#4169E1', is_drum_available: false },
+    { id: 'e3070', product_id: '', name: 'Comet Blue', code: '3070', hex: '#5F6BBE', is_drum_available: false },
+    { id: 'e3034', product_id: '', name: 'H.R. Blue', code: '3034', hex: '#003399', is_drum_available: false },
+    { id: 'e3032', product_id: '', name: 'Deep Blue', code: '3032', hex: '#00008B', is_drum_available: false },
+    { id: 'e3016', product_id: '', name: 'Light Blue', code: '3016', hex: '#ADD8E6', is_drum_available: false },
+    { id: 'e3035', product_id: '', name: 'Vivid Blue', code: '3035', hex: '#1E90FF', is_drum_available: false },
+    { id: 'e3017', product_id: '', name: 'Brighto Blue', code: '3017', hex: '#0000FF', is_drum_available: false },
+    // Purples
+    { id: 'e3033', product_id: '', name: 'Violet', code: '3033', hex: '#8B00FF', is_drum_available: false },
+    { id: 'e3401', product_id: '', name: 'Mauve', code: '3401', hex: '#E0B0FF', is_drum_available: false },
+    { id: 'e3076', product_id: '', name: 'Pumice', code: '3076', hex: '#B5B5A5', is_drum_available: false },
+    // Reds & Pinks
+    { id: 'e3011', product_id: '', name: 'Red Oxide', code: '3011', hex: '#6D1008', is_drum_available: false },
+    { id: 'e3008', product_id: '', name: 'Signal Red', code: '3008', hex: '#FF0000', is_drum_available: false },
+    { id: 'e3009', product_id: '', name: 'P. O. Red', code: '3009', hex: '#BF0A30', is_drum_available: false },
+    { id: 'e3012', product_id: '', name: 'Crimson', code: '3012', hex: '#DC143C', is_drum_available: false },
+    { id: 'e3115', product_id: '', name: 'Baby Pink', code: '3115', hex: '#F4C2C2', is_drum_available: false },
+    { id: 'e3114', product_id: '', name: 'Peach Shadow', code: '3114', hex: '#FFDAB9', is_drum_available: false },
+    { id: 'e3052', product_id: '', name: 'Pink', code: '3052', hex: '#FFC0CB', is_drum_available: false },
+    { id: 'e3020', product_id: '', name: 'Red Rose', code: '3020', hex: '#C21E56', is_drum_available: false },
+    // Yellows & Oranges
+    { id: 'e3006', product_id: '', name: 'Lemon', code: '3006', hex: '#FFF44F', is_drum_available: false },
+    { id: 'e3002', product_id: '', name: 'Orange', code: '3002', hex: '#FF8C00', is_drum_available: false },
+    { id: 'e3007', product_id: '', name: 'Golden Yellow', code: '3007', hex: '#FFD700', is_drum_available: false },
+    { id: 'e3089', product_id: '', name: 'Elegant Orange', code: '3089', hex: '#FF7518', is_drum_available: false },
+    // Black
+    { id: 'e3102', product_id: '', name: 'Black', code: '3102', hex: '#000000', is_drum_available: false },
+];

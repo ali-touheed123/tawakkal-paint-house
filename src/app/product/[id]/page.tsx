@@ -21,7 +21,7 @@ import { ShadeSelector } from '@/components/ShadeSelector';
 import { SimpleVisualizer } from '@/components/SimpleVisualizer';
 import { PaintCalculator } from '@/components/PaintCalculator';
 import Link from 'next/link';
-import { BRIGHTO_SHADES } from '@/constants/shades';
+import { BRIGHTO_SHADES, BRIGHTO_ENAMEL_SHADES } from '@/constants/shades';
 
 
 export default function ProductDetailPage() {
@@ -31,7 +31,7 @@ export default function ProductDetailPage() {
     const [loading, setLoading] = useState(true);
     const [selectedSize, setSelectedSize] = useState<ItemSize>('gallon');
     const [quantity, setQuantity] = useState(1);
-    const [shades, setShades] = useState<Shade[]>(BRIGHTO_SHADES);
+    const [shades, setShades] = useState<Shade[]>([]);
     const [selectedShade, setSelectedShade] = useState<Shade | null>(null);
     const [addingToCart, setAddingToCart] = useState(false);
     const [activeTab, setActiveTab] = useState<'visualizer' | 'calculator'>('visualizer');
@@ -52,7 +52,12 @@ export default function ProductDetailPage() {
             if (productData) {
                 setProduct(productData);
 
-                // Fetch shades from DB, fallback to local if empty
+                // Set default shades based on product type
+                const isSuperEmulsion = productData.name === 'Brighto Super Emulsion';
+                const isSyntheticEnamel = productData.name === 'Brighto Synthetic Enamel';
+                const defaultShades = isSuperEmulsion ? BRIGHTO_SHADES : isSyntheticEnamel ? BRIGHTO_ENAMEL_SHADES : [];
+
+                // Fetch shades from DB, fallback to local constants
                 const { data: shadeData } = await supabase
                     .from('product_shades')
                     .select('*')
@@ -61,6 +66,8 @@ export default function ProductDetailPage() {
 
                 if (shadeData && shadeData.length > 0) {
                     setShades(shadeData);
+                } else {
+                    setShades(defaultShades);
                 }
             }
             setLoading(false);
@@ -100,6 +107,8 @@ export default function ProductDetailPage() {
     if (!product) return <div className="min-h-screen pt-32 text-center text-gray-500">Product not found.</div>;
 
     const isBrightoSuperEmulsion = product.name === 'Brighto Super Emulsion';
+    const isBrightoSyntheticEnamel = product.name === 'Brighto Synthetic Enamel';
+    const hasShadeCard = isBrightoSuperEmulsion || isBrightoSyntheticEnamel;
 
     return (
         <div className="min-h-screen pt-[70px] bg-white">
@@ -157,7 +166,7 @@ export default function ProductDetailPage() {
                                         transition={{ duration: 0.2 }}
                                         className="h-full"
                                     >
-                                        {isBrightoSuperEmulsion ? (
+                                        {hasShadeCard ? (
                                             <SimpleVisualizer
                                                 color={selectedShade?.hex || '#FFFFFF'}
                                                 name={selectedShade?.name || 'Standard'}
@@ -212,7 +221,7 @@ export default function ProductDetailPage() {
                                 </span>
                             </div>
                             <h1 className="font-heading text-4xl lg:text-5xl font-bold text-navy leading-tight mb-4 tracking-tight">
-                                {isBrightoSuperEmulsion ? 'Plastic Emulsion Paint' : product.name}
+                                {isBrightoSuperEmulsion ? 'Plastic Emulsion Paint' : isBrightoSyntheticEnamel ? 'Synthetic Enamel Paint' : product.name}
                             </h1>
                             <p className="text-gray-400 font-medium text-sm leading-relaxed max-w-xl">
                                 {product.brand} {product.name} (color) : <span className="text-navy font-bold">{selectedShade?.name || 'Select a shade'}</span>
@@ -220,7 +229,7 @@ export default function ProductDetailPage() {
                         </div>
 
                         {/* Color Selector (Grid) */}
-                        {isBrightoSuperEmulsion && (
+                        {hasShadeCard && (
                             <ShadeSelector
                                 shades={shades}
                                 selectedSize={selectedSize}
