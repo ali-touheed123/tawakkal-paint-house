@@ -38,6 +38,42 @@ export default function ProductDetailPage() {
 
     const { addItem } = useCartStore();
 
+    const isBrightoSuperEmulsion = product?.name === 'Brighto Super Emulsion';
+    const isBrightoSyntheticEnamel = product?.name === 'Brighto Synthetic Enamel';
+    const isBrightoPlasticEmulsion = product?.name === 'Brighto Plastic Emulsion';
+    const isBrightoAllWeather = product?.name === 'Brighto All Weather';
+    const isSaasiHydrous = product?.name?.includes('Hydrous Matt Finish');
+    const isSaasiMattEnamel = product?.brand === 'Saasi' && product?.name === 'Matt Enamel';
+    const isSaasiPlasticEmulsion = product?.brand === 'Saasi' && product?.name === 'Plastic Emulsion';
+    const isSaasiSuperGlossEnamel = product?.brand === 'Saasi' && product?.name === 'Super Gloss Enamel';
+    const isSaasiWeatherSafe = product?.brand === 'Saasi' && product?.name === 'Weather Safe';
+    const isBrightoStainFree = product?.name === 'Brighto Stain Free royal silky finish emulsion';
+    const hasShadeCard = isBrightoSuperEmulsion || isBrightoSyntheticEnamel || isBrightoPlasticEmulsion || isBrightoAllWeather || isSaasiHydrous || isSaasiMattEnamel || isSaasiPlasticEmulsion || isSaasiSuperGlossEnamel || isSaasiWeatherSafe || isBrightoStainFree;
+
+    const shadeCardPdf = useMemo(() => {
+        if (!product) return null;
+        const name = product.name;
+        const brand = product.brand;
+
+        if (brand === 'Brighto') {
+            if (name === 'Brighto All Weather') return '/pdfs/brighto-all-weather.pdf';
+            if (name === 'Brighto Plastic Emulsion') return '/pdfs/brighto-plastic-emulsion.pdf';
+            if (name === 'Brighto Super Emulsion') return '/pdfs/brighto-super-emulsion.pdf';
+            if (name === 'Brighto Synthetic Enamel') return '/pdfs/brighto-synthetic-enamel.pdf';
+            if (name === 'Brighto Stain Free royal silky finish emulsion') return '/pdfs/brighto-stain-free.pdf';
+        }
+
+        if (brand === 'Saasi') {
+            if (name.includes('Hydrous Matt Finish')) return '/pdfs/saasi-hydrous-matt-finish.pdf';
+            if (name === 'Matt Enamel') return '/pdfs/saasi-matt-enamel.pdf';
+            if (name === 'Plastic Emulsion') return '/pdfs/saasi-plastic-emulsion.pdf';
+            if (name === 'Super Gloss Enamel') return '/pdfs/saasi-super-gloss-enamel.pdf';
+            if (name === 'Weather Safe') return '/pdfs/saasi-weather-safe.pdf';
+        }
+
+        return null;
+    }, [product]);
+
     useEffect(() => {
         const fetchProduct = async () => {
             setLoading(true);
@@ -122,41 +158,6 @@ export default function ProductDetailPage() {
         );
     }
 
-    const isBrightoSuperEmulsion = product?.name === 'Brighto Super Emulsion';
-    const isBrightoSyntheticEnamel = product?.name === 'Brighto Synthetic Enamel';
-    const isBrightoPlasticEmulsion = product?.name === 'Brighto Plastic Emulsion';
-    const isBrightoAllWeather = product?.name === 'Brighto All Weather';
-    const isSaasiHydrous = product?.name?.includes('Hydrous Matt Finish');
-    const isSaasiMattEnamel = product?.brand === 'Saasi' && product?.name === 'Matt Enamel';
-    const isSaasiPlasticEmulsion = product?.brand === 'Saasi' && product?.name === 'Plastic Emulsion';
-    const isSaasiSuperGlossEnamel = product?.brand === 'Saasi' && product?.name === 'Super Gloss Enamel';
-    const isSaasiWeatherSafe = product?.brand === 'Saasi' && product?.name === 'Weather Safe';
-    const isBrightoStainFree = product?.name === 'Brighto Stain Free royal silky finish emulsion';
-    const hasShadeCard = isBrightoSuperEmulsion || isBrightoSyntheticEnamel || isBrightoPlasticEmulsion || isBrightoAllWeather || isSaasiHydrous || isSaasiMattEnamel || isSaasiPlasticEmulsion || isSaasiSuperGlossEnamel || isSaasiWeatherSafe || isBrightoStainFree;
-
-    const shadeCardPdf = useMemo(() => {
-        if (!product) return null;
-        const name = product.name;
-        const brand = product.brand;
-
-        if (brand === 'Brighto') {
-            if (name === 'Brighto All Weather') return '/pdfs/brighto-all-weather.pdf';
-            if (name === 'Brighto Plastic Emulsion') return '/pdfs/brighto-plastic-emulsion.pdf';
-            if (name === 'Brighto Super Emulsion') return '/pdfs/brighto-super-emulsion.pdf';
-            if (name === 'Brighto Synthetic Enamel') return '/pdfs/brighto-synthetic-enamel.pdf';
-            if (name === 'Brighto Stain Free royal silky finish emulsion') return '/pdfs/brighto-stain-free.pdf';
-        }
-
-        if (brand === 'Saasi') {
-            if (name.includes('Hydrous Matt Finish')) return '/pdfs/saasi-hydrous-matt-finish.pdf';
-            if (name === 'Matt Enamel') return '/pdfs/saasi-matt-enamel.pdf';
-            if (name === 'Plastic Emulsion') return '/pdfs/saasi-plastic-emulsion.pdf';
-            if (name === 'Super Gloss Enamel') return '/pdfs/saasi-super-gloss-enamel.pdf';
-            if (name === 'Weather Safe') return '/pdfs/saasi-weather-safe.pdf';
-        }
-
-        return null;
-    }, [product]);
 
     if (!product) return <div className="min-h-screen pt-32 text-center text-gray-500">Product not found.</div>;
 
