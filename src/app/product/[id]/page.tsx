@@ -62,6 +62,7 @@ export default function ProductDetailPage() {
                 const isSaasiPlasticEmulsion = productData.brand === 'Saasi' && productData.name === 'Plastic Emulsion';
                 const isSaasiSuperGlossEnamel = productData.brand === 'Saasi' && productData.name === 'Super Gloss Enamel';
                 const isSaasiWeatherSafe = productData.brand === 'Saasi' && productData.name === 'Weather Safe';
+                const isBrightoStainFree = productData.name === 'Brighto Stain Free royal silky finish emulsion';
                 const defaultShades = isSuperEmulsion ? BRIGHTO_SHADES
                     : isSyntheticEnamel ? BRIGHTO_ENAMEL_SHADES
                         : isPlasticEmulsion ? BRIGHTO_PLASTIC_EMULSION_SHADES
@@ -71,7 +72,8 @@ export default function ProductDetailPage() {
                                         : isSaasiPlasticEmulsion ? SAASI_PLASTIC_EMULSION_SHADES
                                             : isSaasiSuperGlossEnamel ? SAASI_SUPER_GLOSS_ENAMEL_SHADES
                                                 : isSaasiWeatherSafe ? SAASI_WEATHER_SAFE_SHADES
-                                                    : [];
+                                                    : isBrightoStainFree ? BRIGHTO_PLASTIC_EMULSION_SHADES
+                                                        : [];
 
                 // Fetch shades from DB, fallback to local constants
                 const { data: shadeData } = await supabase
@@ -131,7 +133,8 @@ export default function ProductDetailPage() {
     const isSaasiPlasticEmulsion = product.brand === 'Saasi' && product.name === 'Plastic Emulsion';
     const isSaasiSuperGlossEnamel = product.brand === 'Saasi' && product.name === 'Super Gloss Enamel';
     const isSaasiWeatherSafe = product.brand === 'Saasi' && product.name === 'Weather Safe';
-    const hasShadeCard = isBrightoSuperEmulsion || isBrightoSyntheticEnamel || isBrightoPlasticEmulsion || isBrightoAllWeather || isSaasiHydrous || isSaasiMattEnamel || isSaasiPlasticEmulsion || isSaasiSuperGlossEnamel || isSaasiWeatherSafe;
+    const isBrightoStainFree = product.name === 'Brighto Stain Free royal silky finish emulsion';
+    const hasShadeCard = isBrightoSuperEmulsion || isBrightoSyntheticEnamel || isBrightoPlasticEmulsion || isBrightoAllWeather || isSaasiHydrous || isSaasiMattEnamel || isSaasiPlasticEmulsion || isSaasiSuperGlossEnamel || isSaasiWeatherSafe || isBrightoStainFree;
 
     return (
         <div className="min-h-screen pt-[70px] bg-white">
@@ -249,6 +252,17 @@ export default function ProductDetailPage() {
                             <p className="text-gray-400 font-medium text-sm leading-relaxed max-w-xl">
                                 {product.brand} {product.name} (color) : <span className="text-navy font-bold">{selectedShade?.name || 'Select a shade'}</span>
                             </p>
+                            {isBrightoStainFree && (
+                                <a
+                                    href="/pdfs/brighto-stain-free.pdf"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="mt-4 inline-flex items-center gap-2 text-xs font-bold text-gold hover:underline bg-gold/5 px-4 py-2 rounded-lg border border-gold/10"
+                                >
+                                    <Info size={14} />
+                                    Download Shade Card PDF
+                                </a>
+                            )}
                         </div>
 
                         {/* Color Selector (Grid) */}
