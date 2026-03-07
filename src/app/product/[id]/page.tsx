@@ -122,18 +122,16 @@ export default function ProductDetailPage() {
         );
     }
 
-    if (!product) return <div className="min-h-screen pt-32 text-center text-gray-500">Product not found.</div>;
-
-    const isBrightoSuperEmulsion = product.name === 'Brighto Super Emulsion';
-    const isBrightoSyntheticEnamel = product.name === 'Brighto Synthetic Enamel';
-    const isBrightoPlasticEmulsion = product.name === 'Brighto Plastic Emulsion';
-    const isBrightoAllWeather = product.name === 'Brighto All Weather';
-    const isSaasiHydrous = product.name.includes('Hydrous Matt Finish');
-    const isSaasiMattEnamel = product.brand === 'Saasi' && product.name === 'Matt Enamel';
-    const isSaasiPlasticEmulsion = product.brand === 'Saasi' && product.name === 'Plastic Emulsion';
-    const isSaasiSuperGlossEnamel = product.brand === 'Saasi' && product.name === 'Super Gloss Enamel';
-    const isSaasiWeatherSafe = product.brand === 'Saasi' && product.name === 'Weather Safe';
-    const isBrightoStainFree = product.name === 'Brighto Stain Free royal silky finish emulsion';
+    const isBrightoSuperEmulsion = product?.name === 'Brighto Super Emulsion';
+    const isBrightoSyntheticEnamel = product?.name === 'Brighto Synthetic Enamel';
+    const isBrightoPlasticEmulsion = product?.name === 'Brighto Plastic Emulsion';
+    const isBrightoAllWeather = product?.name === 'Brighto All Weather';
+    const isSaasiHydrous = product?.name?.includes('Hydrous Matt Finish');
+    const isSaasiMattEnamel = product?.brand === 'Saasi' && product?.name === 'Matt Enamel';
+    const isSaasiPlasticEmulsion = product?.brand === 'Saasi' && product?.name === 'Plastic Emulsion';
+    const isSaasiSuperGlossEnamel = product?.brand === 'Saasi' && product?.name === 'Super Gloss Enamel';
+    const isSaasiWeatherSafe = product?.brand === 'Saasi' && product?.name === 'Weather Safe';
+    const isBrightoStainFree = product?.name === 'Brighto Stain Free royal silky finish emulsion';
     const hasShadeCard = isBrightoSuperEmulsion || isBrightoSyntheticEnamel || isBrightoPlasticEmulsion || isBrightoAllWeather || isSaasiHydrous || isSaasiMattEnamel || isSaasiPlasticEmulsion || isSaasiSuperGlossEnamel || isSaasiWeatherSafe || isBrightoStainFree;
 
     const shadeCardPdf = useMemo(() => {
@@ -159,6 +157,8 @@ export default function ProductDetailPage() {
 
         return null;
     }, [product]);
+
+    if (!product) return <div className="min-h-screen pt-32 text-center text-gray-500">Product not found.</div>;
 
     return (
         <div className="min-h-screen pt-[70px] bg-white">
