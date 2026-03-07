@@ -136,6 +136,30 @@ export default function ProductDetailPage() {
     const isBrightoStainFree = product.name === 'Brighto Stain Free royal silky finish emulsion';
     const hasShadeCard = isBrightoSuperEmulsion || isBrightoSyntheticEnamel || isBrightoPlasticEmulsion || isBrightoAllWeather || isSaasiHydrous || isSaasiMattEnamel || isSaasiPlasticEmulsion || isSaasiSuperGlossEnamel || isSaasiWeatherSafe || isBrightoStainFree;
 
+    const shadeCardPdf = useMemo(() => {
+        if (!product) return null;
+        const name = product.name;
+        const brand = product.brand;
+
+        if (brand === 'Brighto') {
+            if (name === 'Brighto All Weather') return '/pdfs/brighto-all-weather.pdf';
+            if (name === 'Brighto Plastic Emulsion') return '/pdfs/brighto-plastic-emulsion.pdf';
+            if (name === 'Brighto Super Emulsion') return '/pdfs/brighto-super-emulsion.pdf';
+            if (name === 'Brighto Synthetic Enamel') return '/pdfs/brighto-synthetic-enamel.pdf';
+            if (name === 'Brighto Stain Free royal silky finish emulsion') return '/pdfs/brighto-stain-free.pdf';
+        }
+
+        if (brand === 'Saasi') {
+            if (name.includes('Hydrous Matt Finish')) return '/pdfs/saasi-hydrous-matt-finish.pdf';
+            if (name === 'Matt Enamel') return '/pdfs/saasi-matt-enamel.pdf';
+            if (name === 'Plastic Emulsion') return '/pdfs/saasi-plastic-emulsion.pdf';
+            if (name === 'Super Gloss Enamel') return '/pdfs/saasi-super-gloss-enamel.pdf';
+            if (name === 'Weather Safe') return '/pdfs/saasi-weather-safe.pdf';
+        }
+
+        return null;
+    }, [product]);
+
     return (
         <div className="min-h-screen pt-[70px] bg-white">
             {/* Breadcrumbs */}
@@ -252,9 +276,9 @@ export default function ProductDetailPage() {
                             <p className="text-gray-400 font-medium text-sm leading-relaxed max-w-xl">
                                 {product.brand} {product.name} (color) : <span className="text-navy font-bold">{selectedShade?.name || 'Select a shade'}</span>
                             </p>
-                            {isBrightoStainFree && (
+                            {shadeCardPdf && (
                                 <a
-                                    href="/pdfs/brighto-stain-free.pdf"
+                                    href={shadeCardPdf}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="mt-4 inline-flex items-center gap-2 text-xs font-bold text-gold hover:underline bg-gold/5 px-4 py-2 rounded-lg border border-gold/10"
