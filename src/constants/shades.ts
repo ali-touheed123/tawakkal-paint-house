@@ -1161,3 +1161,58 @@ export const GOBIS_AQUEOUS_MATT_FINISH_SHADES: Shade[] = [
   { id: 'gam-604', product_id: '', name: 'Orchard Lane', code: '604', hex: '#90EE90', is_drum_available: false },
   { id: 'gam-636', product_id: '', name: 'Apricot', code: '636', hex: '#FBCEB1', is_drum_available: false },
 ];
+
+export const GOBIS_GOLD_AQUEOUS_MATT_FINISH_SHADES: Shade[] = [
+  // Whites & Neutrals
+  { id: 'ggam-400', product_id: '', name: 'White', code: '400', hex: '#FFFFFF', is_drum_available: false },
+  { id: 'ggam-401', product_id: '', name: 'Off White', code: '401', hex: '#FAF9F6', is_drum_available: false },
+  { id: 'ggam-402', product_id: '', name: 'Pearl White', code: '402', hex: '#F0EAD6', is_drum_available: false },
+  { id: 'ggam-403', product_id: '', name: 'Antique White', code: '403', hex: '#FAEBD7', is_drum_available: false },
+  { id: 'ggam-405', product_id: '', name: 'Ash White', code: '405', hex: '#B2BEB5', is_drum_available: false },
+  { id: 'ggam-404', product_id: '', name: 'Thousand Nights', code: '404', hex: '#B2C2D1', is_drum_available: false },
+  { id: 'ggam-415', product_id: '', name: 'Crescent Moon', code: '415', hex: '#F8F8FF', is_drum_available: false },
+  { id: 'ggam-416', product_id: '', name: 'Lavender White', code: '416', hex: '#E6E6FA', is_drum_available: false },
+  { id: 'ggam-409', product_id: '', name: 'Spring Air', code: '409', hex: '#F0FFF0', is_drum_available: false },
+
+  // Pinks & Peaches
+  { id: 'ggam-407', product_id: '', name: 'Peppermint', code: '407', hex: '#F1E9D2', is_drum_available: false },
+  { id: 'ggam-411', product_id: '', name: 'Cameo', code: '411', hex: '#EFDECD', is_drum_available: false },
+  { id: 'ggam-408', product_id: '', name: 'Vanilla Latte', code: '408', hex: '#EAE0C8', is_drum_available: false },
+  { id: 'ggam-412', product_id: '', name: 'Soft Peach', code: '412', hex: '#FFDAB9', is_drum_available: false },
+  { id: 'ggam-417', product_id: '', name: 'Cockleshell', code: '417', hex: '#FFCBA4', is_drum_available: false },
+  { id: 'ggam-418', product_id: '', name: 'Magnolia', code: '418', hex: '#F3E5AB', is_drum_available: false },
+  { id: 'ggam-428', product_id: '', name: 'Pink', code: '428', hex: '#FFC0CB', is_drum_available: false },
+  { id: 'ggam-429', product_id: '', name: 'Iced Pink', code: '429', hex: '#FADADD', is_drum_available: false },
+  { id: 'ggam-434', product_id: '', name: 'Peach Country', code: '434', hex: '#FFDAB9', is_drum_available: false },
+
+  // Purples & Reds
+  { id: 'ggam-419', product_id: '', name: 'Lilac Time', code: '419', hex: '#E0B0FF', is_drum_available: false },
+  { id: 'ggam-420', product_id: '', name: 'Vintage Violet', code: '420', hex: '#D8BFD8', is_drum_available: false },
+  { id: 'ggam-421', product_id: '', name: 'Pink Violet', code: '421', hex: '#E0B0FF', is_drum_available: false },
+  { id: 'ggam-422', product_id: '', name: 'Purple Heather', code: '422', hex: '#D19FE8', is_drum_available: false },
+  { id: 'ggam-413', product_id: '', name: 'Tile Red', code: '413', hex: '#B22222', is_drum_available: false },
+  { id: 'ggam-414', product_id: '', name: 'Deep Spice', code: '414', hex: '#7B3F00', is_drum_available: false },
+  { id: 'ggam-424', product_id: '', name: 'Red Haze', code: '424', hex: '#FF7F50', is_drum_available: false },
+  { id: 'ggam-426', product_id: '', name: 'Red Purple', code: '426', hex: '#953553', is_drum_available: false },
+
+  // Blues & Greens
+  { id: 'ggam-406', product_id: '', name: 'Silver Tone', code: '406', hex: '#C0C0C0', is_drum_available: false },
+  { id: 'ggam-423', product_id: '', name: 'Eternity', code: '423', hex: '#87CEEB', is_drum_available: false },
+  { id: 'ggam-425', product_id: '', name: 'Steel Grey', code: '425', hex: '#708090', is_drum_available: false },
+  { id: 'ggam-439', product_id: '', name: 'Sea Blue', code: '439', hex: '#4682B4', is_drum_available: false },
+  { id: 'ggam-440', product_id: '', name: 'Cool Blue', code: '440', hex: '#ADD8E6', is_drum_available: false },
+  { id: 'ggam-435', product_id: '', name: 'Fresh Cut', code: '435', hex: '#90EE90', is_drum_available: false },
+  { id: 'ggam-437', product_id: '', name: 'Twisted Mint', code: '437', hex: '#98FB98', is_drum_available: false },
+  { id: 'ggam-438', product_id: '', name: 'Leaf Green', code: '438', hex: '#228B22', is_drum_available: false },
+  { id: 'ggam-436', product_id: '', name: 'Light Green', code: '436', hex: '#77DD77', is_drum_available: false },
+
+  // Yellows & Others
+  { id: 'ggam-410', product_id: '', name: 'Sand', code: '410', hex: '#C2B280', is_drum_available: false },
+  { id: 'ggam-427', product_id: '', name: 'Vintage', code: '427', hex: '#F5F5DC', is_drum_available: false },
+  { id: 'ggam-430', product_id: '', name: 'Puff', code: '430', hex: '#EAE0C8', is_drum_available: false },
+  { id: 'ggam-431', product_id: '', name: 'Lime Yellow', code: '431', hex: '#F0E130', is_drum_available: false },
+  { id: 'ggam-432', product_id: '', name: 'Mango Yellow', code: '432', hex: '#FFCC00', is_drum_available: false },
+  { id: 'ggam-433', product_id: '', name: 'Triple Crown', code: '433', hex: '#FFD700', is_drum_available: false },
+  { id: 'ggam-441', product_id: '', name: 'Mauve', code: '441', hex: '#E0B0FF', is_drum_available: false },
+  { id: 'ggam-442', product_id: '', name: 'Black', code: '442', hex: '#000000', is_drum_available: false },
+];

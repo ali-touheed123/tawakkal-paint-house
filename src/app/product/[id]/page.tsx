@@ -21,7 +21,7 @@ import { ShadeSelector } from '@/components/ShadeSelector';
 import { SimpleVisualizer } from '@/components/SimpleVisualizer';
 import { PaintCalculator } from '@/components/PaintCalculator';
 import Link from 'next/link';
-import { BRIGHTO_SHADES, BRIGHTO_ENAMEL_SHADES, BRIGHTO_PLASTIC_EMULSION_SHADES, BRIGHTO_ALL_WEATHER_SHADES, SAASI_HYDROUS_SHADES, SAASI_MATT_ENAMEL_SHADES, SAASI_PLASTIC_EMULSION_SHADES, SAASI_SUPER_GLOSS_ENAMEL_SHADES, SAASI_WEATHER_SAFE_SHADES, GOBIS_INDUSTRIAL_ENAMEL_SHADES, GOBIS_STOVING_PAINT_SHADES, GOBIS_CARMAN_SERIES_SHADES, GOBIS_SILVERLINE_ENAMEL_SHADES, GOBIS_SILVERLINE_EMULSION_SHADES, GOBIS_GOLD_LUXURIOUS_WALL_EMULSION_SHADES, GOBIS_SILKSHEEN_EMULSION_SHADES, GOBIS_GOLD_ENAMEL_SHADES, GOBIS_AQUEOUS_MATT_FINISH_SHADES } from '@/constants/shades';
+import { BRIGHTO_SHADES, BRIGHTO_ENAMEL_SHADES, BRIGHTO_PLASTIC_EMULSION_SHADES, BRIGHTO_ALL_WEATHER_SHADES, SAASI_HYDROUS_SHADES, SAASI_MATT_ENAMEL_SHADES, SAASI_PLASTIC_EMULSION_SHADES, SAASI_SUPER_GLOSS_ENAMEL_SHADES, SAASI_WEATHER_SAFE_SHADES, GOBIS_INDUSTRIAL_ENAMEL_SHADES, GOBIS_STOVING_PAINT_SHADES, GOBIS_CARMAN_SERIES_SHADES, GOBIS_SILVERLINE_ENAMEL_SHADES, GOBIS_SILVERLINE_EMULSION_SHADES, GOBIS_GOLD_LUXURIOUS_WALL_EMULSION_SHADES, GOBIS_SILKSHEEN_EMULSION_SHADES, GOBIS_GOLD_ENAMEL_SHADES, GOBIS_AQUEOUS_MATT_FINISH_SHADES, GOBIS_GOLD_AQUEOUS_MATT_FINISH_SHADES } from '@/constants/shades';
 
 
 export default function ProductDetailPage() {
@@ -56,8 +56,9 @@ export default function ProductDetailPage() {
     const isGobisGoldLuxuriousWallEmulsion = (product?.brand === "Gobi's" || product?.brand === 'Gobis') && product?.name?.toLowerCase().includes('gold') && product?.name?.toLowerCase().includes('wall emulsion');
     const isGobisSilksheenEmulsion = (product?.brand === "Gobi's" || product?.brand === 'Gobis') && product?.name?.toLowerCase().includes('silksheen emulsion');
     const isGobisGoldEnamel = (product?.brand === "Gobi's" || product?.brand === 'Gobis') && product?.name?.toLowerCase().includes('gold') && product?.name?.toLowerCase().includes('enamel') && !product?.name?.toLowerCase().includes('wall emulsion');
-    const isGobisAqueousMattFinish = (product?.brand === "Gobi's" || product?.brand === 'Gobis') && product?.name?.toLowerCase().includes('aqueous matt finish');
-    const hasShadeCard = isBrightoSuperEmulsion || isBrightoSyntheticEnamel || isBrightoPlasticEmulsion || isBrightoAllWeather || isSaasiHydrous || isSaasiMattEnamel || isSaasiPlasticEmulsion || isSaasiSuperGlossEnamel || isSaasiWeatherSafe || isBrightoStainFree || isGobisIndustrialEnamel || isGobisStovingPaint || isGobisCarmanSeries || isGobisSilverlineEnamel || isGobisSilverlineEmulsion || isGobisGoldLuxuriousWallEmulsion || isGobisSilksheenEmulsion || isGobisGoldEnamel || isGobisAqueousMattFinish;
+    const isGobisAqueousMattFinish = (product?.brand === "Gobi's" || product?.brand === 'Gobis') && product?.name?.toLowerCase().includes('aqueous matt finish') && !product?.name?.toLowerCase().includes('gold');
+    const isGobisGoldAqueousMattFinish = (product?.brand === "Gobi's" || product?.brand === 'Gobis') && product?.name?.toLowerCase().includes('gold') && product?.name?.toLowerCase().includes('aqueous matt finish');
+    const hasShadeCard = isBrightoSuperEmulsion || isBrightoSyntheticEnamel || isBrightoPlasticEmulsion || isBrightoAllWeather || isSaasiHydrous || isSaasiMattEnamel || isSaasiPlasticEmulsion || isSaasiSuperGlossEnamel || isSaasiWeatherSafe || isBrightoStainFree || isGobisIndustrialEnamel || isGobisStovingPaint || isGobisCarmanSeries || isGobisSilverlineEnamel || isGobisSilverlineEmulsion || isGobisGoldLuxuriousWallEmulsion || isGobisSilksheenEmulsion || isGobisGoldEnamel || isGobisAqueousMattFinish || isGobisGoldAqueousMattFinish;
 
     const shadeCardPdf = useMemo(() => {
         if (!product) return null;
@@ -89,7 +90,8 @@ export default function ProductDetailPage() {
             if (name?.toLowerCase().includes('gold') && name?.toLowerCase().includes('wall emulsion')) return '/pdfs/gobis-gold-luxurious-wall-emulsion.pdf';
             if (name?.toLowerCase().includes('silksheen emulsion')) return '/pdfs/gobis-silksheen-emulsion.pdf';
             if (name?.toLowerCase().includes('gold') && name?.toLowerCase().includes('enamel') && !name?.toLowerCase().includes('wall emulsion')) return '/pdfs/gobis-gold-enamel.pdf';
-            if (name?.toLowerCase().includes('aqueous matt finish')) return '/pdfs/gobis-aqueous-matt-finish.pdf';
+            if (name?.toLowerCase().includes('aqueous matt finish') && !name?.toLowerCase().includes('gold')) return '/pdfs/gobis-aqueous-matt-finish.pdf';
+            if (name?.toLowerCase().includes('gold') && name?.toLowerCase().includes('aqueous matt finish')) return '/pdfs/gobis-gold-aqueous-matt-finish.pdf';
         }
 
         return null;
@@ -128,7 +130,8 @@ export default function ProductDetailPage() {
                 const isGobisGoldLuxuriousWallEmulsion = (productData.brand === "Gobi's" || productData.brand === 'Gobis') && productData.name?.toLowerCase().includes('gold') && productData.name?.toLowerCase().includes('wall emulsion');
                 const isGobisSilksheenEmulsion = (productData.brand === "Gobi's" || productData.brand === 'Gobis') && productData.name?.toLowerCase().includes('silksheen emulsion');
                 const isGobisGoldEnamel = (productData.brand === "Gobi's" || productData.brand === 'Gobis') && productData.name?.toLowerCase().includes('gold') && productData.name?.toLowerCase().includes('enamel') && !productData.name?.toLowerCase().includes('wall emulsion');
-                const isGobisAqueousMattFinish = (productData.brand === "Gobi's" || productData.brand === 'Gobis') && productData.name?.toLowerCase().includes('aqueous matt finish');
+                const isGobisAqueousMattFinish = (productData.brand === "Gobi's" || productData.brand === 'Gobis') && productData.name?.toLowerCase().includes('aqueous matt finish') && !productData.name?.toLowerCase().includes('gold');
+                const isGobisGoldAqueousMattFinish = (productData.brand === "Gobi's" || productData.brand === 'Gobis') && productData.name?.toLowerCase().includes('gold') && productData.name?.toLowerCase().includes('aqueous matt finish');
                 const defaultShades = isSuperEmulsion ? BRIGHTO_SHADES
                     : isSyntheticEnamel ? BRIGHTO_ENAMEL_SHADES
                         : isPlasticEmulsion ? BRIGHTO_PLASTIC_EMULSION_SHADES
@@ -148,7 +151,8 @@ export default function ProductDetailPage() {
                                                                                 : isGobisSilksheenEmulsion ? GOBIS_SILKSHEEN_EMULSION_SHADES
                                                                                     : isGobisGoldEnamel ? GOBIS_GOLD_ENAMEL_SHADES
                                                                                         : isGobisAqueousMattFinish ? GOBIS_AQUEOUS_MATT_FINISH_SHADES
-                                                                                            : [];
+                                                                                            : isGobisGoldAqueousMattFinish ? GOBIS_GOLD_AQUEOUS_MATT_FINISH_SHADES
+                                                                                                : [];
 
                 // Fetch shades from DB, fallback to local constants
                 const { data: shadeData } = await supabase
