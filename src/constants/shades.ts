@@ -1216,3 +1216,53 @@ export const GOBIS_GOLD_AQUEOUS_MATT_FINISH_SHADES: Shade[] = [
   { id: 'ggam-441', product_id: '', name: 'Mauve', code: '441', hex: '#E0B0FF', is_drum_available: false },
   { id: 'ggam-442', product_id: '', name: 'Black', code: '442', hex: '#000000', is_drum_available: false },
 ];
+
+export const GOBIS_GOLD_EGGSHELL_MATT_FINISH_SHADES: Shade[] = [
+  // Whites & Neutrals
+  { id: 'ggem-701', product_id: '', name: 'Honey White', code: '701', hex: '#FDF5E6', is_drum_available: false },
+  { id: 'ggem-702', product_id: '', name: 'Off White', code: '702', hex: '#FAF9F6', is_drum_available: false },
+  { id: 'ggem-703', product_id: '', name: 'Lavender White', code: '703', hex: '#E6E6FA', is_drum_available: false },
+  { id: 'ggem-704', product_id: '', name: 'Ash White', code: '704', hex: '#B2BEB5', is_drum_available: false },
+  { id: 'ggem-706', product_id: '', name: 'Kitten White', code: '706', hex: '#F1E9D2', is_drum_available: false },
+  { id: 'ggem-717', product_id: '', name: 'Classical', code: '717', hex: '#F5F5DC', is_drum_available: false },
+  { id: 'ggem-728', product_id: '', name: 'Honey Frost', code: '728', hex: '#F0EAD6', is_drum_available: false },
+
+  // Pinks & Peaches
+  { id: 'ggem-705', product_id: '', name: 'Adorable Peach', code: '705', hex: '#FFDAB9', is_drum_available: false },
+  { id: 'ggem-709', product_id: '', name: 'Peach Whisper', code: '709', hex: '#FFE5B4', is_drum_available: false },
+  { id: 'ggem-713', product_id: '', name: 'Bubble Gum', code: '713', hex: '#FFC0CB', is_drum_available: false },
+  { id: 'ggem-715', product_id: '', name: 'Candy Pink', code: '715', hex: '#FFB7C5', is_drum_available: false },
+  { id: 'ggem-716', product_id: '', name: 'Carnival Pink', code: '716', hex: '#FF69B4', is_drum_available: false },
+
+  // Yellows & Oranges
+  { id: 'ggem-707', product_id: '', name: 'Cozy', code: '707', hex: '#FFDAB9', is_drum_available: false },
+  { id: 'ggem-710', product_id: '', name: 'Lime Yellow', code: '710', hex: '#F0E130', is_drum_available: false },
+  { id: 'ggem-711', product_id: '', name: 'Marsh Merigold', code: '711', hex: '#FFD700', is_drum_available: false },
+  { id: 'ggem-712', product_id: '', name: 'Classic Orange', code: '712', hex: '#FF8C00', is_drum_available: false },
+
+  // Purples & Reds
+  { id: 'ggem-718', product_id: '', name: 'Lilac Time', code: '718', hex: '#E0B0FF', is_drum_available: false },
+  { id: 'ggem-719', product_id: '', name: 'Purple Passion', code: '719', hex: '#800080', is_drum_available: false },
+  { id: 'ggem-714', product_id: '', name: 'Natural Paprika', code: '714', hex: '#8B4513', is_drum_available: false },
+
+  // Greens
+  { id: 'ggem-720', product_id: '', name: 'Lime Light', code: '720', hex: '#32CD32', is_drum_available: false },
+  { id: 'ggem-721', product_id: '', name: 'Light Green', code: '721', hex: '#90EE90', is_drum_available: false },
+  { id: 'ggem-722', product_id: '', name: 'Woven Green', code: '722', hex: '#228B22', is_drum_available: false },
+  { id: 'ggem-723', product_id: '', name: 'Emerald Isle', code: '723', hex: '#50C878', is_drum_available: false },
+  { id: 'ggem-724', product_id: '', name: 'Gumbed Green', code: '724', hex: '#006400', is_drum_available: false },
+
+  // Blues
+  { id: 'ggem-725', product_id: '', name: 'Blue Haze', code: '725', hex: '#87CEEB', is_drum_available: false },
+  { id: 'ggem-729', product_id: '', name: 'Sea Blue', code: '729', hex: '#4682B4', is_drum_available: false },
+  { id: 'ggem-730', product_id: '', name: 'Regatta Bay', code: '730', hex: '#000080', is_drum_available: false },
+
+  // Greys & Others
+  { id: 'ggem-708', product_id: '', name: 'Abalone', code: '708', hex: '#8D9092', is_drum_available: false },
+  { id: 'ggem-726', product_id: '', name: 'Light Grey', code: '726', hex: '#D3D3D3', is_drum_available: false },
+  { id: 'ggem-727', product_id: '', name: 'Steel Grey', code: '727', hex: '#708090', is_drum_available: false },
+  { id: 'ggem-731', product_id: '', name: 'Terrace Stone', code: '731', hex: '#8B8589', is_drum_available: false },
+  { id: 'ggem-732', product_id: '', name: 'Onyx', code: '732', hex: '#353839', is_drum_available: false },
+  { id: 'ggem-733', product_id: '', name: 'Diyar', code: '733', hex: '#4B3621', is_drum_available: false },
+  { id: 'ggem-734', product_id: '', name: 'Polish Brown', code: '734', hex: '#3B2F2F', is_drum_available: false },
+];
