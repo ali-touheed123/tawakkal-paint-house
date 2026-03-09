@@ -1344,3 +1344,63 @@ export const GOBIS_GLOSS_ENAMEL_SHADES: Shade[] = [
   { id: 'gge-1095', product_id: '', name: 'Spice', code: '1095', hex: '#E2725B', is_drum_available: false },
   { id: 'gge-1049', product_id: '', name: 'Oyster', code: '1049', hex: '#EAE0C8', is_drum_available: false },
 ];
+
+export const GOBIS_EGGSHELL_MATT_ENAMEL_SHADES: Shade[] = [
+  // Whites & Creams
+  { id: 'egm-500', product_id: '', name: 'White', code: '500', hex: '#FFFFFF', is_drum_available: true },
+  { id: 'egm-501', product_id: '', name: 'Off White', code: '501', hex: '#FAF9F6', is_drum_available: true },
+  { id: 'egm-502', product_id: '', name: 'Ash White', code: '0502', hex: '#B2BEB5', is_drum_available: true },
+  { id: 'egm-503', product_id: '', name: 'Lavender White', code: '0503', hex: '#E6E6FA', is_drum_available: false },
+  { id: 'egm-549', product_id: '', name: 'Rose White', code: '549', hex: '#FFF0F5', is_drum_available: false },
+  { id: 'egm-567', product_id: '', name: 'Antique White', code: '0567', hex: '#FAEBD7', is_drum_available: false },
+  { id: 'egm-541', product_id: '', name: 'White Ice', code: '541', hex: '#F0F8FF', is_drum_available: false },
+  { id: 'egm-505', product_id: '', name: 'Snow Mountain', code: '505', hex: '#FFFFFF', is_drum_available: false },
+  { id: 'egm-575', product_id: '', name: 'Magnolia', code: '575', hex: '#F2E8D7', is_drum_available: false },
+  { id: 'egm-565', product_id: '', name: 'Cameo', code: '565', hex: '#F3E5AB', is_drum_available: false },
+  { id: 'egm-517', product_id: '', name: 'Vintage', code: '517', hex: '#D2B48C', is_drum_available: false },
+  { id: 'egm-562', product_id: '', name: 'Classical', code: '0562', hex: '#F5F5DC', is_drum_available: false },
+  { id: 'egm-504', product_id: '', name: 'Halo', code: '504', hex: '#F0EAD6', is_drum_available: false },
+
+  // Yellows & Oranges
+  { id: 'egm-574', product_id: '', name: 'Lime Yellow', code: '574', hex: '#F0E130', is_drum_available: false },
+  { id: 'egm-582', product_id: '', name: 'Marsh Merigold', code: '582', hex: '#FFD700', is_drum_available: false },
+  { id: 'egm-537', product_id: '', name: 'Orange Tropic', code: '537', hex: '#FF8C00', is_drum_available: false },
+
+  // Pinks & Reds
+  { id: 'egm-555', product_id: '', name: 'Sherbet', code: '555', hex: '#FCE8D5', is_drum_available: false },
+  { id: 'egm-558', product_id: '', name: 'Peach Goddess New', code: '558', hex: '#FFE5B4', is_drum_available: false },
+  { id: 'egm-568', product_id: '', name: 'Apricot', code: '568', hex: '#FFDAB9', is_drum_available: false },
+  { id: 'egm-510', product_id: '', name: 'Pink', code: '0510', hex: '#FFC0CB', is_drum_available: false },
+  { id: 'egm-564', product_id: '', name: 'Summer Pink', code: '564', hex: '#FFB6C1', is_drum_available: false },
+  { id: 'egm-570', product_id: '', name: 'Carnival Pink', code: '570', hex: '#FF69B4', is_drum_available: false },
+  { id: 'egm-553', product_id: '', name: 'Country Rose New', code: '553', hex: '#E2725B', is_drum_available: false },
+  { id: 'egm-560', product_id: '', name: 'Cherry', code: '560', hex: '#D2042D', is_drum_available: false },
+  { id: 'egm-584', product_id: '', name: 'Red Purple', code: '584', hex: '#953553', is_drum_available: false },
+
+  // Purples & Blues
+  { id: 'egm-545', product_id: '', name: 'Mauve', code: '545', hex: '#E0B0FF', is_drum_available: false },
+  { id: 'egm-557', product_id: '', name: 'Opal Lilac', code: '557', hex: '#E6E6FA', is_drum_available: false },
+  { id: 'egm-516', product_id: '', name: 'Shangrila', code: '516', hex: '#ADD8E6', is_drum_available: false },
+  { id: 'egm-554', product_id: '', name: 'Angel Blue', code: '0554', hex: '#AFDBF5', is_drum_available: false },
+  { id: 'egm-577', product_id: '', name: 'Sea Blue', code: '0577', hex: '#4682B4', is_drum_available: false },
+  { id: 'egm-525', product_id: '', name: 'Torres Blue', code: '525', hex: '#0073CF', is_drum_available: false },
+  { id: 'egm-552', product_id: '', name: 'Indigo', code: '0552', hex: '#4B0082', is_drum_available: false },
+
+  // Greens
+  { id: 'egm-507', product_id: '', name: 'Light Green', code: '507', hex: '#90EE90', is_drum_available: false },
+  { id: 'egm-583', product_id: '', name: 'Spring Green', code: '583', hex: '#00FF7F', is_drum_available: false },
+  { id: 'egm-579', product_id: '', name: 'Woven Green', code: '0579', hex: '#228B22', is_drum_available: false },
+  { id: 'egm-595', product_id: '', name: 'Topiary Green', code: '595', hex: '#4C5D4B', is_drum_available: false },
+
+  // Greys & Earthy
+  { id: 'egm-540', product_id: '', name: 'First Dawn', code: '0540', hex: '#E3E4E0', is_drum_available: false },
+  { id: 'egm-543', product_id: '', name: 'Reflection', code: '543', hex: '#F0EDE8', is_drum_available: false },
+  { id: 'egm-597', product_id: '', name: 'Steel Grey', code: '597', hex: '#708090', is_drum_available: false },
+  { id: 'egm-593', product_id: '', name: 'Desert Tan', code: '593', hex: '#C19A6B', is_drum_available: false },
+  { id: 'egm-556', product_id: '', name: 'Cockleshell', code: '556', hex: '#F5DEB3', is_drum_available: false },
+  { id: 'egm-538', product_id: '', name: 'Natural Paprika', code: '538', hex: '#8B4513', is_drum_available: false },
+  { id: 'egm-581', product_id: '', name: 'Diyar', code: '581', hex: '#4B3621', is_drum_available: false },
+  { id: 'egm-580', product_id: '', name: 'Sheesham', code: '580', hex: '#714B23', is_drum_available: false },
+  { id: 'egm-563', product_id: '', name: 'Polish Brown', code: '563', hex: '#3B2F2F', is_drum_available: false },
+  { id: 'egm-732', product_id: '', name: 'Onyx', code: '732', hex: '#353839', is_drum_available: false },
+];
