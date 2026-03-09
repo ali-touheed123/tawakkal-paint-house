@@ -120,7 +120,6 @@ INSERT INTO products (name, brand, category, sub_category, description, image_ur
 ('Diamond Everlast High Gloss Enamel', 'Diamond', 'decorative', 'wood_metal', 'Everlast series high gloss finish', '/images/products/diamond/everlast high gloss enamel.webp', 1850, 6300, 29500, true),
 ('Diamond Everlast Weather Proof', 'Diamond', 'decorative', 'exterior', 'Everlast all-weather protection', '/images/products/diamond/Everlast-Weather-Proof.webp', 1900, 6500, 30500, true),
 ('Diamond Interior Overall Texture', 'Diamond', 'decorative', 'interior', 'Decorative interior wall texturing', '/images/products/diamond/interior overall texture.webp', 1600, 5500, 25000, true),
-('Diamond Matt Finish Inner', 'Diamond', 'decorative', 'interior', 'Premium Diamond series matt finish', '/images/products/diamond/Matt-Finish-Inner-630x630.png', 1650, 5650, 26000, true),
 ('Diamond Overall Aluminum Silver', 'Diamond', 'decorative', 'wood_metal', 'Aluminum silver protective paint', '/images/products/diamond/overall aluminum silver_2e53ad9f-0d4b-4698-9906-bd4ec05a3e4b.webp', 1200, 4100, 19500, true),
 ('Diamond Overall High Gloss Enamel', 'Diamond', 'decorative', 'wood_metal', 'Professional high gloss enamel', '/images/products/diamond/overall high gloss enamel.webp', 1800, 6150, 28500, true),
 ('Diamond Overall Metallic', 'Diamond', 'decorative', 'interior', 'Metallic series decorative finish', '/images/products/diamond/overall Metallic_4a2aed52-6c7c-4333-8fd4-6b9a28539b5b.webp', 1700, 5800, 0, true),
@@ -132,8 +131,6 @@ INSERT INTO products (name, brand, category, sub_category, description, image_ur
 ('Diamond Overall Thinner', 'Diamond', 'decorative', 'accessories', 'Standard multi-purpose thinner', '/images/products/diamond/overall thinner.webp', 950, 3250, 0, true),
 ('Diamond Overall Wall Sealer', 'Diamond', 'decorative', 'accessories', 'Effective interior wall sealer', '/images/products/diamond/overall wallsealer_2ff76c33-b42f-4c79-bc32-fa8caf75f545.webp', 720, 2450, 11500, true),
 ('Diamond Overll High Gloss Enamel', 'Diamond', 'decorative', 'wood_metal', 'High gloss series enamel', '/images/products/diamond/overll hgh gloss enamel.webp', 1800, 6200, 29000, true),
-('Diamond Plastic Emulsion', 'Diamond', 'decorative', 'interior', 'Classic plastic wall emulsion', '/images/products/diamond/plastic emulsion.png', 1300, 4400, 20500, true),
-('Diamond Plastic Primer Sealer', 'Diamond', 'decorative', 'accessories', 'Combined plastic primer and sealer', '/images/products/diamond/plastic priemer sealer.png', 680, 2350, 11000, true),
 ('Diamond Plastic Emulsion Special Shade', 'Diamond', 'decorative', 'interior', 'Bespoke shade plastic emulsion', '/images/products/diamond/Plastic-Emulsion-Special-Shade-630x630-removebg-preview.png', 1450, 4950, 23000, true),
 ('Diamond Overall Weather Max', 'Diamond', 'decorative', 'exterior', 'Maximum weather shield protection', '/images/products/diamond/pverall weather max.webp', 1850, 6350, 29500, true),
 ('Diamond Red Oxide Wood & Metal', 'Diamond', 'decorative', 'wood_metal', 'Anti-corrosive red oxide primer', '/images/products/diamond/Red-Oxide-wood-and-metal-630x630-removebg-preview.png', 980, 3350, 15500, true),
@@ -141,8 +138,6 @@ INSERT INTO products (name, brand, category, sub_category, description, image_ur
 ('Diamond Varnish', 'Diamond', 'decorative', 'wood_metal', 'Durable high gloss varnish', '/images/products/diamond/Warnish-630x630.png', 1900, 6500, 0, true),
 ('Diamond Water Matt', 'Diamond', 'decorative', 'wood_metal', 'Water based matt wood finish', '/images/products/diamond/Water-Matt-1-1024x657-removebg-preview.png', 1550, 5300, 0, true),
 ('Diamond Weather Protector', 'Diamond', 'decorative', 'exterior', 'All-weather exterior protector', '/images/products/diamond/weather protector.png', 1700, 5800, 27000, true),
-('Diamond Ace Multi Finish', 'Diamond', 'decorative', 'interior', 'Versatile multi-surface wall finish', '/images/products/diamond/WhatsApp-Image-2024-11-18-at-15.08.00-1024x656-removebg-preview.png', 1500, 5100, 23500, true),
-('Diamond Premium Wall Coating', 'Diamond', 'decorative', 'interior', 'High fidelity interior wall paint', '/images/products/diamond/WhatsApp_Image_2026-02-21_at_1.14.18_AM-removebg-preview.png', 1650, 5650, 26500, true);
 
 -- ------------------------------------------------------------------------------------------------
 -- RELIANCE PRODUCTS (8)
@@ -171,4 +166,9 @@ INSERT INTO products (name, brand, category, sub_category, description, image_ur
 ('Reliable Weather Protector', 'Reliable', 'decorative', 'exterior', 'Top tier exterior weather protection', '/images/products/reliable/ace weather defender.webp', 1800, 6150, 28500, true),
 ('Reliable Ace Water Based Primer', 'Reliable', 'decorative', 'accessories', 'Quality base primer for walls', '/images/products/reliable/ace water-based-primer.webp', 620, 2150, 10000, true),
 ('Reliable Everlast High Gloss Enamel', 'Reliable', 'decorative', 'wood_metal', 'Long-lasting high gloss enamel', '/images/products/reliable/everlast high gloss enamel.webp', 1900, 6500, 30000, true),
-('Reliable Overall Super Emulsion', 'Reliable', 'decorative', 'interior', 'Professional grade super emulsion', '/images/products/reliable/overall super emulsion.webp', 1450, 4950, 23000, true);
+('Reliable Overall Super Emulsion', 'Reliable', 'decorative', 'interior', 'Professional grade super emulsion', '/images/products/reliable/overall super emulsion.webp', 1450, 4950, 23000, true),
+('Reliable Emulsion', 'Reliable', 'decorative', 'interior', 'Versatile multi-surface wall finish', '/images/products/diamond/WhatsApp-Image-2024-11-18-at-15.08.00-1024x656-removebg-preview.png', 1500, 5100, 23500, true),
+('Reliable Advance Filling Putty', 'Reliable', 'decorative', 'interior', 'High fidelity interior wall filling putty', '/images/products/diamond/WhatsApp_Image_2026-02-21_at_1.14.18_AM-removebg-preview.png', 1650, 5650, 26500, true),
+('Reliable Advance Plastic Emulsion', 'Reliable', 'decorative', 'interior', 'Premium plastic wall emulsion', '/images/products/diamond/plastic emulsion.png', 1300, 4400, 20500, true),
+('Reliable Advance Plastic Primer Sealer', 'Reliable', 'decorative', 'accessories', 'Combined plastic primer and sealer', '/images/products/diamond/plastic priemer sealer.png', 680, 2350, 11000, true),
+('Reliable Matt Enamel', 'Reliable', 'decorative', 'interior', 'Premium series matt finish enamel', '/images/products/diamond/Matt-Finish-Inner-630x630.png', 1650, 5650, 26000, true);
