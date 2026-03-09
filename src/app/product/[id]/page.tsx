@@ -21,7 +21,7 @@ import { ShadeSelector } from '@/components/ShadeSelector';
 import { SimpleVisualizer } from '@/components/SimpleVisualizer';
 import { PaintCalculator } from '@/components/PaintCalculator';
 import Link from 'next/link';
-import { BRIGHTO_SHADES, BRIGHTO_ENAMEL_SHADES, BRIGHTO_PLASTIC_EMULSION_SHADES, BRIGHTO_ALL_WEATHER_SHADES, SAASI_HYDROUS_SHADES, SAASI_MATT_ENAMEL_SHADES, SAASI_PLASTIC_EMULSION_SHADES, SAASI_SUPER_GLOSS_ENAMEL_SHADES, SAASI_WEATHER_SAFE_SHADES, GOBIS_INDUSTRIAL_ENAMEL_SHADES, GOBIS_STOVING_PAINT_SHADES, GOBIS_CARMAN_SERIES_SHADES, GOBIS_SILVERLINE_ENAMEL_SHADES, GOBIS_SILVERLINE_EMULSION_SHADES } from '@/constants/shades';
+import { BRIGHTO_SHADES, BRIGHTO_ENAMEL_SHADES, BRIGHTO_PLASTIC_EMULSION_SHADES, BRIGHTO_ALL_WEATHER_SHADES, SAASI_HYDROUS_SHADES, SAASI_MATT_ENAMEL_SHADES, SAASI_PLASTIC_EMULSION_SHADES, SAASI_SUPER_GLOSS_ENAMEL_SHADES, SAASI_WEATHER_SAFE_SHADES, GOBIS_INDUSTRIAL_ENAMEL_SHADES, GOBIS_STOVING_PAINT_SHADES, GOBIS_CARMAN_SERIES_SHADES, GOBIS_SILVERLINE_ENAMEL_SHADES, GOBIS_SILVERLINE_EMULSION_SHADES, GOBIS_GOLD_WALL_EMULSION_SHADES } from '@/constants/shades';
 
 
 export default function ProductDetailPage() {
@@ -53,7 +53,8 @@ export default function ProductDetailPage() {
     const isGobisCarmanSeries = (product?.brand === "Gobi's" || product?.brand === 'Gobis') && product?.name?.toLowerCase().includes('carman series');
     const isGobisSilverlineEnamel = (product?.brand === "Gobi's" || product?.brand === 'Gobis') && product?.name?.toLowerCase().includes('silverline enamel');
     const isGobisSilverlineEmulsion = (product?.brand === "Gobi's" || product?.brand === 'Gobis') && product?.name?.toLowerCase().includes('silverline emulsion');
-    const hasShadeCard = isBrightoSuperEmulsion || isBrightoSyntheticEnamel || isBrightoPlasticEmulsion || isBrightoAllWeather || isSaasiHydrous || isSaasiMattEnamel || isSaasiPlasticEmulsion || isSaasiSuperGlossEnamel || isSaasiWeatherSafe || isBrightoStainFree || isGobisIndustrialEnamel || isGobisStovingPaint || isGobisCarmanSeries || isGobisSilverlineEnamel || isGobisSilverlineEmulsion;
+    const isGobisGoldWallEmulsion = (product?.brand === "Gobi's" || product?.brand === 'Gobis') && product?.name?.toLowerCase().includes('gold wall emulsion');
+    const hasShadeCard = isBrightoSuperEmulsion || isBrightoSyntheticEnamel || isBrightoPlasticEmulsion || isBrightoAllWeather || isSaasiHydrous || isSaasiMattEnamel || isSaasiPlasticEmulsion || isSaasiSuperGlossEnamel || isSaasiWeatherSafe || isBrightoStainFree || isGobisIndustrialEnamel || isGobisStovingPaint || isGobisCarmanSeries || isGobisSilverlineEnamel || isGobisSilverlineEmulsion || isGobisGoldWallEmulsion;
 
     const shadeCardPdf = useMemo(() => {
         if (!product) return null;
@@ -82,6 +83,7 @@ export default function ProductDetailPage() {
             if (name?.toLowerCase().includes('carman series')) return '/pdfs/gobis-carman-series.pdf';
             if (name?.toLowerCase().includes('silverline enamel')) return '/pdfs/gobis-silverline-enamel.pdf';
             if (name?.toLowerCase().includes('silverline emulsion')) return '/pdfs/gobis-silverline-emulsion.pdf';
+            if (name?.toLowerCase().includes('gold wall emulsion')) return '/pdfs/gobis-gold-wall-emulsion.pdf';
         }
 
         return null;
@@ -117,6 +119,7 @@ export default function ProductDetailPage() {
                 const isGobisCarmanSeries = (productData.brand === "Gobi's" || productData.brand === 'Gobis') && productData.name?.toLowerCase().includes('carman series');
                 const isGobisSilverlineEnamel = (productData.brand === "Gobi's" || productData.brand === 'Gobis') && productData.name?.toLowerCase().includes('silverline enamel');
                 const isGobisSilverlineEmulsion = (productData.brand === "Gobi's" || productData.brand === 'Gobis') && productData.name?.toLowerCase().includes('silverline emulsion');
+                const isGobisGoldWallEmulsion = (productData.brand === "Gobi's" || productData.brand === 'Gobis') && productData.name?.toLowerCase().includes('gold wall emulsion');
                 const defaultShades = isSuperEmulsion ? BRIGHTO_SHADES
                     : isSyntheticEnamel ? BRIGHTO_ENAMEL_SHADES
                         : isPlasticEmulsion ? BRIGHTO_PLASTIC_EMULSION_SHADES
@@ -132,7 +135,8 @@ export default function ProductDetailPage() {
                                                                 : isGobisCarmanSeries ? GOBIS_CARMAN_SERIES_SHADES
                                                                     : isGobisSilverlineEnamel ? GOBIS_SILVERLINE_ENAMEL_SHADES
                                                                         : isGobisSilverlineEmulsion ? GOBIS_SILVERLINE_EMULSION_SHADES
-                                                                            : [];
+                                                                            : isGobisGoldWallEmulsion ? GOBIS_GOLD_WALL_EMULSION_SHADES
+                                                                                : [];
 
                 // Fetch shades from DB, fallback to local constants
                 const { data: shadeData } = await supabase
