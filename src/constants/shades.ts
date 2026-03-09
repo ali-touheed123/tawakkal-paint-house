@@ -1404,3 +1404,21 @@ export const GOBIS_EGGSHELL_MATT_ENAMEL_SHADES: Shade[] = [
   { id: 'egm-563', product_id: '', name: 'Polish Brown', code: '563', hex: '#3B2F2F', is_drum_available: false },
   { id: 'egm-732', product_id: '', name: 'Onyx', code: '732', hex: '#353839', is_drum_available: false },
 ];
+
+export const RELIABLE_WEATHER_PROTECTOR_SHADES: Shade[] = [
+  { id: 'rwp-4001', product_id: '', name: 'White', code: '4001', hex: '#FFFFFF', is_drum_available: true },
+  { id: 'rwp-4002', product_id: '', name: 'Off White', code: '4002', hex: '#FAF9F6', is_drum_available: true },
+  { id: 'rwp-4022', product_id: '', name: 'Sugar Cane', code: '4022', hex: '#F2E8D7', is_drum_available: false },
+  { id: 'rwp-4019', product_id: '', name: 'Autumn Stone', code: '4019', hex: '#D2B48C', is_drum_available: false },
+  { id: 'rwp-4006', product_id: '', name: 'Brick Stone', code: '4006', hex: '#A52A2A', is_drum_available: false },
+  { id: 'rwp-4029', product_id: '', name: 'Multani Tile', code: '4029', hex: '#D2B48C', is_drum_available: false },
+  { id: 'rwp-4012', product_id: '', name: 'Tile Red', code: '4012', hex: '#B22222', is_drum_available: false },
+  { id: 'rwp-4009', product_id: '', name: 'Terracotta', code: '4009', hex: '#E2725B', is_drum_available: false },
+  { id: 'rwp-4028', product_id: '', name: 'Spice', code: '4028', hex: '#E2725B', is_drum_available: false },
+  { id: 'rwp-4026', product_id: '', name: 'Roof Tile', code: '4026', hex: '#8B4513', is_drum_available: false },
+  { id: 'rwp-4027', product_id: '', name: 'Red Oxide', code: '4027', hex: '#8B0000', is_drum_available: false },
+  { id: 'rwp-6901', product_id: '', name: 'Naya Nazimabad approved', code: '6901-T CCM', hex: '#E3E4E0', is_drum_available: false },
+  { id: 'rwp-036', product_id: '', name: 'Teracotta', code: '036', hex: '#E2725B', is_drum_available: false },
+  { id: 'rwp-7028', product_id: '', name: 'Teracotta-7028', code: '7028', hex: '#E2725B', is_drum_available: false },
+  { id: 'rwp-4030', product_id: '', name: 'Ash Grey', code: '4030', hex: '#B2BEB5', is_drum_available: false },
+];

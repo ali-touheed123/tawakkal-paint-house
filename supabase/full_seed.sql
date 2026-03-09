@@ -168,7 +168,7 @@ INSERT INTO products (name, brand, category, sub_category, description, image_ur
 ('Reliable Ace Hi Sparkle Metallic', 'Reliable', 'decorative', 'interior', 'Intense sparkle metallic finish', '/images/products/reliable/ace Hi sparkle metalic_087a2ef0-925d-43a8-9d04-c36e344d4990.webp', 1900, 6500, 0, true),
 ('Reliable Ace Matt Enamel', 'Reliable', 'decorative', 'wood_metal', 'Elite series matt enamel', '/images/products/reliable/ace matt enamel.webp', 1750, 6000, 28000, true),
 ('Reliable Ace Super Gloss Enamel', 'Reliable', 'decorative', 'wood_metal', 'Ultra-high gloss gloss enamel', '/images/products/reliable/ace super gloss enamel.webp', 1950, 6700, 31000, true),
-('Reliable Ace Weather Defender', 'Reliable', 'decorative', 'exterior', 'Top tier exterior defender', '/images/products/reliable/ace weather defender.webp', 1800, 6150, 28500, true),
+('Reliable Weather Protector', 'Reliable', 'decorative', 'exterior', 'Top tier exterior weather protection', '/images/products/reliable/ace weather defender.webp', 1800, 6150, 28500, true),
 ('Reliable Ace Water Based Primer', 'Reliable', 'decorative', 'accessories', 'Quality base primer for walls', '/images/products/reliable/ace water-based-primer.webp', 620, 2150, 10000, true),
 ('Reliable Everlast High Gloss Enamel', 'Reliable', 'decorative', 'wood_metal', 'Long-lasting high gloss enamel', '/images/products/reliable/everlast high gloss enamel.webp', 1900, 6500, 30000, true),
 ('Reliable Overall Super Emulsion', 'Reliable', 'decorative', 'interior', 'Professional grade super emulsion', '/images/products/reliable/overall super emulsion.webp', 1450, 4950, 23000, true);
