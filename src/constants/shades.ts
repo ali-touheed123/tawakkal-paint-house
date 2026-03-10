@@ -1528,3 +1528,80 @@ export const RELIABLE_MATT_ENAMEL_SHADES: Shade[] = [
   { id: 'rme-339', product_id: '', name: 'Alpine Red', code: '339', hex: '#E45664', is_drum_available: false },
   { id: 'rme-340', product_id: '', name: 'Merigold', code: '340', hex: '#F8B61F', is_drum_available: false },
 ];
+
+export const RELIABLE_EMULSION_SHADES: Shade[] = [
+  // Page 1 - Column 1
+  { id: 're-102', product_id: '', name: 'Off White', code: '102', hex: '#F5EFEB', is_drum_available: true },
+  { id: 're-165', product_id: '', name: 'Reliable Off White', code: '165', hex: '#FFF8E7', is_drum_available: false },
+  { id: 're-164', product_id: '', name: 'Kitten White', code: '164', hex: '#FCE1CE', is_drum_available: false },
+  { id: 're-103', product_id: '', name: 'New Off White', code: '103', hex: '#FDF4CD', is_drum_available: true },
+  { id: 're-159', product_id: '', name: 'Romantic White', code: '159', hex: '#FCE2DA', is_drum_available: false },
+  { id: 're-104', product_id: '', name: 'Ash White', code: '104', hex: '#E6E4E1', is_drum_available: true },
+  { id: 're-160', product_id: '', name: 'Chandni', code: '160', hex: '#EBE5D9', is_drum_available: false },
+
+  // Page 1 - Column 2
+  { id: 're-110', product_id: '', name: 'Cockleshell', code: '110', hex: '#FACFB8', is_drum_available: false },
+  { id: 're-128', product_id: '', name: 'Cameo', code: '128', hex: '#E1B77A', is_drum_available: true },
+  { id: 're-105', product_id: '', name: 'Rose White', code: '105', hex: '#FCB370', is_drum_available: false },
+  { id: 're-144', product_id: '', name: 'Peach', code: '144', hex: '#F99878', is_drum_available: true },
+  { id: 're-107', product_id: '', name: 'Summer Pink', code: '107', hex: '#FDB192', is_drum_available: false },
+  { id: 're-133', product_id: '', name: 'Apricot', code: '133', hex: '#FA9A60', is_drum_available: false },
+  { id: 're-130', product_id: '', name: 'Terracotta', code: '130', hex: '#543D32', is_drum_available: false },
+
+  // Page 1 - Column 3
+  { id: 're-166', product_id: '', name: 'White Ice', code: '166', hex: '#D8D8DB', is_drum_available: false },
+  { id: 're-131', product_id: '', name: 'Beige White', code: '131', hex: '#9D9179', is_drum_available: false },
+  { id: 're-106', product_id: '', name: 'Sand Stone', code: '106', hex: '#8E8369', is_drum_available: true },
+  { id: 're-136', product_id: '', name: 'Light Mulberry', code: '136', hex: '#CEAC96', is_drum_available: false },
+  { id: 're-132', product_id: '', name: 'Zenta', code: '132', hex: '#DF935E', is_drum_available: true },
+  { id: 're-152', product_id: '', name: 'Desert Dawn', code: '152', hex: '#ECA376', is_drum_available: true },
+  { id: 're-148', product_id: '', name: 'Benjamin Brown', code: '148', hex: '#D67A53', is_drum_available: false },
+
+  // Page 1 - Column 4
+  { id: 're-167', product_id: '', name: 'Green Tea', code: '167', hex: '#E8F5D6', is_drum_available: false },
+  { id: 're-161', product_id: '', name: 'Lemon Zest', code: '161', hex: '#CFE3B5', is_drum_available: false },
+  { id: 're-122', product_id: '', name: 'Crystal Green', code: '122', hex: '#8AC886', is_drum_available: false },
+  { id: 're-123', product_id: '', name: 'Lime Frost', code: '123', hex: '#A6C96C', is_drum_available: false },
+  { id: 're-158', product_id: '', name: 'Spring Blossom', code: '158', hex: '#9CA04F', is_drum_available: false },
+  { id: 're-125', product_id: '', name: 'Leaf Green', code: '125', hex: '#4C5D30', is_drum_available: false },
+  { id: 're-118', product_id: '', name: 'Lilac', code: '118', hex: '#BBAEDE', is_drum_available: true },
+
+  // Page 2 - Column 1
+  { id: 're-162', product_id: '', name: 'Winter Willow', code: '162', hex: '#DAD26B', is_drum_available: false },
+  { id: 're-153', product_id: '', name: 'Hopsack', code: '153', hex: '#CAC995', is_drum_available: true },
+  { id: 're-154', product_id: '', name: 'Bright Mulberry', code: '154', hex: '#FFBFE1', is_drum_available: false },
+  { id: 're-129', product_id: '', name: 'Moon Flower', code: '129', hex: '#FFA6BB', is_drum_available: true },
+  { id: 're-109', product_id: '', name: 'Rose Pink', code: '109', hex: '#FFB3A6', is_drum_available: false },
+  { id: 're-168', product_id: '', name: 'Pink', code: '168', hex: '#FFB5CD', is_drum_available: false },
+  { id: 're-147', product_id: '', name: 'Bliss', code: '147', hex: '#FD8077', is_drum_available: false },
+  { id: 're-146', product_id: '', name: 'Swiss Miss', code: '146', hex: '#FA6BA6', is_drum_available: true },
+
+  // Page 2 - Column 2
+  { id: 're-114', product_id: '', name: 'Greenish White', code: '114', hex: '#EAEBD7', is_drum_available: true },
+  { id: 're-113', product_id: '', name: 'Lavender White', code: '113', hex: '#DFDCE1', is_drum_available: true },
+  { id: 're-115', product_id: '', name: 'Whisper', code: '115', hex: '#A7A6AB', is_drum_available: false },
+  { id: 're-134', product_id: '', name: 'Soft Blue', code: '134', hex: '#73CAFD', is_drum_available: false },
+  { id: 're-119', product_id: '', name: 'Sea Blue', code: '119', hex: '#5CAFE8', is_drum_available: false },
+  { id: 're-120', product_id: '', name: 'Blue Heaven', code: '120', hex: '#3884AF', is_drum_available: false },
+  { id: 're-138', product_id: '', name: 'First Dawn', code: '138', hex: '#4F70AB', is_drum_available: false },
+  { id: 're-143', product_id: '', name: 'Sweet Blue', code: '143', hex: '#084980', is_drum_available: false },
+
+  // Page 2 - Column 3
+  { id: 're-149', product_id: '', name: 'Dream Boat', code: '149', hex: '#837BE4', is_drum_available: false },
+  { id: 're-142', product_id: '', name: 'Mauve', code: '142', hex: '#5E5BA6', is_drum_available: false },
+  { id: 're-135', product_id: '', name: 'Torres Blue', code: '135', hex: '#9BBAF7', is_drum_available: false },
+  { id: 're-151', product_id: '', name: 'Pink Violet', code: '151', hex: '#EB9EE5', is_drum_available: false },
+  { id: 're-150', product_id: '', name: 'Carnival Pink', code: '150', hex: '#DE6DB8', is_drum_available: false },
+  { id: 're-157', product_id: '', name: 'Red Oxide', code: '157', hex: '#532321', is_drum_available: false },
+
+  // Page 2 - Column 4
+  { id: 're-139', product_id: '', name: 'Citrus Yellow', code: '139', hex: '#FFEA5E', is_drum_available: false },
+  { id: 're-108', product_id: '', name: 'Poppy', code: '108', hex: '#CA4B52', is_drum_available: false },
+  { id: 're-156', product_id: '', name: 'Reliable Red', code: '156', hex: '#DD252D', is_drum_available: false },
+  { id: 're-137', product_id: '', name: 'Jade', code: '137', hex: '#1C5535', is_drum_available: false },
+  { id: 're-140', product_id: '', name: 'Orange', code: '140', hex: '#FF8545', is_drum_available: false },
+  { id: 're-155', product_id: '', name: 'Hot Sunset', code: '155', hex: '#E28153', is_drum_available: false },
+  { id: 're-126', product_id: '', name: 'Goose Wing', code: '126', hex: '#899097', is_drum_available: false },
+  { id: 're-111', product_id: '', name: 'Spice', code: '111', hex: '#413631', is_drum_available: false },
+];
+
