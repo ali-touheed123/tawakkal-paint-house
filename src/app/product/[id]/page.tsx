@@ -21,7 +21,7 @@ import { ShadeSelector } from '@/components/ShadeSelector';
 import { SimpleVisualizer } from '@/components/SimpleVisualizer';
 import { PaintCalculator } from '@/components/PaintCalculator';
 import Link from 'next/link';
-import { BRIGHTO_SHADES, BRIGHTO_ENAMEL_SHADES, BRIGHTO_PLASTIC_EMULSION_SHADES, BRIGHTO_ALL_WEATHER_SHADES, SAASI_HYDROUS_SHADES, SAASI_MATT_ENAMEL_SHADES, SAASI_PLASTIC_EMULSION_SHADES, SAASI_SUPER_GLOSS_ENAMEL_SHADES, SAASI_WEATHER_SAFE_SHADES, GOBIS_INDUSTRIAL_ENAMEL_SHADES, GOBIS_STOVING_PAINT_SHADES, GOBIS_CARMAN_SERIES_SHADES, GOBIS_SILVERLINE_ENAMEL_SHADES, GOBIS_SILVERLINE_EMULSION_SHADES, GOBIS_GOLD_LUXURIOUS_WALL_EMULSION_SHADES, GOBIS_SILKSHEEN_EMULSION_SHADES, GOBIS_GOLD_ENAMEL_SHADES, GOBIS_AQUEOUS_MATT_FINISH_SHADES, GOBIS_GOLD_AQUEOUS_MATT_FINISH_SHADES, GOBIS_GOLD_EGGSHELL_MATT_FINISH_SHADES, GOBIS_GLOSS_ENAMEL_SHADES, GOBIS_EGGSHELL_MATT_ENAMEL_SHADES, RELIABLE_WEATHER_PROTECTOR_SHADES, RELIABLE_MATT_ENAMEL_SHADES, RELIABLE_EMULSION_SHADES, RELIABLE_ENAMEL_SHADES, RELIABLE_WATER_MATT_SHADES, CHOICE_SYNTHETIC_ENAMEL_SHADES } from '@/constants/shades';
+import { BRIGHTO_SHADES, BRIGHTO_ENAMEL_SHADES, BRIGHTO_PLASTIC_EMULSION_SHADES, BRIGHTO_ALL_WEATHER_SHADES, SAASI_HYDROUS_SHADES, SAASI_MATT_ENAMEL_SHADES, SAASI_PLASTIC_EMULSION_SHADES, SAASI_SUPER_GLOSS_ENAMEL_SHADES, SAASI_WEATHER_SAFE_SHADES, GOBIS_INDUSTRIAL_ENAMEL_SHADES, GOBIS_STOVING_PAINT_SHADES, GOBIS_CARMAN_SERIES_SHADES, GOBIS_SILVERLINE_ENAMEL_SHADES, GOBIS_SILVERLINE_EMULSION_SHADES, GOBIS_GOLD_LUXURIOUS_WALL_EMULSION_SHADES, GOBIS_SILKSHEEN_EMULSION_SHADES, GOBIS_GOLD_ENAMEL_SHADES, GOBIS_AQUEOUS_MATT_FINISH_SHADES, GOBIS_GOLD_AQUEOUS_MATT_FINISH_SHADES, GOBIS_GOLD_EGGSHELL_MATT_FINISH_SHADES, GOBIS_GLOSS_ENAMEL_SHADES, GOBIS_EGGSHELL_MATT_ENAMEL_SHADES, RELIABLE_WEATHER_PROTECTOR_SHADES, RELIABLE_MATT_ENAMEL_SHADES, RELIABLE_EMULSION_SHADES, RELIABLE_ENAMEL_SHADES, RELIABLE_WATER_MATT_SHADES, CHOICE_SYNTHETIC_ENAMEL_SHADES, CHOICE_WEATHER_SEALER_SHADES } from '@/constants/shades';
 
 
 export default function ProductDetailPage() {
@@ -67,7 +67,8 @@ export default function ProductDetailPage() {
     const isReliableEnamel = product?.brand === 'Reliable' && product?.name?.toLowerCase().includes('enamel') && !product?.name?.toLowerCase().includes('matt');
     const isReliableWaterMatt = product?.brand === 'Reliable' && product?.name?.toLowerCase().includes('water matt');
     const isChoiceSyntheticEnamel = (product?.brand === 'Choice' && product?.name?.toLowerCase().includes('synthetic enamel')) || product?.name?.toLowerCase().includes('choice synthetic enamel');
-    const hasShadeCard = isBrightoSuperEmulsion || isBrightoSyntheticEnamel || isBrightoPlasticEmulsion || isBrightoAllWeather || isSaasiHydrous || isSaasiMattEnamel || isSaasiPlasticEmulsion || isSaasiSuperGlossEnamel || isSaasiWeatherSafe || isBrightoStainFree || isGobisIndustrialEnamel || isGobisStovingPaint || isGobisCarmanSeries || isGobisSilverlineEnamel || isGobisSilverlineEmulsion || isGobisGoldLuxuriousWallEmulsion || isGobisSilksheenEmulsion || isGobisGoldEnamel || isGobisAqueousMattFinish || isGobisGoldAqueousMattFinish || isGobisGoldEggshellMattFinish || isGobisGlossEnamel || isGobisEggshellMattEnamel || isReliableWeatherProtector || isReliableMattEnamel || isReliableEmulsion || isReliableEnamel || isReliableWaterMatt || isChoiceSyntheticEnamel;
+    const isChoiceWeatherSealer = product?.brand === 'Choice' && product?.name?.toLowerCase().includes('weather sealer');
+    const hasShadeCard = isBrightoSuperEmulsion || isBrightoSyntheticEnamel || isBrightoPlasticEmulsion || isBrightoAllWeather || isSaasiHydrous || isSaasiMattEnamel || isSaasiPlasticEmulsion || isSaasiSuperGlossEnamel || isSaasiWeatherSafe || isBrightoStainFree || isGobisIndustrialEnamel || isGobisStovingPaint || isGobisCarmanSeries || isGobisSilverlineEnamel || isGobisSilverlineEmulsion || isGobisGoldLuxuriousWallEmulsion || isGobisSilksheenEmulsion || isGobisGoldEnamel || isGobisAqueousMattFinish || isGobisGoldAqueousMattFinish || isGobisGoldEggshellMattFinish || isGobisGlossEnamel || isGobisEggshellMattEnamel || isReliableWeatherProtector || isReliableMattEnamel || isReliableEmulsion || isReliableEnamel || isReliableWaterMatt || isChoiceSyntheticEnamel || isChoiceWeatherSealer;
 
     const shadeCardPdf = useMemo(() => {
         if (!product) return null;
@@ -114,6 +115,7 @@ export default function ProductDetailPage() {
             if (name.toLowerCase().includes('enamel') && !name.toLowerCase().includes('matt')) return '/pdfs/reliable_enamel.pdf';
         }
         if ((brand === 'Choice' && name.toLowerCase().includes('synthetic enamel')) || name.toLowerCase().includes('choice synthetic enamel')) return '/pdfs/choice_synthetic_enamel.pdf';
+        if (brand === 'Choice' && name.toLowerCase().includes('weather sealer')) return '/pdfs/choice_weather_sealer.pdf';
 
         return null;
     }, [product]);
@@ -161,6 +163,7 @@ export default function ProductDetailPage() {
                 const isReliableWaterMatt = productData.brand === 'Reliable' && productData.name?.toLowerCase().includes('water matt');
                 const isReliableEnamel = productData.brand === 'Reliable' && productData.name?.toLowerCase().includes('enamel') && !productData.name?.toLowerCase().includes('matt');
                 const isChoiceSyntheticEnamel = (productData.brand === 'Choice' && productData.name?.toLowerCase().includes('synthetic enamel')) || productData.name?.toLowerCase().includes('choice synthetic enamel');
+                const isChoiceWeatherSealer = productData.brand === 'Choice' && productData.name?.toLowerCase().includes('weather sealer');
                 const defaultShades = isSuperEmulsion ? BRIGHTO_SHADES
                     : isSyntheticEnamel ? BRIGHTO_ENAMEL_SHADES
                         : isPlasticEmulsion ? BRIGHTO_PLASTIC_EMULSION_SHADES
@@ -190,7 +193,8 @@ export default function ProductDetailPage() {
                                                                                                                         : isReliableWaterMatt ? RELIABLE_WATER_MATT_SHADES
                                                                                                                             : isReliableEnamel ? RELIABLE_ENAMEL_SHADES
                                                                                                                                 : isChoiceSyntheticEnamel ? CHOICE_SYNTHETIC_ENAMEL_SHADES
-                                                                                                                                    : [];
+                                                                                                                                    : isChoiceWeatherSealer ? CHOICE_WEATHER_SEALER_SHADES
+                                                                                                                                        : [];
 
                 // Fetch shades from DB, fallback to local constants
                 const { data: shadeData } = await supabase
@@ -353,7 +357,7 @@ export default function ProductDetailPage() {
                                 </span>
                             </div>
                             <h1 className="font-heading text-4xl lg:text-5xl font-bold text-navy leading-tight mb-4 tracking-tight">
-                                {isBrightoSuperEmulsion ? 'Plastic Emulsion Paint' : isBrightoSyntheticEnamel ? 'Synthetic Enamel Paint' : isBrightoPlasticEmulsion ? 'Plastic Emulsion Paint' : isBrightoAllWeather ? 'All Weather Exterior Paint' : isReliableMattEnamel ? 'Matt Enamel' : isReliableWeatherProtector ? 'Weather Protector' : isReliableEmulsion ? 'Emulsion' : isReliableWaterMatt ? 'Water Matt' : isReliableEnamel ? 'Enamel' : isChoiceSyntheticEnamel ? 'Synthetic Enamel' : product.name}
+                                {isBrightoSuperEmulsion ? 'Plastic Emulsion Paint' : isBrightoSyntheticEnamel ? 'Synthetic Enamel Paint' : isBrightoPlasticEmulsion ? 'Plastic Emulsion Paint' : isBrightoAllWeather ? 'All Weather Exterior Paint' : isReliableMattEnamel ? 'Matt Enamel' : isReliableWeatherProtector ? 'Weather Protector' : isReliableEmulsion ? 'Emulsion' : isReliableWaterMatt ? 'Water Matt' : isReliableEnamel ? 'Enamel' : isChoiceSyntheticEnamel ? 'Synthetic Enamel' : isChoiceWeatherSealer ? 'Weather Sealer' : product.name}
                             </h1>
                             <p className="text-gray-400 font-medium text-sm leading-relaxed max-w-xl">
                                 {product.brand} {product.name.replace(product.brand, '').trim()} (color) : <span className="text-navy font-bold">{selectedShade?.name || 'Select a shade'}</span>

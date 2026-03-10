@@ -1821,5 +1821,45 @@ export const CHOICE_SYNTHETIC_ENAMEL_SHADES: Shade[] = [
   { id: 'cse-090', product_id: '', name: 'Choice Brown', code: '090', hex: '#522C16', is_drum_available: false },
 ];
 
+export const CHOICE_WEATHER_SEALER_SHADES: Shade[] = [
+  { id: 'cws-150', product_id: '', name: 'White', code: '150', hex: '#FFFFFF', is_drum_available: false },
+
+  // Page 1 - Column 1
+  { id: 'cws-151', product_id: '', name: 'Off White', code: '151', hex: '#FDF9EA', is_drum_available: false },
+  { id: 'cws-152', product_id: '', name: 'Cream', code: '152', hex: '#FCE1B3', is_drum_available: false },
+  { id: 'cws-163', product_id: '', name: 'Magnolia', code: '163', hex: '#F5E5CD', is_drum_available: false },
+  { id: 'cws-164', product_id: '', name: 'Autumn Stone', code: '164', hex: '#EADCBF', is_drum_available: false },
+  { id: 'cws-165', product_id: '', name: 'Fawn', code: '165', hex: '#C3B4A6', is_drum_available: false },
+
+  // Page 1 - Column 2
+  { id: 'cws-153', product_id: '', name: 'Ash White', code: '153', hex: '#E1E1D1', is_drum_available: false },
+  { id: 'cws-154', product_id: '', name: 'Hopsack', code: '154', hex: '#CCBA8C', is_drum_available: false },
+  { id: 'cws-155', product_id: '', name: 'Sand Stone', code: '155', hex: '#B2A999', is_drum_available: false },
+  { id: 'cws-160', product_id: '', name: 'Cameo', code: '160', hex: '#CBAA85', is_drum_available: false },
+  { id: 'cws-159', product_id: '', name: 'Beige', code: '159', hex: '#CDAE79', is_drum_available: false },
+
+  // Page 1 - Column 3
+  { id: 'cws-166', product_id: '', name: 'Light Sky Grey', code: '166', hex: '#C9CCCD', is_drum_available: false },
+  { id: 'cws-170', product_id: '', name: 'Port Land', code: '170', hex: '#B7B8AE', is_drum_available: false },
+  { id: 'cws-161', product_id: '', name: 'Sky Grey', code: '161', hex: '#A9B4BC', is_drum_available: false },
+  { id: 'cws-167', product_id: '', name: 'Stone grey', code: '167', hex: '#BDBDA5', is_drum_available: false },
+  { id: 'cws-162', product_id: '', name: 'Goose Wing', code: '162', hex: '#68696F', is_drum_available: false },
+
+  // Page 1 - Column 4
+  { id: 'cws-171', product_id: '', name: 'Honey Milk', code: '171', hex: '#E4CDBB', is_drum_available: false },
+  { id: 'cws-172', product_id: '', name: 'Sweet Peach', code: '172', hex: '#E6B599', is_drum_available: false },
+  { id: 'cws-157', product_id: '', name: 'Sweet Jewel', code: '157', hex: '#DDA790', is_drum_available: false },
+  { id: 'cws-156', product_id: '', name: 'Tea Rose', code: '156', hex: '#C9AFA8', is_drum_available: false },
+  { id: 'cws-168', product_id: '', name: 'Tile Red', code: '168', hex: '#EF3135', is_drum_available: false },
+
+  // Page 1 - Column 5
+  { id: 'cws-175', product_id: '', name: 'Silk Stone', code: '175', hex: '#CCCAAE', is_drum_available: false },
+  { id: 'cws-173', product_id: '', name: 'Camel Coat', code: '173', hex: '#BC9F6B', is_drum_available: false },
+  { id: 'cws-158', product_id: '', name: 'Desert Dawn', code: '158', hex: '#DD9878', is_drum_available: false },
+  { id: 'cws-169', product_id: '', name: 'Terracotta', code: '169', hex: '#934C3E', is_drum_available: false },
+  { id: 'cws-174', product_id: '', name: 'Red Oxide', code: '174', hex: '#7C362F', is_drum_available: false },
+];
+
+
 
 
