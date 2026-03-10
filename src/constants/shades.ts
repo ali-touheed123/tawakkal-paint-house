@@ -2152,6 +2152,68 @@ export const RELIANCE_MATT_ENAMEL_SHADES: Shade[] = [
   { id: 'rme-201', product_id: '', name: 'White', code: '201', hex: '#FFFFFF', is_drum_available: false },
 ];
 
+export const RELIANCE_WEATHER_GUARD_SHADES: Shade[] = [
+  // Page 1 - Column 1
+  { id: 'rwg-1951', product_id: '', name: 'White', code: '1951', hex: '#FFFFFF', is_drum_available: false },
+  { id: 'rwg-1952', product_id: '', name: 'Off White', code: '1952', hex: '#FFFBE6', is_drum_available: false },
+  { id: 'rwg-2016', product_id: '', name: 'Pearl', code: '2016', hex: '#F9F1E1', is_drum_available: false },
+  { id: 'rwg-2020', product_id: '', name: 'Almond', code: '2020', hex: '#FAF3E0', is_drum_available: false },
+  { id: 'rwg-2017', product_id: '', name: 'Silk White', code: '2017', hex: '#F2E8D4', is_drum_available: false },
+  { id: 'rwg-2024', product_id: '', name: 'Silver Mist New', code: '2024', hex: '#ECE8DB', is_drum_available: false },
+  { id: 'rwg-3161', product_id: '', name: 'Silk Stone', code: '3161', hex: '#D7CCBC', is_drum_available: false },
+  { id: 'rwg-2687', product_id: '', name: 'Hopsack', code: '2687', hex: '#D2C79D', is_drum_available: false },
+
+  // Page 1 - Column 2
+  { id: 'rwg-4007', product_id: '', name: 'Fawn', code: '4007', hex: '#F1DCB8', is_drum_available: false },
+  { id: 'rwg-1948', product_id: '', name: 'Sugar Cane', code: '1948', hex: '#F7E1B6', is_drum_available: false },
+  { id: 'rwg-2885', product_id: '', name: 'Autumn Stone', code: '2885', hex: '#E5D1AC', is_drum_available: false },
+  { id: 'rwg-2013', product_id: '', name: 'Ivory', code: '2013', hex: '#F1D9AC', is_drum_available: false },
+  { id: 'rwg-2087', product_id: '', name: 'Beige', code: '2087', hex: '#E7D1A9', is_drum_available: false },
+  { id: 'rwg-2685', product_id: '', name: 'Cameo', code: '2685', hex: '#E1C497', is_drum_available: false },
+  { id: 'rwg-2004', product_id: '', name: 'Brick Stone', code: '2004', hex: '#DFB986', is_drum_available: false },
+  { id: 'rwg-2008', product_id: '', name: 'Tradition', code: '2008', hex: '#EFBC8B', is_drum_available: false },
+
+  // Page 1 - Column 3
+  { id: 'rwg-2010', product_id: '', name: 'Chaar Minaar', code: '2010', hex: '#C29F7C', is_drum_available: false },
+  { id: 'rwg-2014', product_id: '', name: 'Polish Brown', code: '2014', hex: '#B16E49', is_drum_available: false },
+  { id: 'rwg-2009', product_id: '', name: 'Multani Tile', code: '2009', hex: '#AA604A', is_drum_available: false },
+  { id: 'rwg-3148', product_id: '', name: 'Terracotta', code: '3148', hex: '#815645', is_drum_available: false },
+  { id: 'rwg-2111', product_id: '', name: 'Roof Tile', code: '2111', hex: '#87534D', is_drum_available: false },
+  { id: 'rwg-2876', product_id: '', name: 'Tile Red', code: '2876', hex: '#904344', is_drum_available: false },
+  { id: 'rwg-2025', product_id: '', name: 'Volcano Red New', code: '2025', hex: '#90424A', is_drum_available: false },
+  { id: 'rwg-2910', product_id: '', name: 'Red Oxide', code: '2910', hex: '#442A25', is_drum_available: false },
+
+  // Page 2 - Column 1
+  { id: 'rwg-1919', product_id: '', name: 'Ash White', code: '1919', hex: '#E1DDD3', is_drum_available: false },
+  { id: 'rwg-2028', product_id: '', name: 'Cloud Grey New', code: '2028', hex: '#CBCBC1', is_drum_available: false },
+  { id: 'rwg-2015', product_id: '', name: 'Port Land', code: '2015', hex: '#E7E5D1', is_drum_available: false },
+  { id: 'rwg-3160', product_id: '', name: 'Sky Grey', code: '3160', hex: '#BDBDB5', is_drum_available: false },
+  { id: 'rwg-1959', product_id: '', name: 'Goose Wing', code: '1959', hex: '#5E6166', is_drum_available: false },
+  { id: 'rwg-2018', product_id: '', name: 'Charcoal', code: '2018', hex: '#525052', is_drum_available: false },
+  { id: 'rwg-2005', product_id: '', name: 'Phlox', code: '2005', hex: '#6879A1', is_drum_available: false },
+  { id: 'rwg-2000', product_id: '', name: 'Blue Magic', code: '2000', hex: '#2A3654', is_drum_available: false },
+
+  // Page 2 - Column 2
+  { id: 'rwg-2021', product_id: '', name: 'Sweet Almond', code: '2021', hex: '#FDE6D1', is_drum_available: false },
+  { id: 'rwg-4058', product_id: '', name: 'Sweet Jewel', code: '4058', hex: '#EDC9AC', is_drum_available: false },
+  { id: 'rwg-2019', product_id: '', name: 'Pink Pavilion', code: '2019', hex: '#DCC3B6', is_drum_available: false },
+  { id: 'rwg-1958', product_id: '', name: 'Tea Rose', code: '1958', hex: '#CBC1AF', is_drum_available: false },
+  { id: 'rwg-1949', product_id: '', name: 'Sand Stone', code: '1949', hex: '#C2BA9C', is_drum_available: false },
+  { id: 'rwg-2026', product_id: '', name: 'Dusty Stone New', code: '2026', hex: '#AC9F8E', is_drum_available: false },
+  { id: 'rwg-2022', product_id: '', name: 'Brazil Nut', code: '2022', hex: '#635D52', is_drum_available: false },
+  { id: 'rwg-2684', product_id: '', name: 'Beaver', code: '2684', hex: '#594F4D', is_drum_available: false },
+
+  // Page 2 - Column 3
+  { id: 'rwg-2029', product_id: '', name: 'Lilac Touch New', code: '2029', hex: '#F6F2EE', is_drum_available: false },
+  { id: 'rwg-4005', product_id: '', name: 'Dove Grey', code: '4005', hex: '#C8CCAA', is_drum_available: false },
+  { id: 'rwg-2007', product_id: '', name: 'Spring Leaf', code: '2007', hex: '#5B624A', is_drum_available: false },
+  { id: 'rwg-2001', product_id: '', name: 'Jade', code: '2001', hex: '#273B36', is_drum_available: false },
+  { id: 'rwg-2027', product_id: '', name: 'Wild Cranberry New', code: '2027', hex: '#372E32', is_drum_available: false },
+  { id: 'rwg-2011', product_id: '', name: 'Reliance Yellow', code: '2011', hex: '#FFBC6C', is_drum_available: false },
+  { id: 'rwg-2012', product_id: '', name: 'Flame Orange', code: '2012', hex: '#D27F5B', is_drum_available: false },
+  { id: 'rwg-2002', product_id: '', name: 'Black', code: '2002', hex: '#000000', is_drum_available: false },
+];
+
 
 
 
