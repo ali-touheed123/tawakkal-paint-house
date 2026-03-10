@@ -1605,3 +1605,74 @@ export const RELIABLE_EMULSION_SHADES: Shade[] = [
   { id: 're-111', product_id: '', name: 'Spice', code: '111', hex: '#413631', is_drum_available: false },
 ];
 
+export const RELIABLE_ENAMEL_SHADES: Shade[] = [
+  // Page 1 - Column 1
+  { id: 're-244', product_id: '', name: 'Antique White', code: '244', hex: '#FDF1CD', is_drum_available: false },
+  { id: 're-202', product_id: '', name: 'Mid Off White', code: '202', hex: '#FBE18D', is_drum_available: false },
+  { id: 're-203', product_id: '', name: 'Off White', code: '203', hex: '#FAD566', is_drum_available: true },
+  { id: 're-204', product_id: '', name: 'County Cream', code: '204', hex: '#FBC665', is_drum_available: false },
+  { id: 're-205', product_id: '', name: 'Coriander', code: '205', hex: '#947B6A', is_drum_available: false },
+  { id: 're-232', product_id: '', name: 'Chocolate', code: '232', hex: '#875C4C', is_drum_available: false },
+
+  // Page 1 - Column 2
+  { id: 're-256', product_id: '', name: 'New Peach', code: '256', hex: '#FCBE95', is_drum_available: false },
+  { id: 're-227', product_id: '', name: 'Pink', code: '227', hex: '#FA9F7A', is_drum_available: false },
+  { id: 're-230', product_id: '', name: 'Cameo', code: '230', hex: '#EB8F49', is_drum_available: false },
+  { id: 're-233', product_id: '', name: 'Soft Terracotta', code: '233', hex: '#E29124', is_drum_available: false },
+  { id: 're-245', product_id: '', name: 'Sunstraw', code: '245', hex: '#B87236', is_drum_available: false },
+  { id: 're-236', product_id: '', name: 'Diyar', code: '236', hex: '#C28929', is_drum_available: false },
+
+  // Page 1 - Column 3
+  { id: 're-253', product_id: '', name: 'Reflection', code: '253', hex: '#F9F2EA', is_drum_available: false },
+  { id: 're-252', product_id: '', name: 'Reliable Antique White', code: '252', hex: '#EBE6DC', is_drum_available: false },
+  { id: 're-254', product_id: '', name: 'Thousand Nights', code: '254', hex: '#D6DBDC', is_drum_available: false },
+  { id: 're-249', product_id: '', name: 'New Soft Grey', code: '249', hex: '#A8BDC4', is_drum_available: false },
+  { id: 're-255', product_id: '', name: 'Light Grey', code: '255', hex: '#BDC1BD', is_drum_available: false },
+  { id: 're-261', product_id: '', name: 'New Grey White', code: '261', hex: '#879193', is_drum_available: false },
+
+  // Page 1 - Column 4
+  { id: 're-231', product_id: '', name: 'Soft Green', code: '231', hex: '#97D59A', is_drum_available: false },
+  { id: 're-220', product_id: '', name: 'Feroza', code: '220', hex: '#77A87A', is_drum_available: false },
+  { id: 're-221', product_id: '', name: 'Sea Green', code: '221', hex: '#58A257', is_drum_available: false },
+  { id: 're-248', product_id: '', name: 'Amazon Green', code: '248', hex: '#A2C439', is_drum_available: false },
+  { id: 're-222', product_id: '', name: 'Royal Green', code: '222', hex: '#235231', is_drum_available: false },
+  { id: 're-225', product_id: '', name: 'Yellow', code: '225', hex: '#F5BE00', is_drum_available: false },
+
+  // Page 2 - Column 1
+  { id: 're-213', product_id: '', name: 'Ash White', code: '213', hex: '#DBD2AC', is_drum_available: true },
+  { id: 're-259', product_id: '', name: 'New Beige', code: '259', hex: '#E6C97F', is_drum_available: false },
+  { id: 're-260', product_id: '', name: 'New Ash Grey', code: '260', hex: '#C5CCB3', is_drum_available: false },
+  { id: 're-224', product_id: '', name: 'Early Dawn', code: '224', hex: '#948D75', is_drum_available: false },
+  { id: 're-215', product_id: '', name: 'Soft Grey', code: '215', hex: '#5E6B70', is_drum_available: false },
+  { id: 're-216', product_id: '', name: 'Smoke Grey', code: '216', hex: '#44515B', is_drum_available: false },
+  { id: 're-212', product_id: '', name: 'Dark Brown', code: '212', hex: '#1C1C1E', is_drum_available: false },
+
+  // Page 2 - Column 2
+  { id: 're-257', product_id: '', name: 'New Reliable Pink', code: '257', hex: '#FFBECA', is_drum_available: false },
+  { id: 're-258', product_id: '', name: 'New Rose Bouquet', code: '258', hex: '#ED839D', is_drum_available: false },
+  { id: 're-208', product_id: '', name: 'Lilac Touch', code: '208', hex: '#E7AED0', is_drum_available: false },
+  { id: 're-228', product_id: '', name: 'Mauve', code: '228', hex: '#969DE0', is_drum_available: false },
+  { id: 're-246', product_id: '', name: 'Carnival Pink', code: '246', hex: '#BB3E70', is_drum_available: false },
+  { id: 're-210', product_id: '', name: 'Signal Red', code: '210', hex: '#C81B1F', is_drum_available: false },
+  { id: 're-250', product_id: '', name: 'New Ice Coffee', code: '250', hex: '#4B382F', is_drum_available: false },
+
+  // Page 2 - Column 3
+  { id: 're-226', product_id: '', name: 'White Blue', code: '226', hex: '#8CDCFE', is_drum_available: false },
+  { id: 're-218', product_id: '', name: 'Comet Blue', code: '218', hex: '#37A4F9', is_drum_available: false },
+  { id: 're-219', product_id: '', name: 'Light Blue', code: '219', hex: '#0083DF', is_drum_available: false },
+  { id: 're-217', product_id: '', name: 'Mid Blue', code: '217', hex: '#1A3F74', is_drum_available: false },
+  { id: 're-229', product_id: '', name: 'Orange', code: '229', hex: '#FD5C10', is_drum_available: false },
+
+  // Page 2 - Column 4
+  { id: 're-237', product_id: '', name: 'Polish Brown', code: '237', hex: '#D27000', is_drum_available: false },
+  { id: 're-211', product_id: '', name: 'Golden Brown', code: '211', hex: '#A25016', is_drum_available: false },
+  { id: 're-239', product_id: '', name: 'Ocher', code: '239', hex: '#B2330A', is_drum_available: false },
+  { id: 're-251', product_id: '', name: 'Red Oxide', code: '251', hex: '#472B21', is_drum_available: false },
+  { id: 're-243', product_id: '', name: 'Ice Coffee', code: '243', hex: '#35332C', is_drum_available: false },
+
+  // Depleted
+  { id: 're-214', product_id: '', name: 'Ash Grey', code: '214', hex: '#A4A48A', is_drum_available: false },
+  { id: 're-206', product_id: '', name: 'Beige', code: '206', hex: '#A3995E', is_drum_available: false },
+  { id: 're-247', product_id: '', name: 'Grey White', code: '247', hex: '#6F7373', is_drum_available: false },
+];
+
