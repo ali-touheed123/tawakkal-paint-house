@@ -1860,6 +1860,101 @@ export const CHOICE_WEATHER_SEALER_SHADES: Shade[] = [
   { id: 'cws-174', product_id: '', name: 'Red Oxide', code: '174', hex: '#7C362F', is_drum_available: false },
 ];
 
+export const RELIANCE_STAINLESS_MATT_SHADES: Shade[] = [
+  { id: 'rstm-301', product_id: '', name: 'White', code: '301', hex: '#FFFFFF', is_drum_available: false },
+
+  // Page 1 - Column 1
+  { id: 'rstm-318', product_id: '', name: 'Off White', code: '318', hex: '#F6F4E8', is_drum_available: false },
+  { id: 'rstm-344', product_id: '', name: 'Badami', code: '344', hex: '#F1EACB', is_drum_available: false },
+  { id: 'rstm-302', product_id: '', name: 'Kitten White', code: '302', hex: '#F6F4E1', is_drum_available: false },
+  { id: 'rstm-351', product_id: '', name: 'Cream', code: '351', hex: '#FAEECC', is_drum_available: false },
+  { id: 'rstm-314', product_id: '', name: 'Apricot', code: '314', hex: '#F8DCA5', is_drum_available: false },
+
+  // Page 1 - Column 2
+  { id: 'rstm-328', product_id: '', name: 'Ash White', code: '328', hex: '#EFEAD9', is_drum_available: false },
+  { id: 'rstm-347', product_id: '', name: 'Reflection', code: '347', hex: '#EBEAD6', is_drum_available: false },
+  { id: 'rstm-346', product_id: '', name: 'Twilight', code: '346', hex: '#EBE4CD', is_drum_available: false },
+  { id: 'rstm-343', product_id: '', name: 'Chandni', code: '343', hex: '#F6F2D6', is_drum_available: false },
+  { id: 'rstm-319', product_id: '', name: 'Golden Harvest', code: '319', hex: '#F1E5AB', is_drum_available: false },
+
+  // Page 1 - Column 3
+  { id: 'rstm-307', product_id: '', name: 'Cockle Shell', code: '307', hex: '#FAEDD4', is_drum_available: false },
+  { id: 'rstm-304', product_id: '', name: 'Imagine', code: '304', hex: '#F9DFAF', is_drum_available: false },
+  { id: 'rstm-315', product_id: '', name: 'Blossom Heart', code: '315', hex: '#FBD69C', is_drum_available: false },
+  { id: 'rstm-306', product_id: '', name: 'Peach Goddess', code: '306', hex: '#EAC596', is_drum_available: false },
+  { id: 'rstm-310', product_id: '', name: 'Sophistication', code: '310', hex: '#FCDBB5', is_drum_available: false },
+  { id: 'rstm-312', product_id: '', name: 'Evening Sunset', code: '312', hex: '#ECA483', is_drum_available: false },
+
+  // Page 1 - Column 4
+  { id: 'rstm-320', product_id: '', name: 'Gold', code: '320', hex: '#EBDCA9', is_drum_available: false },
+  { id: 'rstm-321', product_id: '', name: 'Cameo', code: '321', hex: '#DFBE84', is_drum_available: false },
+  { id: 'rstm-352', product_id: '', name: 'Terracotta', code: '352', hex: '#CA835E', is_drum_available: false },
+  { id: 'rstm-363', product_id: '', name: 'Caramel SP', code: '363', hex: '#E3995E', is_drum_available: false },
+  { id: 'rstm-326', product_id: '', name: 'Aberdeen', code: '326', hex: '#BE8F6B', is_drum_available: false },
+  { id: 'rstm-361', product_id: '', name: 'Chocolate Brown SP', code: '361', hex: '#9C745E', is_drum_available: false },
+
+  // Page 1 - Column 5
+  { id: 'rstm-305', product_id: '', name: 'Baby Pink', code: '305', hex: '#FBE1CD', is_drum_available: false },
+  { id: 'rstm-353', product_id: '', name: 'Soft Pink', code: '353', hex: '#F8EDE6', is_drum_available: false },
+  { id: 'rstm-369', product_id: '', name: 'Layricat Pink New', code: '369', hex: '#F8A5A5', is_drum_available: false },
+  { id: 'rstm-316', product_id: '', name: 'Plantation Clay', code: '316', hex: '#EDB69C', is_drum_available: false },
+  { id: 'rstm-308', product_id: '', name: 'Cherry', code: '308', hex: '#F19C9D', is_drum_available: false },
+  { id: 'rstm-371', product_id: '', name: 'R.P. Carnival Pink New SP', code: '371', hex: '#D7698D', is_drum_available: false },
+
+  // Page 2 - Column 1
+  { id: 'rstm-345', product_id: '', name: 'Snowfield', code: '345', hex: '#F2F0E6', is_drum_available: false },
+  { id: 'rstm-356', product_id: '', name: 'Soft Grey', code: '356', hex: '#DFE3DE', is_drum_available: false },
+  { id: 'rstm-331', product_id: '', name: 'Lavender White', code: '331', hex: '#E4E5D8', is_drum_available: false },
+  { id: 'rstm-357', product_id: '', name: 'Grey Touch', code: '357', hex: '#DCDACA', is_drum_available: false },
+  { id: 'rstm-332', product_id: '', name: 'Granite', code: '332', hex: '#D1D2D4', is_drum_available: false },
+  { id: 'rstm-367', product_id: '', name: 'Frosted Steel SP', code: '367', hex: '#999B9A', is_drum_available: false },
+
+  // Page 2 - Column 2
+  { id: 'rstm-348', product_id: '', name: 'Fresh Cut', code: '348', hex: '#F3F5E4', is_drum_available: false },
+  { id: 'rstm-333', product_id: '', name: 'Simple Delight', code: '333', hex: '#E3F2CA', is_drum_available: false },
+  { id: 'rstm-330', product_id: '', name: 'Aqua Shell', code: '330', hex: '#CCEBCA', is_drum_available: false },
+  { id: 'rstm-349', product_id: '', name: 'Merry Gold', code: '349', hex: '#BEB953', is_drum_available: false },
+  { id: 'rstm-324', product_id: '', name: 'Soft Green', code: '324', hex: '#D8F281', is_drum_available: false },
+  { id: 'rstm-373', product_id: '', name: 'Leaf Green New', code: '373', hex: '#A0B363', is_drum_available: false },
+
+  // Page 2 - Column 3
+  { id: 'rstm-368', product_id: '', name: 'Spring Blossom', code: '368', hex: '#F3F8DB', is_drum_available: false },
+  { id: 'rstm-322', product_id: '', name: 'Lemon', code: '322', hex: '#F8EB6A', is_drum_available: false },
+  { id: 'rstm-323', product_id: '', name: 'Sunflower SP', code: '323', hex: '#FDD043', is_drum_available: false },
+  { id: 'rstm-375', product_id: '', name: 'Reliance Yellow New SP', code: '375', hex: '#FFC140', is_drum_available: false },
+  { id: 'rstm-340', product_id: '', name: 'Lilac Luxury', code: '340', hex: '#EADBEF', is_drum_available: false },
+  { id: 'rstm-341', product_id: '', name: 'Dream Boat', code: '341', hex: '#D8CAE6', is_drum_available: false },
+
+  // Page 2 - Column 4
+  { id: 'rstm-339', product_id: '', name: 'Cool Blue', code: '339', hex: '#E2F4FD', is_drum_available: false },
+  { id: 'rstm-366', product_id: '', name: 'First Dawn', code: '366', hex: '#68B2DF', is_drum_available: false },
+  { id: 'rstm-359', product_id: '', name: 'Elegant Blue', code: '359', hex: '#8FA5C0', is_drum_available: false },
+  { id: 'rstm-342', product_id: '', name: 'Plum Perfect SP', code: '342', hex: '#9686BB', is_drum_available: false },
+  { id: 'rstm-350', product_id: '', name: 'Cranberry SP', code: '350', hex: '#7A6980', is_drum_available: false },
+  { id: 'rstm-365', product_id: '', name: 'Purple SP', code: '365', hex: '#9E7CAB', is_drum_available: false },
+
+  // Page 2 - Column 5
+  { id: 'rstm-358', product_id: '', name: 'Sky Blue', code: '358', hex: '#EBF8EE', is_drum_available: false },
+  { id: 'rstm-334', product_id: '', name: 'Aqua Green', code: '334', hex: '#9DE6BA', is_drum_available: false },
+  { id: 'rstm-372', product_id: '', name: 'Emerald New SP', code: '372', hex: '#64A887', is_drum_available: false },
+  { id: 'rstm-370', product_id: '', name: 'Ocean Dip New', code: '370', hex: '#629D9A', is_drum_available: false },
+  { id: 'rstm-336', product_id: '', name: 'Kings Robe SP', code: '336', hex: '#32818A', is_drum_available: false },
+  { id: 'rstm-337', product_id: '', name: 'Aqua Blue SP', code: '337', hex: '#407DC3', is_drum_available: false },
+
+  // Page 3 - Depleted Shades
+  { id: 'rstm-325', product_id: '', name: 'Bliss', code: '325', hex: '#F9C5B2', is_drum_available: false },
+  { id: 'rstm-309', product_id: '', name: 'Carnival Pink SP', code: '309', hex: '#EC8EB6', is_drum_available: false },
+  { id: 'rstm-355', product_id: '', name: 'Violet Pink', code: '355', hex: '#F49DAB', is_drum_available: false },
+  { id: 'rstm-317', product_id: '', name: 'Swiss Miss', code: '317', hex: '#FCB8CE', is_drum_available: false },
+  { id: 'rstm-362', product_id: '', name: 'Red Rose SP', code: '362', hex: '#E35E63', is_drum_available: false },
+  { id: 'rstm-360', product_id: '', name: 'Magenta SP', code: '360', hex: '#BD7E7E', is_drum_available: false },
+  { id: 'rstm-354', product_id: '', name: 'Cherry Blossom', code: '354', hex: '#F6E2C6', is_drum_available: false },
+  { id: 'rstm-374', product_id: '', name: 'Tile Red New SP', code: '374', hex: '#DA635C', is_drum_available: false },
+  { id: 'rstm-329', product_id: '', name: 'Natural Paprika', code: '329', hex: '#FE9C61', is_drum_available: false },
+  { id: 'rstm-313', product_id: '', name: 'Chilli Red SP', code: '313', hex: '#A35451', is_drum_available: false },
+  { id: 'rstm-364', product_id: '', name: 'Charcoal SP', code: '364', hex: '#8B8C8D', is_drum_available: false },
+];
+
 
 
 
