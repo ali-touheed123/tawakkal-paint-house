@@ -89,6 +89,7 @@ INSERT INTO products (name, brand, category, sub_category, description, image_ur
 ('Reliance Wall Primer Sealer', 'Reliance', 'decorative', 'accessories', 'Wall primer sealer', '/images/products/reliance/Reliance-Wall-Primer-Sealer.png', 550, 1800, 0, true),
 ('Reliance Water Primer Sealer', 'Reliance', 'decorative', 'accessories', 'Water based primer', '/images/products/reliance/Reliance-Water-Primer-Sealer.png', 500, 1700, 0, true),
 ('Reliance Weather Guard', 'Reliance', 'decorative', 'exterior', 'Weather guard exterior', '/images/products/reliance/Reliance-Weather-Guard.png', 1450, 4900, 22800, true),
+('Reliance Synthetic Enamel', 'Reliance', 'decorative', 'wood_metal', 'High-quality synthetic enamel for a durable gloss finish on wood and metal.', '/images/products/reliance/reliance_synthetic_enamel.png', 1600, 5500, 25500, true);
 
 -- Reliable Products
 ('Reliable Ace Flexi Primer', 'Reliable', 'decorative', 'accessories', 'Flexi primer', '/images/products/reliable/AceFlexiprimer_68b92dcf-b2dc-4299-8666-44c8af138854.webp', 550, 1800, 0, true),

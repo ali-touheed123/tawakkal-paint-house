@@ -150,7 +150,8 @@ INSERT INTO products (name, brand, category, sub_category, description, image_ur
 ('Reliance Stainless Matt', 'Reliance', 'decorative', 'wood_metal', 'Premium stainless matt finish', '/images/products/reliance/Reliance-Stainless-Matt.png', 1800, 6100, 28000, true),
 ('Reliance Wall Primer Sealer', 'Reliance', 'decorative', 'accessories', 'Multi-purpose wall primer sealer', '/images/products/reliance/Reliance-Wall-Primer-Sealer.png', 580, 1950, 9200, true),
 ('Reliance Water Primer Sealer', 'Reliance', 'decorative', 'accessories', 'Sealer for water based paints', '/images/products/reliance/Reliance-Water-Primer-Sealer.png', 540, 1850, 8800, true),
-('Reliance Weather Guard', 'Reliance', 'decorative', 'exterior', 'Exterior grade weather guard coating', '/images/products/reliance/Reliance-Weather-Guard.png', 1550, 5300, 24500, true);
+('Reliance Weather Guard', 'Reliance', 'decorative', 'exterior', 'Exterior grade weather guard coating', '/images/products/reliance/Reliance-Weather-Guard.png', 1550, 5300, 24500, true),
+('Reliance Synthetic Enamel', 'Reliance', 'decorative', 'wood_metal', 'High-quality synthetic enamel for a durable gloss finish on wood and metal.', '/images/products/reliance/reliance_synthetic_enamel.png', 1600, 5600, 26000, true);
 
 -- ------------------------------------------------------------------------------------------------
 -- RELIABLE PRODUCTS (11)
