@@ -2214,6 +2214,78 @@ export const RELIANCE_WEATHER_GUARD_SHADES: Shade[] = [
   { id: 'rwg-2002', product_id: '', name: 'Black', code: '2002', hex: '#000000', is_drum_available: false },
 ];
 
+export const RELIANCE_SYNTHETIC_ENAMEL_SHADES: Shade[] = [
+  // Page 1 - Swatches
+  { id: 'rse-136', product_id: '', name: 'Sandal', code: '136', hex: '#F7B76B', is_drum_available: false },
+  { id: 'rse-114', product_id: '', name: 'Soft Green', code: '114', hex: '#B2EBB2', is_drum_available: false },
+  { id: 'rse-150', product_id: '', name: 'Off White', code: '150', hex: '#FFF9E6', is_drum_available: false },
+  { id: 'rse-162', product_id: '', name: 'Reflection New', code: '162', hex: '#F9ECD9', is_drum_available: false },
+  { id: 'rse-126', product_id: '', name: 'Soft Terracotta', code: '126', hex: '#E79A63', is_drum_available: false },
+  { id: 'rse-147', product_id: '', name: 'Amazon Green', code: '147', hex: '#B8DB8B', is_drum_available: false },
+  { id: 'rse-109', product_id: '', name: 'Mid Off White', code: '109', hex: '#FDE197', is_drum_available: false },
+  { id: 'rse-154', product_id: '', name: 'Ash White', code: '154', hex: '#E7E1C7', is_drum_available: false },
+  { id: 'rse-141', product_id: '', name: 'Polish Brown', code: '141', hex: '#D68143', is_drum_available: false },
+  { id: 'rse-108', product_id: '', name: 'Sea Green', code: '108', hex: '#87CD87', is_drum_available: false },
+  { id: 'rse-151', product_id: '', name: 'Cream', code: '151', hex: '#FDE197', is_drum_available: false },
+  { id: 'rse-167', product_id: '', name: 'Grey White New', code: '167', hex: '#F4ECD9', is_drum_available: false },
+  { id: 'rse-142', product_id: '', name: 'Ocher', code: '142', hex: '#C26332', is_drum_available: false },
+  { id: 'rse-112', product_id: '', name: 'Royal Green', code: '112', hex: '#2A512A', is_drum_available: false },
+  { id: 'rse-152', product_id: '', name: 'Cameo', code: '152', hex: '#FBCC87', is_drum_available: false },
+  { id: 'rse-164', product_id: '', name: 'Light Grey New', code: '164', hex: '#DED9CD', is_drum_available: false },
+  { id: 'rse-115', product_id: '', name: 'Golden Brown', code: '115', hex: '#B26231', is_drum_available: false },
+  { id: 'rse-118', product_id: '', name: 'Yellow', code: '118', hex: '#FFC12A', is_drum_available: false },
+  { id: 'rse-153', product_id: '', name: 'Rose White', code: '153', hex: '#F7E7D1', is_drum_available: false },
+  { id: 'rse-157', product_id: '', name: 'Ice Blue', code: '157', hex: '#D0D6D6', is_drum_available: false },
+  { id: 'rse-131', product_id: '', name: 'Red Oxide', code: '131', hex: '#633224', is_drum_available: false },
+  { id: 'rse-134', product_id: '', name: 'Orange', code: '134', hex: '#FF632A', is_drum_available: false },
+  { id: 'rse-143', product_id: '', name: 'Kitten White', code: '143', hex: '#FDD9B6', is_drum_available: false },
+  { id: 'rse-111', product_id: '', name: 'Smoke Grey', code: '111', hex: '#595D61', is_drum_available: false },
+  { id: 'rse-144', product_id: '', name: 'Colombian Coffee', code: '144', hex: '#513224', is_drum_available: false },
+  { id: 'rse-124', product_id: '', name: 'Dark Grey', code: '124', hex: '#444444', is_drum_available: false },
+
+  // Page 2 - Column 1
+  { id: 'rse-166', product_id: '', name: 'Petal Pink New', code: '166', hex: '#F4B2C3', is_drum_available: false },
+  { id: 'rse-165', product_id: '', name: 'Light Pink New', code: '165', hex: '#FDCDBB', is_drum_available: false },
+  { id: 'rse-137', product_id: '', name: 'Moon Flower', code: '137', hex: '#F28B82', is_drum_available: false },
+  { id: 'rse-135', product_id: '', name: 'Rose Bouquet', code: '135', hex: '#F28B82', is_drum_available: false },
+  { id: 'rse-145', product_id: '', name: 'Rose Candy', code: '145', hex: '#D65163', is_drum_available: false },
+  { id: 'rse-161', product_id: '', name: 'Carnival Pink New', code: '161', hex: '#D6446E', is_drum_available: false },
+  { id: 'rse-103', product_id: '', name: 'Signal Red', code: '103', hex: '#C22A2A', is_drum_available: false },
+
+  // Page 2 - Column 2
+  { id: 'rse-155', product_id: '', name: 'Ash Grey', code: '155', hex: '#B2B294', is_drum_available: false },
+  { id: 'rse-125', product_id: '', name: 'Beige', code: '125', hex: '#B29E7C', is_drum_available: false },
+  { id: 'rse-140', product_id: '', name: 'Early Dawn', code: '140', hex: '#C2B294', is_drum_available: false },
+  { id: 'rse-119', product_id: '', name: 'Coriander', code: '119', hex: '#94816D', is_drum_available: false },
+  { id: 'rse-104', product_id: '', name: 'Chocolate', code: '104', hex: '#877463', is_drum_available: false },
+  { id: 'rse-130', product_id: '', name: 'Dark Brown', code: '130', hex: '#312E2E', is_drum_available: false },
+  { id: 'rse-169', product_id: '', name: 'Steel Grey New', code: '169', hex: '#757575', is_drum_available: false },
+
+  // Page 2 - Column 3
+  { id: 'rse-168', product_id: '', name: 'Soft Sky New', code: '168', hex: '#DFECF4', is_drum_available: false },
+  { id: 'rse-133', product_id: '', name: 'White Blue', code: '133', hex: '#C8E6D9', is_drum_available: false },
+  { id: 'rse-116', product_id: '', name: 'Comet Blue', code: '116', hex: '#94C2CC', is_drum_available: false },
+  { id: 'rse-107', product_id: '', name: 'Light Blue', code: '107', hex: '#63AACC', is_drum_available: false },
+  { id: 'rse-106', product_id: '', name: 'Mid Blue', code: '106', hex: '#2A6394', is_drum_available: false },
+  { id: 'rse-171', product_id: '', name: 'R.P. Mauve New', code: '171', hex: '#B28ECA', is_drum_available: false },
+  { id: 'rse-170', product_id: '', name: 'R.P. Lilac Touch New', code: '170', hex: '#ECD9F4', is_drum_available: false },
+
+  // Page 2 - Column 4 (Depleted)
+  { id: 'rse-158', product_id: '', name: 'Lilac Touch', code: '158', hex: '#E6D9F4', is_drum_available: false },
+  { id: 'rse-159', product_id: '', name: 'Mauve', code: '159', hex: '#D0B6DF', is_drum_available: false },
+  { id: 'rse-148', product_id: '', name: 'Champagne', code: '148', hex: '#5D5D4C', is_drum_available: false },
+
+  // Page 2 - Column 4 (Below Depleted)
+  { id: 'rse-149', product_id: '', name: 'Gold', code: '149', hex: '#B2A563', is_drum_available: false },
+  { id: 'rse-163', product_id: '', name: 'R.P. Champagne New', code: '163', hex: '#877D63', is_drum_available: false },
+  { id: 'rse-156', product_id: '', name: 'Soft Grey', code: '156', hex: '#CED0C4', is_drum_available: false },
+  { id: 'rse-160', product_id: '', name: 'Silver', code: '160', hex: '#EBEBEB', is_drum_available: false },
+
+  // Special Request
+  { id: 'rse-101', product_id: '', name: 'White', code: '101', hex: '#FFFFFF', is_drum_available: false },
+  { id: 'rse-110', product_id: '', name: 'Black', code: '110', hex: '#000000', is_drum_available: false },
+];
+
 
 
 

@@ -21,7 +21,7 @@ import { ShadeSelector } from '@/components/ShadeSelector';
 import { SimpleVisualizer } from '@/components/SimpleVisualizer';
 import { PaintCalculator } from '@/components/PaintCalculator';
 import Link from 'next/link';
-import { BRIGHTO_SHADES, BRIGHTO_ENAMEL_SHADES, BRIGHTO_PLASTIC_EMULSION_SHADES, BRIGHTO_ALL_WEATHER_SHADES, SAASI_HYDROUS_SHADES, SAASI_MATT_ENAMEL_SHADES, SAASI_PLASTIC_EMULSION_SHADES, SAASI_SUPER_GLOSS_ENAMEL_SHADES, SAASI_WEATHER_SAFE_SHADES, GOBIS_INDUSTRIAL_ENAMEL_SHADES, GOBIS_STOVING_PAINT_SHADES, GOBIS_CARMAN_SERIES_SHADES, GOBIS_SILVERLINE_ENAMEL_SHADES, GOBIS_SILVERLINE_EMULSION_SHADES, GOBIS_GOLD_LUXURIOUS_WALL_EMULSION_SHADES, GOBIS_SILKSHEEN_EMULSION_SHADES, GOBIS_GOLD_ENAMEL_SHADES, GOBIS_AQUEOUS_MATT_FINISH_SHADES, GOBIS_GOLD_AQUEOUS_MATT_FINISH_SHADES, GOBIS_GOLD_EGGSHELL_MATT_FINISH_SHADES, GOBIS_GLOSS_ENAMEL_SHADES, GOBIS_EGGSHELL_MATT_ENAMEL_SHADES, RELIABLE_WEATHER_PROTECTOR_SHADES, RELIABLE_MATT_ENAMEL_SHADES, RELIABLE_EMULSION_SHADES, RELIABLE_ENAMEL_SHADES, RELIABLE_WATER_MATT_SHADES, CHOICE_SYNTHETIC_ENAMEL_SHADES, CHOICE_WEATHER_SEALER_SHADES, RELIANCE_STAINLESS_MATT_SHADES, RELIANCE_SEMI_PLASTIC_EMULSION_SHADES, RELIANCE_MATT_ENAMEL_SHADES, RELIANCE_WEATHER_GUARD_SHADES } from '@/constants/shades';
+import { BRIGHTO_SHADES, BRIGHTO_ENAMEL_SHADES, BRIGHTO_PLASTIC_EMULSION_SHADES, BRIGHTO_ALL_WEATHER_SHADES, SAASI_HYDROUS_SHADES, SAASI_MATT_ENAMEL_SHADES, SAASI_PLASTIC_EMULSION_SHADES, SAASI_SUPER_GLOSS_ENAMEL_SHADES, SAASI_WEATHER_SAFE_SHADES, GOBIS_INDUSTRIAL_ENAMEL_SHADES, GOBIS_STOVING_PAINT_SHADES, GOBIS_CARMAN_SERIES_SHADES, GOBIS_SILVERLINE_ENAMEL_SHADES, GOBIS_SILVERLINE_EMULSION_SHADES, GOBIS_GOLD_LUXURIOUS_WALL_EMULSION_SHADES, GOBIS_SILKSHEEN_EMULSION_SHADES, GOBIS_GOLD_ENAMEL_SHADES, GOBIS_AQUEOUS_MATT_FINISH_SHADES, GOBIS_GOLD_AQUEOUS_MATT_FINISH_SHADES, GOBIS_GOLD_EGGSHELL_MATT_FINISH_SHADES, GOBIS_GLOSS_ENAMEL_SHADES, GOBIS_EGGSHELL_MATT_ENAMEL_SHADES, RELIABLE_WEATHER_PROTECTOR_SHADES, RELIABLE_MATT_ENAMEL_SHADES, RELIABLE_EMULSION_SHADES, RELIABLE_ENAMEL_SHADES, RELIABLE_WATER_MATT_SHADES, CHOICE_SYNTHETIC_ENAMEL_SHADES, CHOICE_WEATHER_SEALER_SHADES, RELIANCE_STAINLESS_MATT_SHADES, RELIANCE_SEMI_PLASTIC_EMULSION_SHADES, RELIANCE_MATT_ENAMEL_SHADES, RELIANCE_WEATHER_GUARD_SHADES, RELIANCE_SYNTHETIC_ENAMEL_SHADES } from '@/constants/shades';
 
 
 export default function ProductDetailPage() {
@@ -72,7 +72,8 @@ export default function ProductDetailPage() {
     const isRelianceSemiPlasticEmulsion = product?.brand === 'Reliance' && product?.name?.toLowerCase().includes('semi plastic emulsion');
     const isRelianceMattEnamel = product?.brand === 'Reliance' && product?.name?.toLowerCase().includes('matt enamel');
     const isRelianceWeatherGuard = product?.brand === 'Reliance' && product?.name?.toLowerCase().includes('weather guard');
-    const hasShadeCard = isBrightoSuperEmulsion || isBrightoSyntheticEnamel || isBrightoPlasticEmulsion || isBrightoAllWeather || isSaasiHydrous || isSaasiMattEnamel || isSaasiPlasticEmulsion || isSaasiSuperGlossEnamel || isSaasiWeatherSafe || isBrightoStainFree || isGobisIndustrialEnamel || isGobisStovingPaint || isGobisCarmanSeries || isGobisSilverlineEnamel || isGobisSilverlineEmulsion || isGobisGoldLuxuriousWallEmulsion || isGobisSilksheenEmulsion || isGobisGoldEnamel || isGobisAqueousMattFinish || isGobisGoldAqueousMattFinish || isGobisGoldEggshellMattFinish || isGobisGlossEnamel || isGobisEggshellMattEnamel || isReliableWeatherProtector || isReliableMattEnamel || isReliableEmulsion || isReliableEnamel || isReliableWaterMatt || isChoiceSyntheticEnamel || isChoiceWeatherSealer || isRelianceStainlessMatt || isRelianceSemiPlasticEmulsion || isRelianceMattEnamel || isRelianceWeatherGuard;
+    const isRelianceSyntheticEnamel = product?.brand === 'Reliance' && product?.name?.toLowerCase().includes('synthetic enamel');
+    const hasShadeCard = isBrightoSuperEmulsion || isBrightoSyntheticEnamel || isBrightoPlasticEmulsion || isBrightoAllWeather || isSaasiHydrous || isSaasiMattEnamel || isSaasiPlasticEmulsion || isSaasiSuperGlossEnamel || isSaasiWeatherSafe || isBrightoStainFree || isGobisIndustrialEnamel || isGobisStovingPaint || isGobisCarmanSeries || isGobisSilverlineEnamel || isGobisSilverlineEmulsion || isGobisGoldLuxuriousWallEmulsion || isGobisSilksheenEmulsion || isGobisGoldEnamel || isGobisAqueousMattFinish || isGobisGoldAqueousMattFinish || isGobisGoldEggshellMattFinish || isGobisGlossEnamel || isGobisEggshellMattEnamel || isReliableWeatherProtector || isReliableMattEnamel || isReliableEmulsion || isReliableEnamel || isReliableWaterMatt || isChoiceSyntheticEnamel || isChoiceWeatherSealer || isRelianceStainlessMatt || isRelianceSemiPlasticEmulsion || isRelianceMattEnamel || isRelianceWeatherGuard || isRelianceSyntheticEnamel;
 
     const shadeCardPdf = useMemo(() => {
         if (!product) return null;
@@ -124,7 +125,7 @@ export default function ProductDetailPage() {
         if (brand === 'Reliance' && name.toLowerCase().includes('stainless matt')) return '/pdfs/Reliance_stainless_matt.pdf';
         if (brand === 'Reliance' && name.toLowerCase().includes('semi plastic emulsion')) return '/pdfs/Reliance-Semi-Plastic-Emulsion.pdf';
         if (brand === 'Reliance' && name.toLowerCase().includes('matt enamel')) return '/pdfs/Reliance_Matt_Enamel.pdf';
-        if (brand === 'Reliance' && name.toLowerCase().includes('weather guard')) return '/pdfs/Reliance-Weather-Guard.pdf';
+        if (brand === 'Reliance' && name.toLowerCase().includes('synthetic enamel')) return '/pdfs/reliance_synthetic_enamel.pdf';
 
         return null;
     }, [product]);
@@ -177,6 +178,7 @@ export default function ProductDetailPage() {
                 const isRelianceSemiPlasticEmulsion = productData.brand === 'Reliance' && productData.name?.toLowerCase().includes('semi plastic emulsion');
                 const isRelianceMattEnamel = productData.brand === 'Reliance' && productData.name?.toLowerCase().includes('matt enamel');
                 const isRelianceWeatherGuard = productData.brand === 'Reliance' && productData.name?.toLowerCase().includes('weather guard');
+                const isRelianceSyntheticEnamel = productData.brand === 'Reliance' && productData.name?.toLowerCase().includes('synthetic enamel');
                 const defaultShades = isSuperEmulsion ? BRIGHTO_SHADES
                     : isSyntheticEnamel ? BRIGHTO_ENAMEL_SHADES
                         : isPlasticEmulsion ? BRIGHTO_PLASTIC_EMULSION_SHADES
@@ -211,7 +213,8 @@ export default function ProductDetailPage() {
                                                                                                                                             : isRelianceSemiPlasticEmulsion ? RELIANCE_SEMI_PLASTIC_EMULSION_SHADES
                                                                                                                                                 : isRelianceMattEnamel ? RELIANCE_MATT_ENAMEL_SHADES
                                                                                                                                                     : isRelianceWeatherGuard ? RELIANCE_WEATHER_GUARD_SHADES
-                                                                                                                                                        : [];
+                                                                                                                                                        : isRelianceSyntheticEnamel ? RELIANCE_SYNTHETIC_ENAMEL_SHADES
+                                                                                                                                                            : [];
 
                 // Fetch shades from DB, fallback to local constants
                 const { data: shadeData } = await supabase
