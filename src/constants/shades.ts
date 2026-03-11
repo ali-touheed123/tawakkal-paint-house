@@ -3109,6 +3109,70 @@ export const DIAMOND_OVERALL_HIGH_GLOSS_ENAMEL_SHADES: Shade[] = [
   { id: 'dg-4001', product_id: '', name: 'White', code: '4001', hex: '#FFFFFF', is_drum_available: false },
 ];
 
+export const DIAMOND_OVERALL_WEATHER_MAX_SHADES: Shade[] = [
+  { id: 'dow-0700', product_id: '', name: 'Brilliant White', code: '0700', hex: '#FFFFFF', is_drum_available: false },
+  // Row 1
+  { id: 'dow-0715', product_id: '', name: 'Ash White', code: '0715', hex: '#EBECEA', is_drum_available: false },
+  { id: 'dow-0728', product_id: '', name: 'Autumn Stone', code: '0728', hex: '#EBE1CD', is_drum_available: false },
+  { id: 'dow-0721', product_id: '', name: 'Avocado', code: '0721', hex: '#636D48', is_drum_available: false },
+  { id: 'dow-0709', product_id: '', name: 'Beige', code: '0709', hex: '#D1B996', is_drum_available: false },
+  { id: 'dow-0702', product_id: '', name: 'Cameo', code: '0702', hex: '#E6C7A3', is_drum_available: false },
+
+  // Row 2
+  { id: 'dow-0720', product_id: '', name: 'Golden Needle', code: '0720', hex: '#C4A172', is_drum_available: false },
+  { id: 'dow-0723', product_id: '', name: 'Mehndi', code: '0723', hex: '#948151', is_drum_available: false },
+  { id: 'dow-0707', product_id: '', name: 'Off White', code: '0707', hex: '#FDFCE4', is_drum_available: false },
+  { id: 'dow-0735', product_id: '', name: 'Red Oxide', code: '0735', hex: '#5E3D38', is_drum_available: false },
+  { id: 'dow-0726', product_id: '', name: 'Sakura Pink', code: '0726', hex: '#ECD9C4', is_drum_available: false },
+
+  // Row 3
+  { id: 'dow-0714', product_id: '', name: 'Roof Tile', code: '0714', hex: '#A2635D', is_drum_available: false },
+  { id: 'dow-0706', product_id: '', name: 'Sand Stone', code: '0706', hex: '#D1C4B5', is_drum_available: false },
+  { id: 'dow-0710', product_id: '', name: 'Light Grey', code: '0710', hex: '#D1D4CD', is_drum_available: false },
+  { id: 'dow-0708', product_id: '', name: 'Sugar Cane', code: '0708', hex: '#F1E1BD', is_drum_available: false },
+  { id: 'dow-0797', product_id: '', name: 'Peach', code: '0797', hex: '#F9D9BD', is_drum_available: false },
+
+  // Row 4
+  { id: 'dow-0712', product_id: '', name: 'Tea Rose', code: '0712', hex: '#D9C7BD', is_drum_available: false },
+  { id: 'dow-0705', product_id: '', name: 'Terracotta', code: '0705', hex: '#9E6351', is_drum_available: false },
+  { id: 'dow-0717', product_id: '', name: 'Sweet Jewel', code: '0717', hex: '#E1BEA9', is_drum_available: false },
+  { id: 'dow-0756', product_id: '', name: 'Brown Haze', code: '0756', hex: '#AD947D', is_drum_available: false },
+  { id: 'dow-0782', product_id: '', name: 'Flame Orange', code: '0782', hex: '#E69358', is_drum_available: false },
+
+  // Row 5
+  { id: 'dow-0732', product_id: '', name: 'Polish Brown', code: '0732', hex: '#B57D48', is_drum_available: false },
+  { id: 'dow-0764', product_id: '', name: 'Sahara Sand', code: '0764', hex: '#C1B5A3', is_drum_available: false },
+  { id: 'dow-0718', product_id: '', name: 'Goose Wing', code: '0718', hex: '#9EACA3', is_drum_available: false },
+  { id: 'dow-0734', product_id: '', name: 'Charcoal', code: '0734', hex: '#585E58', is_drum_available: false },
+  { id: 'dow-0729', product_id: '', name: 'Admiral Blue', code: '0729', hex: '#516E82', is_drum_available: false },
+
+  // Right Side Row 1
+  { id: 'dow-0725', product_id: '', name: 'Blue Shadow', code: '0725', hex: '#7D8994', is_drum_available: false },
+  { id: 'dow-0741', product_id: '', name: 'Bright Red', code: '0741', hex: '#C43D3D', is_drum_available: false },
+  { id: 'dow-0713', product_id: '', name: 'Tile Red', code: '0713', hex: '#9E3D3D', is_drum_available: false },
+  { id: 'dow-0722', product_id: '', name: 'Soft Peach', code: '0722', hex: '#EBD9BD', is_drum_available: false },
+  { id: 'dow-0727', product_id: '', name: 'Blue Lake', code: '0727', hex: '#89BED1', is_drum_available: false },
+
+  // Right Side Row 2
+  { id: 'dow-0703', product_id: '', name: 'Desert Dawn', code: '0703', hex: '#E6B989', is_drum_available: false },
+  { id: 'dow-0739', product_id: '', name: 'Deep Sea', code: '0739', hex: '#3D89AD', is_drum_available: false },
+  { id: 'dow-0733', product_id: '', name: 'Clay', code: '0733', hex: '#BCB59E', is_drum_available: false },
+  { id: 'dow-0795', product_id: '', name: 'Grey White', code: '0795', hex: '#E4E6DE', is_drum_available: false },
+  { id: 'dow-0760', product_id: '', name: 'Pottery Clay', code: '0760', hex: '#B5B5A3', is_drum_available: false },
+
+  // Right Side Row 3
+  { id: 'dow-0704', product_id: '', name: 'Cinnamon', code: '0704', hex: '#E1BD9E', is_drum_available: false },
+  { id: 'dow-0716', product_id: '', name: 'Dove Grey', code: '0716', hex: '#CED2BD', is_drum_available: false },
+  { id: 'dow-0778', product_id: '', name: 'Camel Coat', code: '0778', hex: '#D9BE94', is_drum_available: false },
+  { id: 'dow-0724', product_id: '', name: 'Sky Grey', code: '0724', hex: '#B5BEB5', is_drum_available: false },
+  { id: 'dow-0711', product_id: '', name: 'Ash Grey', code: '0711', hex: '#ADB5B5', is_drum_available: false },
+
+  // Right Side Row 4
+  { id: 'dow-0730', product_id: '', name: 'Sapphire Blue', code: '0730', hex: '#A3BDC4', is_drum_available: false },
+  { id: 'dow-0731', product_id: '', name: 'Jade', code: '0731', hex: '#638989', is_drum_available: false },
+  { id: 'dow-0719', product_id: '', name: 'Beaver', code: '0719', hex: '#72635E', is_drum_available: false },
+];
+
 
 
 
