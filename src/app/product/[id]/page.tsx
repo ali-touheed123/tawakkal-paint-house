@@ -21,7 +21,7 @@ import { ShadeSelector } from '@/components/ShadeSelector';
 import { SimpleVisualizer } from '@/components/SimpleVisualizer';
 import { PaintCalculator } from '@/components/PaintCalculator';
 import Link from 'next/link';
-import { BRIGHTO_SHADES, BRIGHTO_ENAMEL_SHADES, BRIGHTO_PLASTIC_EMULSION_SHADES, BRIGHTO_ALL_WEATHER_SHADES, SAASI_HYDROUS_SHADES, SAASI_MATT_ENAMEL_SHADES, SAASI_PLASTIC_EMULSION_SHADES, SAASI_SUPER_GLOSS_ENAMEL_SHADES, SAASI_WEATHER_SAFE_SHADES, GOBIS_INDUSTRIAL_ENAMEL_SHADES, GOBIS_STOVING_PAINT_SHADES, GOBIS_CARMAN_SERIES_SHADES, GOBIS_SILVERLINE_ENAMEL_SHADES, GOBIS_SILVERLINE_EMULSION_SHADES, GOBIS_GOLD_LUXURIOUS_WALL_EMULSION_SHADES, GOBIS_SILKSHEEN_EMULSION_SHADES, GOBIS_GOLD_ENAMEL_SHADES, GOBIS_AQUEOUS_MATT_FINISH_SHADES, GOBIS_GOLD_AQUEOUS_MATT_FINISH_SHADES, GOBIS_GOLD_EGGSHELL_MATT_FINISH_SHADES, GOBIS_GLOSS_ENAMEL_SHADES, GOBIS_EGGSHELL_MATT_ENAMEL_SHADES, RELIABLE_WEATHER_PROTECTOR_SHADES, RELIABLE_MATT_ENAMEL_SHADES, RELIABLE_EMULSION_SHADES, RELIABLE_ENAMEL_SHADES, RELIABLE_WATER_MATT_SHADES, CHOICE_SYNTHETIC_ENAMEL_SHADES, CHOICE_WEATHER_SEALER_SHADES, RELIANCE_STAINLESS_MATT_SHADES, RELIANCE_SEMI_PLASTIC_EMULSION_SHADES, RELIANCE_MATT_ENAMEL_SHADES, RELIANCE_WEATHER_GUARD_SHADES, RELIANCE_SYNTHETIC_ENAMEL_SHADES, BERGER_WEATHER_PRO_SHADES, BERGER_NU_ENAMEL_SHADES, BERGER_NU_EMULSION_SHADES, BERGER_ELEGANCE_SILK_EMULSION_SHADES, BERGER_SUPERIOR_MATT_FINISH_SHADES } from '@/constants/shades';
+import { BRIGHTO_SHADES, BRIGHTO_ENAMEL_SHADES, BRIGHTO_PLASTIC_EMULSION_SHADES, BRIGHTO_ALL_WEATHER_SHADES, SAASI_HYDROUS_SHADES, SAASI_MATT_ENAMEL_SHADES, SAASI_PLASTIC_EMULSION_SHADES, SAASI_SUPER_GLOSS_ENAMEL_SHADES, SAASI_WEATHER_SAFE_SHADES, GOBIS_INDUSTRIAL_ENAMEL_SHADES, GOBIS_STOVING_PAINT_SHADES, GOBIS_CARMAN_SERIES_SHADES, GOBIS_SILVERLINE_ENAMEL_SHADES, GOBIS_SILVERLINE_EMULSION_SHADES, GOBIS_GOLD_LUXURIOUS_WALL_EMULSION_SHADES, GOBIS_SILKSHEEN_EMULSION_SHADES, GOBIS_GOLD_ENAMEL_SHADES, GOBIS_AQUEOUS_MATT_FINISH_SHADES, GOBIS_GOLD_AQUEOUS_MATT_FINISH_SHADES, GOBIS_GOLD_EGGSHELL_MATT_FINISH_SHADES, GOBIS_GLOSS_ENAMEL_SHADES, GOBIS_EGGSHELL_MATT_ENAMEL_SHADES, RELIABLE_WEATHER_PROTECTOR_SHADES, RELIABLE_MATT_ENAMEL_SHADES, RELIABLE_EMULSION_SHADES, RELIABLE_ENAMEL_SHADES, RELIABLE_WATER_MATT_SHADES, CHOICE_SYNTHETIC_ENAMEL_SHADES, CHOICE_WEATHER_SEALER_SHADES, RELIANCE_STAINLESS_MATT_SHADES, RELIANCE_SEMI_PLASTIC_EMULSION_SHADES, RELIANCE_MATT_ENAMEL_SHADES, RELIANCE_WEATHER_GUARD_SHADES, RELIANCE_SYNTHETIC_ENAMEL_SHADES, BERGER_WEATHER_PRO_SHADES, BERGER_NU_ENAMEL_SHADES, BERGER_NU_EMULSION_SHADES, BERGER_ELEGANCE_SILK_EMULSION_SHADES, BERGER_SUPERIOR_MATT_FINISH_SHADES, DIAMOND_ACE_WEATHER_DEFENDER_SHADES } from '@/constants/shades';
 
 
 export default function ProductDetailPage() {
@@ -78,7 +78,8 @@ export default function ProductDetailPage() {
     const isBergerNuEmulsion = product?.brand === 'Berger' && product?.name?.toLowerCase().includes('nu emulsion');
     const isBergerEleganceSilkEmulsion = product?.brand === 'Berger' && product?.name?.toLowerCase().includes('elegance silk emulsion');
     const isBergerSuperiorMattFinish = product?.brand === 'Berger' && product?.name?.toLowerCase().includes('superior matt finish');
-    const hasShadeCard = isBrightoSuperEmulsion || isBrightoSyntheticEnamel || isBrightoPlasticEmulsion || isBrightoAllWeather || isSaasiHydrous || isSaasiMattEnamel || isSaasiPlasticEmulsion || isSaasiSuperGlossEnamel || isSaasiWeatherSafe || isBrightoStainFree || isGobisIndustrialEnamel || isGobisStovingPaint || isGobisCarmanSeries || isGobisSilverlineEnamel || isGobisSilverlineEmulsion || isGobisGoldLuxuriousWallEmulsion || isGobisSilksheenEmulsion || isGobisGoldEnamel || isGobisAqueousMattFinish || isGobisGoldAqueousMattFinish || isGobisGoldEggshellMattFinish || isGobisGlossEnamel || isGobisEggshellMattEnamel || isReliableWeatherProtector || isReliableMattEnamel || isReliableEmulsion || isReliableEnamel || isReliableWaterMatt || isChoiceSyntheticEnamel || isChoiceWeatherSealer || isRelianceStainlessMatt || isRelianceSemiPlasticEmulsion || isRelianceMattEnamel || isRelianceWeatherGuard || isRelianceSyntheticEnamel || isBergerWeatherPro || isBergerNuEnamel || isBergerNuEmulsion || isBergerEleganceSilkEmulsion || isBergerSuperiorMattFinish;
+    const isDiamondAceWeatherDefender = product?.brand === 'Diamond' && product?.name?.toLowerCase().includes('ace weather defender');
+    const hasShadeCard = isBrightoSuperEmulsion || isBrightoSyntheticEnamel || isBrightoPlasticEmulsion || isBrightoAllWeather || isSaasiHydrous || isSaasiMattEnamel || isSaasiPlasticEmulsion || isSaasiSuperGlossEnamel || isSaasiWeatherSafe || isBrightoStainFree || isGobisIndustrialEnamel || isGobisStovingPaint || isGobisCarmanSeries || isGobisSilverlineEnamel || isGobisSilverlineEmulsion || isGobisGoldLuxuriousWallEmulsion || isGobisSilksheenEmulsion || isGobisGoldEnamel || isGobisAqueousMattFinish || isGobisGoldAqueousMattFinish || isGobisGoldEggshellMattFinish || isGobisGlossEnamel || isGobisEggshellMattEnamel || isReliableWeatherProtector || isReliableMattEnamel || isReliableEmulsion || isReliableEnamel || isReliableWaterMatt || isChoiceSyntheticEnamel || isChoiceWeatherSealer || isRelianceStainlessMatt || isRelianceSemiPlasticEmulsion || isRelianceMattEnamel || isRelianceWeatherGuard || isRelianceSyntheticEnamel || isBergerWeatherPro || isBergerNuEnamel || isBergerNuEmulsion || isBergerEleganceSilkEmulsion || isBergerSuperiorMattFinish || isDiamondAceWeatherDefender;
 
     const shadeCardPdf = useMemo(() => {
         if (!product) return null;
@@ -91,6 +92,10 @@ export default function ProductDetailPage() {
             if (name === 'Brighto Super Emulsion') return '/pdfs/brighto-super-emulsion.pdf';
             if (name === 'Brighto Synthetic Enamel') return '/pdfs/brighto-synthetic-enamel.pdf';
             if (name === 'Brighto Stain Free royal silky finish emulsion') return '/pdfs/brighto-stain-free.pdf';
+        }
+
+        if (brand === 'Diamond') {
+            if (name.toLowerCase().includes('ace weather defender')) return '/pdfs/diamond_ace_weather_defender.pdf';
         }
 
         if (brand === 'Saasi') {
@@ -194,6 +199,7 @@ export default function ProductDetailPage() {
                 const isBergerNuEmulsion = productData.brand === 'Berger' && productData.name?.toLowerCase().includes('nu emulsion');
                 const isBergerEleganceSilkEmulsion = productData.brand === 'Berger' && productData.name?.toLowerCase().includes('elegance silk emulsion');
                 const isBergerSuperiorMattFinish = productData.brand === 'Berger' && productData.name?.toLowerCase().includes('superior matt finish');
+                const isDiamondAceWeatherDefender = productData.brand === 'Diamond' && productData.name?.toLowerCase().includes('ace weather defender');
                 const defaultShades = isSuperEmulsion ? BRIGHTO_SHADES
                     : isSyntheticEnamel ? BRIGHTO_ENAMEL_SHADES
                         : isPlasticEmulsion ? BRIGHTO_PLASTIC_EMULSION_SHADES
@@ -234,7 +240,8 @@ export default function ProductDetailPage() {
                                                                                                                                                                     : isBergerNuEmulsion ? BERGER_NU_EMULSION_SHADES
                                                                                                                                                                         : isBergerEleganceSilkEmulsion ? BERGER_ELEGANCE_SILK_EMULSION_SHADES
                                                                                                                                                                             : isBergerSuperiorMattFinish ? BERGER_SUPERIOR_MATT_FINISH_SHADES
-                                                                                                                                                                                : [];
+                                                                                                                                                                                : isDiamondAceWeatherDefender ? DIAMOND_ACE_WEATHER_DEFENDER_SHADES
+                                                                                                                                                                                    : [];
 
                 // Fetch shades from DB, fallback to local constants
                 const { data: shadeData } = await supabase
