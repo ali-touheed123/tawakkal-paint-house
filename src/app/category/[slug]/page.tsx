@@ -110,7 +110,7 @@ export default function CategoryPage() {
   const info = categoryInfo[category] || categoryInfo.decorative;
 
   return (
-    <div className="min-h-screen pt-[70px]">
+    <div className="min-h-screen">
       {/* Hero */}
       <section className="relative h-[40vh] flex items-center">
         <div className="absolute inset-0">
@@ -138,7 +138,7 @@ export default function CategoryPage() {
       </section>
 
       {/* Filters */}
-      <section className="sticky top-[70px] z-30 bg-white shadow-md border-b border-gold/10">
+      <section className="z-30 bg-white shadow-md border-b border-gold/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <div className="flex flex-col gap-4">
             {/* Brand Filter */}
