@@ -2502,6 +2502,47 @@ export const BERGER_ELEGANCE_SILK_EMULSION_SHADES: Shade[] = [
   { id: 'ese-3090', product_id: '', name: 'Chocolate', code: '3090', hex: '#5D4D48', is_drum_available: false },
 ];
 
+export const BERGER_SUPERIOR_MATT_FINISH_SHADES: Shade[] = [
+  // Whites & Beiges
+  { id: 'bsm-mp00', product_id: '', name: 'White', code: 'MP00', hex: '#FFFFFF', is_drum_available: false },
+  { id: 'bsm-mp01', product_id: '', name: 'Off White', code: 'MP01', hex: '#FDFDF2', is_drum_available: false },
+  { id: 'bsm-mp02', product_id: '', name: 'Lavender White', code: 'MP02', hex: '#E6E4E1', is_drum_available: false },
+  { id: 'bsm-mp03', product_id: '', name: 'Ash White', code: 'MP03', hex: '#E1DDD4', is_drum_available: false },
+  { id: 'bsm-mp04', product_id: '', name: 'Antique White', code: 'MP04', hex: '#E5E1D4', is_drum_available: false },
+  { id: 'bsm-mp05', product_id: '', name: 'Honey White', code: 'MP05', hex: '#FDF9E7', is_drum_available: false },
+  { id: 'bsm-mp06', product_id: '', name: 'Kitten White', code: 'MP06', hex: '#F9F5DE', is_drum_available: false },
+  { id: 'bsm-mp07', product_id: '', name: 'Ivory Silk', code: 'MP07', hex: '#F9ECD9', is_drum_available: false },
+  { id: 'bsm-mp08', product_id: '', name: 'Cockleshell', code: 'MP08', hex: '#F5DFBC', is_drum_available: false },
+  { id: 'bsm-mp09', product_id: '', name: 'Castle Stone', code: 'MP09', hex: '#E9DBC4', is_drum_available: false },
+
+  // Blues & Greys
+  { id: 'bsm-mp10', product_id: '', name: 'Baby Blue', code: 'MP10', hex: '#D0DBE1', is_drum_available: false },
+  { id: 'bsm-mp11', product_id: '', name: 'Celestial', code: 'MP11', hex: '#DBF2F9', is_drum_available: false },
+  { id: 'bsm-mp12', product_id: '', name: 'Cadet Blue', code: 'MP12', hex: '#B5D2D5', is_drum_available: false },
+  { id: 'bsm-mp13', product_id: '', name: 'Pearl Glow', code: 'MP13', hex: '#D4D4D4', is_drum_available: false },
+  { id: 'bsm-mp14', product_id: '', name: 'Rain Cloud', code: 'MP14', hex: '#899396', is_drum_available: false },
+
+  // Greens & Yellows
+  { id: 'bsm-mp15', product_id: '', name: 'Spring Blossom', code: 'MP15', hex: '#F9FDF0', is_drum_available: false },
+  { id: 'bsm-mp16', product_id: '', name: 'Lemon Grass', code: 'MP16', hex: '#EDF4D1', is_drum_available: false },
+  { id: 'bsm-mp17', product_id: '', name: 'Murree Green', code: 'MP17', hex: '#A3B982', is_drum_available: false },
+  { id: 'bsm-mp18', product_id: '', name: 'Ribbon Yellow', code: 'MP18', hex: '#FBECA4', is_drum_available: false },
+  { id: 'bsm-mp19', product_id: '', name: 'Sunny Day', code: 'MP19', hex: '#FDECA5', is_drum_available: false },
+  { id: 'bsm-mp20', product_id: '', name: 'Mango Mood', code: 'MP20', hex: '#FBCC82', is_drum_available: false },
+  { id: 'bsm-mp21', product_id: '', name: 'Bumble Bee', code: 'MP21', hex: '#FDCB7E', is_drum_available: false },
+
+  // Pinks, Peaches & Reds
+  { id: 'bsm-mp22', product_id: '', name: 'Pink Violet', code: 'MP22', hex: '#E5DCD9', is_drum_available: false },
+  { id: 'bsm-mp23', product_id: '', name: 'Delicate Pink', code: 'MP23', hex: '#F9E5ED', is_drum_available: false },
+  { id: 'bsm-mp24', product_id: '', name: 'Carnival Pink', code: 'MP24', hex: '#D996B3', is_drum_available: false },
+  { id: 'bsm-mp25', product_id: '', name: 'Jamuni', code: 'MP25', hex: '#684858', is_drum_available: false },
+  { id: 'bsm-mp26', product_id: '', name: 'Salsa', code: 'MP26', hex: '#B55D58', is_drum_available: false },
+  { id: 'bsm-mp27', product_id: '', name: 'Lily White', code: 'MP27', hex: '#FDF8E6', is_drum_available: false },
+  { id: 'bsm-mp28', product_id: '', name: 'Peach Goddess', code: 'MP28', hex: '#FBEE D1', is_drum_available: false },
+  { id: 'bsm-mp29', product_id: '', name: 'Peach Country', code: 'MP29', hex: '#F9B591', is_drum_available: false },
+  { id: 'bsm-mp30', product_id: '', name: 'Sandy Bay', code: 'MP30', hex: '#EBA278', is_drum_available: false },
+];
+
 
 
 
