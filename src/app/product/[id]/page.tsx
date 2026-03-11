@@ -368,79 +368,89 @@ export default function ProductDetailPage() {
                     {/* LEFT COLUMN: Visualizer & Calculator Tabs */}
                     <div className="space-y-6 lg:sticky lg:top-[120px]">
                         {/* Tab Switcher */}
-                        <div className="flex bg-gray-100 p-1.5 rounded-2xl w-fit">
-                            <button
-                                onClick={() => setActiveTab('visualizer')}
-                                className={`px-6 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === 'visualizer'
-                                    ? 'bg-white text-navy shadow-sm'
-                                    : 'text-gray-500 hover:text-navy'
-                                    }`}
-                            >
-                                Room Visualizer
-                            </button>
-                            <button
-                                onClick={() => setActiveTab('calculator')}
-                                className={`px-6 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === 'calculator'
-                                    ? 'bg-white text-navy shadow-sm'
-                                    : 'text-gray-500 hover:text-navy'
-                                    }`}
-                            >
-                                Paint Calculator
-                            </button>
-                        </div>
+                        {!isDiamondAceTimberlacWoodStains && (
+                            <div className="flex bg-gray-100 p-1.5 rounded-2xl w-fit">
+                                <button
+                                    onClick={() => setActiveTab('visualizer')}
+                                    className={`px-6 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === 'visualizer'
+                                        ? 'bg-white text-navy shadow-sm'
+                                        : 'text-gray-500 hover:text-navy'
+                                        }`}
+                                >
+                                    Room Visualizer
+                                </button>
+                                <button
+                                    onClick={() => setActiveTab('calculator')}
+                                    className={`px-6 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === 'calculator'
+                                        ? 'bg-white text-navy shadow-sm'
+                                        : 'text-gray-500 hover:text-navy'
+                                        }`}
+                                >
+                                    Paint Calculator
+                                </button>
+                            </div>
+                        )}
 
                         <div className="relative group rounded-3xl overflow-hidden bg-white shadow-2xl border border-gray-100 min-h-[400px]">
-                            <AnimatePresence mode="wait">
-                                {activeTab === 'visualizer' ? (
-                                    <motion.div
-                                        key="visualizer"
-                                        initial={{ opacity: 0, scale: 0.98 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        exit={{ opacity: 0, scale: 1.02 }}
-                                        transition={{ duration: 0.2 }}
-                                        className="h-full"
-                                    >
-                                        {hasShadeCard ? (
-                                            <SimpleVisualizer
-                                                color={selectedShade?.hex || '#FFFFFF'}
-                                                name={selectedShade?.name || 'Standard'}
-                                                onSelect={(s) => setSelectedShade(s)}
-                                            />
-                                        ) : (
-                                            <div className="aspect-[16/9] flex items-center justify-center p-8">
-                                                <img src={product.image_url || ''} className="max-h-full object-contain" />
-                                            </div>
-                                        )}
-                                    </motion.div>
-                                ) : (
-                                    <motion.div
-                                        key="calculator"
-                                        initial={{ opacity: 0, scale: 0.98 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        exit={{ opacity: 0, scale: 1.02 }}
-                                        transition={{ duration: 0.2 }}
-                                        className="p-4"
-                                    >
-                                        <PaintCalculator compact={true} />
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-                        </div>
-                        {/* Thumbnails */}
-                        <div className="flex gap-4">
-                            <div className="w-24 h-24 rounded-2xl border-2 border-gold p-2 bg-white flex items-center justify-center shadow-md">
-                                <img src={product.image_url || ''} className="w-full h-full object-contain" />
-                            </div>
-                            {selectedShade && (
-                                <motion.div
-                                    initial={{ opacity: 0, scale: 0.8 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    className="w-24 h-24 rounded-2xl border-2 border-gray-100 overflow-hidden shadow-md"
-                                >
-                                    <div className="w-full h-full" style={{ backgroundColor: selectedShade.hex }} />
-                                </motion.div>
+                            {isDiamondAceTimberlacWoodStains ? (
+                                <div className="aspect-[16/9] flex items-center justify-center p-8">
+                                    <img src={product.image_url || ''} className="max-h-full object-contain" />
+                                </div>
+                            ) : (
+                                <AnimatePresence mode="wait">
+                                    {activeTab === 'visualizer' ? (
+                                        <motion.div
+                                            key="visualizer"
+                                            initial={{ opacity: 0, scale: 0.98 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            exit={{ opacity: 0, scale: 1.02 }}
+                                            transition={{ duration: 0.2 }}
+                                            className="h-full"
+                                        >
+                                            {hasShadeCard ? (
+                                                <SimpleVisualizer
+                                                    color={selectedShade?.hex || '#FFFFFF'}
+                                                    name={selectedShade?.name || 'Standard'}
+                                                    onSelect={(s) => setSelectedShade(s)}
+                                                />
+                                            ) : (
+                                                <div className="aspect-[16/9] flex items-center justify-center p-8">
+                                                    <img src={product.image_url || ''} className="max-h-full object-contain" />
+                                                </div>
+                                            )}
+                                        </motion.div>
+                                    ) : (
+                                        <motion.div
+                                            key="calculator"
+                                            initial={{ opacity: 0, scale: 0.98 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            exit={{ opacity: 0, scale: 1.02 }}
+                                            transition={{ duration: 0.2 }}
+                                            className="p-4"
+                                        >
+                                            <PaintCalculator compact={true} />
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
                             )}
                         </div>
+                        {/* Thumbnails */}
+                        {!isDiamondAceTimberlacWoodStains && (
+                            <div className="flex gap-4">
+                                <div className="w-24 h-24 rounded-2xl border-2 border-gold p-2 bg-white flex items-center justify-center shadow-md">
+                                    <img src={product.image_url || ''} className="w-full h-full object-contain" />
+                                </div>
+                                {selectedShade && (
+                                    <motion.div
+                                        initial={{ opacity: 0, scale: 0.8 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        className="w-24 h-24 rounded-2xl border-2 border-gray-100 overflow-hidden shadow-md"
+                                    >
+                                        <div className="w-full h-full" style={{ backgroundColor: selectedShade.hex }} />
+                                    </motion.div>
+                                )}
+                            </div>
+                        )}
                     </div>
 
                     {/* RIGHT COLUMN: Details & Controls */}
