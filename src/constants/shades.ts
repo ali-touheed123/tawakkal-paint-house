@@ -2818,6 +2818,103 @@ export const DIAMOND_ACE_MATT_ENAMEL_SHADES: Shade[] = [
   { id: 'dam-1001', product_id: '', name: 'Brilliant White', code: '1001', hex: '#FFFFFF', is_drum_available: false },
 ];
 
+export const DIAMOND_ACE_SUPER_GLOSS_ENAMEL_SHADES: Shade[] = [
+  // Row 1
+  { id: 'dsg-4501', product_id: '', name: 'White', code: '4501', hex: '#FFFFFF', is_drum_available: false },
+  { id: 'dsg-4503', product_id: '', name: 'Off White', code: '4503', hex: '#F9F8E4', is_drum_available: false },
+  { id: 'dsg-4509', product_id: '', name: 'Signal Red', code: '4509', hex: '#A32E2E', is_drum_available: false },
+  { id: 'dsg-4572', product_id: '', name: 'County Cream', code: '4572', hex: '#FDF2D1', is_drum_available: false },
+  { id: 'dsg-4525', product_id: '', name: 'Beige', code: '4525', hex: '#D1B996', is_drum_available: false },
+  { id: 'dsg-4530', product_id: '', name: 'Rose White', code: '4530', hex: '#FDEED9', is_drum_available: false },
+  { id: 'dsg-4534', product_id: '', name: 'Early Dawn', code: '4534', hex: '#E4DED1', is_drum_available: false },
+  { id: 'dsg-4502', product_id: '', name: 'Black', code: '4502', hex: '#2E3131', is_drum_available: false },
+  { id: 'dsg-4553', product_id: '', name: 'Terracotta', hex: '#AC7D68', code: '4553', is_drum_available: false },
+  { id: 'dsg-4555', product_id: '', name: 'Rose Pink', code: '4555', hex: '#F1BDC7', is_drum_available: false },
+
+  // Row 2
+  { id: 'dsg-4575', product_id: '', name: 'Kashmir Beige', code: '4575', hex: '#C1B5A3', is_drum_available: false },
+  { id: 'dsg-4568', product_id: '', name: 'Antelope', code: '4568', hex: '#A9A396', is_drum_available: false },
+  { id: 'dsg-4504', product_id: '', name: 'Cream', code: '4504', hex: '#FDF4D1', is_drum_available: false },
+  { id: 'dsg-4535', product_id: '', name: 'Diyar', code: '4535', hex: '#E6C189', is_drum_available: false },
+  { id: 'dsg-4553-2', product_id: '', name: 'Coriander', code: '4553', hex: '#A99689', is_drum_available: false },
+  { id: 'dsg-4561', product_id: '', name: 'Shamp', code: '4561', hex: '#897D68', is_drum_available: false },
+  { id: 'dsg-4566', product_id: '', name: 'Soft Violet', code: '4566', hex: '#A9ACD1', is_drum_available: false },
+  { id: 'dsg-4564', product_id: '', name: 'Polish Brown', code: '4564', hex: '#B5896D', is_drum_available: false },
+  { id: 'dsg-4532', product_id: '', name: 'Candy Pink', code: '4532', hex: '#C48996', is_drum_available: false },
+
+  // Row 3
+  { id: 'dsg-4622', product_id: '', name: 'Lemon', code: '4622', hex: '#FCD126', is_drum_available: false },
+  { id: 'dsg-4508', product_id: '', name: 'Red Oxide', code: '4508', hex: '#633D38', is_drum_available: false },
+  { id: 'dsg-4560', product_id: '', name: 'Clay', code: '4560', hex: '#A9A38E', is_drum_available: false },
+  { id: 'dsg-4529', product_id: '', name: 'Golden Brown', code: '4529', hex: '#89583D', is_drum_available: false },
+  { id: 'dsg-4523', product_id: '', name: 'Golden Yellow', code: '4523', hex: '#F19626', is_drum_available: false },
+  { id: 'dsg-4527', product_id: '', name: 'Pink', code: '4527', hex: '#FBDED4', is_drum_available: false },
+  { id: 'dsg-4514', product_id: '', name: 'Adams Green', code: '4514', hex: '#3D9D82', is_drum_available: false },
+  { id: 'dsg-4571', product_id: '', name: 'Comet Blue', code: '4571', hex: '#7DC4D6', is_drum_available: false },
+  { id: 'dsg-4586', product_id: '', name: 'Grey Green', code: '4586', hex: '#686D58', is_drum_available: false },
+
+  // Row 4
+  { id: 'dsg-4543', product_id: '', name: 'Hopsack', code: '4543', hex: '#C1C1A3', is_drum_available: false },
+  { id: 'dsg-4544', product_id: '', name: 'Antique White', code: '4544', hex: '#F1F1E1', is_drum_available: false },
+  { id: 'dsg-4546', product_id: '', name: 'Mustard', code: '4546', hex: '#C49D63', is_drum_available: false },
+  { id: 'dsg-4521', product_id: '', name: 'Orange', code: '4521', hex: '#C1582E', is_drum_available: false },
+  { id: 'dsg-4524', product_id: '', name: 'Brown', code: '4524', hex: '#7D4838', is_drum_available: false },
+  { id: 'dsg-4548', product_id: '', name: 'Lavender White', code: '4548', hex: '#E4ECEC', is_drum_available: false },
+  { id: 'dsg-4506', product_id: '', name: 'Smoke Grey', code: '4506', hex: '#687D82', is_drum_available: false },
+  { id: 'dsg-4551', product_id: '', name: 'Court Grey', code: '4551', hex: '#B5BEB5', is_drum_available: false },
+  { id: 'dsg-4585', product_id: '', name: 'Slate Grey', code: '4585', hex: '#89939D', is_drum_available: false },
+
+  // Row 5
+  { id: 'dsg-4559', product_id: '', name: 'Pumice', code: '4559', hex: '#BDD1D4', is_drum_available: false },
+  { id: 'dsg-4533', product_id: '', name: 'Eau-De-Nil', code: '4533', hex: '#9DBE8E', is_drum_available: false },
+  { id: 'dsg-4520', product_id: '', name: 'Sea Green', code: '4520', hex: '#7DC1A3', is_drum_available: false },
+  { id: 'dsg-4528', product_id: '', name: 'Dark Brown', code: '4528', hex: '#483D38', is_drum_available: false },
+  { id: 'dsg-4518', product_id: '', name: 'Middle Blue', code: '4518', hex: '#1E6389', is_drum_available: false },
+  { id: 'dsg-4507', product_id: '', name: 'Light Grey', code: '4507', hex: '#A3A9A3', is_drum_available: false },
+  { id: 'dsg-4570', product_id: '', name: 'Mauve', code: '4570', hex: '#B5B5C1', is_drum_available: false },
+  { id: 'dsg-4556', product_id: '', name: 'Bali Blue', code: '4556', hex: '#BDDED4', is_drum_available: false },
+
+  // Row 6
+  { id: 'dsg-4517', product_id: '', name: 'Light Blue', code: '4517', hex: '#48BBD6', is_drum_available: false },
+  { id: 'dsg-4550', product_id: '', name: 'Ash White', code: '4550', hex: '#D9D9C1', is_drum_available: false },
+  { id: 'dsg-4545', product_id: '', name: 'Vivid Blue', code: '4545', hex: '#007D9D', is_drum_available: false },
+  { id: 'dsg-4531', product_id: '', name: 'Cameo', code: '4531', hex: '#F1D9C1', is_drum_available: false },
+  { id: 'dsg-4541', product_id: '', name: 'Oyster', code: '4541', hex: '#D1D9CD', is_drum_available: false },
+  { id: 'dsg-4505', product_id: '', name: 'Dark Grey', code: '4505', hex: '#484D58', is_drum_available: false },
+
+  // Overall Metallic
+  { id: 'dsg-1601', product_id: '', name: 'Brilliant Green (Metallic)', code: '1601', hex: '#1E9D7D', is_drum_available: false },
+  { id: 'dsg-1613', product_id: '', name: 'Deep Blue (Metallic)', code: '1613', hex: '#0063A3', is_drum_available: false },
+  { id: 'dsg-1615', product_id: '', name: 'Silver (Metallic)', code: '1615', hex: '#BDC4C1', is_drum_available: false },
+  { id: 'dsg-1602', product_id: '', name: 'Shamp (Metallic)', code: '1602', hex: '#A39D93', is_drum_available: false },
+
+  // Highlighted Metallics
+  { id: 'dsg-1611', product_id: '', name: 'Brown Sheen', code: '1611', hex: '#6D5848', is_drum_available: false },
+  { id: 'dsg-1609', product_id: '', name: 'Brown', code: '1609', hex: '#633D2E', is_drum_available: false },
+  { id: 'dsg-1603', product_id: '', name: 'Pale Green', code: '1603', hex: '#8E9D8E', is_drum_available: false },
+  { id: 'dsg-1610', product_id: '', name: 'Copper', code: '1610', hex: '#89481E', is_drum_available: false },
+  { id: 'dsg-1612', product_id: '', name: 'Black Pearl', code: '1612', hex: '#0A0A0A', is_drum_available: false },
+  { id: 'dsg-1604', product_id: '', name: 'Fine Beige', code: '1604', hex: '#89825D', is_drum_available: false },
+
+  // Soft Metallic
+  { id: 'dsg-0331', product_id: '', name: 'Shamp (Soft)', code: '0331', hex: '#D1D9D1', is_drum_available: false },
+  { id: 'dsg-0332', product_id: '', name: 'Brown (Soft)', code: '0332', hex: '#48483D', is_drum_available: false },
+  { id: 'dsg-0334', product_id: '', name: 'Copper (Soft)', code: '0334', hex: '#9D6D3D', is_drum_available: false },
+  { id: 'dsg-0335', product_id: '', name: 'Silver (Soft)', code: '0335', hex: '#A3ACAD', is_drum_available: false },
+  { id: 'dsg-0336', product_id: '', name: 'Deep Copper (Soft)', code: '0336', hex: '#894838', is_drum_available: false },
+  { id: 'dsg-0337', product_id: '', name: 'Ocean Blue (Soft)', code: '0337', hex: '#3D5863', is_drum_available: false },
+
+  // Hi Sparkle
+  { id: 'dsg-0401', product_id: '', name: 'Pale Green (Sparkle)', code: '0401', hex: '#B5C4B5', is_drum_available: false },
+  { id: 'dsg-0403', product_id: '', name: 'Shamp (Sparkle)', code: '0403', hex: '#8E8E7D', is_drum_available: false },
+  { id: 'dsg-0405', product_id: '', name: 'Fine Beige (Sparkle)', code: '0405', hex: '#ADB5A3', is_drum_available: false },
+  { id: 'dsg-0001', product_id: '', name: 'Silver (Sparkle)', code: '0001', hex: '#B5BEB5', is_drum_available: false },
+
+  // Hammer Finishes
+  { id: 'dsg-0003', product_id: '', name: 'Middle Blue (Hammer)', code: '0003', hex: '#1E637D', is_drum_available: false },
+  { id: 'dsg-0004', product_id: '', name: 'Brilliant Green (Hammer)', code: '0004', hex: '#006348', is_drum_available: false },
+];
+
 
 
 
