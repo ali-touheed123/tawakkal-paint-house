@@ -3173,6 +3173,74 @@ export const DIAMOND_OVERALL_WEATHER_MAX_SHADES: Shade[] = [
   { id: 'dow-0719', product_id: '', name: 'Beaver', code: '0719', hex: '#72635E', is_drum_available: false },
 ];
 
+export const DIAMOND_EVERLAST_HIGH_GLOSS_ENAMEL_SHADES: Shade[] = [
+  // Row 1
+  { id: 'dee-4795', product_id: '', name: 'Kitten White', code: '4795', hex: '#FDF7E1', is_drum_available: false },
+  { id: 'dee-4726', product_id: '', name: 'Beige', code: '4726', hex: '#D1B996', is_drum_available: false },
+  { id: 'dee-4760', product_id: '', name: 'Clay', code: '4760', hex: '#BCB199', is_drum_available: false },
+  { id: 'dee-4728', product_id: '', name: 'Dark Brown', code: '4728', hex: '#3D332E', is_drum_available: false },
+  { id: 'dee-4771', product_id: '', name: 'Sky Blue', code: '4771', hex: '#7DBCD2', is_drum_available: false },
+
+  // Row 2
+  { id: 'dee-4752', product_id: '', name: 'Signal Red', code: '4752', hex: '#B5332E', is_drum_available: false },
+  { id: 'dee-4789', product_id: '', name: 'Pale Beige', code: '4789', hex: '#E6C7A3', is_drum_available: false },
+  { id: 'dee-4791', product_id: '', name: 'Off White', code: '4791', hex: '#FDFCEB', is_drum_available: false },
+  { id: 'dee-4731', product_id: '', name: 'Cameo', code: '4731', hex: '#EBD9BD', is_drum_available: false },
+  { id: 'dee-4744', product_id: '', name: 'Ash White', code: '4744', hex: '#D2D2C2', is_drum_available: false },
+
+  // Row 3
+  { id: 'dee-4768', product_id: '', name: 'Champagne', code: '4768', hex: '#72635E', is_drum_available: false },
+  { id: 'dee-4765', product_id: '', name: 'Pink', code: '4765', hex: '#FDEEDB', is_drum_available: false },
+  { id: 'dee-4709', product_id: '', name: 'PO Red', code: '4709', hex: '#9E241E', is_drum_available: false },
+  { id: 'dee-4796', product_id: '', name: 'Light Blue', code: '4796', hex: '#58C2D9', is_drum_available: false },
+  { id: 'dee-4757', product_id: '', name: 'Grey', code: '4757', hex: '#8C9993', is_drum_available: false },
+
+  // Row 4
+  { id: 'dee-4730', product_id: '', name: 'County Cream', code: '4730', hex: '#FDF1D0', is_drum_available: false },
+  { id: 'dee-4797', product_id: '', name: 'Terracotta', code: '4797', hex: '#9E7260', is_drum_available: false },
+  { id: 'dee-4732', product_id: '', name: 'Candy Pink', code: '4732', hex: '#BC9E9E', is_drum_available: false },
+  { id: 'dee-4793', product_id: '', name: 'Crimson', code: '4793', hex: '#7D332D', is_drum_available: false },
+  { id: 'dee-4770', product_id: '', name: 'Soft Violet', code: '4770', hex: '#A9ACCC', is_drum_available: false },
+
+  // Row 5
+  { id: 'dee-4745', product_id: '', name: 'Vivid Blue', code: '4745', hex: '#007D9E', is_drum_available: false },
+  { id: 'dee-4701', product_id: '', name: 'White', code: '4701', hex: '#FFFFFF', is_drum_available: false },
+  { id: 'dee-4702', product_id: '', name: 'Black', code: '4702', hex: '#1A1A1A', is_drum_available: false },
+  { id: 'dee-4708', product_id: '', name: 'Red Oxide', code: '4708', hex: '#7D4338', is_drum_available: false },
+  { id: 'dee-4741', product_id: '', name: 'Oyster', code: '4741', hex: '#CED4C6', is_drum_available: false },
+
+  // Extra Column (Diyar, Golden Brown, etc.)
+  { id: 'dee-4735', product_id: '', name: 'Diyar', code: '4735', hex: '#E4BD81', is_drum_available: false },
+  { id: 'dee-4729', product_id: '', name: 'Golden Brown', code: '4729', hex: '#92583D', is_drum_available: false },
+  { id: 'dee-4712', product_id: '', name: 'Fresh Green', code: '4712', hex: '#BDD2A9', is_drum_available: false },
+  { id: 'dee-4719', product_id: '', name: 'Royal Blue', code: '4719', hex: '#313D51', is_drum_available: false },
+  { id: 'dee-4736', product_id: '', name: 'Pale Cream', code: '4736', hex: '#D1B582', is_drum_available: false },
+  { id: 'dee-4753', product_id: '', name: 'Coriander', code: '4753', hex: '#AD9E92', is_drum_available: false },
+  { id: 'dee-4704', product_id: '', name: 'Cream', code: '4704', hex: '#FDF4D1', is_drum_available: false },
+
+  // Bottom Rows
+  { id: 'dee-4792', product_id: '', name: 'Orange', code: '4792', hex: '#D96E3D', is_drum_available: false },
+  { id: 'dee-4733', product_id: '', name: 'Eau-De-Nil', code: '4733', hex: '#9EB18C', is_drum_available: false },
+  { id: 'dee-4722', product_id: '', name: 'Lemon', code: '4722', hex: '#FDD21E', is_drum_available: false },
+  { id: 'dee-4759', product_id: '', name: 'Mid Grey', code: '4759', hex: '#ADB5AD', is_drum_available: false },
+  { id: 'dee-4705', product_id: '', name: 'Dark Grey', code: '4705', hex: '#585E63', is_drum_available: false },
+  { id: 'dee-4716', product_id: '', name: 'Spring Green', code: '4716', hex: '#92A944', is_drum_available: false },
+  { id: 'dee-4723', product_id: '', name: 'Golden Yellow', code: '4723', hex: '#F19E24', is_drum_available: false },
+  { id: 'dee-4706', product_id: '', name: 'Smoke Grey', code: '4706', hex: '#637D82', is_drum_available: false },
+
+  // Metallics
+  { id: 'dee-1601', product_id: '', name: 'Brilliant Green (Metallic)', code: '1601', hex: '#1E9E81', is_drum_available: false },
+  { id: 'dee-1602', product_id: '', name: 'Shamp (Metallic)', code: '1602', hex: '#9E998B', is_drum_available: false },
+  { id: 'dee-1603', product_id: '', name: 'Pale Green (Metallic)', code: '1603', hex: '#A9B9A3', is_drum_available: false },
+  { id: 'dee-1604', product_id: '', name: 'Fine Beige (Metallic)', code: '1604', hex: '#9E9372', is_drum_available: false },
+  { id: 'dee-1613', product_id: '', name: 'Deep Blue (Metallic)', code: '1613', hex: '#0063A3', is_drum_available: false },
+  { id: 'dee-1615', product_id: '', name: 'Silver (Metallic)', code: '1615', hex: '#C1C4C4', is_drum_available: false },
+  { id: 'dee-1611', product_id: '', name: 'Brown Sheen (Metallic)', code: '1611', hex: '#72513D', is_drum_available: false },
+  { id: 'dee-1609', product_id: '', name: 'Brown (Metallic)', code: '1609', hex: '#5E3D2B', is_drum_available: false },
+  { id: 'dee-1610', product_id: '', name: 'Copper (Metallic)', code: '1610', hex: '#9E5E31', is_drum_available: false },
+  { id: 'dee-1612', product_id: '', name: 'Black Pearl (Metallic)', code: '1612', hex: '#1A1A1A', is_drum_available: false },
+];
+
 
 
 
