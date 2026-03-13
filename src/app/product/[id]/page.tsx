@@ -128,6 +128,7 @@ export default function ProductDetailPage() {
             if (name.toLowerCase().includes('value emulsion')) return '/pdfs/diamond_value_emulsion.pdf';
             if (name.toLowerCase().includes('overall matt enamel')) return '/pdfs/diamond_overall_matt_enamel.pdf';
             if (name.toLowerCase().includes('aquamax')) return '/pdfs/diamond_overall_aquamax_water_matt.pdf';
+            if (name.toLowerCase().includes('timberlac wood stain')) return '/pdfs/diamond_Ace_Timberlac_Wood_Stains.pdf';
         }
 
         if (brand === 'Saasi') {
