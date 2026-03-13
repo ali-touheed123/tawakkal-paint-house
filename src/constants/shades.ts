@@ -3785,3 +3785,59 @@ export const BERGER_SEMI_PLASTIC_EMULSION_SHADES: Shade[] = [
   { id: "bspe39", product_id: "", name: "Vintage Coat", code: "5981", hex: "#632C34", is_drum_available: true },
   { id: "bspe40", product_id: "", name: "Salsa", code: "4605", hex: "#B3211D", is_drum_available: true }
 ];
+
+export const BERGER_ELEGANCE_MATT_EMULSION_SHADES: Shade[] = [
+  // Image 1
+  { id: "beme1", product_id: "", name: "Off White", code: "0010", hex: "#FFFCE3", is_drum_available: true },
+  { id: "beme2", product_id: "", name: "Ash White", code: "0110", hex: "#F3EFE7", is_drum_available: true },
+  { id: "beme3", product_id: "", name: "Pearl", code: "0122", hex: "#EAEAE3", is_drum_available: true },
+  { id: "beme4", product_id: "", name: "Pink Violet", code: "5095", hex: "#FCEEEF", is_drum_available: true },
+  { id: "beme5", product_id: "", name: "Off White Plus", code: "0120", hex: "#FFFFEB", is_drum_available: true },
+  { id: "beme6", product_id: "", name: "Ivory Silk", code: "3179", hex: "#FDEBCE", is_drum_available: true },
+  { id: "beme7", product_id: "", name: "Grey Blue", code: "6150", hex: "#B8C5C8", is_drum_available: true },
+  { id: "beme8", product_id: "", name: "Lace", code: "4054", hex: "#EAE0F0", is_drum_available: true },
+  { id: "beme9", product_id: "", name: "Lavendar White", code: "0474", hex: "#F3F4F4", is_drum_available: true },
+  { id: "beme10", product_id: "", name: "Cockleshell", code: "3442", hex: "#FEE8D8", is_drum_available: true },
+  { id: "beme11", product_id: "", name: "Dove Grey", code: "6100", hex: "#D4DEE0", is_drum_available: true },
+  { id: "beme12", product_id: "", name: "Orchard Lane", code: "7201", hex: "#E1D5F2", is_drum_available: true },
+  { id: "beme13", product_id: "", name: "Pearl Glow", code: "7239", hex: "#F3F2F8", is_drum_available: true },
+  { id: "beme14", product_id: "", name: "Sand Dune", code: "3152", hex: "#F2DFBF", is_drum_available: true },
+  { id: "beme15", product_id: "", name: "Thunder Grey", code: "6157", hex: "#95A2B8", is_drum_available: true },
+  { id: "beme16", product_id: "", name: "Elegance", code: "4070", hex: "#8A7DB0", is_drum_available: true },
+
+  // Image 2
+  { id: "beme17", product_id: "", name: "Rose Petal", code: "5220", hex: "#E9D2C8", is_drum_available: true },
+  { id: "beme18", product_id: "", name: "Delicate Pink", code: "7236", hex: "#F8DFE9", is_drum_available: true },
+  { id: "beme19", product_id: "", name: "Mint Leaf", code: "2112", hex: "#CBE8C2", is_drum_available: true },
+  { id: "beme20", product_id: "", name: "Fiery Volcano", code: "5103", hex: "#D47754", is_drum_available: true },
+  { id: "beme21", product_id: "", name: "Summer Pink", code: "7358", hex: "#F8D1C7", is_drum_available: true },
+  { id: "beme22", product_id: "", name: "Swiss Miss", code: "7237", hex: "#E9B0CD", is_drum_available: true },
+  { id: "beme23", product_id: "", name: "Green Haven", code: "2129", hex: "#7EC1B2", is_drum_available: true },
+  { id: "beme24", product_id: "", name: "Oriental Copper", code: "5098", hex: "#E65E4F", is_drum_available: true },
+  { id: "beme25", product_id: "", name: "Sophistication", code: "4123", hex: "#FCBF9A", is_drum_available: true },
+  { id: "beme26", product_id: "", name: "Rose Bouquet", code: "7238", hex: "#FAACAC", is_drum_available: true },
+  { id: "beme27", product_id: "", name: "Spring Blossom", code: "2128", hex: "#E0FA80", is_drum_available: true },
+  { id: "beme28", product_id: "", name: "Rust", code: "5099", hex: "#9E6452", is_drum_available: true },
+  { id: "beme29", product_id: "", name: "Peach Goddess", code: "3149", hex: "#EED7BF", is_drum_available: true },
+  { id: "beme30", product_id: "", name: "Bliss", code: "4084", hex: "#F8B7B8", is_drum_available: true },
+  { id: "beme31", product_id: "", name: "Leaf Green", code: "2250", hex: "#707D54", is_drum_available: true },
+  { id: "beme32", product_id: "", name: "Tile Red", code: "5200", hex: "#7E3E34", is_drum_available: true },
+  { id: "beme33", product_id: "", name: "Peach Country", code: "5096", hex: "#FB9E6E", is_drum_available: true },
+  { id: "beme34", product_id: "", name: "Carnival Pink", code: "04069", hex: "#D96E9B", is_drum_available: true },
+  { id: "beme35", product_id: "", name: "Gold Mist", code: "3154", hex: "#B89D66", is_drum_available: true },
+  { id: "beme36", product_id: "", name: "Chocolate", code: "5105", hex: "#524E48", is_drum_available: true },
+
+  // Image 3
+  { id: "beme37", product_id: "", name: "Celestial", code: "1119", hex: "#B8D9F2", is_drum_available: true },
+  { id: "beme38", product_id: "", name: "Ocean Blue", code: "1127", hex: "#8EA9E1", is_drum_available: true },
+  { id: "beme39", product_id: "", name: "Fresh Orange", code: "5170", hex: "#FF8C34", is_drum_available: true },
+  { id: "beme40", product_id: "", name: "Lake Blue", code: "1126", hex: "#93CDDE", is_drum_available: true },
+  { id: "beme41", product_id: "", name: "Blue Street", code: "1111", hex: "#233F6E", is_drum_available: true },
+  { id: "beme42", product_id: "", name: "Mango Mood", code: "3153", hex: "#FFCD62", is_drum_available: true },
+  
+  // New Shades
+  { id: "beme43", product_id: "", name: "Fresh Green", code: "14202", hex: "#DEEBBF", is_drum_available: true },
+  { id: "beme44", product_id: "", name: "Hazy Blue", code: "11341", hex: "#DBEEF2", is_drum_available: true },
+  { id: "beme45", product_id: "", name: "Apricot", code: "10184", hex: "#FFD095", is_drum_available: true },
+  { id: "beme46", product_id: "", name: "Gold Thread", code: "13123", hex: "#F3E293", is_drum_available: true }
+];
