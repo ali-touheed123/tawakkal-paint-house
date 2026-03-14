@@ -96,6 +96,17 @@ export default function ProductsPage() {
     setEditingProduct(null);
   }
 
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsModalOpen(false);
+        setEditingProduct(null);
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, []);
+
   const filteredProducts = products.filter(p => 
     p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     p.brand.toLowerCase().includes(searchTerm.toLowerCase())
@@ -203,67 +214,58 @@ export default function ProductsPage() {
       {/* Product Edit/Add Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy/60 backdrop-blur-sm">
-          <form onSubmit={handleSave} className="bg-white rounded-2xl w-full max-w-2xl shadow-2xl animate-in fade-in zoom-in duration-200 overflow-hidden">
-            <div className="p-6 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
-              <h2 className="text-xl font-bold text-navy">{editingProduct ? 'Edit Product' : 'Add New Product'}</h2>
+          <form onSubmit={handleSave} className="bg-white rounded-2xl w-full max-w-xl shadow-2xl animate-in fade-in zoom-in duration-200 overflow-hidden">
+            <div className="p-5 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
+              <h2 className="text-lg font-bold text-navy">{editingProduct ? 'Edit Product' : 'Add New Product'}</h2>
             </div>
-            <div className="p-8 grid grid-cols-2 gap-6">
+            <div className="p-6 grid grid-cols-2 gap-4">
               <div className="col-span-2">
-                <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Product Name</label>
-                <input name="name" defaultValue={editingProduct?.name} required className="w-full p-3 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none" />
+                <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Product Name</label>
+                <input name="name" defaultValue={editingProduct?.name} required className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" />
               </div>
               <div>
-                <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Brand</label>
-                <input name="brand" defaultValue={editingProduct?.brand} required className="w-full p-3 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none" />
+                <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Brand</label>
+                <input name="brand" defaultValue={editingProduct?.brand} required className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" />
               </div>
               <div>
-                <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Category</label>
-                <select name="category" defaultValue={editingProduct?.category || 'decorative'} className="w-full p-3 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none">
+                <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Category</label>
+                <select name="category" defaultValue={editingProduct?.category || 'decorative'} className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm">
                   <option value="decorative">Decorative</option>
                   <option value="industrial">Industrial</option>
                   <option value="auto">Auto</option>
                   <option value="projects">Projects</option>
                 </select>
               </div>
-              <div>
-                <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Sub Category</label>
-                <select name="sub_category" defaultValue={editingProduct?.sub_category || 'interior'} className="w-full p-3 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none">
-                  <option value="interior">Interior</option>
-                  <option value="exterior">Exterior</option>
-                  <option value="wood_metal">Wood & Metal</option>
-                  <option value="waterproofing">Waterproofing</option>
-                  <option value="accessories">Accessories</option>
-                  <option value="primers_fillers">Primers & Fillers</option>
-                </select>
+              <div className="col-span-2">
+                <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Image URL</label>
+                <input name="image_url" defaultValue={editingProduct?.image_url} placeholder="https://example.com/image.jpg" className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" />
               </div>
               <div className="col-span-2">
-                <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Image URL</label>
-                <input name="image_url" defaultValue={editingProduct?.image_url} placeholder="https://example.com/image.jpg" className="w-full p-3 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none" />
+                <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Description</label>
+                <textarea name="description" defaultValue={editingProduct?.description} rows={2} className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none resize-none text-sm" />
               </div>
-              <div className="col-span-2">
-                <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Description</label>
-                <textarea name="description" defaultValue={editingProduct?.description} rows={3} className="w-full p-3 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none resize-none" />
+              <div className="grid grid-cols-3 col-span-2 gap-4">
+                <div>
+                   <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Price (Q)</label>
+                   <input name="price_quarter" type="number" defaultValue={editingProduct?.price_quarter} className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" />
+                </div>
+                <div>
+                   <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Price (G)</label>
+                   <input name="price_gallon" type="number" defaultValue={editingProduct?.price_gallon} className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" />
+                </div>
+                <div>
+                   <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Price (D)</label>
+                   <input name="price_drum" type="number" defaultValue={editingProduct?.price_drum} className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" />
+                </div>
               </div>
-              <div>
-                 <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Price (Quarter)</label>
-                 <input name="price_quarter" type="number" defaultValue={editingProduct?.price_quarter} className="w-full p-3 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none" />
-              </div>
-              <div>
-                 <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Price (Gallon)</label>
-                 <input name="price_gallon" type="number" defaultValue={editingProduct?.price_gallon} className="w-full p-3 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none" />
-              </div>
-              <div>
-                 <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Price (Drum)</label>
-                 <input name="price_drum" type="number" defaultValue={editingProduct?.price_drum} className="w-full p-3 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none" />
-              </div>
-              <div className="flex items-center gap-3">
-                 <input type="checkbox" name="in_stock" defaultChecked={editingProduct ? editingProduct.in_stock : true} className="w-5 h-5 accent-gold" />
-                 <label className="text-sm font-bold text-navy">In Stock</label>
+              <div className="flex items-center gap-2">
+                 <input type="checkbox" name="in_stock" id="in_stock" defaultChecked={editingProduct ? editingProduct.in_stock : true} className="w-4 h-4 accent-gold" />
+                 <label htmlFor="in_stock" className="text-xs font-bold text-navy">In Stock</label>
               </div>
             </div>
-            <div className="p-6 bg-gray-50 border-t border-gray-100 flex justify-end gap-4">
-              <button type="button" onClick={() => setIsModalOpen(false)} className="px-6 py-2 text-gray-500 font-bold hover:text-navy">Cancel</button>
-              <button type="submit" className="px-8 py-2 bg-navy text-white font-bold rounded-lg hover:bg-navy/90 shadow-md">Save Changes</button>
+            <div className="p-5 bg-gray-50 border-t border-gray-100 flex justify-end gap-3">
+              <button type="button" onClick={() => { setIsModalOpen(false); setEditingProduct(null); }} className="px-5 py-2 text-sm text-gray-500 font-bold hover:text-navy">Cancel</button>
+              <button type="submit" className="px-6 py-2 bg-navy text-white text-sm font-bold rounded-lg hover:bg-navy/90 shadow-md transition-all active:scale-95">Save Product</button>
             </div>
           </form>
         </div>
