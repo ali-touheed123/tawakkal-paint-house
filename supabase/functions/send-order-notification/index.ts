@@ -131,7 +131,7 @@ serve(async (req: Request): Promise<Response> => {
         Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "Tawakkal Paint House <onboarding@resend.dev>",
+        from: "Tawakkal Paint House <painthtawakkal@gmail.com>",
         to: [email],
         subject: subject,
         html: htmlContent,
