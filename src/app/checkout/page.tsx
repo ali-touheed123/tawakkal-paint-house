@@ -106,10 +106,6 @@ export default function CheckoutPage() {
     else if (!/^03\d{9}$/.test(formData.phone.replace(/\s/g, ''))) {
       newErrors.phone = 'Phone must be 03XXXXXXXXX format';
     }
-    if (!formData.email.trim()) newErrors.email = 'Email address is required';
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
-    }
     if (!formData.deliveryArea) newErrors.deliveryArea = 'Please select delivery area';
     if (!formData.deliveryAddress.trim()) newErrors.deliveryAddress = 'Delivery address is required';
 
@@ -146,7 +142,6 @@ export default function CheckoutPage() {
         .insert({
           user_id: null,
           customer_name: formData.fullName,
-          email: formData.email,
           items: orderItems,
           subtotal,
           discount_percent: discountPercent,
@@ -215,16 +210,14 @@ export default function CheckoutPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Email (Optional)</label>
                   <input
                     type="email"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 ${errors.email ? 'border-red-500' : 'border-gray-200 focus:border-gold'
-                      }`}
+                    className="w-full p-3 border border-gray-200 rounded-lg focus:border-gold focus:outline-none"
                     placeholder="john@example.com"
                   />
-                  {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
                 </div>
 
                 <div>
