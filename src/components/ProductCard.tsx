@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { MessageCircle, ShoppingCart, Bell } from 'lucide-react';
 import { Product, ItemSize } from '@/types';
 import { useCartStore } from '@/lib/store';
+import { cn } from '@/lib/utils';
 
 interface ProductCardProps {
   product: Product;
@@ -63,10 +64,24 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
 
       {/* Content */}
       <div className="p-3">
-        <p className="text-gold text-[10px] uppercase tracking-wider font-semibold mb-0.5">
-          {product.brand}
-        </p>
-        <h3 className="font-heading text-base font-semibold text-navy mb-2 line-clamp-2 h-12">
+        <div className="flex items-center justify-between mb-0.5">
+          <p className="text-gold text-[10px] uppercase tracking-wider font-semibold">
+            {product.brand}
+          </p>
+          <div className="flex items-center gap-1">
+            <div className={cn(
+              "w-1.5 h-1.5 rounded-full animate-pulse",
+              product.in_stock ? "bg-green-500" : "bg-red-500"
+            )} />
+            <span className={cn(
+              "text-[9px] font-bold uppercase tracking-tight",
+              product.in_stock ? "text-green-600" : "text-red-600"
+            )}>
+              {product.in_stock ? 'In Stock' : 'Out of Stock'}
+            </span>
+          </div>
+        </div>
+        <h3 className="font-heading text-base font-semibold text-navy mb-2 line-clamp-2 h-10">
           {(() => {
             const nameLower = product.name.toLowerCase();
             const brandLower = product.brand.toLowerCase();
