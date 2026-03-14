@@ -166,10 +166,7 @@ export default function DealsManagement() {
             <Briefcase className="text-gold" />
             Full Deals Configuration
           </h1>
-          <p className="text-gray-500 mt-1">Customize pricing, labor rates, and what&apos;s included in each package.</p>
-          <div className="mt-2 text-[10px] text-gray-400 font-mono">
-            Logged in as: {loading ? 'Checking...' : (session?.user?.email || 'Not logged in')}
-          </div>
+          <p className="text-gray-500 mt-2">Customize pricing, labor rates, and what&apos;s included in each package.</p>
         </div>
         <button
           onClick={handleSave}

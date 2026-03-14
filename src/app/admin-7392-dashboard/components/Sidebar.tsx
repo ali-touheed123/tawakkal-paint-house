@@ -12,6 +12,7 @@ import {
   Briefcase
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { createClient } from '@/lib/supabase/client';
 
 const navItems = [
   { name: 'Dashboard', href: '/admin-7392-dashboard', icon: LayoutDashboard },
@@ -69,6 +70,17 @@ export function Sidebar() {
           <Home size={20} className="text-white/40" />
           View Store
         </Link>
+        <button 
+          onClick={async () => {
+            const supabase = createClient();
+            await supabase.auth.signOut();
+            window.location.href = '/admin-7392-dashboard/login';
+          }}
+          className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-500/10 transition-all font-medium"
+        >
+          <LogOut size={20} />
+          Logout
+        </button>
       </div>
     </aside>
   );
