@@ -32,11 +32,13 @@ export default function AdminDashboard() {
         
       if (orders) {
         const today = new Date().toISOString().split('T')[0];
+        const activeOrders = orders.filter(o => o.status !== 'cancelled');
+        
         const statsData = {
-          totalOrders: orders.length,
-          totalRevenue: orders.reduce((sum, o) => sum + (Number(o.total) || 0), 0),
-          ordersToday: orders.filter(o => o.created_at?.startsWith(today)).length,
-          pendingOrders: orders.filter(o => o.status === 'pending').length
+          totalOrders: activeOrders.length,
+          totalRevenue: activeOrders.reduce((sum, o) => sum + (Number(o.total) || 0), 0),
+          ordersToday: activeOrders.filter(o => o.created_at?.startsWith(today)).length,
+          pendingOrders: activeOrders.filter(o => o.status === 'pending').length
         };
         setStats(statsData);
       }
