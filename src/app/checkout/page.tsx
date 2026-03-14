@@ -28,6 +28,7 @@ export default function CheckoutPage() {
     deliveryArea: globalArea || '',
     deliveryAddress: ''
   });
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string>('cod');
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
@@ -139,13 +140,14 @@ export default function CheckoutPage() {
         .from('orders')
         .insert({
           user_id: null,
+          customer_name: formData.fullName,
           items: orderItems,
           subtotal,
           discount_percent: discountPercent,
           discount_amount: discountAmount,
           shipping_amount: shippingCharge,
           total,
-          payment_method: 'cash_on_delivery',
+          payment_method: selectedPaymentMethod,
           status: 'pending',
           delivery_area: formData.deliveryArea,
           delivery_address: formData.deliveryAddress,
@@ -258,30 +260,44 @@ export default function CheckoutPage() {
 
               <div className="space-y-3">
                 {paymentMethods.map((method) => (
-                  <div
+                  <label
                     key={method.id}
-                    className={`flex items-center gap-4 p-4 rounded-lg border-2 transition-colors ${method.type === 'cod'
-                        ? 'border-green-500 bg-green-50'
-                        : 'border-gray-200 opacity-60'
+                    className={`flex items-center gap-4 p-4 rounded-lg border-2 cursor-pointer transition-all ${selectedPaymentMethod === method.type
+                        ? 'border-gold bg-gold/5 shadow-sm'
+                        : 'border-gray-100 hover:border-gold/30 hover:bg-gray-50'
                       }`}
                   >
-                    {method.type === 'cod' ? (
-                      <Check className="text-green-500" size={20} />
-                    ) : (
-                      <Lock className="text-gray-400" size={20} />
-                    )}
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      className="hidden"
+                      checked={selectedPaymentMethod === method.type}
+                      onChange={() => setSelectedPaymentMethod(method.type)}
+                    />
+                    
+                    <div className={`flex items-center justify-center h-5 w-5 rounded-full border-2 ${
+                      selectedPaymentMethod === method.type ? 'border-gold bg-gold' : 'border-gray-300'
+                    }`}>
+                      {selectedPaymentMethod === method.type && <div className="h-2 w-2 rounded-full bg-white" />}
+                    </div>
 
                     <div className="flex-1">
-                      <p className={`font-medium ${method.type === 'cod' ? 'text-navy' : 'text-gray-500'}`}>
+                      <p className="font-semibold text-navy">
                         {method.name}
                       </p>
-                      {method.type !== 'cod' && (
-                        <span className="text-xs bg-gold text-navy px-2 py-0.5 rounded-full">Coming Soon</span>
+                      {method.details && (
+                        <p className="text-xs text-gray-500 mt-0.5">{method.details}</p>
                       )}
                     </div>
 
-                    <CreditCard className={method.type === 'cod' ? 'text-green-500' : 'text-gray-400'} size={20} />
-                  </div>
+                    <div className="p-2 bg-gray-50 rounded-lg">
+                      {method.type === 'cod' ? (
+                        <CreditCard className="text-navy/70" size={20} />
+                      ) : (
+                        <Smartphone className="text-navy/70" size={20} />
+                      )}
+                    </div>
+                  </label>
                 ))}
               </div>
             </div>
