@@ -13,7 +13,7 @@ import { type OrderItem } from '@/types';
 export default function CheckoutPage() {
   const router = useRouter();
   const { items, getTotal, clearCart } = useCartStore();
-  const { area: deliveryArea } = useLocationStore();
+  const { area: globalArea, setArea: setGlobalArea } = useLocationStore();
 
   const [loading, setLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -25,7 +25,7 @@ export default function CheckoutPage() {
     fullName: '',
     phone: '',
     email: '',
-    deliveryArea: deliveryArea || '',
+    deliveryArea: globalArea || '',
     deliveryAddress: ''
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -33,6 +33,13 @@ export default function CheckoutPage() {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Sync global area to form if it changes externally
+  useEffect(() => {
+    if (globalArea && globalArea !== formData.deliveryArea) {
+      setFormData(prev => ({ ...prev, deliveryArea: globalArea }));
+    }
+  }, [globalArea]);
 
 
 
@@ -87,7 +94,7 @@ export default function CheckoutPage() {
   const subtotal = getTotal();
   const discountPercent = calculateDiscount(subtotal);
   const discountAmount = subtotal * (discountPercent / 100);
-  const shippingCharge = deliveryArea ? (getRateForArea(deliveryArea, subtotal) || 0) : 0;
+  const shippingCharge = formData.deliveryArea ? (getRateForArea(formData.deliveryArea, subtotal) || 0) : 0;
   const total = subtotal - discountAmount + shippingCharge;
 
   const validate = () => {
@@ -214,7 +221,11 @@ export default function CheckoutPage() {
                   <label className="block text-sm font-medium text-gray-700 mb-1">Delivery Area *</label>
                   <select
                     value={formData.deliveryArea}
-                    onChange={(e) => setFormData({ ...formData, deliveryArea: e.target.value })}
+                    onChange={(e) => {
+                      const newArea = e.target.value;
+                      setFormData({ ...formData, deliveryArea: newArea });
+                      setGlobalArea(newArea);
+                    }}
                     className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 ${errors.deliveryArea ? 'border-red-500' : 'border-gray-200 focus:border-gold'
                       }`}
                   >
