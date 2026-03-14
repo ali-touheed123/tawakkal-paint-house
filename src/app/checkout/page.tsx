@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Loader2, Lock, Check, CreditCard, Smartphone, Building } from 'lucide-react';
-import { useCartStore, useUserStore, useLocationStore, useUIStore } from '@/lib/store';
+import { useCartStore, useLocationStore } from '@/lib/store';
 import { createClient } from '@/lib/supabase/client';
 import { useDiscountRules, useShippingRates, usePaymentMethods } from '@/lib/hooks/useSettings';
 import { type OrderItem } from '@/types';
@@ -13,9 +13,7 @@ import { type OrderItem } from '@/types';
 export default function CheckoutPage() {
   const router = useRouter();
   const { items, getTotal, clearCart } = useCartStore();
-  const { user, isAuthenticated } = useUserStore();
   const { area: deliveryArea } = useLocationStore();
-  const { redirectAfterAuth } = useUIStore();
 
   const [loading, setLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -24,9 +22,9 @@ export default function CheckoutPage() {
   const { getRateForArea, rates } = useShippingRates();
   const { methods: paymentMethods } = usePaymentMethods();
   const [formData, setFormData] = useState({
-    fullName: user?.full_name || '',
-    phone: user?.phone || '',
-    email: user?.email || '',
+    fullName: '',
+    phone: '',
+    email: '',
     deliveryArea: deliveryArea || '',
     deliveryAddress: ''
   });
@@ -36,25 +34,9 @@ export default function CheckoutPage() {
     setMounted(true);
   }, []);
 
-  useEffect(() => {
-    if (mounted && !isAuthenticated) {
-      router.push('/?auth_required=true');
-    }
-  }, [mounted, isAuthenticated, router]);
 
-  useEffect(() => {
-    if (user) {
-      setFormData(prev => ({
-        ...prev,
-        fullName: prev.fullName || user.full_name || '',
-        phone: prev.phone || user.phone || '',
-        email: prev.email || user.email || '',
-        deliveryArea: prev.deliveryArea || deliveryArea || ''
-      }));
-    }
-  }, [user, deliveryArea]);
 
-  if (!mounted || !isAuthenticated) {
+  if (!mounted) {
     return (
       <div className="min-h-screen pt-[70px] flex items-center justify-center">
         <Loader2 className="animate-spin text-gold" size={40} />
@@ -149,7 +131,7 @@ export default function CheckoutPage() {
       const { data, error } = await supabase
         .from('orders')
         .insert({
-          user_id: user?.id,
+          user_id: null,
           items: orderItems,
           subtotal,
           discount_percent: discountPercent,
@@ -338,6 +320,15 @@ export default function CheckoutPage() {
                   <span>Total</span>
                   <span>Rs. {total.toLocaleString()}</span>
                 </div>
+
+                {discountPercent > 0 && (
+                  <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg animate-fade-in">
+                    <p className="text-green-700 text-sm font-medium flex items-center gap-2">
+                      <Check size={16} />
+                      Congratulations! You have received a discount of {discountPercent}% (Rs. {discountAmount.toLocaleString()}) on your order.
+                    </p>
+                  </div>
+                )}
               </div>
 
               {errors.submit && (

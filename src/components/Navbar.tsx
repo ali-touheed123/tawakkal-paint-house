@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, MessageCircle, ShoppingCart, User, Menu, X, MapPin, ChevronRight, ChevronDown } from 'lucide-react';
-import { useCartStore, useLocationStore, useUIStore, useUserStore } from '@/lib/store';
+import { Search, MessageCircle, ShoppingCart, Menu, X, MapPin, ChevronRight, ChevronDown } from 'lucide-react';
+import { useCartStore, useLocationStore, useUIStore } from '@/lib/store';
 import { createClient } from '@/lib/supabase/client';
 import { Category, Brand } from '@/types';
 import { useSettings } from '@/lib/hooks/useSettings';
@@ -14,8 +14,7 @@ export function Navbar() {
   const pathname = usePathname();
   const { items } = useCartStore();
   const { area } = useLocationStore();
-  const { setLocationPopupOpen, isMobileMenuOpen, setMobileMenuOpen, setSearchOpen, setAuthModalOpen, setAuthModalMode } = useUIStore();
-  const { user, isAuthenticated } = useUserStore();
+  const { setLocationPopupOpen, isMobileMenuOpen, setMobileMenuOpen, setSearchOpen } = useUIStore();
   const { settings } = useSettings();
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -76,14 +75,6 @@ export function Navbar() {
     ]
   };
 
-  const handleProfileClick = () => {
-    if (isAuthenticated) {
-      window.location.href = '/profile';
-    } else {
-      setAuthModalMode('login');
-      setAuthModalOpen(true);
-    }
-  };
 
   const handleChangeArea = () => {
     if (typeof window !== 'undefined' && (window as any).openLocationPopup) {
@@ -268,17 +259,6 @@ export function Navbar() {
                 )}
               </Link>
 
-              <button
-                onClick={handleProfileClick}
-                className="text-white/80 hover:text-gold transition-colors"
-                aria-label="Profile"
-              >
-                {isAuthenticated && user ? (
-                  <span className="text-gold text-sm font-medium">{user.full_name.split(' ')[0]}</span>
-                ) : (
-                  <User size={20} />
-                )}
-              </button>
 
               {area && (
                 <button
@@ -428,9 +408,6 @@ export function Navbar() {
                     )}
                   </Link>
 
-                  <button onClick={handleProfileClick} className="text-white/80">
-                    <User size={20} />
-                  </button>
                 </div>
 
                 {area && (

@@ -4,9 +4,7 @@ import { LocationPopup } from "@/components/LocationPopup";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
-import { AuthModal } from "@/components/AuthModal";
 import { SearchOverlay } from "@/components/SearchOverlay";
-import { AuthProvider } from "@/components/AuthProvider";
 
 export const metadata: Metadata = {
   title: "Tawakkal Paint House | Premium Paints in Karachi",
@@ -74,17 +72,14 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
-        <AuthProvider>
-          <LocationPopup />
-          <Navbar />
-          <AuthModal />
-          <SearchOverlay />
-          <main className="min-h-screen">
-            {children}
-          </main>
-          <Footer />
-          <WhatsAppFloat />
-        </AuthProvider>
+        <LocationPopup />
+        <Navbar />
+        <SearchOverlay />
+        <main className="min-h-screen">
+          {children}
+        </main>
+        <Footer />
+        <WhatsAppFloat />
       </body>
     </html>
   );

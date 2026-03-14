@@ -42,14 +42,6 @@ export interface Product {
   created_at: string;
 }
 
-export interface User {
-  id: string;
-  full_name: string;
-  phone: string | null;
-  email: string | null;
-  area: string | null;
-  created_at: string;
-}
 
 export interface CartItem {
   id: string;
@@ -78,7 +70,7 @@ export interface OrderItem {
 
 export interface Order {
   id: string;
-  user_id: string | null;
+  user_id?: string | null;
   items: OrderItem[];
   subtotal: number;
   discount_percent: number;
@@ -91,10 +83,6 @@ export interface Order {
   delivery_address: string;
   phone: string;
   created_at: string;
-  users?: {
-    full_name: string;
-    email: string | null;
-  };
 }
 
 export interface SiteSettings {
