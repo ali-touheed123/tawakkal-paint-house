@@ -330,11 +330,11 @@ export default function CheckoutPage() {
                       )}
                     </div>
                     <span className="font-medium">
-                      Rs. {((item.size === 'quarter'
+                      Rs. {(((item.size === 'quarter'
                         ? item.product?.price_quarter
                         : item.size === 'gallon'
                           ? item.product?.price_gallon
-                          : item.product?.price_drum) || 0 * item.quantity).toLocaleString()}
+                          : item.product?.price_drum) || 0) * item.quantity).toLocaleString()}
                     </span>
                   </div>
                 ))}

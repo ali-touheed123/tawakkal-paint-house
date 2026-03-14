@@ -59,12 +59,16 @@ export default function DiscountsPage() {
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget as HTMLFormElement);
-    const ruleData = {
+    const ruleData: any = {
       name: formData.get('name'),
       min_amount: Number(formData.get('min_amount')),
       discount_percent: Number(formData.get('discount_percent')),
-      is_active: true
     };
+
+    // Only set default active for new rules
+    if (!editingRule) {
+      ruleData.is_active = true;
+    }
 
     const supabase = createClient();
     if (editingRule?.id) {
