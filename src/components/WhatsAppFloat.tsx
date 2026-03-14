@@ -1,10 +1,15 @@
 'use client';
 
 import { MessageCircle } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 import { useSettings } from '@/lib/hooks/useSettings';
 
 export function WhatsAppFloat() {
+  const pathname = usePathname();
   const { settings } = useSettings();
+
+  // Hide WhatsApp button on admin dashboard
+  if (pathname?.startsWith('/admin-7392-dashboard')) return null;
   return (
     <a
       href={`https://wa.me/${settings?.contact?.whatsapp || '923475658761'}?text=Hi! I need help with paint.`}

@@ -4,12 +4,17 @@ import { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search as SearchIcon, X } from 'lucide-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useUIStore } from '@/lib/store';
 import { createClient } from '@/lib/supabase/client';
 import { Product } from '@/types';
 
 export function SearchOverlay() {
+  const pathname = usePathname();
   const { isSearchOpen, setSearchOpen } = useUIStore();
+
+  // Hide search overlay on admin dashboard
+  if (pathname?.startsWith('/admin-7392-dashboard')) return null;
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);

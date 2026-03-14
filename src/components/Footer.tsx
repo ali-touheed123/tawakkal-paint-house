@@ -1,13 +1,18 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { MessageCircle, Instagram, Facebook, Phone, MapPin, Music2 } from 'lucide-react';
 import { useLocationStore, useUIStore } from '@/lib/store';
 import { useSettings } from '@/lib/hooks/useSettings';
 
 export function Footer() {
+  const pathname = usePathname();
   const { setLocationPopupOpen } = useUIStore();
   const { settings } = useSettings();
+
+  // Hide footer on admin dashboard
+  if (pathname?.startsWith('/admin-7392-dashboard')) return null;
 
   const handleChangeArea = () => {
     if (typeof window !== 'undefined' && (window as any).openLocationPopup) {

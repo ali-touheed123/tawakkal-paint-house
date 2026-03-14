@@ -2,13 +2,18 @@
 
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { usePathname } from 'next/navigation';
 import { useLocationStore, useUIStore } from '@/lib/store';
 import { KARACHI_AREAS } from '@/types';
 import { X } from 'lucide-react';
 
 export function LocationPopup() {
+  const pathname = usePathname();
   const { area, hasSelectedArea, setArea } = useLocationStore();
   const { isLocationPopupOpen, setLocationPopupOpen } = useUIStore();
+
+  // Hide location popup on admin dashboard
+  if (pathname?.startsWith('/admin-7392-dashboard')) return null;
   const [isVisible, setIsVisible] = useState(false);
   const [selectedArea, setSelectedArea] = useState<string | null>(area);
 

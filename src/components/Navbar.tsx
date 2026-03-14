@@ -4,7 +4,9 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, MessageCircle, ShoppingCart, Menu, X, MapPin, ChevronRight, ChevronDown } from 'lucide-react';
+import { Search, MessageCircle, ShoppingCart, Menu, X, MapPin, ChevronRight,
+  ChevronDown
+} from 'lucide-react';
 import { useCartStore, useLocationStore, useUIStore } from '@/lib/store';
 import { createClient } from '@/lib/supabase/client';
 import { Category, Brand } from '@/types';
@@ -54,6 +56,9 @@ export function Navbar() {
   }, [pathname, setMobileMenuOpen]);
 
   const cartCount = items.reduce((sum, item) => sum + item.quantity, 0);
+
+  // Hide navbar on admin dashboard
+  if (pathname?.startsWith('/admin-7392-dashboard')) return null;
 
   const navLinks = [
     { href: '/', label: 'Home' },
