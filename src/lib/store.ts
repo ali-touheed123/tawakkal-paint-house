@@ -25,6 +25,15 @@ export const useCartStore = create<CartStore>()(
             item.size === size && 
             JSON.stringify(item.selectedShade) === JSON.stringify(selectedShade)
         );
+
+        // Update UI Store for Notification
+        const uiStore = useUIStore.getState();
+        uiStore.setLastAddedItem({ 
+          name: product?.name || 'Product', 
+          image: product?.image_url || null 
+        });
+        uiStore.setCartToastOpen(true);
+
         if (existingItem) {
           set({
             items: items.map(item =>
@@ -150,6 +159,10 @@ interface UIStore {
   setSearchOpen: (open: boolean) => void;
   isMobileMenuOpen: boolean;
   setMobileMenuOpen: (open: boolean) => void;
+  isCartToastOpen: boolean;
+  setCartToastOpen: (open: boolean) => void;
+  lastAddedItem: { name: string; image: string | null } | null;
+  setLastAddedItem: (item: { name: string; image: string | null } | null) => void;
 }
 
 export const useUIStore = create<UIStore>()(
@@ -160,7 +173,11 @@ export const useUIStore = create<UIStore>()(
       isSearchOpen: false,
       setSearchOpen: (open) => set({ isSearchOpen: open }),
       isMobileMenuOpen: false,
-      setMobileMenuOpen: (open) => set({ isMobileMenuOpen: open })
+      setMobileMenuOpen: (open) => set({ isMobileMenuOpen: open }),
+      isCartToastOpen: false,
+      setCartToastOpen: (open) => set({ isCartToastOpen: open }),
+      lastAddedItem: null,
+      setLastAddedItem: (item) => set({ lastAddedItem: item })
     }),
     {
       name: 'tawakkal-ui'

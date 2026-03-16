@@ -5,6 +5,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { SearchOverlay } from "@/components/SearchOverlay";
+import { CartToast } from "@/components/CartToast";
 
 export const metadata: Metadata = {
   title: "Tawakkal Paint House | Premium Paints in Karachi",
@@ -80,6 +81,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <WhatsAppFloat />
+        <CartToast />
       </body>
     </html>
   );
