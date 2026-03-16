@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
     Search, 
@@ -14,10 +14,12 @@ import {
 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 type OrderStatus = 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
 
 export default function OrderTrackingPage() {
+    const searchParams = useSearchParams();
     const [orderId, setOrderId] = useState('');
     const [email, setEmail] = useState('');
     const [loading, setLoading] = useState(false);
@@ -25,6 +27,13 @@ export default function OrderTrackingPage() {
     const [error, setError] = useState<string | null>(null);
 
     const supabase = createClient();
+
+    useEffect(() => {
+        const idFromUrl = searchParams.get('id');
+        if (idFromUrl) {
+            setOrderId(idFromUrl);
+        }
+    }, [searchParams]);
 
     const handleTrack = async (e: React.FormEvent) => {
         e.preventDefault();

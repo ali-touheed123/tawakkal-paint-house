@@ -77,10 +77,17 @@ export default function CheckoutPage() {
             href={`https://wa.me/923475658761?text=Hi! My order ID is ${orderId}. Please update me on my delivery status.`}
             target="_blank"
             rel="noopener noreferrer"
-            className="block w-full py-3 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-400 transition-colors mb-4"
+            className="block w-full py-3 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-400 transition-colors mb-3"
           >
             Track on WhatsApp
           </a>
+
+          <Link
+            href={`/track?id=${orderId}`}
+            className="block w-full py-3 bg-gold text-navy rounded-lg font-semibold hover:bg-gold-light transition-colors mb-3"
+          >
+            Track Order
+          </Link>
 
           <Link
             href="/"

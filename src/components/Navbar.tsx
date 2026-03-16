@@ -66,6 +66,7 @@ export function Navbar() {
     { href: '/about', label: 'About Us' },
     { href: '/#why-choose-us', label: 'Why Choose Us' },
     { href: '/#calculator', label: 'Calculator' },
+    { href: '/track', label: 'Track Order' },
     { href: '/contact', label: 'Contact Us' },
   ];
 
