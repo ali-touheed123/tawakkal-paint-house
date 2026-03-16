@@ -33,6 +33,7 @@ export default function AdminReviewsPage() {
     const [loading, setLoading] = useState(true);
     const [stats, setStats] = useState({ pending: 0, approved: 0 });
     const [filter, setFilter] = useState<'all' | 'pending' | 'approved' | 'rejected'>('all');
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
     const supabase = createClient();
 
@@ -87,7 +88,7 @@ export default function AdminReviewsPage() {
                 </div>
                 <div className="flex items-center gap-3">
                     <button 
-                        onClick={() => window.location.href = '#add-shop-review'}
+                        onClick={() => setIsAddModalOpen(true)}
                         className="bg-gold text-navy font-bold px-6 py-3 rounded-xl flex items-center gap-2 hover:bg-navy hover:text-white transition-all shadow-lg shadow-gold/20"
                     >
                         <Plus size={20} />
@@ -264,10 +265,10 @@ export default function AdminReviewsPage() {
 
             {/* Add Shop Review Modal */}
             <AddShopReviewModal 
-                isOpen={window.location.hash === '#add-shop-review'} 
-                onClose={() => window.location.hash = ''}
+                isOpen={isAddModalOpen} 
+                onClose={() => setIsAddModalOpen(false)}
                 onSuccess={() => {
-                    window.location.hash = '';
+                    setIsAddModalOpen(false);
                     fetchReviews();
                 }}
             />
@@ -282,6 +283,16 @@ function AddShopReviewModal({ isOpen, onClose, onSuccess }: { isOpen: boolean, o
     const [content, setContent] = useState('');
     const [file, setFile] = useState<File | null>(null);
     const [preview, setPreview] = useState<string | null>(null);
+
+    useEffect(() => {
+        const handleEsc = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') onClose();
+        };
+        if (isOpen) {
+            window.addEventListener('keydown', handleEsc);
+        }
+        return () => window.removeEventListener('keydown', handleEsc);
+    }, [isOpen, onClose]);
 
     const supabase = createClient();
 
