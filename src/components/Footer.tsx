@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { MessageCircle, Instagram, Facebook, Phone, MapPin, Music2 } from 'lucide-react';
+import { MessageCircle, Instagram, Facebook, Phone, MapPin, Music2, ArrowRight, ChevronUp } from 'lucide-react';
 import { useLocationStore, useUIStore } from '@/lib/store';
 import { useSettings } from '@/lib/hooks/useSettings';
 
@@ -22,115 +22,161 @@ export function Footer() {
     }
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <footer className="bg-navy text-white pt-16 pb-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-          {/* Column 1: Logo & Description */}
-          <div>
-            <div className="flex items-center gap-2 mb-4">
+    <footer className="bg-navy relative overflow-hidden pt-20 pb-8 text-gray-300 selection:bg-gold selection:text-navy">
+      {/* Subtle top border accent */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-navy via-gold/50 to-navy opacity-50"></div>
+      
+      {/* Decorative background blur */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gold/5 rounded-full blur-[120px] pointer-events-none transform translate-x-1/2 -translate-y-1/2"></div>
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-900/10 rounded-full blur-[120px] pointer-events-none transform -translate-x-1/2 translate-y-1/2"></div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
+          
+          {/* Column 1: Brand & Desc */}
+          <div className="lg:pr-8 space-y-6">
+            <Link href="/" className="inline-block">
               <img
                 src={settings?.logo || "/logo.png"}
                 alt="Tawakkal Paint House"
-                className="h-12 w-auto"
+                className="h-14 w-auto drop-shadow-lg"
               />
-            </div>
-            <p className="text-gray-400 text-sm mb-6">
-              Quality You Can Trust Since 2011
+            </Link>
+            <p className="text-gray-400 text-sm leading-relaxed pr-4">
+              Providing premium quality paints, industrial coatings, and painting solutions since 2011. Your trusted partner in color.
             </p>
-            <div className="flex items-center gap-4">
-              <Link
+            <div className="flex items-center gap-3 pt-2">
+              <a
                 href={`https://wa.me/${settings?.contact?.whatsapp || '923475658761'}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-green-400 hover:text-green-300 transition-colors"
+                className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-[#25D366] hover:text-white hover:border-[#25D366] hover:scale-110 active:scale-95 transition-all duration-300"
                 aria-label="WhatsApp"
               >
-                <MessageCircle size={20} />
-              </Link>
-              <a
-                href={settings?.socials?.instagram || "#"}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-400 hover:text-gold transition-colors"
-                aria-label="Instagram"
-              >
-                <Instagram size={20} />
+                <MessageCircle size={18} />
               </a>
               <a
                 href={settings?.socials?.facebook || "#"}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-gold transition-colors"
+                className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2] hover:scale-110 active:scale-95 transition-all duration-300"
                 aria-label="Facebook"
               >
-                <Facebook size={20} />
+                <Facebook size={18} />
+              </a>
+              <a
+                href={settings?.socials?.instagram || "#"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-gradient-to-tr hover:from-[#f09433] hover:via-[#dc2743] hover:to-[#bc1888] hover:text-white hover:border-transparent hover:scale-110 active:scale-95 transition-all duration-300"
+                aria-label="Instagram"
+              >
+                <Instagram size={18} />
               </a>
               <a
                 href={settings?.socials?.tiktok || "#"}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-gold transition-colors"
+                className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-black hover:text-white hover:border-white/20 hover:scale-110 active:scale-95 transition-all duration-300"
                 aria-label="TikTok"
               >
-                <Music2 size={20} />
+                <Music2 size={18} />
               </a>
             </div>
           </div>
 
           {/* Column 2: Quick Links */}
           <div>
-            <h3 className="font-heading text-lg font-semibold mb-4 text-gold">Quick Links</h3>
-            <ul className="space-y-2">
-              <li><Link href="/" className="text-gray-400 hover:text-gold transition-colors text-sm">Home</Link></li>
-              <li><Link href="/category/decorative" className="text-gray-400 hover:text-gold transition-colors text-sm">Products</Link></li>
-              <li><Link href="/#why-choose-us" className="text-gray-400 hover:text-gold transition-colors text-sm">Why Choose Us</Link></li>
-              <li><Link href="/#calculator" className="text-gray-400 hover:text-gold transition-colors text-sm">Calculator</Link></li>
-              <li><Link href="/#contact" className="text-gray-400 hover:text-gold transition-colors text-sm">Contact Us</Link></li>
-            </ul>
-            <h3 className="font-heading text-lg font-semibold mt-6 mb-4 text-gold">Categories</h3>
-            <ul className="space-y-2">
-              <li><Link href="/category/decorative" className="text-gray-400 hover:text-gold transition-colors text-sm">Decorative</Link></li>
-              <li><Link href="/category/industrial" className="text-gray-400 hover:text-gold transition-colors text-sm">Industrial</Link></li>
-              <li><Link href="/category/auto" className="text-gray-400 hover:text-gold transition-colors text-sm">Auto</Link></li>
-              <li><Link href="/deals" className="text-gray-400 hover:text-gold transition-colors text-sm font-semibold text-gold">Deals & Projects</Link></li>
+            <h3 className="text-white font-bold tracking-widest uppercase text-xs mb-6 after:content-[''] after:block after:w-8 after:h-0.5 after:bg-gold after:mt-3">Quick Links</h3>
+            <ul className="space-y-3">
+              {[
+                { name: 'Home', path: '/' },
+                { name: 'Calculator', path: '/#calculator' },
+                { name: 'Why Choose Us', path: '/#why-choose-us' },
+                { name: 'Contact Us', path: '/#contact' },
+              ].map((link) => (
+                <li key={link.name}>
+                  <Link href={link.path} className="group flex items-center text-sm text-gray-400 hover:text-gold transition-colors">
+                    <ArrowRight size={14} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-gold mr-2" />
+                    <span className="group-hover:translate-x-1 transition-transform duration-300">{link.name}</span>
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Column 3: Contact */}
+          {/* Column 3: Categories */}
           <div>
-            <h3 className="font-heading text-lg font-semibold mb-4 text-gold">Contact Us</h3>
-            <div className="space-y-4">
-              <div className="flex items-start gap-3">
-                <Phone size={18} className="text-gold mt-0.5" />
-                <div>
-                  <p className="text-gray-400 text-sm">{settings?.contact?.phone || '0347-5658761'}</p>
-                  <p className="text-gray-400 text-sm">WhatsApp: {settings?.contact?.whatsapp || '0347-5658761'}</p>
+            <h3 className="text-white font-bold tracking-widest uppercase text-xs mb-6 after:content-[''] after:block after:w-8 after:h-0.5 after:bg-gold after:mt-3">Categories</h3>
+            <ul className="space-y-3">
+              {[
+                { name: 'Decorative Paints', path: '/category/decorative' },
+                { name: 'Industrial Coatings', path: '/category/industrial' },
+                { name: 'Auto Refinish', path: '/category/auto' },
+                { name: 'Deals & Projects', path: '/deals', special: true },
+              ].map((link) => (
+                <li key={link.name}>
+                  <Link href={link.path} className={`group flex items-center text-sm transition-colors ${link.special ? 'text-gold font-semibold' : 'text-gray-400 hover:text-gold'}`}>
+                    <ArrowRight size={14} className={`opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 mr-2 ${link.special ? 'text-gold opacity-100 translate-x-0' : 'text-gold'}`} />
+                    <span className="group-hover:translate-x-1 transition-transform duration-300">{link.name}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 4: Contact Us */}
+          <div>
+            <h3 className="text-white font-bold tracking-widest uppercase text-xs mb-6 after:content-[''] after:block after:w-8 after:h-0.5 after:bg-gold after:mt-3">Contact Info</h3>
+            <ul className="space-y-5">
+              <li className="flex items-start gap-4">
+                <div className="w-8 h-8 rounded-full bg-white/5 flex flex-shrink-0 items-center justify-center text-gold mt-1">
+                  <MapPin size={14} />
                 </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <MapPin size={18} className="text-gold mt-0.5" />
                 <div>
-                  <p className="text-gray-400 text-sm">Karachi, Pakistan</p>
-                  <button
-                    onClick={handleChangeArea}
-                    className="text-gold text-sm hover:underline mt-1"
-                  >
+                  <p className="text-sm text-white font-medium mb-1">Location</p>
+                  <p className="text-sm text-gray-400 leading-relaxed mb-2">Karachi, Pakistan</p>
+                  <button onClick={handleChangeArea} className="text-xs font-bold text-gold hover:text-white uppercase tracking-wider transition-colors border-b border-gold/30 hover:border-white pb-0.5">
                     Change Delivery Area
                   </button>
                 </div>
-              </div>
-            </div>
+              </li>
+              <li className="flex items-start gap-4">
+                <div className="w-8 h-8 rounded-full bg-white/5 flex flex-shrink-0 items-center justify-center text-gold mt-1">
+                  <Phone size={14} />
+                </div>
+                <div>
+                  <p className="text-sm text-white font-medium mb-1">Phone & WhatsApp</p>
+                  <a href={`tel:${settings?.contact?.phone || '0347-5658761'}`} className="block text-sm text-gray-400 hover:text-gold transition-colors mb-0.5">{settings?.contact?.phone || '0347-5658761'}</a>
+                  <a href={`https://wa.me/${settings?.contact?.whatsapp || '923475658761'}`} className="block text-sm text-[#25D366] hover:text-white transition-colors">WhatsApp Us</a>
+                </div>
+              </li>
+            </ul>
           </div>
+
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-gray-400 text-sm">
-            © 2025 Tawakkal Paint House. All Rights Reserved.
+        <div className="relative border-t border-white/10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-gray-500 tracking-wide">
+            &copy; {new Date().getFullYear()} <span className="text-gray-300 font-medium tracking-normal">Tawakkal Paint House</span>. All Rights Reserved.
           </p>
-          <p className="text-gray-400 text-sm">
-            Made with ❤️ in Karachi
+          
+          <button 
+            onClick={scrollToTop}
+            className="group absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-navy border border-white/10 hover:border-gold flex items-center justify-center transition-all duration-300 hover:-translate-y-1 shadow-xl text-gray-400 hover:text-gold"
+            aria-label="Scroll to top"
+          >
+            <ChevronUp size={20} className="group-hover:-translate-y-0.5 transition-transform duration-300" />
+          </button>
+
+          <p className="text-xs text-gray-500 tracking-wide flex items-center gap-1.5">
+            Designed with <span className="text-red-500 text-sm animate-pulse">❤</span> in Karachi
           </p>
         </div>
       </div>
