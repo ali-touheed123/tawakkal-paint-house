@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, MessageCircle, Calculator, Palette, CheckCircle, Award, Star, Truck, Users, Clock } from 'lucide-react';
 import { PaintCalculator } from '@/components/PaintCalculator';
 import { FAQ } from '@/components/FAQ';
+import { TestimonialSlider } from '@/components/TestimonialSlider';
 import { ProductCard } from '@/components/ProductCard';
 import { BrandSection } from '@/components/BrandSection';
 import { createClient } from '@/lib/supabase/client';
@@ -406,6 +407,9 @@ export default function HomePage() {
       <section id="calculator" className="py-20 bg-white">
         <PaintCalculator />
       </section>
+
+      {/* Testimonials Section */}
+      <TestimonialSlider />
 
       {/* FAQ Section */}
       <section className="py-20 bg-off-white">
