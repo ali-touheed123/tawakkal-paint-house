@@ -184,8 +184,8 @@ export default function ContactPage() {
                 <div>
                   <h4 className="font-heading font-bold text-lg mb-1">Tawakkal Paint House</h4>
                   <p className="text-gray-400 leading-relaxed">
-                    Shop #1, 2, 3 & 4. Plot #123, Block 3, <br/>
-                    Karachi, Pakistan
+                    VWCC+4RG, Hawks Bay Rd, Mauripur, <br/>
+                    Kemari Town, Keamari, Karachi, 75750, Pakistan
                   </p>
                   <p className="text-gold text-sm font-medium mt-3 flex items-center gap-2">
                     <Clock size={14} /> Open Mon-Sat, 9AM to 8PM
