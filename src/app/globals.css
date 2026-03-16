@@ -34,19 +34,18 @@
   box-sizing: border-box;
 }
 
-html, body {
+html {
   overflow-x: hidden !important;
-  width: 100vw;
-  max-width: 100%;
 }
 
 body {
+  overflow-x: hidden !important;
+  width: 100%;
+  max-width: 100%;
   background: var(--background);
   color: var(--foreground);
   font-family: 'DM Sans', sans-serif;
   position: relative;
-  left: 0;
-  right: 0;
 }
 
 main {

@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 export default function AboutPage() {
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-white overflow-x-hidden">
             {/* Hero Section */}
             <section className="relative h-[60vh] flex items-center justify-center overflow-hidden bg-navy">
                 <div className="absolute inset-0 opacity-40">
@@ -97,14 +97,14 @@ export default function AboutPage() {
             </section>
 
             {/* Core Values */}
-            <section className="py-24 bg-off-white">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl font-heading font-bold text-navy mb-4">The Tawakkal Standard</h2>
+            <section className="py-12 md:py-24 bg-off-white">
+                <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+                    <div className="text-center mb-10 md:mb-16">
+                        <h2 className="text-2xl md:text-4xl font-heading font-bold text-navy mb-4">The Tawakkal Standard</h2>
                         <div className="w-24 h-1 bg-gold mx-auto" />
                     </div>
 
-                    <div className="grid md:grid-cols-3 gap-12">
+                    <div className="grid md:grid-cols-3 gap-6 md:gap-12">
                         {[
                             {
                                 icon: Award,
@@ -127,13 +127,13 @@ export default function AboutPage() {
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ delay: i * 0.1 }}
-                                className="bg-white p-8 md:p-10 rounded-3xl shadow-xl shadow-navy/5 hover:shadow-2xl hover:shadow-gold/10 transition-all border border-gray-50 group"
+                                className="bg-white p-6 md:p-10 rounded-3xl shadow-xl shadow-navy/5 hover:shadow-2xl hover:shadow-gold/10 transition-all border border-gray-50 group"
                             >
                                 <div className="w-16 h-16 bg-navy text-white rounded-2xl flex items-center justify-center mb-6 group-hover:bg-gold transition-colors duration-500">
                                     <value.icon size={32} />
                                 </div>
-                                <h3 className="text-2xl font-bold text-navy mb-4">{value.title}</h3>
-                                <p className="text-gray-500 leading-relaxed">{value.desc}</p>
+                                <h3 className="text-xl md:text-2xl font-bold text-navy mb-3 md:mb-4">{value.title}</h3>
+                                <p className="text-gray-500 leading-relaxed text-sm md:text-base">{value.desc}</p>
                             </motion.div>
                         ))}
                     </div>
@@ -141,46 +141,46 @@ export default function AboutPage() {
             </section>
 
             {/* Why Us / Distribution Section */}
-            <section className="py-24 bg-white overflow-hidden">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="bg-navy rounded-[30px] md:rounded-[50px] overflow-hidden relative p-8 md:p-24">
-                        <div className="absolute top-0 right-0 w-[250px] md:w-[600px] h-[250px] md:h-[600px] bg-gold/10 rounded-full blur-3xl opacity-20 -translate-y-1/2" />
+            <section className="py-12 md:py-24 bg-white overflow-hidden">
+                <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+                    <div className="bg-navy rounded-[20px] md:rounded-[50px] overflow-hidden relative p-5 sm:p-8 md:p-24">
+                        <div className="absolute top-0 right-0 w-[150px] md:w-[600px] h-[150px] md:h-[600px] bg-gold/10 rounded-full blur-3xl opacity-20 -translate-y-1/2" />
                         
-                        <div className="grid lg:grid-cols-2 gap-16 items-center relative z-10">
-                            <div className="space-y-8">
+                        <div className="grid lg:grid-cols-2 gap-8 md:gap-16 items-center relative z-10">
+                            <div className="space-y-5 md:space-y-8 min-w-0">
                                 <motion.span 
                                     initial={{ opacity: 0 }}
                                     whileInView={{ opacity: 1 }}
-                                    className="px-4 py-2 bg-gold/20 border border-gold/30 text-gold rounded-full text-xs font-bold uppercase tracking-widest inline-block"
+                                    className="px-3 py-1.5 md:px-4 md:py-2 bg-gold/20 border border-gold/30 text-gold rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest inline-block"
                                 >
                                     Exclusive Distributor
                                 </motion.span>
-                                <h2 className="text-2xl md:text-5xl font-heading font-bold text-white leading-tight">
+                                <h2 className="text-xl sm:text-2xl md:text-5xl font-heading font-bold text-white leading-tight">
                                     A Partner for <span className="text-gold">Every Scale.</span>
                                 </h2>
-                                <p className="text-gray-400 text-lg">
-                                    Whether you're painting a single room or managing a 50-story commercial tower, we have the stock and the logistical capacity to support you.
+                                <p className="text-gray-400 text-sm md:text-lg leading-relaxed">
+                                    Whether you&apos;re painting a single room or managing a 50-story commercial tower, we have the stock and the logistical capacity to support you.
                                 </p>
-                                <ul className="space-y-4">
+                                <ul className="space-y-3 md:space-y-4">
                                     {[
                                         "Authorized Distributor for Rozzilac Paints",
                                         "Specialized Industrial Coatings for factories",
                                         "Automotive Refinishes (Gobi's Carman Series)",
                                         "Complimentary Color Matching Experts"
                                     ].map((item, i) => (
-                                        <li key={i} className="flex items-center gap-3 text-white font-medium">
-                                            <CheckCircle2 size={20} className="text-gold" />
-                                            {item}
+                                        <li key={i} className="flex items-start gap-2 md:gap-3 text-white text-sm md:text-base font-medium">
+                                            <CheckCircle2 size={18} className="text-gold flex-shrink-0 mt-0.5" />
+                                            <span className="break-words">{item}</span>
                                         </li>
                                     ))}
                                 </ul>
-                                <div className="pt-8">
+                                <div className="pt-4 md:pt-8">
                                     <Link 
                                         href="/contact"
-                                        className="inline-flex items-center gap-2 bg-gold text-navy font-bold px-6 md:px-10 py-4 md:py-5 rounded-full hover:bg-white transition-all duration-300 shadow-xl shadow-gold/20 text-sm md:text-base w-full sm:w-auto justify-center"
+                                        className="inline-flex items-center gap-2 bg-gold text-navy font-bold px-5 md:px-10 py-3.5 md:py-5 rounded-full hover:bg-white transition-all duration-300 shadow-xl shadow-gold/20 text-sm md:text-base w-full sm:w-auto justify-center"
                                     >
                                         Discuss Your Project
-                                        <Building2 size={20} />
+                                        <Building2 size={18} />
                                     </Link>
                                 </div>
                             </div>
@@ -190,14 +190,14 @@ export default function AboutPage() {
                                 whileInView={{ scale: 1, opacity: 1 }}
                                 className="relative lg:h-[500px] flex items-center justify-center"
                             >
-                                <div className="w-48 h-48 md:w-64 md:h-64 bg-gold rounded-full blur-[80px] md:blur-[100px] animate-pulse" />
-                                <PaintBucket size={200} className="text-white relative z-10 opacity-10 md:hidden" />
+                                <div className="w-36 h-36 md:w-64 md:h-64 bg-gold rounded-full blur-[60px] md:blur-[100px] animate-pulse" />
+                                <PaintBucket size={120} className="text-white relative z-10 opacity-10 md:hidden" />
                                 <PaintBucket size={300} className="text-white relative z-10 opacity-10 hidden md:block" />
                                 <div className="absolute inset-0 flex items-center justify-center">
                                     <div className="text-center">
-                                        <Star size={48} className="text-gold mx-auto mb-4 animate-bounce" />
-                                        <p className="text-4xl font-bold text-white">Top Rated</p>
-                                        <p className="text-gold font-bold tracking-widest uppercase text-sm mt-2">In Karachi West</p>
+                                        <Star size={36} className="text-gold mx-auto mb-3 md:mb-4 animate-bounce md:w-12 md:h-12" />
+                                        <p className="text-2xl md:text-4xl font-bold text-white">Top Rated</p>
+                                        <p className="text-gold font-bold tracking-widest uppercase text-xs md:text-sm mt-2">In Karachi West</p>
                                     </div>
                                 </div>
                             </motion.div>
@@ -207,10 +207,10 @@ export default function AboutPage() {
             </section>
 
             {/* CTA */}
-            <section className="py-24 bg-white text-center">
-                <div className="max-w-4xl mx-auto px-4">
-                    <h2 className="text-4xl font-heading font-bold text-navy mb-6">Ready to color your world?</h2>
-                    <p className="text-gray-500 mb-10 text-lg">Visit our store in Mauripur or browse our complete collection online.</p>
+            <section className="py-12 md:py-24 bg-white text-center">
+                <div className="max-w-4xl mx-auto px-3 sm:px-4">
+                    <h2 className="text-2xl md:text-4xl font-heading font-bold text-navy mb-4 md:mb-6">Ready to color your world?</h2>
+                    <p className="text-gray-500 mb-6 md:mb-10 text-sm md:text-lg">Visit our store in Mauripur or browse our complete collection online.</p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Link 
                             href="/category/all" 
