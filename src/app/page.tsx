@@ -285,6 +285,81 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Project Showcase Section */}
+      <section className="py-24 bg-navy overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row items-end justify-between gap-8 mb-16">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="max-w-2xl"
+            >
+              <span className="text-gold font-medium tracking-widest uppercase text-sm mb-4 block">Our Portfolio</span>
+              <h2 className="font-heading text-4xl md:text-5xl font-bold text-white leading-tight">
+                Transforming Spaces into <br />
+                <span className="text-gold italic">Masterpieces.</span>
+              </h2>
+            </motion.div>
+            <motion.p 
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="text-gray-400 max-w-md text-lg"
+            >
+              From luxury villas to modern commercial hubs, we provide the palette for Karachi's most prestigious projects.
+            </motion.p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {[
+              { 
+                title: "DHA Luxury Villa", 
+                location: "Phase 8, Karachi", 
+                image: "/images/projects/villa_showcase.png",
+                tags: ["Premium Finish", "Exterior"]
+              },
+              { 
+                title: "Modern Office Lobby", 
+                location: "I.I Chundrigar Rd", 
+                image: "/images/projects/lobby_showcase.png",
+                tags: ["Matt Finish", "Interior"]
+              }
+            ].map((project, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.2 }}
+                className="group relative h-[400px] md:h-[500px] rounded-3xl overflow-hidden cursor-pointer"
+              >
+                <img 
+                  src={project.image} 
+                  alt={project.title}
+                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
+                
+                <div className="absolute top-6 left-6 flex gap-2">
+                  {project.tags.map((tag, tIdx) => (
+                    <span key={tIdx} className="px-3 py-1 bg-white/10 backdrop-blur-md text-white text-[10px] uppercase tracking-wider rounded-full border border-white/20">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="absolute bottom-8 left-8 right-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                  <p className="text-gold text-sm font-medium mb-1">{project.location}</p>
+                  <h4 className="text-2xl font-bold text-white mb-4">{project.title}</h4>
+                  <div className="h-1 w-0 group-hover:w-24 bg-gold transition-all duration-500" />
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Featured Products */}
       <section className="py-20 bg-off-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

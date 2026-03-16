@@ -13,47 +13,53 @@ export function BrandSection() {
     const displayLogos = [...logos, ...logos, ...logos];
 
     return (
-        <section className="py-8 bg-white border-b border-gray-100 overflow-hidden">
+        <section className="py-12 bg-white border-b border-gray-100 overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+                <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
                     {/* Header */}
-                    <div className="flex items-center gap-6 shrink-0">
+                    <div className="flex items-center gap-6 shrink-0 relative">
                         <h2 className="font-heading text-xl md:text-2xl font-bold text-navy whitespace-nowrap">
-                            Our Top Brands
+                            Trusted Partners
                         </h2>
-                        <div className="hidden md:block w-px h-12 bg-gray-200" />
+                        <div className="hidden md:block w-px h-12 bg-gradient-to-b from-transparent via-gray-200 to-transparent" />
+                        <motion.div 
+                            className="absolute -top-1 -right-1 w-2 h-2 bg-gold rounded-full"
+                            animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
+                            transition={{ duration: 2, repeat: Infinity }}
+                        />
                     </div>
 
                     {/* Marquee */}
                     <div className="w-full overflow-hidden relative">
                         <motion.div
-                            className="flex items-center gap-12 md:gap-20"
+                            className="flex items-center gap-16 md:gap-24"
                             animate={{
                                 x: [0, -100 * logos.length],
                             }}
                             transition={{
-                                duration: logos.length * 3,
+                                duration: logos.length * 2, // Faster marquee (was length * 3)
                                 repeat: Infinity,
                                 ease: "linear",
                             }}
                         >
                             {displayLogos.map((logo, i) => (
-                                <div
+                                <motion.div
                                     key={`${logo.name}-${i}`}
-                                    className="shrink-0 grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100"
+                                    whileHover={{ scale: 1.15, y: -5 }}
+                                    className="shrink-0 grayscale hover:grayscale-0 transition-all duration-500 opacity-50 hover:opacity-100 cursor-pointer"
                                 >
                                     <img
                                         src={logo.url}
                                         alt={logo.name}
-                                        className={`h-8 md:h-12 w-auto object-contain pointer-events-none ${logo.name === 'Dior' ? 'scale-125 p-1' : ''}`}
+                                        className={`h-10 md:h-14 w-auto object-contain pointer-events-none drop-shadow-sm ${logo.name === 'Dior' ? 'scale-125 p-1' : ''}`}
                                     />
-                                </div>
+                                </motion.div>
                             ))}
                         </motion.div>
 
-                        {/* Gradients to fade edges */}
-                        <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white to-transparent z-10" />
-                        <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white to-transparent z-10" />
+                        {/* Premium edge fades */}
+                        <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white via-white/80 to-transparent z-10" />
+                        <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white via-white/80 to-transparent z-10" />
                     </div>
                 </div>
             </div>
