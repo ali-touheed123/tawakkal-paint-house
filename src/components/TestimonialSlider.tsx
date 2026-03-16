@@ -16,23 +16,6 @@ interface Review {
     is_shop_review: boolean;
 }
 
-const fallbackTestimonials = [
-    {
-        name: "Arsalan Ahmed",
-        role: "Homeowner, DHA Phase 8",
-        content: "Tawakkal Paint House provided exceptional service. The Rozzilac Matt finish we chose for our lounge is absolutely stunning. Smooth, rich, and exactly the shade we wanted.",
-        image: "/images/testimonials/user1.png",
-        rating: 5
-    },
-    {
-        name: "Sana Malik",
-        role: "Interior Designer",
-        content: "As a designer, I'm very picky about color accuracy. Tawakkal is the only store in Karachi I trust for perfect color mixing and genuine sealed products. Their customer support is top-notch.",
-        image: "/images/testimonials/user2.png",
-        rating: 5
-    }
-];
-
 export function TestimonialSlider() {
     const [reviews, setReviews] = useState<any[]>([]);
     const [index, setIndex] = useState(0);
@@ -47,18 +30,8 @@ export function TestimonialSlider() {
                 .eq('status', 'approved')
                 .order('created_at', { ascending: false });
 
-            if (data && data.length > 0) {
+            if (data) {
                 setReviews(data);
-            } else {
-                setReviews(fallbackTestimonials.map(t => ({
-                    user_name: t.name,
-                    role: t.role,
-                    content: t.content,
-                    media_url: t.image,
-                    media_type: 'image',
-                    rating: t.rating,
-                    is_shop_review: false
-                })));
             }
             setLoading(false);
         };
