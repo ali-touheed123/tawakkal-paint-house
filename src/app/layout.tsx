@@ -41,7 +41,8 @@ export const metadata: Metadata = {
     icon: '/favicon-tph.png',
     shortcut: '/favicon-tph.png',
     apple: '/favicon-tph.png',
-  }
+  },
+  themeColor: '#0F1F3D',
 };
 
 export default function RootLayout({
