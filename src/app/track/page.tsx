@@ -50,20 +50,24 @@ function OrderTrackingContent() {
 
         let query = supabase.from('orders').select('*').eq('id', cleanId);
         
-        // Only enforce email check if this is a manual lookup
-        if (searchEmail) {
-            query = query.ilike('email', searchEmail.trim());
-        }
-
         const { data, error: dbError } = await query.single();
 
         if (dbError || !data) {
             setError(searchEmail 
-                ? 'We couldn\'t find an order with matching details. Please double-check your Order ID and Email.' 
+                ? 'We couldn\'t find an order with matching details. Please double-check your Order ID.' 
                 : 'Order not found or invalid link. Please try entering your details manually.');
-        } else {
-            setOrder(data);
+            setLoading(false);
+            return;
         }
+
+        // Only enforce email check if this is a manual lookup AND the order actually has an email attached
+        if (searchEmail && data.email && data.email.toLowerCase() !== searchEmail.trim().toLowerCase()) {
+            setError('We couldn\'t find an order with matching details. Please double-check your Order ID and Email.');
+            setLoading(false);
+            return;
+        }
+
+        setOrder(data);
         setLoading(false);
     };
 

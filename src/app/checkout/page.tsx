@@ -166,7 +166,8 @@ export default function CheckoutPage() {
           status: 'pending',
           delivery_area: formData.deliveryArea,
           delivery_address: formData.deliveryAddress,
-          phone: formData.phone
+          phone: formData.phone,
+          email: formData.email || null
         })
         .select('id')
         .single();
