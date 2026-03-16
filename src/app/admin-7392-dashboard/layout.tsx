@@ -92,7 +92,7 @@ export default function AdminLayout({
       
       {/* Main Content */}
       <main className={cn(
-        "flex-1 overflow-y-auto w-full", 
+        "flex-1 overflow-y-auto overflow-x-hidden w-full relative", 
         !isLoginPage ? "p-4 md:p-8" : "p-0"
       )}>
         <div className={cn(!isLoginPage && "max-w-7xl mx-auto")}>

@@ -158,23 +158,23 @@ export default function DealsManagement() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto space-y-12 pb-20">
+    <div className="max-w-6xl mx-auto space-y-8 md:space-y-12 pb-20">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
           <h1 className="text-3xl font-bold text-navy flex items-center gap-3">
             <Briefcase className="text-gold" />
-            Full Deals Configuration
+            Deals Management
           </h1>
-          <p className="text-gray-500 mt-2">Customize pricing, labor rates, and what&apos;s included in each package.</p>
+          <p className="text-sm text-gray-500 mt-2">Customize pricing, labor rates, and what&apos;s included in each package.</p>
         </div>
         <button
           onClick={handleSave}
           disabled={saving}
-          className="bg-navy text-white px-8 py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-navy/90 transition-all disabled:opacity-50 shadow-lg shadow-navy/20"
+          className="bg-navy text-white px-8 py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-navy/90 transition-all disabled:opacity-50 shadow-lg shadow-navy/20 active:scale-95 w-full md:w-auto"
         >
-          {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save size={18} />}
-          {saving ? 'Saving Changes...' : 'Save Configuration'}
+          {saving ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save size={20} />}
+          {saving ? 'Saving...' : 'Save Configuration'}
         </button>
       </div>
 

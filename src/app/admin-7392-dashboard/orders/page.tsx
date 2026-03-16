@@ -77,7 +77,8 @@ export default function OrdersPage() {
       </div>
 
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        <div className="overflow-x-auto">
+        {/* Desktop View (Table) */}
+        <div className="hidden md:block overflow-x-auto">
           <table className="w-full text-left">
             <thead className="bg-gray-50 text-gray-400 text-xs uppercase font-bold">
               <tr>
@@ -122,12 +123,48 @@ export default function OrdersPage() {
               ))}
             </tbody>
           </table>
-          {filteredOrders.length === 0 && !loading && (
-            <div className="p-12 text-center text-gray-400 bg-gray-50">
-              No orders matches your filter.
-            </div>
-          )}
         </div>
+
+        {/* Mobile View (Cards) */}
+        <div className="md:hidden divide-y divide-gray-100">
+          {filteredOrders.map((order) => (
+            <div key={order.id} className="p-5 space-y-4">
+              <div className="flex items-start justify-between">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-[10px] font-mono bg-gray-100 px-2 py-0.5 rounded text-gray-500">#{order.id.slice(0, 8)}</span>
+                    <StatusBadge status={order.status} />
+                  </div>
+                  <div className="font-bold text-navy">{order.customer_name || 'Guest'}</div>
+                  <div className="text-xs text-gray-400">{order.phone}</div>
+                </div>
+                <div className="text-right">
+                  <div className="text-xs text-gray-400 mb-1">{new Date(order.created_at).toLocaleDateString()}</div>
+                  <div className="font-black text-navy text-lg">Rs. {Number(order.total).toLocaleString()}</div>
+                  <div className="text-[10px] text-green-600">-{order.discount_percent}% Discount</div>
+                </div>
+              </div>
+              <div className="flex items-center justify-between pt-2">
+                <div className="text-xs text-gray-400 flex items-center gap-2">
+                   <Package size={12} />
+                   {order.items?.length || 0} Products
+                </div>
+                <button 
+                   onClick={() => { setSelectedOrder(order); setIsModalOpen(true); }}
+                   className="bg-gold/10 text-gold px-4 py-2 rounded-lg font-bold text-xs flex items-center gap-2 hover:bg-gold/20 transition-all"
+                >
+                  <Eye size={14} /> Full Details
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {filteredOrders.length === 0 && !loading && (
+          <div className="p-12 text-center text-gray-400 bg-gray-50">
+            No orders matches your filter.
+          </div>
+        )}
       </div>
 
       {/* Order Detail Modal */}
