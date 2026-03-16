@@ -30,7 +30,7 @@ export default function AboutPage() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="text-5xl md:text-7xl font-heading font-bold text-white mb-8"
+                        className="text-4xl md:text-7xl font-heading font-bold text-white mb-8"
                     >
                         Our <span className="text-gold">Legacy</span> of Color
                     </motion.h1>
@@ -50,12 +50,12 @@ export default function AboutPage() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid lg:grid-cols-2 gap-10 md:gap-20 items-center">
                         <motion.div 
-                            initial={{ opacity: 0, x: -30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
                             className="space-y-8"
                         >
-                            <h2 className="text-3xl md:text-4xl font-heading font-bold text-navy">
-                                More Than Just a <span className="text-gold text-nowrap md:text-wrap">Paint Store.</span>
+                            <h2 className="text-3xl md:text-4xl font-heading font-bold text-navy leading-tight">
+                                More Than Just a <span className="text-gold">Paint Store.</span>
                             </h2>
                             <p className="text-gray-600 text-lg leading-relaxed">
                                 Founded in 2011 in Mauripur, Karachi, Tawakkal Paint House started with a simple belief: 
@@ -75,8 +75,8 @@ export default function AboutPage() {
                         </motion.div>
 
                         <motion.div 
-                            initial={{ opacity: 0, x: 30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
                             className="relative"
                         >
                             <div className="aspect-square rounded-[40px] overflow-hidden shadow-2xl">
@@ -144,7 +144,7 @@ export default function AboutPage() {
             <section className="py-24 bg-white overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="bg-navy rounded-[30px] md:rounded-[50px] overflow-hidden relative p-8 md:p-24">
-                        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gold/10 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
+                        <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-gold/10 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
                         
                         <div className="grid lg:grid-cols-2 gap-16 items-center relative z-10">
                             <div className="space-y-8">
@@ -155,7 +155,7 @@ export default function AboutPage() {
                                 >
                                     Exclusive Distributor
                                 </motion.span>
-                                <h2 className="text-3xl md:text-5xl font-heading font-bold text-white leading-tight">
+                                <h2 className="text-2xl md:text-5xl font-heading font-bold text-white leading-tight">
                                     A Partner for <span className="text-gold">Every Scale.</span>
                                 </h2>
                                 <p className="text-gray-400 text-lg">

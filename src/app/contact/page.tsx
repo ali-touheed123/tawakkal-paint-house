@@ -27,7 +27,7 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-navy text-white pt-[100px] md:pt-[120px] pb-24 overflow-x-hidden">
       {/* Decorative Background */}
-      <div className="absolute top-0 right-0 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-gold/10 rounded-full blur-[80px] md:blur-[120px] pointer-events-none transform translate-x-1/2 -translate-y-1/2"></div>
+      <div className="absolute top-0 right-0 w-[200px] md:w-[500px] h-[200px] md:h-[500px] bg-gold/10 rounded-full blur-[60px] md:blur-[120px] pointer-events-none transform translate-x-1/4 md:translate-x-1/2 -translate-y-1/2" />
       
       <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8 relative z-10">
         
@@ -54,8 +54,8 @@ export default function ContactPage() {
           
           {/* Left Column - Contact Info & Form */}
           <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
             className="space-y-10"
           >
@@ -145,8 +145,8 @@ export default function ContactPage() {
 
           {/* Right Column - Map & Location */}
           <motion.div 
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
             className="h-full flex flex-col"
           >
