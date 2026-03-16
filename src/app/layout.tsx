@@ -3,7 +3,7 @@ import "./globals.css";
 import { LocationPopup } from "@/components/LocationPopup";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { WhatsAppBubble } from "@/components/WhatsAppBubble";
+import { Footer } from "@/components/Footer";
 import { SearchOverlay } from "@/components/SearchOverlay";
 import { CartToast } from "@/components/CartToast";
 
@@ -87,7 +87,6 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
-        <WhatsAppBubble />
         <CartToast />
       </body>
     </html>
