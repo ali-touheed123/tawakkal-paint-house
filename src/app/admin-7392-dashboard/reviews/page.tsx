@@ -261,6 +261,184 @@ export default function AdminReviewsPage() {
                     <p className="text-gray-400 font-medium">No reviews found matching this filter.</p>
                 </div>
             )}
+
+            {/* Add Shop Review Modal */}
+            <AddShopReviewModal 
+                isOpen={window.location.hash === '#add-shop-review'} 
+                onClose={() => window.location.hash = ''}
+                onSuccess={() => {
+                    window.location.hash = '';
+                    fetchReviews();
+                }}
+            />
         </div>
     );
+}
+
+function AddShopReviewModal({ isOpen, onClose, onSuccess }: { isOpen: boolean, onClose: () => void, onSuccess: () => void }) {
+    const [loading, setLoading] = useState(false);
+    const [rating, setRating] = useState(5);
+    const [userName, setUserName] = useState('');
+    const [content, setContent] = useState('');
+    const [file, setFile] = useState<File | null>(null);
+    const [preview, setPreview] = useState<string | null>(null);
+
+    const supabase = createClient();
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const selected = e.target.files?.[0];
+        if (selected) {
+            setFile(selected);
+            const reader = new FileReader();
+            reader.onloadend = () => setPreview(reader.result as string);
+            reader.readAsDataURL(selected);
+        }
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+
+        let media_url = null;
+        let media_type: 'image' | 'video' | 'none' = 'none';
+
+        if (file) {
+            const fileExt = file.name.split('.').pop();
+            const fileName = `admin_${Math.random()}.${fileExt}`;
+            const { error: uploadError } = await supabase.storage
+                .from('review-media')
+                .upload(fileName, file);
+
+            if (!uploadError) {
+                const { data: { publicUrl } } = supabase.storage
+                    .from('review-media')
+                    .getPublicUrl(fileName);
+                media_url = publicUrl;
+                media_type = file.type.startsWith('video/') ? 'video' : 'image';
+            }
+        }
+
+        const { error } = await supabase.from('reviews').insert({
+            user_name: userName,
+            rating,
+            content,
+            media_url,
+            media_type,
+            status: 'approved', // Auto-approve shop reviews
+            is_shop_review: true
+        });
+
+        if (!error) {
+            onSuccess();
+            setUserName('');
+            setContent('');
+            setFile(null);
+            setPreview(null);
+        }
+        setLoading(false);
+    };
+
+    if (!isOpen) return null;
+
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                onClick={onClose}
+                className="absolute inset-0 bg-navy/80 backdrop-blur-sm"
+            />
+            <motion.div 
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                className="bg-white rounded-[40px] w-full max-w-xl relative z-10 overflow-hidden shadow-2xl"
+            >
+                <div className="bg-navy p-8 text-white flex justify-between items-center">
+                    <div>
+                        <h2 className="text-2xl font-heading font-bold">Add Shop Review</h2>
+                        <p className="text-gray-400 text-sm">Enter a review captured at the shop.</p>
+                    </div>
+                    <button onClick={onClose} className="p-2 hover:bg-white/10 rounded-full transition-colors">
+                        <X size={24} />
+                    </button>
+                </div>
+
+                <form onSubmit={handleSubmit} className="p-8 space-y-6">
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <label className="text-xs font-bold text-gray-400 uppercase">Customer Name</label>
+                            <input 
+                                required
+                                value={userName}
+                                onChange={e => setUserName(e.target.value)}
+                                className="w-full bg-gray-50 border-none rounded-xl h-12 px-4 focus:ring-2 focus:ring-gold/50"
+                                placeholder="e.g. Ali Khan"
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-xs font-bold text-gray-400 uppercase">Rating</label>
+                            <select 
+                                value={rating}
+                                onChange={e => setRating(Number(e.target.value))}
+                                className="w-full bg-gray-50 border-none rounded-xl h-12 px-4 focus:ring-2 focus:ring-gold/50"
+                            >
+                                {[5, 4, 3, 2, 1].map(n => (
+                                    <option key={n} value={n}>{n} Stars</option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div className="space-y-2">
+                        <label className="text-xs font-bold text-gray-400 uppercase">Review Content</label>
+                        <textarea 
+                            required
+                            value={content}
+                            onChange={e => setContent(e.target.value)}
+                            className="w-full bg-gray-50 border-none rounded-2xl p-4 h-32 resize-none focus:ring-2 focus:ring-gold/50"
+                            placeholder="What did the customer say?"
+                        />
+                    </div>
+
+                    <div className="space-y-2">
+                        <label className="text-xs font-bold text-gray-400 uppercase">Attach Media (Photo/Video)</label>
+                        <div className="flex gap-4 items-center">
+                            <button 
+                                type="button"
+                                onClick={() => document.getElementById('admin-file')?.click()}
+                                className="flex-1 bg-gold/10 text-gold border border-gold/20 h-14 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-gold/20 transition-all"
+                            >
+                                <ImageIcon size={20} />
+                                Upload File
+                            </button>
+                            {preview && (
+                                <div className="w-14 h-14 rounded-xl overflow-hidden border border-gray-100">
+                                    {file?.type.startsWith('video/') ? (
+                                        <div className="w-full h-full bg-navy flex items-center justify-center">
+                                            <Video size={16} className="text-gold" />
+                                        </div>
+                                    ) : (
+                                        <img src={preview} className="w-full h-full object-cover" />
+                                    )}
+                                </div>
+                            )}
+                        </div>
+                        <input id="admin-file" type="file" hidden accept="image/*,video/*" onChange={handleFileChange} />
+                    </div>
+
+                    <button 
+                        disabled={loading}
+                        className="w-full bg-navy text-white h-16 rounded-2xl font-bold text-lg hover:bg-gold hover:text-navy transition-all shadow-xl shadow-navy/20 flex items-center justify-center gap-3"
+                    >
+                        {loading ? <Loader2 className="animate-spin" /> : <Plus size={24} />}
+                        Save Verified Review
+                    </button>
+                </form>
+            </motion.div>
+        </div>
+    );
+}
+
+function Loader2({ className }: { className?: string }) {
+    return <Clock className={`animate-spin ${className}`} size={20} />;
 }
