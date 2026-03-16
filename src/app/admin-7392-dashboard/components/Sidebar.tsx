@@ -10,7 +10,8 @@ import {
   LogOut,
   Home,
   Briefcase,
-  Layers
+  Layers,
+  Star
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { createClient } from '@/lib/supabase/client';
@@ -20,6 +21,7 @@ const navItems = [
   { name: 'Orders', href: '/admin-7392-dashboard/orders', icon: ShoppingBag },
   { name: 'Categories', href: '/admin-7392-dashboard/categories', icon: Layers },
   { name: 'Products', href: '/admin-7392-dashboard/products', icon: Package },
+  { name: 'Reviews', href: '/admin-7392-dashboard/reviews', icon: Star },
   { name: 'Discounts', href: '/admin-7392-dashboard/discounts', icon: Percent },
   { name: 'Deals', href: '/admin-7392-dashboard/deals', icon: Briefcase },
 ];

@@ -2,13 +2,25 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
+import { Star, ChevronLeft, ChevronRight, Quote, Play } from 'lucide-react';
+import { createClient } from '@/lib/supabase/client';
 
-const testimonials = [
+interface Review {
+    id: string;
+    user_name: string;
+    role?: string;
+    content: string;
+    media_url: string | null;
+    media_type: 'image' | 'video' | 'none';
+    rating: number;
+    is_shop_review: boolean;
+}
+
+const fallbackTestimonials = [
     {
         name: "Arsalan Ahmed",
         role: "Homeowner, DHA Phase 8",
-        content: "Tawakkal Paint House provided exceptional service. The Rozzilac Matt finish we chose for our lounge is absolutely stunned. Smooth, rich, and exactly the shade we wanted.",
+        content: "Tawakkal Paint House provided exceptional service. The Rozzilac Matt finish we chose for our lounge is absolutely stunning. Smooth, rich, and exactly the shade we wanted.",
         image: "/images/testimonials/user1.png",
         rating: 5
     },
@@ -18,28 +30,55 @@ const testimonials = [
         content: "As a designer, I'm very picky about color accuracy. Tawakkal is the only store in Karachi I trust for perfect color mixing and genuine sealed products. Their customer support is top-notch.",
         image: "/images/testimonials/user2.png",
         rating: 5
-    },
-    {
-        name: "Zubair Khan",
-        role: "Contractor",
-        content: "I've been buying bulk industrial paint from them for years. Reliable prices, fast delivery to site, and always 100% original brands. They are my go-to partner for all projects.",
-        image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop",
-        rating: 5
     }
 ];
 
 export function TestimonialSlider() {
+    const [reviews, setReviews] = useState<any[]>([]);
     const [index, setIndex] = useState(0);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const timer = setInterval(() => {
-            setIndex((prev) => (prev + 1) % testimonials.length);
-        }, 8000);
-        return () => clearInterval(timer);
+        const fetchReviews = async () => {
+            const supabase = createClient();
+            const { data } = await supabase
+                .from('reviews')
+                .select('*')
+                .eq('status', 'approved')
+                .order('created_at', { ascending: false });
+
+            if (data && data.length > 0) {
+                setReviews(data);
+            } else {
+                setReviews(fallbackTestimonials.map(t => ({
+                    user_name: t.name,
+                    role: t.role,
+                    content: t.content,
+                    media_url: t.image,
+                    media_type: 'image',
+                    rating: t.rating,
+                    is_shop_review: false
+                })));
+            }
+            setLoading(false);
+        };
+        fetchReviews();
     }, []);
 
-    const next = () => setIndex((prev) => (prev + 1) % testimonials.length);
-    const prev = () => setIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+    useEffect(() => {
+        if (reviews.length === 0) return;
+        const timer = setInterval(() => {
+            setIndex((prev) => (prev + 1) % reviews.length);
+        }, 8000);
+        return () => clearInterval(timer);
+    }, [reviews]);
+
+    const next = () => setIndex((prev) => (prev + 1) % reviews.length);
+    const prev = () => setIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
+
+    if (loading || reviews.length === 0) return null;
+
+    const current = reviews[index];
 
     return (
         <section className="py-24 bg-white relative overflow-hidden">
@@ -76,14 +115,32 @@ export function TestimonialSlider() {
                             className="bg-off-white/50 backdrop-blur-sm rounded-[40px] p-8 md:p-16 border border-gray-100 shadow-xl shadow-navy/5"
                         >
                             <div className="grid md:grid-cols-5 gap-12 items-center">
-                                {/* Image */}
+                                {/* Image/Video */}
                                 <div className="md:col-span-2">
-                                    <div className="relative aspect-square rounded-[30px] overflow-hidden shadow-2xl group">
-                                        <img 
-                                            src={testimonials[index].image} 
-                                            alt={testimonials[index].name}
-                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                                        />
+                                    <div className="relative aspect-square rounded-[30px] overflow-hidden shadow-2xl group bg-navy">
+                                        {current.media_type === 'video' ? (
+                                            <div className="w-full h-full relative">
+                                                <video 
+                                                    src={current.media_url} 
+                                                    className="w-full h-full object-cover"
+                                                    autoPlay
+                                                    muted
+                                                    loop
+                                                    playsInline
+                                                />
+                                                <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                                                    <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30">
+                                                        <Play size={20} className="text-white fill-current translate-x-0.5" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <img 
+                                                src={current.media_url || "/images/placeholder.jpg"} 
+                                                alt={current.user_name}
+                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                            />
+                                        )}
                                         <div className="absolute inset-0 bg-gradient-to-t from-navy/40 to-transparent" />
                                         <div className="absolute -bottom-2 -left-2 w-16 h-16 bg-gold rounded-2xl flex items-center justify-center text-white shadow-lg">
                                             <Quote size={32} />
@@ -94,16 +151,23 @@ export function TestimonialSlider() {
                                 {/* Content */}
                                 <div className="md:col-span-3 space-y-8">
                                     <div className="flex gap-1 text-gold">
-                                        {[...Array(testimonials[index].rating)].map((_, i) => (
+                                        {[...Array(current.rating)].map((_, i) => (
                                             <Star key={i} size={20} fill="currentColor" />
                                         ))}
                                     </div>
                                     <p className="text-2xl md:text-3xl font-heading italic text-navy leading-relaxed">
-                                        "{testimonials[index].content}"
+                                        "{current.content}"
                                     </p>
                                     <div>
-                                        <h4 className="text-xl font-bold text-navy">{testimonials[index].name}</h4>
-                                        <p className="text-gold font-medium">{testimonials[index].role}</p>
+                                        <div className="flex items-center gap-2">
+                                            <h4 className="text-xl font-bold text-navy">{current.user_name}</h4>
+                                            {current.is_shop_review && (
+                                                <span className="text-[10px] font-bold text-gold bg-gold/10 px-2 py-0.5 rounded-full uppercase tracking-widest border border-gold/10">
+                                                    Shop Visit
+                                                </span>
+                                            )}
+                                        </div>
+                                        <p className="text-gold font-medium">{current.role || 'Verified Customer'}</p>
                                     </div>
                                 </div>
                             </div>

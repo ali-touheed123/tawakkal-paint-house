@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, MessageCircle, Clock, Send } from 'lucide-react';
 import { useSettings } from '@/lib/hooks/useSettings';
+import { ReviewForm } from '@/components/ReviewForm';
 import Link from 'next/link';
 
 export default function ContactPage() {
@@ -196,6 +197,15 @@ export default function ContactPage() {
             </div>
           </motion.div>
 
+        </div>
+
+        {/* Review Section */}
+        <div className="mt-24 max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-heading font-bold mb-4">Been to our shop?</h2>
+            <p className="text-gray-400">Share your experience with the world. We value your feedback!</p>
+          </div>
+          <ReviewForm />
         </div>
       </div>
     </div>

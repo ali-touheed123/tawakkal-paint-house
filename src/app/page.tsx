@@ -7,6 +7,7 @@ import { ArrowRight, MessageCircle, Calculator, Palette, CheckCircle, Award, Sta
 import { PaintCalculator } from '@/components/PaintCalculator';
 import { FAQ } from '@/components/FAQ';
 import { TestimonialSlider } from '@/components/TestimonialSlider';
+import { ReviewForm } from '@/components/ReviewForm';
 import { ProductCard } from '@/components/ProductCard';
 import { BrandSection } from '@/components/BrandSection';
 import { createClient } from '@/lib/supabase/client';
@@ -410,6 +411,13 @@ export default function HomePage() {
 
       {/* Testimonials Section */}
       <TestimonialSlider />
+
+      {/* Review Submission Section */}
+      <section className="py-24 bg-white">
+        <div className="max-w-4xl mx-auto px-4">
+          <ReviewForm />
+        </div>
+      </section>
 
       {/* FAQ Section */}
       <section className="py-20 bg-off-white">
