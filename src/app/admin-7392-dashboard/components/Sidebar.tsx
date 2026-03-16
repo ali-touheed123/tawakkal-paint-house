@@ -22,19 +22,34 @@ const navItems = [
   { name: 'Deals', href: '/admin-7392-dashboard/deals', icon: Briefcase },
 ];
 
-export function Sidebar() {
+interface SidebarProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+}
+
+export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 bg-navy text-white flex flex-col sticky top-0 h-screen shadow-xl">
-      {/* Header */}
-      <div className="p-6 border-b border-white/10">
+    <aside className={cn(
+      "w-64 bg-navy text-white flex flex-col h-screen shadow-xl",
+      "fixed md:sticky top-0 left-0 z-50 transition-transform duration-300 ease-in-out",
+      // On mobile, slide in/out based on isOpen. On desktop, always show.
+      !isOpen ? "-translate-x-full md:translate-x-0" : "translate-x-0"
+    )}>
+      {/* Header (Hidden on Mobile, handled by layout header) */}
+      <div className="hidden md:flex p-6 border-b border-white/10 items-center justify-between">
         <h1 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
           <div className="w-8 h-8 bg-gold rounded flex items-center justify-center">
             <span className="text-navy font-black text-xs">TPH</span>
           </div>
           Admin Panel
         </h1>
+      </div>
+      
+      {/* Mobile Header (For when drawer is open) */}
+      <div className="flex md:hidden p-4 border-b border-white/10 items-center justify-between mt-1">
+        <h2 className="text-lg font-bold tracking-tight text-white/90">Navigation</h2>
       </div>
 
       {/* Navigation */}

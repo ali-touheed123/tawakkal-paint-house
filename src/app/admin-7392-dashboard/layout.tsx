@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { Sidebar } from './components/Sidebar';
-import { Loader2 } from 'lucide-react';
+import { Menu, X, Loader2 } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 export default function AdminLayout({
   children,
@@ -13,6 +14,7 @@ export default function AdminLayout({
 }) {
   const [loading, setLoading] = useState(true);
   const [authorized, setAuthorized] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -38,6 +40,11 @@ export default function AdminLayout({
     checkAuth();
   }, [pathname, router]);
 
+  // Close mobile menu on path change
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -54,20 +61,52 @@ export default function AdminLayout({
   const isLoginPage = pathname === '/admin-7392-dashboard/login';
 
   return (
-    <div className="flex min-h-screen bg-gray-50 text-gray-900">
-      {!isLoginPage && <Sidebar />}
+    <div className="flex flex-col md:flex-row min-h-screen bg-gray-50 text-gray-900">
+      
+      {/* Mobile Top Header */}
+      {!isLoginPage && (
+        <header className="md:hidden bg-navy text-white flex items-center justify-between p-4 sticky top-0 z-40 shadow-md">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-gold rounded flex items-center justify-center">
+              <span className="text-navy font-black text-xs">TPH</span>
+            </div>
+            <span className="font-bold tracking-tight">Admin Panel</span>
+          </div>
+          <button 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="p-1 rounded-md hover:bg-white/10 transition-colors"
+            aria-label="Toggle Menu"
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </header>
+      )}
+
+      {/* Sidebar Overlay (Mobile) & Fixed Sidebar (Desktop) */}
+      {!isLoginPage && (
+        <Sidebar 
+          isOpen={isMobileMenuOpen} 
+          onClose={() => setIsMobileMenuOpen(false)} 
+        />
+      )}
       
       {/* Main Content */}
-      <main className={cn("flex-1 overflow-y-auto", !isLoginPage ? "p-8" : "p-0")}>
+      <main className={cn(
+        "flex-1 overflow-y-auto w-full", 
+        !isLoginPage ? "p-4 md:p-8" : "p-0"
+      )}>
         <div className={cn(!isLoginPage && "max-w-7xl mx-auto")}>
           {children}
         </div>
       </main>
+
+      {/* Mobile Overlay Backdrop */}
+      {!isLoginPage && isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 md:hidden backdrop-blur-sm"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
     </div>
   );
-}
-
-// Helper for conditional classes
-function cn(...classes: (string | boolean | undefined)[]) {
-  return classes.filter(Boolean).join(' ');
 }
