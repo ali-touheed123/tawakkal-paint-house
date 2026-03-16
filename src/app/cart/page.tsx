@@ -58,7 +58,7 @@ export default function CartPage() {
                   key={item.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="bg-white rounded-xl p-4 shadow-md flex gap-4"
+                  className="bg-white rounded-xl p-4 shadow-md flex flex-col sm:flex-row gap-4"
                 >
                   {/* Image */}
                   <div className="w-24 h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">

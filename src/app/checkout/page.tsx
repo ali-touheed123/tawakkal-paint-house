@@ -312,10 +312,10 @@ export default function CheckoutPage() {
 
               <div className="space-y-3 mb-6">
                 {items.map((item) => (
-                  <div key={item.id} className="flex justify-between text-sm">
-                    <div className="flex flex-col">
-                      <span className="text-gray-600">
-                        {item.product?.name} ({item.size}) x {item.quantity}
+                  <div key={item.id} className="flex justify-between items-start gap-4 text-sm">
+                    <div className="flex flex-col flex-1 min-w-0">
+                      <span className="text-gray-600 truncate pr-2">
+                        {item.product?.name} ({item.size}) <span className="whitespace-nowrap">x {item.quantity}</span>
                       </span>
                       {item.selectedShade && (
                         <div className="flex items-center gap-1.5 mt-0.5">

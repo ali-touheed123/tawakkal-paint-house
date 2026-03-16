@@ -570,16 +570,16 @@ export default function ProductDetailPage() {
                                 <div className="text-4xl font-bold text-navy">Rs. {price?.toLocaleString()}</div>
                             </div>
 
-                            <div className="flex items-center gap-6">
-                                <div className="flex items-center border-2 border-gray-100 rounded-xl bg-gray-50 p-1">
-                                    <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="w-12 h-12 flex items-center justify-center text-navy font-bold hover:bg-white rounded-lg transition-colors">-</button>
+                            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6">
+                                <div className="flex items-center justify-between sm:justify-start border-2 border-gray-100 rounded-xl bg-gray-50 p-1 w-full sm:w-auto h-14">
+                                    <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="w-12 h-full flex items-center justify-center text-navy font-bold hover:bg-white rounded-lg transition-colors">-</button>
                                     <span className="w-10 text-center font-bold text-navy">{quantity}</span>
-                                    <button onClick={() => setQuantity(quantity + 1)} className="w-12 h-12 flex items-center justify-center text-navy font-bold hover:bg-white rounded-lg transition-colors">+</button>
+                                    <button onClick={() => setQuantity(quantity + 1)} className="w-12 h-full flex items-center justify-center text-navy font-bold hover:bg-white rounded-lg transition-colors">+</button>
                                 </div>
                                 <button
                                     onClick={handleAddToCart}
                                     disabled={addingToCart || !product.in_stock}
-                                    className="flex-1 max-w-xs h-14 bg-navy text-white font-bold rounded-xl shadow-2xl shadow-navy/30 hover:bg-gold hover:shadow-gold/30 transition-all flex items-center justify-center gap-3 active:scale-95 disabled:opacity-50"
+                                    className="w-full sm:flex-1 h-14 bg-navy text-white font-bold rounded-xl shadow-xl shadow-navy/20 hover:bg-gold hover:shadow-gold/30 transition-all flex items-center justify-center gap-3 active:scale-95 disabled:opacity-50"
                                 >
                                     <ShoppingCart size={20} />
                                     {addingToCart ? 'Success!' : product.in_stock ? 'Add to Cart' : 'Out of Stock'}
