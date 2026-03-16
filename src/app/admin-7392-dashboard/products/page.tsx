@@ -8,7 +8,10 @@ import {
   Edit2, 
   Trash2, 
   Package,
-  AlertTriangle
+  AlertTriangle,
+  Palette,
+  X as CloseIcon,
+  Save
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -18,6 +21,7 @@ export default function ProductsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [editingProduct, setEditingProduct] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [managingShadesProduct, setManagingShadesProduct] = useState<any>(null);
   const [categories, setCategories] = useState<any[]>([]);
 
   useEffect(() => {
@@ -42,6 +46,7 @@ export default function ProductsPage() {
     if (data) setProducts(data);
     setLoading(false);
   }
+
 
   async function handleDelete(id: string) {
     if (!confirm('Are you sure you want to delete this product?')) return;
@@ -81,7 +86,8 @@ export default function ProductsPage() {
       price_quarter: Number(formData.get('price_quarter')),
       price_gallon: Number(formData.get('price_gallon')),
       price_drum: Number(formData.get('price_drum')),
-      in_stock: formData.get('in_stock') === 'on'
+      in_stock: formData.get('in_stock') === 'on',
+      shade_card_url: formData.get('shade_card_url')
     };
 
     const supabase = createClient();
@@ -210,6 +216,13 @@ export default function ProductsPage() {
                   <td className="px-6 py-4 text-right">
                     <div className="flex justify-end gap-2">
                       <button 
+                        onClick={() => setManagingShadesProduct(product)}
+                        className="p-2 text-gray-400 hover:text-gold hover:bg-gold/5 rounded-lg transition-colors"
+                        title="Manage Shades"
+                      >
+                        <Palette size={18} />
+                      </button>
+                      <button 
                         onClick={() => { setEditingProduct(product); setIsModalOpen(true); }}
                         className="p-2 text-gray-400 hover:text-navy hover:bg-gray-100 rounded-lg transition-colors"
                       >
@@ -254,6 +267,13 @@ export default function ProductsPage() {
                     </div>
                  </div>
                  <div className="flex flex-col gap-1">
+                   <button 
+                      onClick={() => setManagingShadesProduct(product)}
+                      className="p-2.5 bg-gold/10 text-gold rounded-lg hover:bg-gold hover:text-navy transition-all mb-1"
+                      title="Manage Shades"
+                   >
+                     <Palette size={18} />
+                   </button>
                    <button 
                       onClick={() => { setEditingProduct(product); setIsModalOpen(true); }}
                       className="p-2.5 bg-gray-100 text-navy rounded-lg hover:bg-gold hover:text-navy transition-all"
@@ -356,6 +376,15 @@ export default function ProductsPage() {
                 <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Description</label>
                 <textarea name="description" defaultValue={editingProduct?.description} rows={2} className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none resize-none text-sm" />
               </div>
+              <div className="col-span-2">
+                <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Shade Card PDF URL</label>
+                <input 
+                  name="shade_card_url" 
+                  defaultValue={editingProduct?.shade_card_url} 
+                  placeholder="https://example.com/shade-card.pdf" 
+                  className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" 
+                />
+              </div>
               <div className="grid grid-cols-3 col-span-2 gap-4">
                 <div>
                    <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Price (Q)</label>
@@ -382,6 +411,193 @@ export default function ProductsPage() {
           </form>
         </div>
       )}
+
+      {/* Shade Management Modal */}
+      {managingShadesProduct && (
+        <ShadeManagementModal 
+          product={managingShadesProduct}
+          onClose={() => setManagingShadesProduct(null)}
+        />
+      )}
     </div>
   );
 }
+
+function ShadeManagementModal({ product, onClose }: { product: any, onClose: () => void }) {
+  const [shades, setShades] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [isAdding, setIsAdding] = useState(false);
+  
+  const supabase = createClient();
+
+  useEffect(() => {
+    fetchShades();
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, []);
+
+  async function fetchShades() {
+    setLoading(true);
+    const { data } = await supabase
+      .from('product_shades')
+      .select('*')
+      .eq('product_id', product.id)
+      .order('created_at', { ascending: true });
+    
+    if (data) setShades(data);
+    setLoading(false);
+  }
+
+  async function handleAddShade(e: React.FormEvent) {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget as HTMLFormElement);
+    const hex = formData.get('hex') as string;
+    
+    const newShade = {
+      product_id: product.id,
+      name: formData.get('name'),
+      code: formData.get('code'),
+      hex: hex,
+      is_drum_available: formData.get('is_drum_available') === 'on'
+    };
+
+    const { error } = await supabase.from('product_shades').insert([newShade]);
+    if (error) {
+      alert('Error adding shade: ' + error.message);
+    } else {
+      fetchShades();
+      setIsAdding(false);
+    }
+  }
+
+  async function handleDeleteShade(id: string) {
+    if (!confirm('Delete this shade?')) return;
+    const { error } = await supabase.from('product_shades').delete().eq('id', id);
+    if (!error) {
+      setShades(shades.filter(s => s.id !== id));
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy/60 backdrop-blur-sm">
+      <div className="bg-white rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+        <div className="bg-navy p-6 text-white flex justify-between items-center">
+          <div>
+            <h2 className="text-xl font-bold flex items-center gap-2">
+              <Palette size={24} /> {product.name}
+            </h2>
+            <p className="text-xs text-gray-400">Manage color shades and availability</p>
+          </div>
+          <button onClick={onClose} className="p-2 hover:bg-white/10 rounded-full transition-colors">
+            <CloseIcon size={24} />
+          </button>
+        </div>
+
+        <div className="p-6">
+          <div className="flex justify-between items-center mb-6">
+            <h3 className="font-bold text-navy">Existing Shades ({shades.length})</h3>
+            <button 
+              onClick={() => setIsAdding(!isAdding)}
+              className="bg-gold/10 text-gold hover:bg-gold hover:text-navy px-4 py-2 rounded-lg font-bold text-sm flex items-center gap-2 transition-all"
+            >
+              <Plus size={16} /> {isAdding ? 'Cancel' : 'Add Shade'}
+            </button>
+          </div>
+
+          {isAdding && (
+            <AddShadeForm onSubmit={handleAddShade} />
+          )}
+
+          <div className="max-h-[400px] overflow-y-auto space-y-3 pr-2 scrollbar-thin">
+            {loading ? (
+              <div className="py-10 text-center text-gray-400"><Loader2 className="animate-spin mx-auto mb-2" /> Loading shades...</div>
+            ) : shades.length === 0 ? (
+              <div className="py-10 text-center text-gray-400 border-2 border-dashed border-gray-100 rounded-3xl">No shades added yet.</div>
+            ) : (
+              shades.map((shade) => (
+                <div key={shade.id} className="flex items-center justify-between p-4 bg-white border border-gray-100 rounded-2xl hover:shadow-md transition-shadow">
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full border border-gray-100 shadow-inner" style={{ backgroundColor: shade.hex }} />
+                    <div>
+                      <div className="font-bold text-navy leading-tight">{shade.name}</div>
+                      <div className="text-xs text-gray-400 font-mono tracking-tight">{shade.code} • {shade.hex}</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className={cn(
+                      "px-2 py-0.5 rounded text-[8px] font-bold uppercase",
+                      shade.is_drum_available ? "bg-gold/10 text-gold" : "bg-gray-100 text-gray-400"
+                    )}>
+                      Drum: {shade.is_drum_available ? 'YES' : 'NO'}
+                    </div>
+                    <button 
+                      onClick={() => handleDeleteShade(shade.id)}
+                      className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-all"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AddShadeForm({ onSubmit }: { onSubmit: (e: React.FormEvent) => void }) {
+  const [hex, setHex] = useState('#C9973A');
+  
+  return (
+    <form onSubmit={onSubmit} className="bg-gray-50 p-6 rounded-2xl border border-gold/20 mb-6 animate-in slide-in-from-top duration-300">
+      <div className="grid grid-cols-2 gap-4 mb-4">
+        <div>
+          <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1">Shade Name</label>
+          <input name="name" required placeholder="e.g. Royal Gold" className="w-full p-2.5 bg-white border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" />
+        </div>
+        <div>
+          <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1">Color Code</label>
+          <input name="code" required placeholder="e.g. G-102" className="w-full p-2.5 bg-white border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" />
+        </div>
+        <div>
+          <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1">HEX Color</label>
+          <div className="flex gap-2">
+            <input 
+              name="hex" 
+              required 
+              type="color" 
+              value={hex}
+              onChange={(e) => setHex(e.target.value)}
+              className="h-10 w-10 border-none rounded cursor-pointer p-0" 
+            />
+            <input 
+              name="hex_text" 
+              placeholder="#C9973A" 
+              value={hex}
+              onChange={(e) => setHex(e.target.value)}
+              className="flex-1 p-2.5 bg-white border border-gray-100 rounded-xl focus:outline-none text-sm font-mono uppercase" 
+            />
+          </div>
+        </div>
+        <div className="flex items-center gap-2 pt-5">
+           <input type="checkbox" name="is_drum_available" id="drum_add" className="w-4 h-4 accent-gold" />
+           <label htmlFor="drum_add" className="text-xs font-bold text-navy">Drum Available</label>
+        </div>
+      </div>
+      <button type="submit" className="w-full bg-navy text-white py-3 rounded-xl font-bold hover:bg-gold hover:text-navy transition-all flex items-center justify-center gap-2">
+        <Plus size={18} /> Save New Shade
+      </button>
+    </form>
+  );
+}
+
+function Loader2({ className }: { className?: string }) {
+  return <Loader2Icon className={`animate-spin ${className}`} size={20} />;
+}
+
+import { Loader2 as Loader2Icon } from 'lucide-react';

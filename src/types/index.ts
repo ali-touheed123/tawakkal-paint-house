@@ -34,6 +34,7 @@ export interface Product {
   price_gallon: number;
   price_drum: number;
   in_stock: boolean;
+  shade_card_url?: string | null;
   selectedShade?: {
     name: string;
     code: string;

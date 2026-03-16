@@ -12,7 +12,9 @@ import {
     Package,
     Info,
     ArrowRight,
-    Search
+    Search,
+    FileText,
+    Download
 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { Product, ItemSize, Shade } from '@/types';
@@ -101,10 +103,11 @@ export function ProductView({ initialId }: { initialId: string }) {
     const isDiamondOverallMattEnamel = product?.brand === 'Diamond' && product?.name?.toLowerCase().includes('overall matt enamel');
     const isDiamondOverallAquamaxWaterMatt = product?.brand === 'Diamond' && product?.name?.toLowerCase().includes('aquamax');
     const isDiamondAceTimberlacWoodStains = product?.brand === 'Diamond' && product?.name?.toLowerCase().includes('timberlac wood stain');
-    const hasShadeCard = isBrightoSuperEmulsion || isBrightoSyntheticEnamel || isBrightoPlasticEmulsion || isBrightoAllWeather || isSaasiHydrous || isSaasiMattEnamel || isSaasiPlasticEmulsion || isSaasiSuperGlossEnamel || isSaasiWeatherSafe || isBrightoStainFree || isGobisIndustrialEnamel || isGobisStovingPaint || isGobisCarmanSeries || isGobisSilverlineEnamel || isGobisSilverlineEmulsion || isGobisGoldLuxuriousWallEmulsion || isGobisSilksheenEmulsion || isGobisGoldEnamel || isGobisAqueousMattFinish || isGobisGoldAqueousMattFinish || isGobisGoldEggshellMattFinish || isGobisGlossEnamel || isGobisEggshellMattEnamel || isReliableWeatherProtector || isReliableMattEnamel || isReliableEmulsion || isReliableEnamel || isReliableWaterMatt || isChoiceSyntheticEnamel || isChoiceWeatherSealer || isRelianceStainlessMatt || isRelianceSemiPlasticEmulsion || isRelianceMattEnamel || isRelianceWeatherGuard || isRelianceSyntheticEnamel || isBergerWeatherPro || isBergerNuEnamel || isBergerNuEmulsion || isBergerEleganceSilkEmulsion || isBergerEleganceMattEmulsion || isBergerSuperiorMattFinish || isBergerWeatherCoatGlow365 || isBergerVipWeatherCoat || isBergerAllrounderMattEnamel || isBergerTopSuperEmulsion || isBergerSuperGlossEnamel || isBergerSemiPlasticEmulsion || isDiamondAceWeatherDefender || isDiamondOverallPlasticcoatEmulsion || isDiamondAceAcrylicPlasticEmulsion || isDiamondAceMattEnamel || isDiamondAceSuperGlossEnamel || isDiamondOverallSuperEmulsion || isDiamondOverallHighGlossEnamel || isDiamondOverallWeatherMax || isDiamondEverlastHighGlossEnamel || isDiamondAceDurasilkEmulsion || isDiamondValueEmulsion || isDiamondOverallMattEnamel || isDiamondOverallAquamaxWaterMatt || isDiamondAceTimberlacWoodStains;
+    const hasShadeCard = shades.length > 0 || isBrightoSuperEmulsion || isBrightoSyntheticEnamel || isBrightoPlasticEmulsion || isBrightoAllWeather || isSaasiHydrous || isSaasiMattEnamel || isSaasiPlasticEmulsion || isSaasiSuperGlossEnamel || isSaasiWeatherSafe || isBrightoStainFree || isGobisIndustrialEnamel || isGobisStovingPaint || isGobisCarmanSeries || isGobisSilverlineEnamel || isGobisSilverlineEmulsion || isGobisGoldLuxuriousWallEmulsion || isGobisSilksheenEmulsion || isGobisGoldEnamel || isGobisAqueousMattFinish || isGobisGoldAqueousMattFinish || isGobisGoldEggshellMattFinish || isGobisGlossEnamel || isGobisEggshellMattEnamel || isReliableWeatherProtector || isReliableMattEnamel || isReliableEmulsion || isReliableEnamel || isReliableWaterMatt || isChoiceSyntheticEnamel || isChoiceWeatherSealer || isRelianceStainlessMatt || isRelianceSemiPlasticEmulsion || isRelianceMattEnamel || isRelianceWeatherGuard || isRelianceSyntheticEnamel || isBergerWeatherPro || isBergerNuEnamel || isBergerNuEmulsion || isBergerEleganceSilkEmulsion || isBergerEleganceMattEmulsion || isBergerSuperiorMattFinish || isBergerWeatherCoatGlow365 || isBergerVipWeatherCoat || isBergerAllrounderMattEnamel || isBergerTopSuperEmulsion || isBergerSuperGlossEnamel || isBergerSemiPlasticEmulsion || isDiamondAceWeatherDefender || isDiamondOverallPlasticcoatEmulsion || isDiamondAceAcrylicPlasticEmulsion || isDiamondAceMattEnamel || isDiamondAceSuperGlossEnamel || isDiamondOverallSuperEmulsion || isDiamondOverallHighGlossEnamel || isDiamondOverallWeatherMax || isDiamondEverlastHighGlossEnamel || isDiamondAceDurasilkEmulsion || isDiamondValueEmulsion || isDiamondOverallMattEnamel || isDiamondOverallAquamaxWaterMatt || isDiamondAceTimberlacWoodStains;
 
     const shadeCardPdf = useMemo(() => {
         if (!product) return null;
+        if (product.shade_card_url) return product.shade_card_url;
         const name = product.name;
         const brand = product.brand;
 
@@ -468,10 +471,11 @@ export function ProductView({ initialId }: { initialId: string }) {
                                     href={shadeCardPdf}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="mt-4 inline-flex items-center gap-2 text-xs font-bold text-gold hover:underline bg-gold/5 px-4 py-2 rounded-lg border border-gold/10"
+                                    className="mt-6 group inline-flex items-center gap-3 px-6 py-3 bg-white border-2 border-gold/20 text-gold rounded-2xl font-bold text-xs uppercase tracking-widest hover:bg-gold hover:text-navy hover:border-gold transition-all duration-300 shadow-sm hover:shadow-gold/20"
                                 >
-                                    <Info size={14} />
-                                    Download Shade Card PDF
+                                    <FileText size={16} className="group-hover:scale-110 transition-transform" />
+                                    <span>Download Shade Card PDF</span>
+                                    <Download size={14} className="opacity-50 group-hover:translate-y-0.5 transition-transform" />
                                 </a>
                             )}
                         </div>

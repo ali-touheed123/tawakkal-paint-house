@@ -25,9 +25,9 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-navy text-white pt-[120px] pb-24">
+    <div className="min-h-screen bg-navy text-white pt-[100px] md:pt-[120px] pb-24 overflow-x-hidden">
       {/* Decorative Background */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gold/10 rounded-full blur-[120px] pointer-events-none transform translate-x-1/2 -translate-y-1/2"></div>
+      <div className="absolute top-0 right-0 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-gold/10 rounded-full blur-[80px] md:blur-[120px] pointer-events-none transform translate-x-1/2 -translate-y-1/2"></div>
       
       <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8 relative z-10">
         
@@ -50,7 +50,7 @@ export default function ContactPage() {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16">
           
           {/* Left Column - Contact Info & Form */}
           <motion.div 
@@ -133,7 +133,7 @@ export default function ContactPage() {
                 </div>
                 <button 
                   type="submit"
-                  className="w-full bg-gold text-navy font-bold py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all duration-300"
+                  className="w-full bg-gold text-navy font-bold py-3.5 md:py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all duration-300"
                 >
                   <span>Chat on WhatsApp</span>
                   <Send size={18} />
@@ -152,7 +152,7 @@ export default function ContactPage() {
           >
             <div className="bg-white/5 border border-white/10 rounded-3xl p-2 flex-grow flex flex-col min-h-[400px]">
               {/* Map Visual / Link Area */}
-              <div className="relative w-full h-[300px] lg:h-flex-grow rounded-2xl overflow-hidden bg-navy-light flex items-center justify-center flex-grow group">
+              <div className="relative w-full h-[350px] md:h-auto rounded-2xl overflow-hidden bg-navy-light flex items-center justify-center flex-grow group">
                 {/* Decorative Map Background Pattern */}
                 <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
                 

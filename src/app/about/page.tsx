@@ -48,15 +48,14 @@ export default function AboutPage() {
             {/* Vision & Mission */}
             <section className="py-24 bg-white relative">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="grid lg:grid-cols-2 gap-20 items-center">
+                    <div className="grid lg:grid-cols-2 gap-10 md:gap-20 items-center">
                         <motion.div 
                             initial={{ opacity: 0, x: -30 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             className="space-y-8"
                         >
-                            <h2 className="text-4xl font-heading font-bold text-navy">
-                                More Than Just a <br/>
-                                <span className="text-gold">Paint Store.</span>
+                            <h2 className="text-3xl md:text-4xl font-heading font-bold text-navy">
+                                More Than Just a <span className="text-gold text-nowrap md:text-wrap">Paint Store.</span>
                             </h2>
                             <p className="text-gray-600 text-lg leading-relaxed">
                                 Founded in 2011 in Mauripur, Karachi, Tawakkal Paint House started with a simple belief: 
@@ -128,7 +127,7 @@ export default function AboutPage() {
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ delay: i * 0.1 }}
-                                className="bg-white p-10 rounded-3xl shadow-xl shadow-navy/5 hover:shadow-2xl hover:shadow-gold/10 transition-all border border-gray-50 group"
+                                className="bg-white p-8 md:p-10 rounded-3xl shadow-xl shadow-navy/5 hover:shadow-2xl hover:shadow-gold/10 transition-all border border-gray-50 group"
                             >
                                 <div className="w-16 h-16 bg-navy text-white rounded-2xl flex items-center justify-center mb-6 group-hover:bg-gold transition-colors duration-500">
                                     <value.icon size={32} />
@@ -144,7 +143,7 @@ export default function AboutPage() {
             {/* Why Us / Distribution Section */}
             <section className="py-24 bg-white overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="bg-navy rounded-[50px] overflow-hidden relative p-12 md:p-24">
+                    <div className="bg-navy rounded-[30px] md:rounded-[50px] overflow-hidden relative p-8 md:p-24">
                         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gold/10 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
                         
                         <div className="grid lg:grid-cols-2 gap-16 items-center relative z-10">
@@ -156,8 +155,8 @@ export default function AboutPage() {
                                 >
                                     Exclusive Distributor
                                 </motion.span>
-                                <h2 className="text-4xl md:text-5xl font-heading font-bold text-white leading-tight">
-                                    A Partner for <br/><span className="text-gold">Every Scale.</span>
+                                <h2 className="text-3xl md:text-5xl font-heading font-bold text-white leading-tight">
+                                    A Partner for <span className="text-gold">Every Scale.</span>
                                 </h2>
                                 <p className="text-gray-400 text-lg">
                                     Whether you're painting a single room or managing a 50-story commercial tower, we have the stock and the logistical capacity to support you.
@@ -178,7 +177,7 @@ export default function AboutPage() {
                                 <div className="pt-8">
                                     <Link 
                                         href="/contact"
-                                        className="inline-flex items-center gap-2 bg-gold text-navy font-bold px-10 py-5 rounded-full hover:bg-white transition-all duration-300 shadow-xl shadow-gold/20"
+                                        className="inline-flex items-center gap-2 bg-gold text-navy font-bold px-6 md:px-10 py-4 md:py-5 rounded-full hover:bg-white transition-all duration-300 shadow-xl shadow-gold/20 text-sm md:text-base w-full sm:w-auto justify-center"
                                     >
                                         Discuss Your Project
                                         <Building2 size={20} />
@@ -191,8 +190,9 @@ export default function AboutPage() {
                                 whileInView={{ scale: 1, opacity: 1 }}
                                 className="relative lg:h-[500px] flex items-center justify-center"
                             >
-                                <div className="w-64 h-64 bg-gold rounded-full blur-[100px] animate-pulse" />
-                                <PaintBucket size={300} className="text-white relative z-10 opacity-10" />
+                                <div className="w-48 h-48 md:w-64 md:h-64 bg-gold rounded-full blur-[80px] md:blur-[100px] animate-pulse" />
+                                <PaintBucket size={200} className="text-white relative z-10 opacity-10 md:hidden" />
+                                <PaintBucket size={300} className="text-white relative z-10 opacity-10 hidden md:block" />
                                 <div className="absolute inset-0 flex items-center justify-center">
                                     <div className="text-center">
                                         <Star size={48} className="text-gold mx-auto mb-4 animate-bounce" />
