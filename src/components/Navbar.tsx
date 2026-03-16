@@ -101,9 +101,18 @@ export function Navbar() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
         >
-          <div className="flex items-center justify-between h-[70px] md:h-[70px]">
+          <div className="flex items-center justify-between h-[70px] md:h-[70px] relative">
+            {/* Mobile Menu Button - Left on mobile */}
+            <button
+              onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
+              className="lg:hidden text-white"
+              aria-label="Menu"
+            >
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2">
+            <Link href="/" className="flex items-center gap-2 absolute left-1/2 -translate-x-1/2 lg:static lg:translate-x-0 lg:left-0">
               <img
                 src={settings?.logo || "/logo.png"}
                 alt="Tawakkal Paint House"
@@ -112,7 +121,7 @@ export function Navbar() {
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-8 self-stretch">
+            <div className="hidden lg:flex items-center gap-8 self-stretch pl-4">
               {navLinks.map((link) => (
                 <div
                   key={link.label}
@@ -232,7 +241,7 @@ export function Navbar() {
             </div>
 
             {/* Desktop Icons */}
-            <div className="hidden lg:flex items-center gap-4">
+            <div className="flex items-center gap-4">
               <button
                 onClick={() => setSearchOpen(true)}
                 className="text-white/80 hover:text-gold transition-colors"
@@ -245,7 +254,7 @@ export function Navbar() {
                 href={`https://wa.me/${settings?.contact?.whatsapp || '923475658761'}?text=Hi! I need help with paint.`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-green-400 hover:text-green-300 transition-colors"
+                className="hidden lg:flex text-green-400 hover:text-green-300 transition-colors"
                 aria-label="WhatsApp"
               >
                 <MessageCircle size={20} />
@@ -268,7 +277,7 @@ export function Navbar() {
               {area && (
                 <button
                   onClick={handleChangeArea}
-                  className="flex items-center gap-1 text-gold text-sm bg-gold/10 px-3 py-1.5 rounded-full hover:bg-gold/20 transition-colors"
+                  className="hidden lg:flex items-center gap-1 text-gold text-sm bg-gold/10 px-3 py-1.5 rounded-full hover:bg-gold/20 transition-colors"
                 >
                   <MapPin size={14} />
                   <span className="hidden xl:inline">{area}</span>
@@ -276,15 +285,6 @@ export function Navbar() {
                 </button>
               )}
             </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden text-white"
-              aria-label="Menu"
-            >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
           </div>
         </motion.div>
 
@@ -389,30 +389,14 @@ export function Navbar() {
                 ))}
 
                 <div className="flex items-center gap-4 pt-4 border-t border-white/10">
-                  <button
-                    onClick={() => setSearchOpen(true)}
-                    className="text-white/80"
-                  >
-                    <Search size={20} />
-                  </button>
-
                   <Link
                     href={`https://wa.me/${settings?.contact?.whatsapp || '923475658761'}?text=Hi! I need help with paint.`}
                     target="_blank"
-                    className="text-green-400"
+                    className="text-green-400 flex items-center gap-2"
                   >
                     <MessageCircle size={20} />
+                    <span className="text-sm">WhatsApp Inquiry</span>
                   </Link>
-
-                  <Link href="/cart" className="relative text-white/80">
-                    <ShoppingCart size={20} />
-                    {cartCount > 0 && (
-                      <span className="absolute -top-2 -right-2 bg-gold text-navy text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
-                        {cartCount}
-                      </span>
-                    )}
-                  </Link>
-
                 </div>
 
                 {area && (
