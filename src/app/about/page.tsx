@@ -144,7 +144,7 @@ export default function AboutPage() {
             <section className="py-24 bg-white overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="bg-navy rounded-[30px] md:rounded-[50px] overflow-hidden relative p-8 md:p-24">
-                        <div className="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-gold/10 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
+                        <div className="absolute top-0 right-0 w-[250px] md:w-[600px] h-[250px] md:h-[600px] bg-gold/10 rounded-full blur-3xl opacity-20 -translate-y-1/2" />
                         
                         <div className="grid lg:grid-cols-2 gap-16 items-center relative z-10">
                             <div className="space-y-8">

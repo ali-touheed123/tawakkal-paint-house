@@ -32,8 +32,8 @@ export function Footer() {
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-navy via-gold/50 to-navy opacity-50"></div>
       
       {/* Decorative background blur */}
-      <div className="absolute top-0 right-0 w-[250px] md:w-[500px] h-[250px] md:h-[500px] bg-gold/5 rounded-full blur-[80px] md:blur-[120px] pointer-events-none transform translate-x-1/4 md:translate-x-1/2 -translate-y-1/2" />
-      <div className="absolute bottom-0 left-0 w-[250px] md:w-[500px] h-[250px] md:h-[500px] bg-blue-900/10 rounded-full blur-[80px] md:blur-[120px] pointer-events-none transform -translate-x-1/4 md:-translate-x-1/2 translate-y-1/2" />
+      <div className="absolute top-0 right-0 w-[250px] md:w-[500px] h-[250px] md:h-[500px] bg-gold/5 rounded-full blur-[80px] md:blur-[120px] pointer-events-none -translate-y-1/2" />
+      <div className="absolute bottom-0 left-0 w-[250px] md:w-[500px] h-[250px] md:h-[500px] bg-blue-900/10 rounded-full blur-[80px] md:blur-[120px] pointer-events-none translate-y-1/2" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-10 xs:gap-8 lg:gap-8 mb-16">

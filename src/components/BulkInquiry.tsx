@@ -16,8 +16,8 @@ export function BulkInquiry() {
         className="max-w-7xl mx-auto bg-navy rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden border border-gold/20 shadow-2xl shadow-navy/40"
       >
         {/* Background Elements */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-gold/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2" />
+        <div className="absolute top-0 right-0 w-64 md:w-96 h-64 md:h-96 bg-gold/5 rounded-full blur-[80px] md:blur-[100px] -translate-y-1/2" />
+        <div className="absolute bottom-0 left-0 w-48 md:w-64 h-48 md:h-64 bg-gold/5 rounded-full blur-[60px] md:blur-[80px] translate-y-1/2" />
 
         <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
