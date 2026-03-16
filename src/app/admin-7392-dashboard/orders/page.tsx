@@ -201,6 +201,10 @@ export default function OrdersPage() {
                       <p className="font-semibold text-navy">{selectedOrder.phone}</p>
                     </div>
                     <div>
+                      <label className="block text-xs text-gray-400">Email</label>
+                      <p className="font-semibold text-navy">{selectedOrder.email}</p>
+                    </div>
+                    <div>
                       <label className="block text-xs text-gray-400">Address</label>
                       <p className="text-sm text-navy">{selectedOrder.delivery_address}</p>
                       <p className="text-xs font-bold text-gold uppercase mt-1">{selectedOrder.delivery_area}</p>
