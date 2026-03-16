@@ -40,36 +40,49 @@ function OrderTrackingContent() {
 
     const supabase = createClient();
 
-    useEffect(() => {
-        const idFromUrl = searchParams.get('id');
-        if (idFromUrl) {
-            setOrderId(idFromUrl);
-        }
-    }, [searchParams]);
-
-    const handleTrack = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const fetchOrder = async (id: string, searchEmail?: string) => {
         setLoading(true);
         setError(null);
         setOrder(null);
 
-        // Sanitize Order ID to extract numbers if needed (TPH-1234 -> 1234)
-        const cleanId = orderId.replace(/\D/g, '');
+        const cleanId = id.replace(/\D/g, '');
 
-        const { data, error: dbError } = await supabase
-            .from('orders')
-            .select('*')
-            .eq('id', cleanId)
-            .ilike('email', email.trim())
-            .single();
+        let query = supabase.from('orders').select('*').eq('id', cleanId);
+        
+        // Only enforce email check if this is a manual lookup
+        if (searchEmail) {
+            query = query.ilike('email', searchEmail.trim());
+        }
+
+        const { data, error: dbError } = await query.single();
 
         if (dbError || !data) {
-            setError('We couldn\'t find an order with matching details. Please double-check your Order ID and Email.');
+            setError(searchEmail 
+                ? 'We couldn\'t find an order with matching details. Please double-check your Order ID and Email.' 
+                : 'Order not found or invalid link. Please try entering your details manually.');
         } else {
             setOrder(data);
         }
         setLoading(false);
     };
+
+    useEffect(() => {
+        const idFromUrl = searchParams.get('id');
+        if (idFromUrl) {
+            setOrderId(idFromUrl);
+            fetchOrder(idFromUrl);
+        }
+    }, [searchParams]);
+
+    const handleTrack = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!email.trim() && !searchParams.get('id')) {
+            setError('Please enter your email address to track your order.');
+            return;
+        }
+        await fetchOrder(orderId, email);
+    };
+
 
     const statusSteps: { status: OrderStatus; label: string; icon: any; color: string }[] = [
         { status: 'pending', label: 'Order Placed', icon: Clock, color: 'text-amber-500' },
