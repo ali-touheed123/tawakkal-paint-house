@@ -45,7 +45,7 @@ function OrderTrackingContent() {
         setError(null);
         setOrder(null);
 
-        const cleanId = id.replace(/\D/g, '');
+        const cleanId = id.trim();
 
         let query = supabase.from('orders').select('*').eq('id', cleanId);
         
