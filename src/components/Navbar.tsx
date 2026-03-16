@@ -63,6 +63,7 @@ export function Navbar() {
   const navLinks = [
     { href: '/', label: 'Home' },
     { href: '#', label: 'Products', hasDropdown: true },
+    { href: '/about', label: 'About Us' },
     { href: '/#why-choose-us', label: 'Why Choose Us' },
     { href: '/#calculator', label: 'Calculator' },
     { href: '/contact', label: 'Contact Us' },
