@@ -18,10 +18,18 @@ export default function ProductsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [editingProduct, setEditingProduct] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [categories, setCategories] = useState<any[]>([]);
 
   useEffect(() => {
     fetchProducts();
+    fetchCategories();
   }, []);
+
+  async function fetchCategories() {
+    const supabase = createClient();
+    const { data } = await supabase.from('categories').select('*').eq('is_active', true);
+    if (data) setCategories(data);
+  }
 
   async function fetchProducts() {
     setLoading(true);
@@ -303,11 +311,10 @@ export default function ProductsPage() {
               </div>
               <div>
                 <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Category</label>
-                <select name="category" defaultValue={editingProduct?.category || 'decorative'} className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm">
-                  <option value="decorative">Decorative</option>
-                  <option value="industrial">Industrial</option>
-                  <option value="auto">Auto</option>
-                  <option value="projects">Projects</option>
+                <select name="category" defaultValue={editingProduct?.category || categories[0]?.slug} className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm">
+                  {categories.map(cat => (
+                    <option key={cat.id} value={cat.slug}>{cat.name}</option>
+                  ))}
                 </select>
               </div>
               <div className="col-span-2">

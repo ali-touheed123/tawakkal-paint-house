@@ -19,19 +19,34 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: route === '' ? 1 : 0.8,
   }));
 
-  // Categories
-  const categories = ['decorative', 'industrial', 'auto', 'projects'].map((slug) => ({
+  // Products and Categories from Supabase
+  const supabase = createClient();
+  
+  // Fetch Categories
+  const { data: dbCategories } = await supabase
+    .from('categories')
+    .select('slug, updated_at')
+    .eq('is_active', true);
+
+  const categoryRoutes = (dbCategories || []).map((cat) => ({
+    url: `${baseUrl}/category/${cat.slug}`,
+    lastModified: cat.updated_at ? new Date(cat.updated_at) : new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.9,
+  }));
+
+  // Fallback if DB categories fail to load (hardcoded ones)
+  const legacyCategories = !dbCategories?.length ? ['decorative', 'industrial', 'auto', 'projects'].map(slug => ({
     url: `${baseUrl}/category/${slug}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.9,
-  }));
+  })) : [];
 
   // Products from Supabase
   // Note: Since this is a sitemap generation, it runs during build time or on-demand
   // using the server-side client or a service role if needed.
   // We'll use the public client for now to fetch published products.
-  const supabase = createClient();
   const { data: products } = await supabase
     .from('products')
     .select('id, updated_at')
@@ -44,5 +59,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...routes, ...categories, ...productRoutes];
+  return [...routes, ...categoryRoutes, ...legacyCategories, ...productRoutes];
 }

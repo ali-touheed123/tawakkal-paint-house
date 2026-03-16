@@ -61,6 +61,37 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
   const [loading, setLoading] = useState(true);
   const [selectedBrand, setSelectedBrand] = useState(searchParams.get('brand') || 'all');
   const [selectedSub, setSelectedSub] = useState(searchParams.get('sub') || 'all');
+  const [categoryDetails, setCategoryDetails] = useState<{ title: string; description: string; hero: string } | null>(null);
+
+  useEffect(() => {
+    async function fetchCategoryDetails() {
+      // Check hardcoded first
+      if (categoryInfo[category]) {
+        setCategoryDetails(categoryInfo[category]);
+        return;
+      }
+
+      // Fetch from Supabase
+      const supabase = createClient();
+      const { data, error } = await supabase
+        .from('categories')
+        .select('*')
+        .eq('slug', category)
+        .single();
+      
+      if (data) {
+        setCategoryDetails({
+          title: data.name,
+          description: data.description || '',
+          hero: data.image_url || '/images/categories/decorative.jpg'
+        });
+      } else {
+        // Fallback
+        setCategoryDetails(categoryInfo.decorative);
+      }
+    }
+    fetchCategoryDetails();
+  }, [category]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -113,7 +144,7 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
     router.push(`/category/${category}?${params.toString()}`);
   };
 
-  const info = categoryInfo[category] || categoryInfo.decorative;
+  const info = categoryDetails || categoryInfo.decorative;
 
   return (
     <div className="min-h-screen overflow-x-hidden">

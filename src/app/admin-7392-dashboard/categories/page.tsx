@@ -1,0 +1,265 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { createClient } from '@/lib/supabase/client';
+import { 
+  Plus, 
+  Search, 
+  Edit2, 
+  Trash2, 
+  Layers,
+  Image as ImageIcon,
+  AlertTriangle,
+  ChevronRight
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+
+export default function CategoriesPage() {
+  const [categories, setCategories] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [editingCategory, setEditingCategory] = useState<any>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [imgError, setImgError] = useState(false);
+  const [currentImageUrl, setCurrentImageUrl] = useState('');
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  async function fetchCategories() {
+    setLoading(true);
+    const supabase = createClient();
+    const { data } = await supabase
+      .from('categories')
+      .select('*')
+      .order('name', { ascending: true });
+    
+    if (data) setCategories(data);
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    if (isModalOpen) {
+      setCurrentImageUrl(editingCategory?.image_url || '');
+      setImgError(false);
+    }
+  }, [isModalOpen, editingCategory]);
+
+  async function handleDelete(id: string) {
+    if (!confirm('Are you sure? This will not delete products in this category, but they may become orphaned.')) return;
+    
+    const supabase = createClient();
+    const { error } = await supabase.from('categories').delete().eq('id', id);
+    
+    if (error) {
+      alert('Failed to delete: ' + error.message);
+      return;
+    }
+
+    setCategories(categories.filter(c => c.id !== id));
+  }
+
+  async function handleSave(e: React.FormEvent) {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget as HTMLFormElement);
+    const categoryData = {
+      name: formData.get('name'),
+      slug: formData.get('slug'),
+      description: formData.get('description'),
+      image_url: formData.get('image_url'),
+      is_active: formData.get('is_active') === 'on'
+    };
+
+    const supabase = createClient();
+    if (editingCategory?.id) {
+      const { error } = await supabase
+        .from('categories')
+        .update(categoryData)
+        .eq('id', editingCategory.id);
+      
+      if (error) {
+        alert('Failed to save: ' + error.message);
+        return;
+      }
+    } else {
+      const { error } = await supabase
+        .from('categories')
+        .insert([categoryData]);
+      
+      if (error) {
+        alert('Failed to create: ' + error.message);
+        return;
+      }
+    }
+    
+    fetchCategories();
+    setIsModalOpen(false);
+    setEditingCategory(null);
+  }
+
+  const filteredCategories = categories.filter(c => 
+    c.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    c.slug.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-navy">Categories</h1>
+          <p className="text-gray-500">Manage product categories and their hero displays.</p>
+        </div>
+        <button 
+          onClick={() => { setEditingCategory(null); setIsModalOpen(true); }}
+          className="bg-gold hover:bg-gold-dark text-navy font-bold px-6 py-2.5 rounded-lg flex items-center gap-2 shadow-lg transition-all active:scale-95"
+        >
+          <Plus size={20} /> Add Category
+        </button>
+      </div>
+
+      <div className="relative mb-6">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+        <input 
+          type="text" 
+          placeholder="Search categories..." 
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full pl-10 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold/50 text-sm shadow-sm"
+        />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {filteredCategories.map((category) => (
+          <div key={category.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden group hover:shadow-xl transition-all duration-300">
+            <div className="aspect-[16/9] relative overflow-hidden bg-gray-100">
+              {category.image_url ? (
+                <img src={category.image_url} alt={category.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-gray-300">
+                  <ImageIcon size={48} />
+                </div>
+              )}
+              <div className="absolute top-3 right-3">
+                <span className={cn(
+                  "px-2 py-1 rounded-md text-[10px] font-bold uppercase shadow-sm",
+                  category.is_active ? "bg-green-500 text-white" : "bg-gray-400 text-white"
+                )}>
+                  {category.is_active ? 'Active' : 'Hidden'}
+                </span>
+              </div>
+            </div>
+            
+            <div className="p-5">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <h3 className="font-bold text-lg text-navy">{category.name}</h3>
+                  <code className="text-[10px] bg-gray-50 px-1.5 py-0.5 rounded text-gray-400">{category.slug}</code>
+                </div>
+                <div className="flex gap-1">
+                  <button 
+                    onClick={() => { setEditingCategory(category); setIsModalOpen(true); }}
+                    className="p-2 text-gray-400 hover:text-navy hover:bg-gray-50 rounded-lg transition-colors"
+                  >
+                    <Edit2 size={18} />
+                  </button>
+                  <button 
+                    onClick={() => handleDelete(category.id)}
+                    className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                  >
+                    <Trash2 size={18} />
+                  </button>
+                </div>
+              </div>
+              <p className="mt-3 text-sm text-gray-500 line-clamp-2 min-h-[40px]">
+                {category.description || 'No description provided.'}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy/60 backdrop-blur-sm">
+          <form onSubmit={handleSave} className="bg-white rounded-2xl w-full max-w-xl shadow-2xl animate-in fade-in zoom-in duration-200 overflow-hidden">
+            <div className="p-5 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
+              <h2 className="text-lg font-bold text-navy">{editingCategory ? 'Edit Category' : 'Add New Category'}</h2>
+            </div>
+            
+            <div className="p-6 space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Name</label>
+                  <input 
+                    name="name" 
+                    defaultValue={editingCategory?.name} 
+                    required 
+                    onChange={(e) => {
+                      if (!editingCategory) {
+                        const slugInput = (e.target.form as HTMLFormElement).elements.namedItem('slug') as HTMLInputElement;
+                        if (slugInput) slugInput.value = e.target.value.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+                      }
+                    }}
+                    className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" 
+                  />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Slug</label>
+                  <input name="slug" defaultValue={editingCategory?.slug} required className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Description</label>
+                <textarea name="description" defaultValue={editingCategory?.description} rows={3} className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none resize-none text-sm" />
+              </div>
+
+              <div>
+                <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Hero Image URL</label>
+                <div className="flex gap-4 items-start">
+                  <div className="flex-1">
+                    <input 
+                      name="image_url" 
+                      value={currentImageUrl}
+                      onChange={(e) => {
+                        setCurrentImageUrl(e.target.value);
+                        setImgError(false);
+                      }}
+                      placeholder="/images/categories/example.jpg" 
+                      className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" 
+                    />
+                    <p className="text-[9px] text-gray-400 mt-1 italic">
+                      Recommended: 1920x600px image for hero sections.
+                    </p>
+                  </div>
+                  <div className="w-20 h-12 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden border border-gray-100 shrink-0">
+                    {currentImageUrl && !imgError ? (
+                      <img 
+                        src={currentImageUrl} 
+                        alt="Preview" 
+                        onError={() => setImgError(true)}
+                        className="w-full h-full object-cover" 
+                      />
+                    ) : (
+                      <ImageIcon size={20} className="text-gray-300" />
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                 <input type="checkbox" name="is_active" id="is_active" defaultChecked={editingCategory ? editingCategory.is_active : true} className="w-4 h-4 accent-gold" />
+                 <label htmlFor="is_active" className="text-xs font-bold text-navy">Category is Active</label>
+              </div>
+            </div>
+
+            <div className="p-5 bg-gray-50 border-t border-gray-100 flex justify-end gap-3">
+              <button type="button" onClick={() => { setIsModalOpen(false); setEditingCategory(null); }} className="px-5 py-2 text-sm text-gray-500 font-bold hover:text-navy">Cancel</button>
+              <button type="submit" className="px-6 py-2 bg-navy text-white text-sm font-bold rounded-lg hover:bg-navy/90 shadow-md transition-all active:scale-95">Save Category</button>
+            </div>
+          </form>
+        </div>
+      )}
+    </div>
+  );
+}
