@@ -98,7 +98,7 @@ export default function HomePage() {
               <span className="inline-block text-gold text-[10px] xs:text-sm tracking-[2px] xs:tracking-[3px] mb-4">
                 SINCE 2011 • AUTHORIZED DEALER • KARACHI
               </span>
-              <h1 className="font-heading text-3xl xs:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] mb-6">
+              <h1 className="font-heading text-4xl xs:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] mb-6">
                 Where Colour Meets Craftsmanship
               </h1>
               <p className="text-gray-300 text-base xs:text-lg md:text-xl mb-8 max-w-lg">

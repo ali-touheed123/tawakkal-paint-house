@@ -513,7 +513,7 @@ export default function ProductDetailPage() {
                                     {product.in_stock ? 'In Stock' : 'Out of Stock'}
                                 </div>
                             </div>
-                            <h1 className="font-heading text-2xl xs:text-4xl lg:text-5xl font-bold text-navy leading-tight mb-4 tracking-tight">
+                            <h1 className="font-heading text-3xl xs:text-4xl lg:text-5xl font-bold text-navy leading-tight mb-4 tracking-tight">
                                 {isBrightoSuperEmulsion ? 'Plastic Emulsion Paint' : isBrightoSyntheticEnamel ? 'Synthetic Enamel Paint' : isBrightoPlasticEmulsion ? 'Plastic Emulsion Paint' : isBrightoAllWeather ? 'All Weather Exterior Paint' : isReliableMattEnamel ? 'Matt Enamel' : isReliableWeatherProtector ? 'Weather Protector' : isReliableEmulsion ? 'Emulsion' : isReliableWaterMatt ? 'Water Matt' : isReliableEnamel ? 'Enamel' : isChoiceSyntheticEnamel ? 'Synthetic Enamel' : isChoiceWeatherSealer ? 'Weather Sealer' : isRelianceStainlessMatt ? 'Stainless Matt' : isRelianceSemiPlasticEmulsion ? 'Semi Plastic Emulsion' : isRelianceMattEnamel ? 'Matt Enamel' : isRelianceWeatherGuard ? 'Weather Guard' : product.name?.toLowerCase().includes('synthetic enamel') ? 'Synthetic Enamel' : product.name}
                             </h1>
                             <p className="text-gray-400 font-medium text-sm leading-relaxed max-w-xl">

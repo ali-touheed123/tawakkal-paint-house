@@ -122,7 +122,122 @@ export function Navbar() {
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center gap-8 self-stretch pl-4">
-              {/* ... existing links ... */}
+              {navLinks.map((link) => (
+                <div
+                  key={link.label}
+                  className="relative h-full flex items-center"
+                  onMouseEnter={() => link.hasDropdown && setActiveMenu('products')}
+                  onMouseLeave={() => link.hasDropdown && setActiveMenu(null)}
+                >
+                  <Link
+                    href={link.href}
+                    className={`text-sm font-medium transition-colors duration-300 py-[25px] ${pathname === link.href
+                      ? 'text-gold'
+                      : 'text-white/80 hover:text-gold'
+                      }`}
+                  >
+                    {link.label}
+                  </Link>
+
+                  {/* Desktop Multi-level Dropdown */}
+                  <AnimatePresence>
+                    {link.hasDropdown && activeMenu === 'products' && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10 }}
+                        className="absolute top-[calc(100%-2px)] left-0 w-64 z-[100] overflow-visible pt-1"
+                      >
+                        <div className="bg-navy border border-gold/20 shadow-2xl py-2">
+                          {productData.categories.map((cat) => (
+                            <div
+                              key={cat.slug}
+                              className="relative group"
+                              onMouseEnter={() => cat.slug === 'decorative' && setActiveCategory(cat.slug)}
+                              onMouseLeave={() => cat.slug === 'decorative' && setActiveCategory(null)}
+                            >
+                              <Link
+                                href={`/category/${cat.slug}`}
+                                className="flex items-center justify-between px-6 py-3 text-sm text-white/80 hover:text-gold hover:bg-white/5 transition-all"
+                              >
+                                {cat.name}
+                                {cat.slug === 'decorative' && (
+                                  <ChevronRight size={14} className="opacity-40 group-hover:opacity-100" />
+                                )}
+                              </Link>
+
+                              {/* Level 2: Brands - Only for Decorative */}
+                              {cat.slug === 'decorative' && (
+                                <AnimatePresence>
+                                  {activeCategory === cat.slug && (
+                                    <motion.div
+                                      initial={{ opacity: 0, x: -10 }}
+                                      animate={{ opacity: 1, x: 0 }}
+                                      exit={{ opacity: 0, x: -10 }}
+                                      className="absolute top-0 left-[calc(100%-2px)] w-64 pl-1 z-[110]"
+                                    >
+                                      <div className="bg-navy border border-gold/20 shadow-2xl py-2">
+                                        {productData.brands.map((brand) => (
+                                          <div
+                                            key={brand.slug}
+                                            className="relative group/brand"
+                                            onMouseEnter={() => setActiveBrand(brand.slug)}
+                                            onMouseLeave={() => setActiveBrand(null)}
+                                          >
+                                            <Link
+                                              href={`/category/${cat.slug}?brand=${brand.name}`}
+                                              className="flex items-center justify-between px-6 py-3 text-sm text-white/80 hover:text-gold hover:bg-white/5 transition-all"
+                                            >
+                                              {brand.name}
+                                              <ChevronRight size={14} className="opacity-40 group-hover/brand:opacity-100" />
+                                            </Link>
+
+                                            {/* Level 3: Sub-categories */}
+                                            <AnimatePresence>
+                                              {activeBrand === brand.slug && (
+                                                <motion.div
+                                                  initial={{ opacity: 0, x: -10 }}
+                                                  animate={{ opacity: 1, x: 0 }}
+                                                  exit={{ opacity: 0, x: -10 }}
+                                                  className="absolute top-0 left-[calc(100%-2px)] w-64 pl-1 z-[120]"
+                                                >
+                                                  <div className="bg-navy border border-gold/20 shadow-2xl py-2">
+                                                    {productData.subs.map((sub) => (
+                                                      <Link
+                                                        key={sub.slug}
+                                                        href={`/category/${cat.slug}?brand=${brand.name}&sub=${sub.slug}`}
+                                                        className="block px-6 py-3 text-sm text-white/80 hover:text-gold hover:bg-white/5 transition-all"
+                                                      >
+                                                        {sub.name}
+                                                      </Link>
+                                                    ))}
+                                                  </div>
+                                                </motion.div>
+                                              )}
+                                            </AnimatePresence>
+                                          </div>
+                                        ))}
+                                      </div>
+                                    </motion.div>
+                                  )}
+                                </AnimatePresence>
+                              )}
+                            </div>
+                          ))}
+                          {/* Static Deals & Projects Link */}
+                          <Link
+                            href="/deals"
+                            className="flex items-center justify-between px-6 py-3 text-sm text-white/80 hover:text-gold hover:bg-white/5 transition-all border-t border-white/10"
+                          >
+                            Deals & Projects
+                            <ChevronRight size={14} className="opacity-40 group-hover:opacity-100" />
+                          </Link>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ))}
             </div>
 
             {/* Desktop/Mobile Icons */}
@@ -132,7 +247,7 @@ export function Navbar() {
                 className="text-white/80 hover:text-gold transition-colors p-1"
                 aria-label="Search"
               >
-                <Search size={18} className="xs:w-5 xs:h-5" />
+                <Search size={20} className="w-4.5 h-4.5 xs:w-5 xs:h-5" />
               </button>
 
               <Link
@@ -150,7 +265,7 @@ export function Navbar() {
                 className="relative text-white/80 hover:text-gold transition-colors p-1"
                 aria-label="Cart"
               >
-                <ShoppingCart size={18} className="xs:w-5 xs:h-5" />
+                <ShoppingCart size={20} className="w-4.5 h-4.5 xs:w-5 xs:h-5" />
                 {cartCount > 0 && (
                   <span className="absolute -top-1 -right-1 xs:-top-2 xs:-right-2 bg-gold text-navy text-[9px] xs:text-xs font-bold w-4 h-4 xs:w-5 xs:h-5 rounded-full flex items-center justify-center border border-navy">
                     {cartCount}
