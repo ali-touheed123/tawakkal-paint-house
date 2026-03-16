@@ -65,7 +65,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
             </span>
           </div>
         </div>
-        <h3 className="font-heading text-base font-semibold text-navy mb-2 line-clamp-2 h-10">
+        <h3 className="font-heading text-base font-semibold text-navy mb-2 line-clamp-2 h-12">
           {(() => {
             const nameLower = product.name.toLowerCase();
             const brandLower = product.brand.toLowerCase();
