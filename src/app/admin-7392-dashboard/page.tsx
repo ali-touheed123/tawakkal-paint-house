@@ -69,7 +69,20 @@ export default function AdminDashboard() {
     <div className="space-y-8">
       <div>
         <h1 className="text-3xl font-bold text-navy">Dashboard Overview</h1>
-        <p className="text-gray-500 mt-2">Welcome back! Here's what's happening today.</p>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mt-2">
+          <p className="text-gray-500">Welcome back! Here's what's happening today.</p>
+          <button 
+            onClick={async () => {
+              const res = await fetch('/api/seo/indexnow', { method: 'POST' });
+              const data = await res.json();
+              if (data.success) alert('Search engines notified successfully!');
+              else alert('Failed to notify search engines. Check logs.');
+            }}
+            className="px-4 py-2 bg-navy text-white rounded-lg text-xs font-bold hover:bg-gold transition-all flex items-center gap-2 w-fit"
+          >
+            Notify Search Engines (IndexNow)
+          </button>
+        </div>
       </div>
 
       {/* Stats Cards */}

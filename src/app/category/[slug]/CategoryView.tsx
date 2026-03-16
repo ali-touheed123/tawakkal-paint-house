@@ -1,7 +1,7 @@
 'use client';
 
 import { ProductCard } from '@/components/ProductCard';
-import { Product } from '@/types';
+import { Product, BRANDS, BRAND_LOGOS } from '@/types';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { useParams, useSearchParams, useRouter } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
@@ -17,22 +17,6 @@ const subCategories = [
   { id: 'accessories', label: 'Accessories' }
 ];
 
-const BRANDS = [
-  'Rozzilac', "Gobi's", 'Reliable', 'Choice', 'Saasi', 'Berger', 'Diamond', 'Brighto', 'Reliance', 'Nippon'
-];
-
-const BRAND_LOGOS: Record<string, string> = {
-  'Rozzilac': '/images/brands/rozzilac.png',
-  "Gobi's": '/images/brands/gobis.png',
-  'Reliable': '/images/brands/reliable.png',
-  'Choice': '/images/brands/choice.png',
-  'Saasi': '/images/brands/saasi.png',
-  'Berger': '/images/brands/berger.png',
-  'Diamond': '/images/brands/diamond.png',
-  'Brighto': '/images/brands/brighto.png',
-  'Reliance': '/images/brands/reliance.png',
-  'Nippon': '/images/brands/nippon.png'
-};
 
 const categoryInfo: Record<string, { title: string; description: string; hero: string }> = {
   decorative: {
@@ -86,8 +70,8 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
         let supabaseQuery = supabase.from('products').select('*').eq('category', category);
 
         if (selectedBrand && selectedBrand !== 'all') {
-          const exactBrand = BRANDS.find(b =>
-            b.toLowerCase().replace(/['\s]/g, '') === selectedBrand.toLowerCase().replace(/['\s]/g, '')
+          const exactBrand = BRANDS.find(b => 
+            b.toLowerCase().replace(/['\s\.]/g, '') === selectedBrand.toLowerCase().replace(/['\s\.]/g, '')
           );
           supabaseQuery = supabaseQuery.eq('brand', exactBrand || selectedBrand);
         }
@@ -214,7 +198,8 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
                 </button>
                 {BRANDS.map((brand, i) => {
                   const logoUrl = BRAND_LOGOS[brand];
-                  const isActive = selectedBrand === brand.toLowerCase().replace("'", '');
+                  const brandValue = brand.toLowerCase().replace(/['\s]/g, '');
+                  const isActive = selectedBrand === brandValue;
 
                   return (
                     <motion.button
@@ -222,7 +207,7 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: i * 0.05 }}
-                      onClick={() => handleBrandChange(brand.toLowerCase().replace("'", ''))}
+                      onClick={() => handleBrandChange(brandValue)}
                       className={`snap-start shrink-0 h-10 xs:h-12 w-20 xs:w-24 px-2 xs:px-3 rounded-xl border-2 transition-all flex items-center justify-center bg-white ${isActive
                         ? 'border-gold shadow-lg shadow-gold/10 scale-105 z-10'
                         : 'border-gray-100 hover:border-gold/30 grayscale opacity-60 hover:grayscale-0 hover:opacity-100'
@@ -233,7 +218,7 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
                         <img
                           src={logoUrl}
                           alt={brand}
-                          className={`h-full w-auto object-contain pointer-events-none p-1.5 xs:p-2 ${brand === 'Dior' ? 'scale-110' : ''}`}
+                          className={`h-full w-auto object-contain pointer-events-none p-1.5 xs:p-2 ${brand === 'Dior' || brand === 'Rozzilac' ? 'scale-110' : ''}`}
                         />
                       ) : (
                         <span className="text-[10px] xs:text-sm font-bold text-navy/60">{brand}</span>
