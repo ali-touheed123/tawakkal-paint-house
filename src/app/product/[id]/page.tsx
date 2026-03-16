@@ -399,31 +399,31 @@ export default function ProductDetailPage() {
                 </div>
             </div>
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-16">
+            <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8 py-6 xs:py-8 lg:py-16">
                 <div className="grid lg:grid-cols-2 gap-16 items-start">
 
                     {/* LEFT COLUMN: Visualizer & Calculator Tabs */}
                     <div className="space-y-6 lg:sticky lg:top-[120px]">
                         {/* Tab Switcher */}
                         {!isDiamondAceTimberlacWoodStains && (
-                            <div className="flex bg-gray-100 p-1.5 rounded-2xl w-fit">
+                            <div className="flex flex-wrap xs:flex-nowrap bg-gray-100 p-1 rounded-xl xs:rounded-2xl w-full xs:w-fit gap-1 xs:gap-0">
                                 <button
                                     onClick={() => setActiveTab('visualizer')}
-                                    className={`px-6 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === 'visualizer'
+                                    className={`flex-1 xs:flex-none px-3 xs:px-6 py-2 rounded-lg xs:rounded-xl text-[10px] xs:text-xs font-bold transition-all ${activeTab === 'visualizer'
                                         ? 'bg-white text-navy shadow-sm'
                                         : 'text-gray-500 hover:text-navy'
                                         }`}
                                 >
-                                    Room Visualizer
+                                    Visualizer
                                 </button>
                                 <button
                                     onClick={() => setActiveTab('calculator')}
-                                    className={`px-6 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === 'calculator'
+                                    className={`flex-1 xs:flex-none px-3 xs:px-6 py-2 rounded-lg xs:rounded-xl text-[10px] xs:text-xs font-bold transition-all ${activeTab === 'calculator'
                                         ? 'bg-white text-navy shadow-sm'
                                         : 'text-gray-500 hover:text-navy'
                                         }`}
                                 >
-                                    Paint Calculator
+                                    Calculator
                                 </button>
                             </div>
                         )}
@@ -513,7 +513,7 @@ export default function ProductDetailPage() {
                                     {product.in_stock ? 'In Stock' : 'Out of Stock'}
                                 </div>
                             </div>
-                            <h1 className="font-heading text-4xl lg:text-5xl font-bold text-navy leading-tight mb-4 tracking-tight">
+                            <h1 className="font-heading text-2xl xs:text-4xl lg:text-5xl font-bold text-navy leading-tight mb-4 tracking-tight">
                                 {isBrightoSuperEmulsion ? 'Plastic Emulsion Paint' : isBrightoSyntheticEnamel ? 'Synthetic Enamel Paint' : isBrightoPlasticEmulsion ? 'Plastic Emulsion Paint' : isBrightoAllWeather ? 'All Weather Exterior Paint' : isReliableMattEnamel ? 'Matt Enamel' : isReliableWeatherProtector ? 'Weather Protector' : isReliableEmulsion ? 'Emulsion' : isReliableWaterMatt ? 'Water Matt' : isReliableEnamel ? 'Enamel' : isChoiceSyntheticEnamel ? 'Synthetic Enamel' : isChoiceWeatherSealer ? 'Weather Sealer' : isRelianceStainlessMatt ? 'Stainless Matt' : isRelianceSemiPlasticEmulsion ? 'Semi Plastic Emulsion' : isRelianceMattEnamel ? 'Matt Enamel' : isRelianceWeatherGuard ? 'Weather Guard' : product.name?.toLowerCase().includes('synthetic enamel') ? 'Synthetic Enamel' : product.name}
                             </h1>
                             <p className="text-gray-400 font-medium text-sm leading-relaxed max-w-xl">
@@ -567,7 +567,7 @@ export default function ProductDetailPage() {
                         {/* Price & POS */}
                         <div className="space-y-8 pt-4">
                             <div className="flex items-baseline gap-4">
-                                <div className="text-4xl font-bold text-navy">Rs. {price?.toLocaleString()}</div>
+                                <div className="text-2xl xs:text-4xl font-bold text-navy">Rs. {price?.toLocaleString()}</div>
                             </div>
 
                             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6">

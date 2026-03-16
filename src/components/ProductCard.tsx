@@ -82,22 +82,21 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
         </h3>
 
         {/* Actions */}
-        <div className="flex gap-1.5 mt-auto">
+        <div className="flex flex-col xs:flex-row gap-1.5 mt-auto">
           <Link
             href={`https://wa.me/923475658761?text=Hi! I'm interested in ${product.name}. Please share availability and price.`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 flex items-center justify-center gap-1.5 py-2 px-2 rounded-lg text-xs font-medium border-2 border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-colors cursor-pointer"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 rounded-lg text-[10px] xs:text-xs font-bold border-2 border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-colors cursor-pointer whitespace-nowrap"
           >
-            <MessageCircle size={14} />
+            <MessageCircle size={14} className="shrink-0" />
             <span>Inquiry</span>
           </Link>
-
           <Link
             href={`/product/${product.id}`}
-            className="flex-1 flex items-center justify-center gap-1.5 py-2 px-2 rounded-lg text-xs font-medium bg-navy text-white hover:bg-gold transition-colors cursor-pointer"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 rounded-lg text-[10px] xs:text-xs font-bold bg-navy text-white hover:bg-gold transition-colors cursor-pointer whitespace-nowrap"
           >
-            <FileText size={14} />
+            <FileText size={14} className="shrink-0" />
             <span>Details</span>
           </Link>
         </div>

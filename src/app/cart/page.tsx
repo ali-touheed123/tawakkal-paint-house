@@ -36,8 +36,8 @@ export default function CartPage() {
 
   return (
     <div className="min-h-screen pt-[70px] bg-off-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="font-heading text-3xl md:text-4xl font-bold text-navy mb-8">Shopping Cart</h1>
+      <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8 py-8 xs:py-12">
+        <h1 className="font-heading text-2xl xs:text-3xl md:text-4xl font-bold text-navy mb-6 xs:mb-8">Cart</h1>
 
         {items.length === 0 ? (
           <div className="text-center py-20">
@@ -92,26 +92,26 @@ export default function CartPage() {
                       )}
                     </div>
 
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-wrap items-center justify-between gap-y-3">
                       {/* Quantity */}
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-1.5 xs:gap-2">
                         <button
                           onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                          className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center hover:bg-gold-pale transition-colors"
+                          className="w-7 h-7 xs:w-8 xs:h-8 rounded-lg bg-gray-100 flex items-center justify-center hover:bg-gold-pale transition-colors"
                         >
-                          <Minus size={16} />
+                          <Minus size={14} className="xs:w-4 xs:h-4" />
                         </button>
-                        <span className="w-8 text-center font-medium">{item.quantity}</span>
+                        <span className="w-6 text-center font-medium text-sm xs:text-base">{item.quantity}</span>
                         <button
                           onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                          className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center hover:bg-gold-pale transition-colors"
+                          className="w-7 h-7 xs:w-8 xs:h-8 rounded-lg bg-gray-100 flex items-center justify-center hover:bg-gold-pale transition-colors"
                         >
-                          <Plus size={16} />
+                          <Plus size={14} className="xs:w-4 xs:h-4" />
                         </button>
                       </div>
 
                       {/* Price */}
-                      <p className="font-heading text-lg font-semibold text-navy">
+                      <p className="font-heading text-base xs:text-lg font-bold text-navy whitespace-nowrap">
                         Rs. {(getPrice(item) * item.quantity).toLocaleString()}
                       </p>
                     </div>

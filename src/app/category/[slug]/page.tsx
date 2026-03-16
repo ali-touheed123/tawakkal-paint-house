@@ -112,7 +112,7 @@ export default function CategoryPage() {
   return (
     <div className="min-h-screen">
       {/* Hero */}
-      <section className="relative h-[40vh] flex items-center">
+      <section className="relative h-[30vh] xs:h-[40vh] flex items-center">
         <div className="absolute inset-0">
           <img
             src={info.hero}
@@ -127,10 +127,10 @@ export default function CategoryPage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center"
           >
-            <h1 className="font-heading text-4xl md:text-5xl font-bold text-white mb-4">
+            <h1 className="font-heading text-3xl xs:text-4xl md:text-5xl font-bold text-white mb-4">
               {info.title}
             </h1>
-            <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+            <p className="text-gray-300 text-sm xs:text-lg max-w-2xl mx-auto line-clamp-2 xs:line-clamp-none">
               {info.description}
             </p>
           </motion.div>
@@ -139,15 +139,15 @@ export default function CategoryPage() {
 
       {/* Filters */}
       <section className="z-30 bg-white shadow-md border-b border-gold/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+        <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8 py-3">
           <div className="flex flex-col gap-4">
             {/* Brand Filter */}
             <div className="space-y-2">
-              <h3 className="text-[10px] font-bold text-navy/30 uppercase tracking-[0.2em] pl-1">Filter by Brand</h3>
-              <div className="flex overflow-x-auto pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide snap-x gap-2.5">
+              <h3 className="text-[10px] font-bold text-navy/30 uppercase tracking-[0.2em] pl-1">Brands</h3>
+              <div className="flex overflow-x-auto pb-3 -mx-3 xs:-mx-4 px-3 xs:px-4 sm:mx-0 sm:px-0 scrollbar-hide snap-x gap-2 xs:gap-2.5">
                 <button
                   onClick={() => handleBrandChange('all')}
-                  className={`snap-start shrink-0 h-12 px-6 rounded-xl text-sm font-semibold transition-all border-2 flex items-center justify-center ${selectedBrand === 'all'
+                  className={`snap-start shrink-0 h-10 xs:h-12 px-4 xs:px-6 rounded-xl text-xs xs:text-sm font-bold transition-all border-2 flex items-center justify-center whitespace-nowrap ${selectedBrand === 'all'
                     ? 'bg-gold border-gold text-navy shadow-lg shadow-gold/20 scale-105'
                     : 'bg-white border-gray-100 text-gray-400 hover:border-gold/30 hover:text-gold'
                     }`}
@@ -162,7 +162,7 @@ export default function CategoryPage() {
                     <button
                       key={brand}
                       onClick={() => handleBrandChange(brand.toLowerCase().replace("'", ''))}
-                      className={`snap-start shrink-0 h-12 w-24 px-3 rounded-xl border-2 transition-all flex items-center justify-center bg-white ${isActive
+                      className={`snap-start shrink-0 h-10 xs:h-12 w-20 xs:w-24 px-2 xs:px-3 rounded-xl border-2 transition-all flex items-center justify-center bg-white ${isActive
                         ? 'border-gold shadow-lg shadow-gold/10 scale-105 z-10'
                         : 'border-gray-100 hover:border-gold/30 grayscale opacity-60 hover:grayscale-0 hover:opacity-100'
                         }`}
@@ -172,10 +172,10 @@ export default function CategoryPage() {
                         <img
                           src={logoUrl}
                           alt={brand}
-                          className={`h-full w-auto object-contain pointer-events-none p-2 ${brand === 'Dior' ? 'scale-110' : ''}`}
+                          className={`h-full w-auto object-contain pointer-events-none p-1.5 xs:p-2 ${brand === 'Dior' ? 'scale-110' : ''}`}
                         />
                       ) : (
-                        <span className="text-sm font-bold text-navy/60">{brand}</span>
+                        <span className="text-[10px] xs:text-sm font-bold text-navy/60">{brand}</span>
                       )}
                     </button>
                   );
@@ -186,13 +186,13 @@ export default function CategoryPage() {
             {/* Sub-category Filter - Only for Decorative */}
             {category === 'decorative' && (
               <div className="space-y-2">
-                <h3 className="text-[10px] font-bold text-navy/30 uppercase tracking-[0.2em] pl-1">Filter by Category</h3>
-                <div className="flex overflow-x-auto pb-1 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide snap-x gap-2">
+                <h3 className="text-[10px] font-bold text-navy/30 uppercase tracking-[0.2em] pl-1">Categories</h3>
+                <div className="flex overflow-x-auto pb-1 -mx-3 xs:-mx-4 px-3 xs:px-4 sm:mx-0 sm:px-0 scrollbar-hide snap-x gap-2">
                   {subCategories.map((sub) => (
                     <button
                       key={sub.id}
                       onClick={() => handleSubChange(sub.id)}
-                      className={`snap-start shrink-0 px-5 py-2.5 rounded-xl text-sm font-semibold whitespace-nowrap transition-all border-2 ${selectedSub === sub.id
+                      className={`snap-start shrink-0 px-4 xs:px-5 py-2 xs:py-2.5 rounded-xl text-xs xs:text-sm font-bold whitespace-nowrap transition-all border-2 ${selectedSub === sub.id
                         ? 'bg-navy border-navy text-white shadow-lg shadow-navy/20'
                         : 'bg-white border-gray-100 text-gray-500 hover:border-navy/30 hover:text-navy'
                         }`}

@@ -95,19 +95,19 @@ export default function HomePage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: 'easeOut' }}
             >
-              <span className="inline-block text-gold text-sm tracking-[3px] mb-4">
+              <span className="inline-block text-gold text-[10px] xs:text-sm tracking-[2px] xs:tracking-[3px] mb-4">
                 SINCE 2011 • AUTHORIZED DEALER • KARACHI
               </span>
-              <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+              <h1 className="font-heading text-3xl xs:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] mb-6">
                 Where Colour Meets Craftsmanship
               </h1>
-              <p className="text-gray-300 text-lg md:text-xl mb-8 max-w-lg">
+              <p className="text-gray-300 text-base xs:text-lg md:text-xl mb-8 max-w-lg">
                 Karachi&apos;s most trusted paint store. {settings?.contact?.phone ? 'Call us at ' + settings.contact.phone : 'Serving Karachi since 2011.'}
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col sm:flex-row gap-3 xs:gap-4">
                 <Link
                   href="/category/decorative"
-                  className="inline-flex items-center justify-center gap-2 bg-gold text-navy px-8 py-4 rounded-lg font-semibold hover:bg-gold-light transition-colors"
+                  className="inline-flex items-center justify-center gap-2 bg-gold text-navy px-6 xs:px-8 py-3.5 xs:py-4 rounded-xl font-bold hover:bg-gold-light transition-all active:scale-95 text-sm xs:text-base"
                 >
                   Shop Now <ArrowRight size={20} />
                 </Link>
@@ -115,7 +115,7 @@ export default function HomePage() {
                   href={`https://wa.me/${settings?.contact?.whatsapp || '923475658761'}?text=Hi! I need help with paint.`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 border-2 border-green-500 text-green-500 px-8 py-4 rounded-lg font-semibold hover:bg-green-500 hover:text-white transition-colors"
+                  className="inline-flex items-center justify-center gap-2 border-2 border-green-500 text-green-500 px-6 xs:px-8 py-3.5 xs:py-4 rounded-xl font-bold hover:bg-green-500 hover:text-white transition-all active:scale-95 text-sm xs:text-base"
                 >
                   <MessageCircle size={20} /> WhatsApp Us
                 </Link>

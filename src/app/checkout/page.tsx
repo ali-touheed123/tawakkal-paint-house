@@ -174,14 +174,14 @@ export default function CheckoutPage() {
 
   return (
     <div className="min-h-screen pt-[70px] bg-off-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="font-heading text-3xl md:text-4xl font-bold text-navy mb-8">Checkout</h1>
+      <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8 py-8 xs:py-12">
+        <h1 className="font-heading text-2xl xs:text-3xl md:text-4xl font-bold text-navy mb-6 xs:mb-8">Checkout</h1>
 
         <form onSubmit={handleSubmit} className="grid lg:grid-cols-2 gap-8">
           {/* Form */}
           <div className="space-y-6">
-            <div className="bg-white rounded-xl p-6 shadow-md">
-              <h2 className="font-heading text-xl font-semibold text-navy mb-6">Delivery Details</h2>
+            <div className="bg-white rounded-xl p-4 xs:p-6 shadow-md">
+              <h2 className="font-heading text-lg xs:text-xl font-semibold text-navy mb-4 xs:mb-6">Delivery Details</h2>
 
               <div className="space-y-4">
                 <div>
@@ -257,8 +257,8 @@ export default function CheckoutPage() {
             </div>
 
             {/* Payment Methods */}
-            <div className="bg-white rounded-xl p-6 shadow-md">
-              <h2 className="font-heading text-xl font-semibold text-navy mb-6">Payment Method</h2>
+            <div className="bg-white rounded-xl p-4 xs:p-6 shadow-md">
+              <h2 className="font-heading text-lg xs:text-xl font-semibold text-navy mb-4 xs:mb-6">Payment Method</h2>
 
               <div className="space-y-3">
                 {paymentMethods.map((method) => (
@@ -307,8 +307,8 @@ export default function CheckoutPage() {
 
           {/* Order Summary */}
           <div className="lg:sticky lg:top-24 h-fit">
-            <div className="bg-white rounded-xl p-6 shadow-md">
-              <h2 className="font-heading text-xl font-semibold text-navy mb-6">Order Summary</h2>
+            <div className="bg-white rounded-xl p-4 xs:p-6 shadow-md">
+              <h2 className="font-heading text-lg xs:text-xl font-semibold text-navy mb-4 xs:mb-6">Order Summary</h2>
 
               <div className="space-y-3 mb-6">
                 {items.map((item) => (
