@@ -16,7 +16,7 @@ import { createClient } from '@/lib/supabase/client';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
-type OrderStatus = 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
+type OrderStatus = 'pending' | 'confirmed' | 'shipped' | 'delivered' | 'cancelled';
 
 export default function OrderTrackingPage() {
     return (
@@ -88,10 +88,9 @@ function OrderTrackingContent() {
         await fetchOrder(orderId, email);
     };
 
-
     const statusSteps: { status: OrderStatus; label: string; icon: any; color: string }[] = [
         { status: 'pending', label: 'Order Placed', icon: Clock, color: 'text-amber-500' },
-        { status: 'processing', label: 'Processing', icon: Package, color: 'text-blue-500' },
+        { status: 'confirmed', label: 'Processing', icon: Package, color: 'text-blue-500' },
         { status: 'shipped', label: 'On the Way', icon: Truck, color: 'text-gold' },
         { status: 'delivered', label: 'Delivered', icon: CheckCircle2, color: 'text-green-500' }
     ];
