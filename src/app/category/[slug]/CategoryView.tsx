@@ -62,29 +62,36 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
   const [loading, setLoading] = useState(true);
   const [selectedBrand, setSelectedBrand] = useState(searchParams.get('brand') || 'all');
   const [selectedSub, setSelectedSub] = useState(searchParams.get('sub') || 'all');
-  const [selectedFinish, setSelectedFinish] = useState('All');
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 50000]);
-  const [maxPrice, setMaxPrice] = useState(50000);
   const [categoryDetails, setCategoryDetails] = useState<{ title: string; description: string; hero: string } | null>(null);
 
   useEffect(() => {
-    // Determine the max price in the current category to set slider limits
-    async function fetchMaxPrice() {
+    async function fetchCategoryDetails() {
+      // Check hardcoded first
+      if (categoryInfo[category]) {
+        setCategoryDetails(categoryInfo[category]);
+        return;
+      }
+
+      // Fetch from Supabase
       const supabase = createClient();
-      const { data } = await supabase
-        .from('products')
-        .select('price_gallon')
-        .eq('category', category)
-        .order('price_gallon', { ascending: false })
-        .limit(1);
+      const { data, error } = await supabase
+        .from('categories')
+        .select('*')
+        .eq('slug', category)
+        .single();
       
-      if (data && data.length > 0) {
-        const foundMax = Math.ceil(Number(data[0].price_gallon) || 50000);
-        setMaxPrice(foundMax);
-        setPriceRange([0, foundMax]);
+      if (data) {
+        setCategoryDetails({
+          title: data.name,
+          description: data.description || '',
+          hero: data.image_url || '/images/categories/decorative.jpg'
+        });
+      } else {
+        // Fallback
+        setCategoryDetails(categoryInfo.decorative);
       }
     }
-    fetchMaxPrice();
+    fetchCategoryDetails();
   }, [category]);
 
   useEffect(() => {
@@ -105,23 +112,8 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
           supabaseQuery = supabaseQuery.eq('sub_category', selectedSub);
         }
 
-        // Apply price filter (using price_gallon as the standard comparison price)
-        supabaseQuery = supabaseQuery.gte('price_gallon', priceRange[0]).lte('price_gallon', priceRange[1]);
-
         const { data } = await supabaseQuery;
-        if (data) {
-          let filtered = data as Product[];
-          
-          // Apply finish filter (fuzzy)
-          if (selectedFinish !== 'All') {
-            filtered = filtered.filter(p => 
-              p.name.toLowerCase().includes(selectedFinish.toLowerCase()) || 
-              p.description?.toLowerCase().includes(selectedFinish.toLowerCase())
-            );
-          }
-          
-          setProducts(filtered);
-        }
+        if (data) setProducts(data as Product[]);
       } catch (err) {
         console.error('Fetch error:', err);
       }
@@ -129,7 +121,7 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
     };
 
     fetchProducts();
-  }, [category, selectedBrand, selectedSub, priceRange, selectedFinish]);
+  }, [category, selectedBrand, selectedSub]);
 
   const handleBrandChange = (brand: string) => {
     setSelectedBrand(brand);
@@ -298,55 +290,6 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
               </motion.div>
             )}
 
-            {/* Advanced Filters: Price & Finish */}
-            <div className="grid md:grid-cols-2 gap-8 pt-4 border-t border-gray-50 mt-2">
-              {/* Price Range */}
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-[10px] font-bold text-navy/30 uppercase tracking-[0.2em]">Price Range</h3>
-                  <p className="text-xs font-bold text-navy">
-                    Rs. {priceRange[0].toLocaleString()} — Rs. {priceRange[1].toLocaleString()}
-                  </p>
-                </div>
-                <div className="relative h-2 bg-gray-100 rounded-full group">
-                  <input
-                    type="range"
-                    min="0"
-                    max={maxPrice}
-                    step="500"
-                    value={priceRange[1]}
-                    onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
-                    className="absolute inset-0 w-full h-full appearance-none bg-transparent cursor-pointer z-20 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:bg-gold [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-4 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:shadow-lg"
-                  />
-                  <div 
-                    className="absolute inset-y-0 left-0 bg-gold rounded-full transition-all duration-300"
-                    style={{ width: `${(priceRange[1] / maxPrice) * 100}%` }}
-                  />
-                </div>
-              </div>
-
-              {/* Finish Filter (Only for relevant categories) */}
-              {['decorative', 'industrial', 'auto'].includes(category) && (
-                <div className="space-y-3">
-                  <h3 className="text-[10px] font-bold text-navy/30 uppercase tracking-[0.2em]">Surface Finish</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {['All', 'Matt', 'Gloss', 'Silk', 'Semi-Gloss', 'Textured'].map((finish) => (
-                      <button
-                        key={finish}
-                        onClick={() => setSelectedFinish(finish)}
-                        className={`px-3 py-1.5 rounded-full border text-[10px] font-bold uppercase tracking-wider transition-all ${
-                          selectedFinish === finish 
-                            ? 'bg-gold border-gold text-navy shadow-md shadow-gold/20' 
-                            : 'border-gray-100 text-gray-400 hover:border-gold hover:text-gold'
-                        }`}
-                      >
-                        {finish}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
           </div>
         </div>
       </section>
