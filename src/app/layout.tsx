@@ -1,8 +1,7 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { LocationPopup } from "@/components/LocationPopup";
 import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
 import { Footer } from "@/components/Footer";
 import { SearchOverlay } from "@/components/SearchOverlay";
 import { CartToast } from "@/components/CartToast";
@@ -42,6 +41,9 @@ export const metadata: Metadata = {
     shortcut: '/favicon-tph.png',
     apple: '/favicon-tph.png',
   },
+};
+
+export const viewport: Viewport = {
   themeColor: '#0F1F3D',
 };
 

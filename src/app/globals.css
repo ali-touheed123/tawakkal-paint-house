@@ -14,9 +14,8 @@
   
   --background: var(--off-white);
   --foreground: var(--text);
-}
 
-@theme inline {
+  /* Tailwind v4 Theme Variables */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-navy: var(--navy);
