@@ -259,9 +259,9 @@ export default function DealsManagement() {
         <div className="grid lg:grid-cols-2 gap-8">
           {packagesConfig.map((pkg) => (
             <div key={pkg.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 flex flex-col overflow-hidden">
-              <div className="p-6 border-b border-gray-50 bg-gray-50/50 flex justify-between items-center">
+              <div className="p-6 border-b border-gray-50 bg-gray-50/50 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-navy text-white flex items-center justify-center font-bold">
+                    <div className="w-12 h-12 rounded-2xl bg-navy text-white flex items-center justify-center font-bold text-lg shrink-0 shadow-inner">
                         {pkg.id.charAt(0).toUpperCase()}
                     </div>
                     <div>
@@ -269,23 +269,26 @@ export default function DealsManagement() {
                             type="text"
                             value={pkg.name}
                             onChange={(e) => setPackagesConfig(prev => prev.map(p => p.id === pkg.id ? { ...p, name: e.target.value } : p))}
-                            className="font-bold text-navy bg-transparent border-none p-0 focus:ring-0 outline-none w-fit"
+                            className="font-bold text-lg text-navy bg-transparent border-none p-0 focus:ring-0 outline-none w-full sm:w-fit"
                         />
-                        <div className="text-[10px] text-gray-400 uppercase tracking-tighter">Package Tier</div>
+                        <div className="text-[10px] text-gray-400 uppercase tracking-widest font-black">Package Tier</div>
                     </div>
                 </div>
                 
-                <div className="text-right">
-                    <div className="flex items-center gap-1 text-navy font-bold">
-                        <span className="text-xs text-gray-400 font-medium">Base:</span>
-                        <span>Rs. {pricing[pkg.id]?.toLocaleString() || 0}</span>
+                <div className="sm:text-right bg-white/50 sm:bg-transparent p-3 sm:p-0 rounded-xl border border-gray-100 sm:border-none">
+                    <div className="flex items-center sm:justify-end gap-1 text-navy font-bold mb-1">
+                        <span className="text-xs text-gray-400 font-medium">Current Base:</span>
+                        <span className="text-gold">Rs. {pricing[pkg.id]?.toLocaleString() || 0}</span>
                     </div>
-                    <input 
-                        type="number"
-                        value={pricing[pkg.id] || 0}
-                        onChange={(e) => setPricing(prev => ({ ...prev, [pkg.id]: Number(e.target.value) }))}
-                        className="text-[10px] border border-gray-200 rounded px-1 w-20 outline-none focus:border-gold"
-                    />
+                    <div className="flex items-center sm:justify-end gap-2">
+                      <span className="text-[10px] text-gray-400 font-bold uppercase">Update:</span>
+                      <input 
+                          type="number"
+                          value={pricing[pkg.id] || 0}
+                          onChange={(e) => setPricing(prev => ({ ...prev, [pkg.id]: Number(e.target.value) }))}
+                          className="text-sm font-bold border border-gray-200 rounded-lg px-2 py-1.5 w-28 outline-none focus:border-gold focus:ring-1 focus:ring-gold bg-white"
+                      />
+                    </div>
                 </div>
               </div>
 
