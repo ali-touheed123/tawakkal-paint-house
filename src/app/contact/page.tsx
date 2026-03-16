@@ -28,14 +28,14 @@ export default function ContactPage() {
       {/* Decorative Background */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gold/10 rounded-full blur-[120px] pointer-events-none transform translate-x-1/2 -translate-y-1/2"></div>
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header Section */}
         <div className="text-center mb-16">
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-heading font-bold mb-4"
+            className="text-3xl xs:text-4xl md:text-5xl font-heading font-bold mb-4"
           >
             Get In <span className="text-gold">Touch</span>
           </motion.h1>
@@ -89,8 +89,8 @@ export default function ContactPage() {
             </div>
 
             {/* Contact Form */}
-            <div className="bg-white/5 border border-white/10 p-8 rounded-3xl">
-              <h3 className="text-2xl font-heading font-bold mb-6">Send us a Message</h3>
+            <div className="bg-white/5 border border-white/10 p-5 xs:p-8 rounded-3xl">
+              <h3 className="text-xl xs:text-2xl font-heading font-bold mb-6">Send us a Message</h3>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
