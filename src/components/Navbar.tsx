@@ -65,7 +65,7 @@ export function Navbar() {
     { href: '#', label: 'Products', hasDropdown: true },
     { href: '/#why-choose-us', label: 'Why Choose Us' },
     { href: '/#calculator', label: 'Calculator' },
-    { href: '/#contact', label: 'Contact Us' },
+    { href: '/contact', label: 'Contact Us' },
   ];
 
   const productData = {

@@ -98,7 +98,7 @@ export function Footer() {
                 { name: 'Home', path: '/' },
                 { name: 'Calculator', path: '/#calculator' },
                 { name: 'Why Choose Us', path: '/#why-choose-us' },
-                { name: 'Contact Us', path: '/#contact' },
+                { name: 'Contact Us', path: '/contact' },
               ].map((link) => (
                 <li key={link.name}>
                   <Link href={link.path} className="group flex items-center text-sm text-gray-400 hover:text-gold transition-colors">
