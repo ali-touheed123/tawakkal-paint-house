@@ -9,7 +9,8 @@ import {
   ChevronLeft,
   ChevronRight,
   MoreVertical,
-  Package
+  Package,
+  Trash2
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -33,7 +34,6 @@ export default function OrdersPage() {
     if (data) setOrders(data);
     setLoading(false);
   }
-
   async function updateOrderStatus(id: string, newStatus: string) {
     const supabase = createClient();
     const { error } = await supabase
@@ -46,6 +46,23 @@ export default function OrdersPage() {
       if (selectedOrder && selectedOrder.id === id) {
         setSelectedOrder({ ...selectedOrder, status: newStatus });
       }
+    }
+  }
+
+  async function deleteOrder(id: string) {
+    if (!window.confirm('Are you sure you want to delete this order? This action cannot be undone.')) return;
+
+    const supabase = createClient();
+    const { error } = await supabase.from('orders').delete().eq('id', id);
+
+    if (!error) {
+      setOrders(orders.filter(o => o.id !== id));
+      if (selectedOrder && selectedOrder.id === id) {
+        setIsModalOpen(false);
+        setSelectedOrder(null);
+      }
+    } else {
+      alert('Error deleting order: ' + error.message);
     }
   }
 
@@ -112,12 +129,21 @@ export default function OrdersPage() {
                     {new Date(order.created_at).toLocaleDateString()}
                   </td>
                   <td className="px-6 py-4 text-right">
-                    <button 
-                      onClick={() => { setSelectedOrder(order); setIsModalOpen(true); }}
-                      className="inline-flex items-center gap-2 text-gold hover:text-gold-dark font-bold text-sm"
-                    >
-                      <Eye size={16} /> View
-                    </button>
+                    <div className="flex items-center justify-end gap-3">
+                      <button 
+                        onClick={() => { setSelectedOrder(order); setIsModalOpen(true); }}
+                        className="inline-flex items-center gap-1 text-gold hover:text-gold-dark font-bold text-sm"
+                      >
+                        <Eye size={16} /> View
+                      </button>
+                      <button 
+                        onClick={() => deleteOrder(order.id)}
+                        className="inline-flex items-center gap-1 text-red-500 hover:text-red-600 font-bold text-sm"
+                        title="Delete Order"
+                      >
+                        <Trash2 size={16} /> Delete
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -149,12 +175,21 @@ export default function OrdersPage() {
                    <Package size={12} />
                    {order.items?.length || 0} Products
                 </div>
-                <button 
-                   onClick={() => { setSelectedOrder(order); setIsModalOpen(true); }}
-                   className="bg-gold/10 text-gold px-4 py-2 rounded-lg font-bold text-xs flex items-center gap-2 hover:bg-gold/20 transition-all"
-                >
-                  <Eye size={14} /> Full Details
-                </button>
+                <div className="flex items-center gap-2 pt-2">
+                  <button 
+                     onClick={() => { setSelectedOrder(order); setIsModalOpen(true); }}
+                     className="flex-1 bg-gold/10 text-gold px-4 py-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-2 hover:bg-gold/20 transition-all"
+                  >
+                    <Eye size={14} /> View
+                  </button>
+                  <button 
+                     onClick={() => deleteOrder(order.id)}
+                     className="p-2.5 bg-red-50 text-red-500 rounded-xl hover:bg-red-100 transition-all border border-red-100"
+                     title="Delete Order"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
               </div>
             </div>
           ))}
