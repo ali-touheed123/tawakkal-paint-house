@@ -377,8 +377,8 @@ export function ProductView({ initialId }: { initialId: string }) {
 
                         <div className="relative group rounded-3xl overflow-hidden bg-white shadow-2xl border border-gray-100 min-h-[400px]">
                             {isDiamondAceTimberlacWoodStains ? (
-                                <div className="aspect-square md:aspect-[4/3] w-full flex items-center justify-center p-4 md:p-12">
-                                    <img src={product.image_url || ''} className="w-full h-full object-contain scale-110 md:scale-100 transition-transform" />
+                                <div className="aspect-[16/9] flex items-center justify-center p-8">
+                                    <img src={product.image_url || ''} className="max-h-full object-contain" />
                                 </div>
                             ) : (
                                 <AnimatePresence mode="wait">
@@ -398,8 +398,8 @@ export function ProductView({ initialId }: { initialId: string }) {
                                                     onSelect={(s) => setSelectedShade(s)}
                                                 />
                                             ) : (
-                                                <div className="aspect-square md:aspect-[4/3] w-full flex items-center justify-center p-4 md:p-12">
-                                                    <img src={product.image_url || ''} alt={`${product.brand} ${product.name} product image`} className="w-full h-full object-contain scale-110 md:scale-100 transition-transform" />
+                                                <div className="aspect-[16/9] flex items-center justify-center p-8">
+                                                    <img src={product.image_url || ''} alt={`${product.brand} ${product.name} product image`} className="max-h-full object-contain" />
                                                 </div>
                                             )}
                                         </motion.div>
