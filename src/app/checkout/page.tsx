@@ -326,26 +326,26 @@ export default function CheckoutPage() {
             <div className="bg-white rounded-xl p-3 xs:p-6 shadow-md border border-gold/10">
               <h2 className="font-heading text-base xs:text-xl font-semibold text-navy mb-3 xs:mb-6">Order Summary</h2>
 
-              <div className="space-y-3 mb-6">
+              <div className="space-y-4 mb-6">
                 {items.map((item) => (
-                  <div key={item.id} className="flex justify-between items-start gap-4 text-sm">
+                  <div key={item.id} className="flex justify-between items-start gap-4 text-sm pb-4 border-b border-gray-50 last:border-0 last:pb-0">
                     <div className="flex flex-col flex-1 min-w-0">
-                      <span className="text-gray-600 truncate pr-2">
-                        {item.product?.name} ({item.size}) <span className="whitespace-nowrap">x {item.quantity}</span>
+                      <span className="text-gray-600 font-medium leading-tight mb-1">
+                        {item.product?.name} ({item.size}) <span className="text-navy font-bold whitespace-nowrap ml-1">x {item.quantity}</span>
                       </span>
                       {item.selectedShade && (
                         <div className="flex items-center gap-1.5 mt-0.5">
                           <div 
-                            className="w-2 h-2 rounded-full" 
+                            className="w-2 h-2 rounded-full shrink-0" 
                             style={{ backgroundColor: item.selectedShade.hex }}
                           />
-                          <span className="text-[10px] text-gray-400 font-bold uppercase">
+                          <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tight">
                             Shade: {item.selectedShade.name}
                           </span>
                         </div>
                       )}
                     </div>
-                    <span className="font-medium">
+                    <span className="font-bold text-navy shrink-0 text-right min-w-[80px]">
                       Rs. {(((item.size === 'quarter'
                         ? item.product?.price_quarter
                         : item.size === 'gallon'
