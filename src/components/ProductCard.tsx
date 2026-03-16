@@ -40,9 +40,10 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
       <Link href={`/product/${product.id}`} className="relative aspect-square overflow-hidden bg-white border-b border-gray-100 block">
         <img
           src={getImageUrl()}
-          alt={product.name}
+          alt={`${product.brand} ${product.name} - ${product.category} Paint`}
           onError={() => setImgError(true)}
           className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 p-2"
+          title={`${product.brand} ${product.name}`}
         />
         {!product.in_stock && (
           <div className="absolute inset-0 bg-navy/60 flex items-center justify-center">
