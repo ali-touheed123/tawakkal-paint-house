@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
     Search, 
@@ -19,6 +19,18 @@ import { useSearchParams } from 'next/navigation';
 type OrderStatus = 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
 
 export default function OrderTrackingPage() {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen pt-[120px] flex items-center justify-center">
+                <div className="animate-spin w-8 h-8 border-2 border-gold border-t-transparent rounded-full" />
+            </div>
+        }>
+            <OrderTrackingContent />
+        </Suspense>
+    );
+}
+
+function OrderTrackingContent() {
     const searchParams = useSearchParams();
     const [orderId, setOrderId] = useState('');
     const [email, setEmail] = useState('');
