@@ -3,9 +3,8 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { MessageCircle, ShoppingCart, Bell } from 'lucide-react';
-import { Product, ItemSize } from '@/types';
-import { useCartStore } from '@/lib/store';
+import { MessageCircle, FileText } from 'lucide-react';
+import { Product } from '@/types';
 import { cn } from '@/lib/utils';
 
 interface ProductCardProps {
@@ -14,10 +13,7 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product, index = 0 }: ProductCardProps) {
-  const [selectedSize, setSelectedSize] = useState<ItemSize>('gallon');
-  const [addingToCart, setAddingToCart] = useState(false);
   const [imgError, setImgError] = useState(false);
-  const { addItem } = useCartStore();
 
   const getImageUrl = () => {
     if (!product.image_url || imgError) {
@@ -26,19 +22,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
     return product.image_url;
   };
 
-  const price = selectedSize === 'quarter'
-    ? product.price_quarter
-    : selectedSize === 'gallon'
-      ? product.price_gallon
-      : product.price_drum;
 
-  const handleAddToCart = () => {
-    setAddingToCart(true);
-    addItem(product.id, selectedSize, 1, product);
-    setTimeout(() => setAddingToCart(false), 500);
-  };
-
-  const sizes: ItemSize[] = ['quarter', 'gallon', 'drum'];
 
   return (
     <motion.div
@@ -97,66 +81,25 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
           })()}
         </h3>
 
-        {/* Size Toggle */}
-        <div className="flex gap-1.5 mb-3">
-          {sizes.map((size) => {
-            const sizePrice = size === 'quarter'
-              ? product.price_quarter
-              : size === 'gallon'
-                ? product.price_gallon
-                : product.price_drum;
-
-            if (sizePrice === 0) return null;
-
-            return (
-              <button
-                key={size}
-                onClick={() => setSelectedSize(size)}
-                className={`flex-1 py-1.5 px-2 rounded-md text-[11px] font-medium transition-all ${selectedSize === size
-                  ? 'bg-gold text-navy'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gold-pale'
-                  }`}
-              >
-                {size.charAt(0).toUpperCase() + size.slice(1)}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Price */}
-        <p className="font-heading text-lg font-bold text-navy mb-3">
-          Rs. {price.toLocaleString()}
-        </p>
-
         {/* Actions */}
-        <div className="flex gap-1.5">
+        <div className="flex gap-1.5 mt-auto">
           <Link
-            href={`https://wa.me/923475658761?text=Hi! I'm interested in ${product.name} – ${selectedSize}. Please share availability and price.`}
+            href={`https://wa.me/923475658761?text=Hi! I'm interested in ${product.name}. Please share availability and price.`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 flex items-center justify-center gap-1.5 py-2 px-2 rounded-lg text-xs font-medium border-2 border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-colors"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2 px-2 rounded-lg text-xs font-medium border-2 border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-colors cursor-pointer"
           >
             <MessageCircle size={14} />
-            <span className="hidden sm:inline">Inquiry</span>
+            <span>Inquiry</span>
           </Link>
 
-          {product.in_stock ? (
-            <button
-              onClick={handleAddToCart}
-              disabled={addingToCart}
-              className="flex-1 flex items-center justify-center gap-1.5 py-2 px-2 rounded-lg text-xs font-medium bg-navy text-white hover:bg-gold transition-colors disabled:opacity-50"
-            >
-              <ShoppingCart size={14} />
-              <span className="hidden sm:inline">{addingToCart ? 'Added!' : 'Add'}</span>
-            </button>
-          ) : (
-            <button
-              className="flex-1 flex items-center justify-center gap-1.5 py-2 px-2 rounded-lg text-xs font-medium border-2 border-navy text-navy hover:bg-navy hover:text-white transition-colors"
-            >
-              <Bell size={14} />
-              <span className="hidden sm:inline">Notify</span>
-            </button>
-          )}
+          <Link
+            href={`/product/${product.id}`}
+            className="flex-1 flex items-center justify-center gap-1.5 py-2 px-2 rounded-lg text-xs font-medium bg-navy text-white hover:bg-gold transition-colors cursor-pointer"
+          >
+            <FileText size={14} />
+            <span>Details</span>
+          </Link>
         </div>
       </div>
     </motion.div>
