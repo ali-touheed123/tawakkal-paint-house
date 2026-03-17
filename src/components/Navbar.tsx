@@ -26,6 +26,7 @@ export function Navbar() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [brands, setBrands] = useState<Brand[]>([]);
   const [subCategories, setSubCategories] = useState<any[]>([]);
+  const [categoryBrands, setCategoryBrands] = useState<any[]>([]);
 
   useEffect(() => {
     setMounted(true);
@@ -34,14 +35,16 @@ export function Navbar() {
   useEffect(() => {
     const fetchNavData = async () => {
       const supabase = createClient();
-      const [catsRes, brandsRes, subsRes] = await Promise.all([
+      const [catsRes, brandsRes, subsRes, associationsRes] = await Promise.all([
         supabase.from('categories').select('*').order('name'),
         supabase.from('brands').select('*').order('name'),
-        supabase.from('sub_categories').select('*').eq('is_active', true).order('name')
+        supabase.from('sub_categories').select('*').eq('is_active', true).order('name'),
+        supabase.from('category_brands').select('*')
       ]);
       if (catsRes.data) setCategories(catsRes.data);
       if (brandsRes.data) setBrands(brandsRes.data);
       if (subsRes.data) setSubCategories(subsRes.data);
+      if (associationsRes.data) setCategoryBrands(associationsRes.data);
     };
     fetchNavData();
   }, []);
@@ -75,8 +78,9 @@ export function Navbar() {
 
   const productData = {
     categories: categories.map(c => ({ name: c.name, slug: c.slug, id: c.id })),
-    brands: brands.map(b => ({ name: b.name, slug: b.slug })),
-    subs: subCategories
+    brands: brands.map(b => ({ name: b.name, slug: b.slug, id: b.id })),
+    subs: subCategories,
+    associations: categoryBrands
   };
 
 
@@ -149,23 +153,27 @@ export function Navbar() {
                       >
                         <div className="bg-navy border border-gold/20 shadow-2xl py-2">
                           {productData.categories.map((cat) => {
-                            const categorySubs = productData.subs.filter(s => s.category_id === (categories.find(c => c.slug === cat.slug)?.id));
+                            const categorySubs = productData.subs.filter(s => s.category_id === cat.id);
+                            const categoryBrands = productData.brands.filter(b => 
+                              productData.associations.some(a => a.category_id === cat.id && a.brand_id === b.id)
+                            );
+                            
                             const hasSubs = categorySubs.length > 0;
-                            const isDecorative = cat.slug === 'decorative';
+                            const hasBrands = categoryBrands.length > 0;
 
                             return (
                               <div
                                 key={cat.slug}
                                 className="relative group"
-                                onMouseEnter={() => (isDecorative || hasSubs) && setActiveCategory(cat.slug)}
-                                onMouseLeave={() => (isDecorative || hasSubs) && setActiveCategory(null)}
+                                onMouseEnter={() => (hasBrands || hasSubs) && setActiveCategory(cat.slug)}
+                                onMouseLeave={() => (hasBrands || hasSubs) && setActiveCategory(null)}
                               >
                                 <Link
                                   href={`/category/${cat.slug}`}
                                   className="flex items-center justify-between px-6 py-3 text-sm text-white/80 hover:text-gold hover:bg-white/5 transition-all"
                                 >
                                   {cat.name}
-                                  {(isDecorative || hasSubs) && (
+                                  {(hasBrands || hasSubs) && (
                                     <ChevronRight size={14} className="opacity-40 group-hover:opacity-100" />
                                   )}
                                 </Link>
@@ -180,8 +188,8 @@ export function Navbar() {
                                       className="absolute top-0 left-[calc(100%-2px)] w-64 pl-1 z-[110]"
                                     >
                                       <div className="bg-navy border border-gold/20 shadow-2xl py-2">
-                                        {isDecorative ? (
-                                          productData.brands.map((brand) => (
+                                        {hasBrands ? (
+                                          categoryBrands.map((brand) => (
                                             <div
                                               key={brand.slug}
                                               className="relative group/brand"
@@ -333,13 +341,17 @@ export function Navbar() {
                               className="overflow-hidden pl-4 space-y-2 mt-2 border-l border-gold/20"
                             >
                               {productData.categories.map((cat) => {
-                                const categorySubs = productData.subs.filter(s => s.category_id === (categories.find(c => c.id === cat.id)?.id || cat.id));
+                                const categorySubs = productData.subs.filter(s => s.category_id === cat.id);
+                                const categoryBrands = productData.brands.filter(b => 
+                                  productData.associations.some(a => a.category_id === cat.id && a.brand_id === b.id)
+                                );
+                                
                                 const hasSubs = categorySubs.length > 0;
-                                const isDecorative = cat.slug === 'decorative';
+                                const hasBrands = categoryBrands.length > 0;
 
                                 return (
                                   <div key={cat.slug}>
-                                    {(isDecorative || hasSubs) ? (
+                                    {(hasBrands || hasSubs) ? (
                                       <>
                                         <button
                                           onClick={() => setActiveBrand(activeBrand === cat.slug ? null : cat.slug)}
@@ -357,8 +369,8 @@ export function Navbar() {
                                               exit={{ height: 0, opacity: 0 }}
                                               className="overflow-hidden pl-4 space-y-1 mt-1 border-l border-gold/20"
                                             >
-                                              {isDecorative ? (
-                                                productData.brands.map((brand) => (
+                                              {hasBrands ? (
+                                                categoryBrands.map((brand) => (
                                                   <Link
                                                     key={brand.slug}
                                                     href={`/category/${cat.slug}?brand=${brand.name}`}

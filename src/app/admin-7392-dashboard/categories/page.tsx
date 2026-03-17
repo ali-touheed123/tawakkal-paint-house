@@ -11,17 +11,21 @@ import {
   Image as ImageIcon,
   AlertTriangle,
   ChevronRight,
-  X
+  X,
+  Target
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export default function CategoriesPage() {
   const [categories, setCategories] = useState<any[]>([]);
   const [subCategories, setSubCategories] = useState<any[]>([]);
+  const [brands, setBrands] = useState<any[]>([]);
+  const [categoryBrands, setCategoryBrands] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [editingCategory, setEditingCategory] = useState<any>(null);
   const [managingSubsFor, setManagingSubsFor] = useState<any>(null);
+  const [managingBrandsFor, setManagingBrandsFor] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubModalOpen, setIsSubModalOpen] = useState(false);
   const [editingSub, setEditingSub] = useState<any>(null);
@@ -31,7 +35,21 @@ export default function CategoriesPage() {
   useEffect(() => {
     fetchCategories();
     fetchSubCategories();
+    fetchBrands();
+    fetchCategoryBrands();
   }, []);
+
+  async function fetchBrands() {
+    const supabase = createClient();
+    const { data } = await supabase.from('brands').select('*').eq('is_active', true).order('name');
+    if (data) setBrands(data);
+  }
+
+  async function fetchCategoryBrands() {
+    const supabase = createClient();
+    const { data } = await supabase.from('category_brands').select('*');
+    if (data) setCategoryBrands(data);
+  }
 
   async function fetchCategories() {
     setLoading(true);
@@ -161,6 +179,27 @@ export default function CategoriesPage() {
     fetchSubCategories();
   }
 
+  async function toggleBrandAssociation(brandId: string) {
+    if (!managingBrandsFor) return;
+    const supabase = createClient();
+    const existing = categoryBrands.find(cb => cb.category_id === managingBrandsFor.id && cb.brand_id === brandId);
+
+    if (existing) {
+      const { error } = await supabase
+        .from('category_brands')
+        .delete()
+        .eq('category_id', managingBrandsFor.id)
+        .eq('brand_id', brandId);
+      if (error) alert('Failed to remove brand: ' + error.message);
+    } else {
+      const { error } = await supabase
+        .from('category_brands')
+        .insert([{ category_id: managingBrandsFor.id, brand_id: brandId }]);
+      if (error) alert('Failed to add brand: ' + error.message);
+    }
+    fetchCategoryBrands();
+  }
+
   const filteredCategories = categories.filter(c => 
     c.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     c.slug.toLowerCase().includes(searchTerm.toLowerCase())
@@ -243,12 +282,18 @@ export default function CategoriesPage() {
                 ))}
               </div>
 
-              <div className="mt-6">
+              <div className="mt-6 grid grid-cols-2 gap-2">
                 <button 
                   onClick={() => setManagingSubsFor(category)}
-                  className="w-full py-2 border-2 border-navy/10 hover:border-gold hover:bg-gold/5 text-navy text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-2"
+                  className="py-2 border-2 border-navy/10 hover:border-gold hover:bg-gold/5 text-navy text-[10px] font-bold rounded-xl transition-all flex items-center justify-center gap-1.5"
                 >
-                  <Layers size={14} /> Manage Sub-categories
+                  <Layers size={14} /> Subs
+                </button>
+                <button 
+                  onClick={() => setManagingBrandsFor(category)}
+                  className="py-2 border-2 border-navy/10 hover:border-gold hover:bg-gold/5 text-navy text-[10px] font-bold rounded-xl transition-all flex items-center justify-center gap-1.5"
+                >
+                  <Target size={14} /> Brands
                 </button>
               </div>
             </div>
@@ -435,6 +480,68 @@ export default function CategoriesPage() {
               <button type="submit" className="px-5 py-2 bg-navy text-white text-xs font-bold rounded-lg hover:bg-navy/90 active:scale-95 transition-all">Save</button>
             </div>
           </form>
+        </div>
+      )}
+      {/* Brand Management Side Overlay */}
+      {managingBrandsFor && (
+        <div className="fixed inset-0 z-50 flex justify-end bg-navy/60 backdrop-blur-sm animate-in fade-in duration-300">
+          <div className="w-full max-w-md bg-white h-full shadow-2xl animate-in slide-in-from-right duration-500 flex flex-col">
+            <div className="p-6 border-b border-gray-100 flex items-center justify-between">
+              <div>
+                <h2 className="text-xl font-bold text-navy">Manage Brands</h2>
+                <p className="text-xs text-gray-400 mt-1">For {managingBrandsFor.name}</p>
+              </div>
+              <button onClick={() => setManagingBrandsFor(null)} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto p-6">
+              <div className="space-y-3">
+                {brands.map(brand => {
+                  const isAssociated = categoryBrands.some(cb => cb.category_id === managingBrandsFor.id && cb.brand_id === brand.id);
+                  return (
+                    <button 
+                      key={brand.id}
+                      onClick={() => toggleBrandAssociation(brand.id)}
+                      className={cn(
+                        "w-full p-4 rounded-xl border-2 transition-all flex items-center justify-between group",
+                        isAssociated 
+                          ? "border-gold bg-gold/5 text-navy" 
+                          : "border-gray-100 hover:border-gold/30 text-gray-400"
+                      )}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className={cn(
+                          "w-10 h-10 rounded flex items-center justify-center overflow-hidden border",
+                          isAssociated ? "bg-white border-gold/20" : "bg-gray-50 border-gray-200"
+                        )}>
+                          {brand.logo_url ? (
+                            <img src={brand.logo_url} alt={brand.name} className="w-full h-full object-contain p-1" />
+                          ) : (
+                            <span className="text-[10px] font-bold">{brand.name.charAt(0)}</span>
+                          )}
+                        </div>
+                        <span className="font-bold text-sm">{brand.name}</span>
+                      </div>
+                      <div className={cn(
+                        "w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all",
+                        isAssociated ? "bg-gold border-gold scale-110" : "border-gray-200 group-hover:border-gold/50"
+                      )}>
+                        {isAssociated && <X size={12} className="text-navy rotate-45" />}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+            
+            <div className="p-6 bg-gray-50 border-t border-gray-100">
+              <p className="text-[10px] text-center text-gray-400">
+                Brands selected here will appear in the navigation dropdown specifically for the <span className="text-navy font-bold">{managingBrandsFor.name}</span> category.
+              </p>
+            </div>
+          </div>
         </div>
       )}
     </div>
