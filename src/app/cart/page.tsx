@@ -15,6 +15,7 @@ export default function CartPage() {
   useEffect(() => {
     setMounted(true);
     refreshItems();
+    window.scrollTo(0, 0);
   }, []);
 
   if (!mounted) return null;
