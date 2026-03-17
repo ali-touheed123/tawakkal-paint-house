@@ -152,22 +152,44 @@ export interface ShippingRate {
 }
 
 export const KARACHI_AREAS = [
-  'Gulshan-e-Iqbal',
-  'DHA',
+  'Airport',
+  'Arambagh',
+  'Baldia',
+  'Bin Qasim',
+  'Civil Lines',
   'Clifton',
-  'North Karachi',
-  'Korangi',
-  'Malir',
-  'Saddar',
-  'Orangi Town',
+  'DHA',
   'F.B Area',
-  'Nazimabad',
+  'Ferozabad',
+  'Gadap',
+  'Garden',
+  'Gulberg',
+  'Gulshan-e-Iqbal',
   'Gulistan-e-Johar',
-  'Liaquatabad',
+  'Gulzar-e-Hijri',
+  'Harbor',
+  'Ibrahim Hyderi',
+  'Jamshed Quarters',
+  'Keamari',
+  'Korangi',
   'Landhi',
-  'Baldia Town',
+  'Liaquatabad',
+  'Lyari',
+  'Malir',
+  'Mango Pir',
+  'Maripur',
+  'Model Colony',
+  'Mominabad',
+  'Murad Memon',
+  'Nazimabad',
   'New Karachi',
-  'Shah Faisal Colony'
+  'New Nazimabad',
+  'North Karachi',
+  'Orangi Town',
+  'Saddar',
+  'Shah Faisal',
+  'Shah Mureed',
+  'SITE'
 ] as const;
 
 export type KarachiArea = typeof KARACHI_AREAS[number];
@@ -321,7 +343,7 @@ export const COLOR_FAMILIES = [
 export const FAQS = [
   {
     question: 'Which areas in Karachi do you deliver to?',
-    answer: 'We deliver to all areas across Karachi including Gulshan-e-Iqbal, DHA, Clifton, North Karachi, Korangi, Malir, Saddar, Orangi Town, F.B Area, Nazimabad, Gulistan-e-Johar, Liaquatabad, Landhi, Baldia Town, New Karachi, and Shah Faisal Colony.'
+    answer: 'We deliver to all major areas across Karachi, including DHA, Clifton, Gulshan, Nazimabad, Korangi, Malir, and 30+ other locations. You can select your specific area from the location popup to see service availability.'
   },
   {
     question: 'Are all products 100% original and sealed?',
