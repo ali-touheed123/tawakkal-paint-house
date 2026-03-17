@@ -100,7 +100,7 @@ export const useCartStore = create<CartStore>()(
         try {
           const { createClient } = await import('@/lib/supabase/client');
           const supabase = createClient();
-          const productIds = Array.from(new Set(items.map(item => item.product_id)));
+          const productIds = Array.from(new Set(items.map(item => item.product_id))).filter(id => id && id.length === 36);
 
           const { data: latestProducts, error } = await supabase
             .from('products')

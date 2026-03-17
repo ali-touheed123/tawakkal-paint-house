@@ -135,6 +135,7 @@ export default function CheckoutPage() {
 
     try {
       const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
 
       const orderItems: OrderItem[] = items.map(item => ({
         product_id: item.product_id,
@@ -154,7 +155,7 @@ export default function CheckoutPage() {
       const { data, error } = await supabase
         .from('orders')
         .insert({
-          user_id: null,
+          user_id: user?.id || null,
           customer_name: formData.fullName,
           items: orderItems,
           subtotal,
