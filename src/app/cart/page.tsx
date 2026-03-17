@@ -43,7 +43,7 @@ export default function CartPage() {
           <div className="text-center py-20">
             <p className="text-gray-500 text-lg mb-4">Your cart is empty</p>
             <Link
-              href="/category/decorative"
+              href="/#categories"
               className="inline-flex items-center gap-2 bg-gold text-navy px-8 py-4 rounded-lg font-semibold hover:bg-gold-light transition-colors"
             >
               Start Shopping <ArrowRight size={20} />

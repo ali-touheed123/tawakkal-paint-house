@@ -108,7 +108,7 @@ export default function HomePage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-3 xs:gap-4">
                 <Link
-                  href="/category/decorative"
+                  href="#categories"
                   className="inline-flex items-center justify-center gap-2 bg-gold text-navy px-6 xs:px-8 py-3.5 xs:py-4 rounded-xl font-bold hover:bg-gold-light transition-all active:scale-95 text-sm xs:text-base"
                 >
                   Shop Now <ArrowRight size={20} />
@@ -237,7 +237,7 @@ export default function HomePage() {
       </section>
 
       {/* Categories Section */}
-      <section className="py-20 bg-navy">
+      <section id="categories" className="py-20 bg-navy">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
