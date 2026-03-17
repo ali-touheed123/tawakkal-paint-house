@@ -103,8 +103,8 @@ export default function HomePage() {
               <h1 className="font-heading text-4xl xs:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] mb-6">
                 Where Colour Meets Craftsmanship
               </h1>
-              <p className="text-gray-300 text-base xs:text-lg md:text-xl mb-8 max-w-lg">
-                Karachi&apos;s most trusted paint store. {settings?.contact?.phone ? 'Call us at ' + settings.contact.phone : 'Serving Karachi since 2004.'}
+              <p className="text-gray-300 text-base xs:text-lg md:text-xl mb-8 max-w-2xl">
+                Karachi&apos;s most trusted paint store. {settings?.contact?.phone ? <span>Call us at <span className="text-gold font-bold whitespace-nowrap">{settings.contact.phone}</span></span> : 'Serving Karachi since 2004.'}
               </p>
               <div className="flex flex-col sm:flex-row gap-3 xs:gap-4">
                 <Link
