@@ -14,7 +14,7 @@ export function LocationPopup() {
 
   // Hide location popup on admin dashboard
   if (pathname?.startsWith('/admin-7392-dashboard')) return null;
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const [selectedArea, setSelectedArea] = useState<string | null>(area);
 
   useEffect(() => {
