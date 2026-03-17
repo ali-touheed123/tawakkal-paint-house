@@ -377,8 +377,12 @@ export function ProductView({ initialId }: { initialId: string }) {
 
                         <div className="relative group rounded-3xl overflow-hidden bg-white shadow-2xl border border-gray-100 min-h-[400px]">
                             {isDiamondAceTimberlacWoodStains ? (
-                                <div className="aspect-[16/9] flex items-center justify-center p-8">
-                                    <img src={product.image_url || ''} className="max-h-full object-contain" />
+                                <div className="aspect-square xs:aspect-[16/9] flex items-center justify-center p-4 xs:p-8">
+                                    <img 
+                                        src={product.image_url || ''} 
+                                        className="max-h-[85%] xs:max-h-full object-contain transform scale-125 xs:scale-100 transition-transform duration-500" 
+                                        alt={product.name}
+                                    />
                                 </div>
                             ) : (
                                 <AnimatePresence mode="wait">
@@ -398,8 +402,12 @@ export function ProductView({ initialId }: { initialId: string }) {
                                                     onSelect={(s) => setSelectedShade(s)}
                                                 />
                                             ) : (
-                                                <div className="aspect-[16/9] flex items-center justify-center p-8">
-                                                    <img src={product.image_url || ''} alt={`${product.brand} ${product.name} product image`} className="max-h-full object-contain" />
+                                                <div className="aspect-square xs:aspect-[16/9] flex items-center justify-center p-4 xs:p-8 h-full w-full">
+                                                    <img 
+                                                        src={product.image_url || ''} 
+                                                        alt={`${product.brand} ${product.name} product image`} 
+                                                        className="max-h-[85%] xs:max-h-full object-contain transform scale-125 xs:scale-100 transition-transform duration-500" 
+                                                    />
                                                 </div>
                                             )}
                                         </motion.div>
