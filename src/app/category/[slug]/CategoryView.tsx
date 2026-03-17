@@ -8,15 +8,7 @@ import { useState, useEffect, useRef } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { BulkInquiry } from '@/components/BulkInquiry';
 
-const subCategories = [
-  { id: 'all', label: 'All' },
-  { id: 'interior', label: 'Interior' },
-  { id: 'exterior', label: 'Exterior' },
-  { id: 'wood_metal', label: 'Wood & Metal' },
-  { id: 'primers_fillers', label: 'Primers & Fillers' },
-  { id: 'waterproofing', label: 'Waterproofing' },
-  { id: 'accessories', label: 'Accessories' }
-];
+// Removed hardcoded constraints and constants
 
 
 const categoryInfo: Record<string, { title: string; description: string; hero: string }> = {
@@ -62,36 +54,58 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
   const [loading, setLoading] = useState(true);
   const [selectedBrand, setSelectedBrand] = useState(searchParams.get('brand') || 'all');
   const [selectedSub, setSelectedSub] = useState(searchParams.get('sub') || 'all');
-  const [categoryDetails, setCategoryDetails] = useState<{ title: string; description: string; hero: string } | null>(null);
+  const [categoryDetails, setCategoryDetails] = useState<any | null>(null);
+  const [dynamicBrands, setDynamicBrands] = useState<any[]>([]);
+  const [dynamicSubs, setDynamicSubs] = useState<any[]>([]);
 
   useEffect(() => {
-    async function fetchCategoryDetails() {
-      // Check hardcoded first
-      if (categoryInfo[category]) {
-        setCategoryDetails(categoryInfo[category]);
-        return;
-      }
-
-      // Fetch from Supabase
+    async function fetchCategoryData() {
       const supabase = createClient();
-      const { data, error } = await supabase
+      
+      // 1. Fetch Category Details
+      const { data: catData } = await supabase
         .from('categories')
         .select('*')
         .eq('slug', category)
         .single();
       
-      if (data) {
+      if (catData) {
         setCategoryDetails({
-          title: data.name,
-          description: data.description || '',
-          hero: data.image_url || '/images/categories/decorative.jpg'
+          ...catData,
+          title: catData.name,
+          hero: catData.image_url || '/images/categories/decorative.jpg'
         });
-      } else {
-        // Fallback
-        setCategoryDetails(categoryInfo.decorative);
+
+        // 2. Fetch Associated Brands
+        const { data: associations } = await supabase
+          .from('category_brands')
+          .select('brand_id')
+          .eq('category_id', catData.id);
+        
+        if (associations && associations.length > 0) {
+          const brandIds = associations.map(a => a.brand_id);
+          const { data: brandsRes } = await supabase
+            .from('brands')
+            .select('*')
+            .in('id', brandIds)
+            .eq('is_active', true)
+            .order('name');
+          if (brandsRes) setDynamicBrands(brandsRes);
+        } else {
+          setDynamicBrands([]);
+        }
+
+        // 3. Fetch Sub-categories
+        const { data: subsRes } = await supabase
+          .from('sub_categories')
+          .select('*')
+          .eq('category_id', catData.id)
+          .eq('is_active', true)
+          .order('name');
+        if (subsRes) setDynamicSubs(subsRes);
       }
     }
-    fetchCategoryDetails();
+    fetchCategoryData();
   }, [category]);
 
   useEffect(() => {
@@ -102,10 +116,10 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
         let supabaseQuery = supabase.from('products').select('*').eq('category', category);
 
         if (selectedBrand && selectedBrand !== 'all') {
-          const exactBrand = BRANDS.find(b => 
-            b.toLowerCase().replace(/['\s\.]/g, '') === selectedBrand.toLowerCase().replace(/['\s\.]/g, '')
+          const exactBrand = dynamicBrands.find(b => 
+            b.name.toLowerCase().replace(/['\s\.]/g, '') === selectedBrand.toLowerCase().replace(/['\s\.]/g, '')
           );
-          supabaseQuery = supabaseQuery.eq('brand', exactBrand || selectedBrand);
+          supabaseQuery = supabaseQuery.eq('brand', exactBrand?.name || selectedBrand);
         }
 
         if (selectedSub && selectedSub !== 'all') {
@@ -219,14 +233,13 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
                 >
                   All Brands
                 </button>
-                {BRANDS.map((brand, i) => {
-                  const logoUrl = BRAND_LOGOS[brand];
-                  const brandValue = brand.toLowerCase().replace(/['\s]/g, '');
+                {dynamicBrands.map((brand, i) => {
+                  const brandValue = brand.name.toLowerCase().replace(/['\s]/g, '');
                   const isActive = selectedBrand === brandValue;
 
                   return (
                     <motion.button
-                      key={brand}
+                      key={brand.id}
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: i * 0.05 }}
@@ -235,16 +248,16 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
                         ? 'border-gold shadow-lg shadow-gold/10 scale-105 z-10'
                         : 'border-gray-100 hover:border-gold/30 grayscale opacity-60 hover:grayscale-0 hover:opacity-100'
                         }`}
-                      title={brand}
+                      title={brand.name}
                     >
-                      {logoUrl ? (
+                      {brand.logo_url ? (
                         <img
-                          src={logoUrl}
-                          alt={brand}
-                          className={`h-full w-auto object-contain pointer-events-none p-1.5 xs:p-2 ${brand === 'Dior' || brand === 'Rozzilac' ? 'scale-110' : ''}`}
+                          src={brand.logo_url}
+                          alt={brand.name}
+                          className={`h-full w-auto object-contain pointer-events-none p-1.5 xs:p-2`}
                         />
                       ) : (
-                        <span className="text-[10px] xs:text-sm font-bold text-navy/60">{brand}</span>
+                        <span className="text-[10px] xs:text-sm font-bold text-navy/60">{brand.name}</span>
                       )}
                     </motion.button>
                   );
@@ -253,7 +266,7 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
             </motion.div>
 
             {/* Sub-category Filter */}
-            {category === 'decorative' && (
+            {dynamicSubs.length > 0 && (
               <motion.div 
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -262,19 +275,28 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
               >
                 <h3 className="text-[10px] font-bold text-navy/30 uppercase tracking-[0.2em] pl-1">Categories</h3>
                 <div className="flex overflow-x-auto pb-1 -mx-3 xs:-mx-4 px-3 xs:px-4 sm:mx-0 sm:px-0 scrollbar-hide snap-x gap-2">
-                  {subCategories.map((sub, i) => (
+                  <button
+                    onClick={() => handleSubChange('all')}
+                    className={`snap-start shrink-0 px-4 xs:px-5 py-2 xs:py-2.5 rounded-xl text-xs xs:text-sm font-bold whitespace-nowrap transition-all border-2 ${selectedSub === 'all'
+                      ? 'bg-navy border-navy text-white shadow-lg shadow-navy/20'
+                      : 'bg-white border-gray-100 text-gray-500 hover:border-navy/30 hover:text-navy'
+                      }`}
+                  >
+                    All
+                  </button>
+                  {dynamicSubs.map((sub, i) => (
                     <motion.button
                       key={sub.id}
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: i * 0.05 }}
-                      onClick={() => handleSubChange(sub.id)}
-                      className={`snap-start shrink-0 px-4 xs:px-5 py-2 xs:py-2.5 rounded-xl text-xs xs:text-sm font-bold whitespace-nowrap transition-all border-2 ${selectedSub === sub.id
+                      onClick={() => handleSubChange(sub.slug)}
+                      className={`snap-start shrink-0 px-4 xs:px-5 py-2 xs:py-2.5 rounded-xl text-xs xs:text-sm font-bold whitespace-nowrap transition-all border-2 ${selectedSub === sub.slug
                         ? 'bg-navy border-navy text-white shadow-lg shadow-navy/20'
                         : 'bg-white border-gray-100 text-gray-500 hover:border-navy/30 hover:text-navy'
                         }`}
                     >
-                      {sub.label}
+                      {sub.name}
                     </motion.button>
                   ))}
                 </div>

@@ -1,13 +1,27 @@
-'use client';
-
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { BRAND_LOGOS } from '@/types';
+import { createClient } from '@/lib/supabase/client';
 
 export function BrandSection() {
-    const logos = Object.entries(BRAND_LOGOS).map(([name, url]) => ({
-        name,
-        url
-    }));
+    const [brands, setBrands] = useState<any[]>([]);
+
+    useEffect(() => {
+        async function fetchBrands() {
+            const supabase = createClient();
+            const { data } = await supabase
+                .from('brands')
+                .select('*')
+                .eq('is_active', true)
+                .order('name');
+            if (data) setBrands(data);
+        }
+        fetchBrands();
+    }, []);
+
+    const logos = brands.map(brand => ({
+        name: brand.name,
+        url: brand.logo_url
+    })).filter(l => !!l.url);
 
     // Duplicate logos for a seamless marquee
     const displayLogos = [...logos, ...logos, ...logos];
