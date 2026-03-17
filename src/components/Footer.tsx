@@ -1,18 +1,39 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { MessageCircle, Instagram, Facebook, Phone, MapPin, Music2, ArrowRight, ChevronUp } from 'lucide-react';
 import { useLocationStore, useUIStore } from '@/lib/store';
 import { useSettings } from '@/lib/hooks/useSettings';
+import { createClient } from '@/lib/supabase/client';
+import { Category } from '@/types';
 
 export function Footer() {
   const pathname = usePathname();
   const { setLocationPopupOpen } = useUIStore();
   const { settings } = useSettings();
+  const [categories, setCategories] = useState<any[]>([]);
 
-  // Hide footer on admin dashboard
-  if (pathname?.startsWith('/admin-7392-dashboard')) return null;
+  useEffect(() => {
+    async function fetchCategories() {
+      const supabase = createClient();
+      const { data } = await supabase
+        .from('categories')
+        .select('*')
+        .eq('is_active', true)
+        .order('name');
+      
+      if (data) {
+        const dbHasDeals = data.some((c: any) => c.slug === 'deals');
+        const finalCats = dbHasDeals 
+          ? data 
+          : [...data, { name: 'Deals & Projects', slug: 'deals' }];
+        setCategories(finalCats);
+      }
+    }
+    fetchCategories();
+  }, []);
 
   const handleChangeArea = () => {
     if (typeof window !== 'undefined' && (window as any).openLocationPopup) {
@@ -116,19 +137,18 @@ export function Footer() {
           <div className="col-span-1">
             <h3 className="text-white font-bold tracking-widest uppercase text-[10px] xs:text-xs mb-6 after:content-[''] after:block after:w-8 after:h-0.5 after:bg-gold after:mt-3">Categories</h3>
             <ul className="space-y-3">
-              {[
-                { name: 'Decorative', path: '/category/decorative' }, // Shortened for very narrow
-                { name: 'Industrial', path: '/category/industrial' },
-                { name: 'Auto Refinish', path: '/category/auto' },
-                { name: 'Deals & Projects', path: '/deals', special: true },
-              ].map((link) => (
-                <li key={link.name}>
-                  <Link href={link.path} className={`group flex items-center text-xs xs:text-sm transition-colors ${link.special ? 'text-gold font-semibold' : 'text-gray-400 hover:text-gold'}`}>
-                    <ArrowRight size={14} className={`opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 mr-2 hidden xs:block ${link.special ? 'text-gold opacity-100 translate-x-0' : 'text-gold'}`} />
-                    <span className="group-hover:translate-x-1 transition-transform duration-300">{link.name}</span>
-                  </Link>
-                </li>
-              ))}
+              {categories.map((cat: any) => {
+                const isSpecial = cat.slug === 'deals';
+                const href = isSpecial ? '/deals' : `/category/${cat.slug}`;
+                return (
+                  <li key={cat.slug}>
+                    <Link href={href} className={`group flex items-center text-xs xs:text-sm transition-colors ${isSpecial ? 'text-gold font-semibold' : 'text-gray-400 hover:text-gold'}`}>
+                      <ArrowRight size={14} className={`opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 mr-2 hidden xs:block ${isSpecial ? 'text-gold opacity-100 translate-x-0' : 'text-gold'}`} />
+                      <span className="group-hover:translate-x-1 transition-transform duration-300">{cat.name}</span>
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 

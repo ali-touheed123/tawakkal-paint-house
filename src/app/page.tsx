@@ -12,34 +12,14 @@ import { ProductCard } from '@/components/ProductCard';
 import { BrandSection } from '@/components/BrandSection';
 import { createClient } from '@/lib/supabase/client';
 import { useSettings } from '@/lib/hooks/useSettings';
-import { Product } from '@/types';
+import { Product, Category } from '@/types';
 
-const categories = [
-  {
-    slug: 'decorative',
-    name: 'Decorative',
-    description: 'Interior & exterior wall paints for homes & offices',
-    image: '/images/categories/decorative.jpg'
-  },
-  {
-    slug: 'industrial',
-    name: 'Industrial',
-    description: 'Heavy-duty protective coatings',
-    image: '/images/categories/industrial.jpg'
-  },
-  {
-    slug: 'auto',
-    name: 'Auto',
-    description: 'Automotive & vehicle refinishing paints',
-    image: '/images/categories/auto.jpg'
-  },
-  {
-    slug: 'deals',
-    name: 'Deals / Projects',
-    description: 'Complete paint packages for your 80 to 1000 Gaz property',
-    image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800'
-  }
-];
+const staticDealsCategory = {
+  slug: 'deals',
+  name: 'Deals / Projects',
+  description: 'Complete paint packages for your 80 to 1000 Gaz property',
+  image_url: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800'
+};
 
 const whyChooseUs = [
   { icon: Clock, title: '20+ Years in Business', description: 'Serving Karachi since 2004' },
@@ -54,23 +34,42 @@ const whyChooseUs = [
 export default function HomePage() {
   const { settings } = useSettings();
   const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchData = async () => {
+      setLoading(true);
       const supabase = createClient();
-      const { data } = await supabase
-        .from('products')
-        .select('*')
-        .in('brand', ['Rozzilac', "Gobi's", 'Reliable'])
-        .or('name.ilike.%Matt%,name.ilike.%Weather%,name.ilike.%Enamel%,name.ilike.%Emulsion%')
-        .order('created_at', { ascending: false })
-        .limit(10);
-      if (data) setProducts(data as Product[]);
+      
+      const [productsRes, categoriesRes] = await Promise.all([
+        supabase
+          .from('products')
+          .select('*')
+          .in('brand', ['Rozzilac', "Gobi's", 'Reliable'])
+          .or('name.ilike.%Matt%,name.ilike.%Weather%,name.ilike.%Enamel%,name.ilike.%Emulsion%')
+          .order('created_at', { ascending: false })
+          .limit(10),
+        supabase
+          .from('categories')
+          .select('*')
+          .eq('is_active', true)
+          .order('name', { ascending: true })
+      ]);
+
+      if (productsRes.data) setProducts(productsRes.data as Product[]);
+      if (categoriesRes.data) {
+        // Merge with static deals if not present in DB
+        const dbHasDeals = categoriesRes.data.some(c => c.slug === 'deals');
+        const finalCats = dbHasDeals 
+          ? categoriesRes.data 
+          : [...categoriesRes.data, staticDealsCategory];
+        setCategories(finalCats);
+      }
       setLoading(false);
     };
-    fetchProducts();
+    fetchData();
   }, []);
 
   return (
@@ -270,7 +269,7 @@ export default function HomePage() {
                 className="group relative overflow-hidden rounded-2xl aspect-[16/9] md:aspect-[2/1]"
               >
                 <img
-                  src={cat.image}
+                  src={cat.image_url || cat.image || '/images/placeholder.jpg'}
                   alt={cat.name}
                   className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
