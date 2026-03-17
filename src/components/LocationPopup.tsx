@@ -18,16 +18,10 @@ export function LocationPopup() {
   const [selectedArea, setSelectedArea] = useState<string | null>(area);
 
   useEffect(() => {
-    if (!hasSelectedArea) {
-      setIsVisible(true);
-    }
-  }, [hasSelectedArea]);
-
-  useEffect(() => {
     const storedArea = localStorage.getItem('tawakkal-area');
     if (storedArea && !hasSelectedArea) {
       setArea(storedArea);
-      setIsVisible(false);
+      setSelectedArea(storedArea);
     }
   }, [hasSelectedArea, setArea]);
 
