@@ -22,11 +22,20 @@ export default function ProductsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [categories, setCategories] = useState<any[]>([]);
+  const [subCategories, setSubCategories] = useState<any[]>([]);
+  const [selectedSubCategory, setSelectedSubCategory] = useState('');
 
   useEffect(() => {
     fetchProducts();
     fetchCategories();
+    fetchSubCategories();
   }, []);
+
+  async function fetchSubCategories() {
+    const supabase = createClient();
+    const { data } = await supabase.from('sub_categories').select('*').eq('is_active', true);
+    if (data) setSubCategories(data);
+  }
 
   async function fetchCategories() {
     const supabase = createClient();
@@ -316,10 +325,39 @@ export default function ProductsPage() {
               </div>
               <div>
                 <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Category</label>
-                <select name="category" defaultValue={editingProduct?.category || categories[0]?.slug} className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm">
+                <select 
+                  name="category" 
+                  defaultValue={editingProduct?.category || categories[0]?.slug} 
+                  onChange={(e) => {
+                    const cat = categories.find(c => c.slug === e.target.value);
+                    // Force re-render of sub-category filter
+                    setSelectedSubCategory(''); 
+                  }}
+                  className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm"
+                >
                   {categories.map(cat => (
                     <option key={cat.id} value={cat.slug}>{cat.name}</option>
                   ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Sub-category</label>
+                <select 
+                  name="sub_category" 
+                  defaultValue={editingProduct?.sub_category}
+                  className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm"
+                >
+                  <option value="">None</option>
+                  {subCategories
+                    .filter(s => {
+                      const currentCategorySlug = (document.querySelector('select[name="category"]') as HTMLSelectElement)?.value || editingProduct?.category;
+                      const cat = categories.find(c => c.slug === currentCategorySlug);
+                      return s.category_id === cat?.id;
+                    })
+                    .map(sub => (
+                      <option key={sub.id} value={sub.slug}>{sub.name}</option>
+                    ))
+                  }
                 </select>
               </div>
               <div className="col-span-2">

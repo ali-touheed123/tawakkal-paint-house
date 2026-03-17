@@ -10,21 +10,27 @@ import {
   Layers,
   Image as ImageIcon,
   AlertTriangle,
-  ChevronRight
+  ChevronRight,
+  X
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export default function CategoriesPage() {
   const [categories, setCategories] = useState<any[]>([]);
+  const [subCategories, setSubCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [editingCategory, setEditingCategory] = useState<any>(null);
+  const [managingSubsFor, setManagingSubsFor] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSubModalOpen, setIsSubModalOpen] = useState(false);
+  const [editingSub, setEditingSub] = useState<any>(null);
   const [imgError, setImgError] = useState(false);
   const [currentImageUrl, setCurrentImageUrl] = useState('');
 
   useEffect(() => {
     fetchCategories();
+    fetchSubCategories();
   }, []);
 
   async function fetchCategories() {
@@ -37,6 +43,15 @@ export default function CategoriesPage() {
     
     if (data) setCategories(data);
     setLoading(false);
+  }
+
+  async function fetchSubCategories() {
+    const supabase = createClient();
+    const { data } = await supabase
+      .from('sub_categories')
+      .select('*')
+      .order('name');
+    if (data) setSubCategories(data);
   }
 
   useEffect(() => {
@@ -98,6 +113,54 @@ export default function CategoriesPage() {
     setEditingCategory(null);
   }
 
+  async function handleSaveSub(e: React.FormEvent) {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget as HTMLFormElement);
+    const subData = {
+      category_id: managingSubsFor.id,
+      name: formData.get('name'),
+      slug: formData.get('slug'),
+      is_active: formData.get('is_active') === 'on'
+    };
+
+    const supabase = createClient();
+    if (editingSub?.id) {
+      const { error } = await supabase
+        .from('sub_categories')
+        .update(subData)
+        .eq('id', editingSub.id);
+      
+      if (error) {
+        alert('Failed to save: ' + error.message);
+        return;
+      }
+    } else {
+      const { error } = await supabase
+        .from('sub_categories')
+        .insert([subData]);
+      
+      if (error) {
+        alert('Failed to create: ' + error.message);
+        return;
+      }
+    }
+    
+    fetchSubCategories();
+    setIsSubModalOpen(false);
+    setEditingSub(null);
+  }
+
+  async function handleDeleteSub(id: string) {
+    if (!confirm('Are you sure?')) return;
+    const supabase = createClient();
+    const { error } = await supabase.from('sub_categories').delete().eq('id', id);
+    if (error) {
+      alert('Failed: ' + error.message);
+      return;
+    }
+    fetchSubCategories();
+  }
+
   const filteredCategories = categories.filter(c => 
     c.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     c.slug.toLowerCase().includes(searchTerm.toLowerCase())
@@ -108,7 +171,7 @@ export default function CategoriesPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-navy">Categories</h1>
-          <p className="text-gray-500">Manage product categories and their hero displays.</p>
+          <p className="text-gray-500">Manage product categories, hero displays, and sub-categories.</p>
         </div>
         <button 
           onClick={() => { setEditingCategory(null); setIsModalOpen(true); }}
@@ -142,8 +205,8 @@ export default function CategoriesPage() {
               )}
               <div className="absolute top-3 right-3">
                 <span className={cn(
-                  "px-2 py-1 rounded-md text-[10px] font-bold uppercase shadow-sm",
-                  category.is_active ? "bg-green-500 text-white" : "bg-gray-400 text-white"
+                   "px-2 py-1 rounded-md text-[10px] font-bold uppercase shadow-sm",
+                   category.is_active ? "bg-green-500 text-white" : "bg-gray-400 text-white"
                 )}>
                   {category.is_active ? 'Active' : 'Hidden'}
                 </span>
@@ -171,16 +234,31 @@ export default function CategoriesPage() {
                   </button>
                 </div>
               </div>
-              <p className="mt-3 text-sm text-gray-500 line-clamp-2 min-h-[40px]">
-                {category.description || 'No description provided.'}
-              </p>
+              
+              <div className="mt-4 flex flex-wrap gap-1.5 min-h-[50px]">
+                {subCategories.filter(s => s.category_id === category.id).map(sub => (
+                  <span key={sub.id} className="text-[10px] bg-navy/5 text-navy/60 px-2 py-1 rounded-full border border-navy/10">
+                    {sub.name}
+                  </span>
+                ))}
+              </div>
+
+              <div className="mt-6">
+                <button 
+                  onClick={() => setManagingSubsFor(category)}
+                  className="w-full py-2 border-2 border-navy/10 hover:border-gold hover:bg-gold/5 text-navy text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-2"
+                >
+                  <Layers size={14} /> Manage Sub-categories
+                </button>
+              </div>
             </div>
           </div>
         ))}
       </div>
 
+      {/* Category Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy/60 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy/60 backdrop-blur-sm shadow-2xl">
           <form onSubmit={handleSave} className="bg-white rounded-2xl w-full max-w-xl shadow-2xl animate-in fade-in zoom-in duration-200 overflow-hidden">
             <div className="p-5 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
               <h2 className="text-lg font-bold text-navy">{editingCategory ? 'Edit Category' : 'Add New Category'}</h2>
@@ -256,6 +334,105 @@ export default function CategoriesPage() {
             <div className="p-5 bg-gray-50 border-t border-gray-100 flex justify-end gap-3">
               <button type="button" onClick={() => { setIsModalOpen(false); setEditingCategory(null); }} className="px-5 py-2 text-sm text-gray-500 font-bold hover:text-navy">Cancel</button>
               <button type="submit" className="px-6 py-2 bg-navy text-white text-sm font-bold rounded-lg hover:bg-navy/90 shadow-md transition-all active:scale-95">Save Category</button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {/* Sub-category Management Side Overlay */}
+      {managingSubsFor && (
+        <div className="fixed inset-0 z-50 flex justify-end bg-navy/60 backdrop-blur-sm animate-in fade-in duration-300">
+          <div className="w-full max-w-md bg-white h-full shadow-2xl animate-in slide-in-from-right duration-500 flex flex-col">
+            <div className="p-6 border-b border-gray-100 flex items-center justify-between">
+              <div>
+                <h2 className="text-xl font-bold text-navy">Manage Sub-categories</h2>
+                <p className="text-xs text-gray-400 mt-1">For {managingSubsFor.name}</p>
+              </div>
+              <button onClick={() => setManagingSubsFor(null)} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto p-6 space-y-4">
+              <button 
+                onClick={() => { setEditingSub(null); setIsSubModalOpen(true); }}
+                className="w-full py-3 border-2 border-dashed border-gold/30 rounded-xl text-gold hover:bg-gold/5 flex items-center justify-center gap-2 font-bold text-sm transition-all"
+              >
+                <Plus size={18} /> Add New Sub-category
+              </button>
+
+              <div className="space-y-2">
+                {subCategories.filter(s => s.category_id === managingSubsFor.id).map(sub => (
+                  <div key={sub.id} className="p-4 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-between">
+                    <div>
+                      <h4 className="font-bold text-navy text-sm">{sub.name}</h4>
+                      <code className="text-[10px] text-gray-400">{sub.slug}</code>
+                    </div>
+                    <div className="flex gap-1">
+                      <button 
+                         onClick={() => { setEditingSub(sub); setIsSubModalOpen(true); }}
+                         className="p-1.5 text-gray-400 hover:text-navy hover:bg-white rounded-lg transition-all"
+                      >
+                        <Edit2 size={16} />
+                      </button>
+                      <button 
+                        onClick={() => handleDeleteSub(sub.id)}
+                        className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-white rounded-lg transition-all"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+                {subCategories.filter(s => s.category_id === managingSubsFor.id).length === 0 && (
+                  <div className="text-center py-10 opacity-30">
+                    <Layers size={48} className="mx-auto mb-2" />
+                    <p className="text-sm">No sub-categories yet</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Sub-category Add/Edit Modal */}
+      {isSubModalOpen && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-navy/40 backdrop-blur-sm">
+          <form onSubmit={handleSaveSub} className="bg-white rounded-2xl w-full max-sm shadow-2xl animate-in fade-in zoom-in duration-200 overflow-hidden border border-gold/20">
+            <div className="p-4 border-b border-gray-100 bg-gray-50 font-bold text-navy text-sm">
+              {editingSub ? 'Edit Sub-category' : 'Add Sub-category'}
+            </div>
+            
+            <div className="p-5 space-y-4">
+              <div>
+                <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Name</label>
+                <input 
+                  name="name" 
+                  defaultValue={editingSub?.name} 
+                  required 
+                  onChange={(e) => {
+                    if (!editingSub) {
+                      const slugInput = (e.target.form as HTMLFormElement).elements.namedItem('slug') as HTMLInputElement;
+                      if (slugInput) slugInput.value = e.target.value.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+                    }
+                  }}
+                  className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" 
+                />
+              </div>
+              <div>
+                <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Slug</label>
+                <input name="slug" defaultValue={editingSub?.slug} required className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" />
+              </div>
+              <div className="flex items-center gap-2">
+                 <input type="checkbox" name="is_active" id="is_sub_active" defaultChecked={editingSub ? editingSub.is_active : true} className="w-4 h-4 accent-gold" />
+                 <label htmlFor="is_sub_active" className="text-xs font-bold text-navy">Active</label>
+              </div>
+            </div>
+
+            <div className="p-4 bg-gray-50 border-t border-gray-100 flex justify-end gap-2">
+              <button type="button" onClick={() => { setIsSubModalOpen(false); setEditingSub(null); }} className="px-4 py-2 text-xs font-bold text-gray-500 hover:text-navy">Cancel</button>
+              <button type="submit" className="px-5 py-2 bg-navy text-white text-xs font-bold rounded-lg hover:bg-navy/90 active:scale-95 transition-all">Save</button>
             </div>
           </form>
         </div>
