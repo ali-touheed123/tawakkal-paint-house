@@ -108,7 +108,13 @@ export default function HomePage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-3 xs:gap-4">
                 <Link
-                  href="#categories"
+                  href="/#categories"
+                  onClick={(e) => {
+                    if (window.location.pathname === '/') {
+                      e.preventDefault();
+                      document.getElementById('categories')?.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
                   className="inline-flex items-center justify-center gap-2 bg-gold text-navy px-6 xs:px-8 py-3.5 xs:py-4 rounded-xl font-bold hover:bg-gold-light transition-all active:scale-95 text-sm xs:text-base"
                 >
                   Shop Now <ArrowRight size={20} />
@@ -395,7 +401,13 @@ export default function HomePage() {
 
           <div className="text-center mt-12">
             <Link
-              href="/category/decorative"
+              href="/#categories"
+              onClick={(e) => {
+                if (window.location.pathname === '/') {
+                  e.preventDefault();
+                  document.getElementById('categories')?.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
               className="inline-flex items-center gap-2 bg-navy text-white px-8 py-4 rounded-lg font-semibold hover:bg-navy/90 transition-colors"
             >
               View All Products <ArrowRight size={20} />
