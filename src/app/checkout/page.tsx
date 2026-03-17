@@ -8,7 +8,7 @@ import { Loader2, Lock, Check, CreditCard, Smartphone, Building } from 'lucide-r
 import { useCartStore, useLocationStore } from '@/lib/store';
 import { createClient } from '@/lib/supabase/client';
 import { useDiscountRules, useShippingRates, usePaymentMethods } from '@/lib/hooks/useSettings';
-import { type OrderItem } from '@/types';
+import { type OrderItem, KARACHI_AREAS } from '@/types';
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -185,7 +185,9 @@ export default function CheckoutPage() {
     }
   };
 
-  const deliveryAreas = Array.from(new Set(rates.map(r => r.area)));
+  const deliveryAreas = KARACHI_AREAS;
+  // Fallback to rates if KARACHI_AREAS is somehow empty or we want to merge them
+  // const deliveryAreas = Array.from(new Set([...KARACHI_AREAS, ...rates.map(r => r.area)]));
 
   return (
     <div className="min-h-screen pt-[70px] bg-off-white">
