@@ -24,7 +24,7 @@ export default function AboutPage() {
                         animate={{ opacity: 1, y: 0 }}
                         className="text-gold font-bold tracking-[0.3em] uppercase text-sm mb-6 block"
                     >
-                        Established 2011
+                        Established 2004
                     </motion.span>
                     <motion.h1 
                         initial={{ opacity: 0, y: 30 }}
@@ -58,13 +58,13 @@ export default function AboutPage() {
                                 More Than Just a <span className="text-gold">Paint Store.</span>
                             </h2>
                             <p className="text-gray-600 text-lg leading-relaxed">
-                                Founded in 2011 in Mauripur, Karachi, Tawakkal Paint House started with a simple belief: 
+                                Founded in 2004 in Mauripur, Karachi, Tawakkal Paint House started with a simple belief: 
                                 <span className="text-navy font-bold"> quality should never be compromised.</span> 
                                 What began as a local shop has evolved into one of Karachi's most trusted authorized dealers for global and national paint giants.
                             </p>
                             <div className="grid grid-cols-2 gap-6 pt-4">
                                 <div className="space-y-2">
-                                    <h3 className="text-3xl font-bold text-navy">13+</h3>
+                                    <h3 className="text-3xl font-bold text-navy">20+</h3>
                                     <p className="text-gold font-bold text-sm uppercase tracking-wider">Years Experience</p>
                                 </div>
                                 <div className="space-y-2">

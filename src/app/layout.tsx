@@ -8,12 +8,12 @@ import { CartToast } from "@/components/CartToast";
 
 export const metadata: Metadata = {
   title: "Tawakkal Paint House | Premium Paints in Karachi",
-  description: "Karachi's most trusted paint house since 2011. Authorized dealer for Gobi's, Berger, Diamond, Saasi, Brighto, Choice. Premium quality paints with free color consultation.",
+  description: "Karachi's most trusted paint house since 2004. Authorized dealer for Gobi's, Berger, Diamond, Saasi, Brighto, Choice. Premium quality paints with free color consultation.",
   keywords: "paint store, Karachi paints, premium paints, Gobi's, Berger, Diamond, Saasi, Brighto, Choice, Rozzilac, industrial paints, automotive paints, decorative paints",
   authors: [{ name: "Tawakkal Paint House" }],
   openGraph: {
     title: "Tawakkal Paint House | Premium Paints in Karachi",
-    description: "Karachi's most trusted paint house since 2011. Authorized dealer for premium paint brands.",
+    description: "Karachi's most trusted paint house since 2004. Authorized dealer for premium paint brands.",
     type: "website",
     locale: "en_PK",
     siteName: "Tawakkal Paint House",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Tawakkal Paint House | Premium Paints in Karachi",
-    description: "Karachi's most trusted paint house since 2011."
+    description: "Karachi's most trusted paint house since 2004."
   },
   robots: {
     index: true,
@@ -73,7 +73,7 @@ export default function RootLayout({
     "priceRange": "$$",
     "openingHours": "Mo-Sat 09:00-20:00",
     "image": "https://tawakkalpainthouse.com/logo.png",
-    "description": "Karachi's most trusted paint house since 2011. Authorized dealer for Gobi's, Berger, Diamond, Saasi, Brighto, Choice, and exclusive distributor for Rozzilac."
+    "description": "Karachi's most trusted paint house since 2004. Authorized dealer for Gobi's, Berger, Diamond, Saasi, Brighto, Choice, and exclusive distributor for Rozzilac."
   };
 
   return (

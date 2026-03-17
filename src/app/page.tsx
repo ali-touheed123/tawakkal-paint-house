@@ -42,7 +42,7 @@ const categories = [
 ];
 
 const whyChooseUs = [
-  { icon: Clock, title: '13+ Years in Business', description: 'Serving Karachi since 2011' },
+  { icon: Clock, title: '20+ Years in Business', description: 'Serving Karachi since 2004' },
   { icon: Users, title: '5,000+ Happy Customers', description: 'Satisfied clients across Karachi' },
   { icon: Award, title: '10+ Premium Brands', description: 'Authorized dealer for top brands' },
   { icon: CheckCircle, title: '100% Original Sealed', description: 'No fakes, no refills. Ever.' },
@@ -98,13 +98,13 @@ export default function HomePage() {
               transition={{ duration: 0.8, ease: 'easeOut' }}
             >
               <span className="inline-block text-gold text-[10px] xs:text-sm tracking-[2px] xs:tracking-[3px] mb-4">
-                SINCE 2011 • AUTHORIZED DEALER • KARACHI
+                SINCE 2004 • AUTHORIZED DEALER • KARACHI
               </span>
               <h1 className="font-heading text-4xl xs:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] mb-6">
                 Where Colour Meets Craftsmanship
               </h1>
               <p className="text-gray-300 text-base xs:text-lg md:text-xl mb-8 max-w-lg">
-                Karachi&apos;s most trusted paint store. {settings?.contact?.phone ? 'Call us at ' + settings.contact.phone : 'Serving Karachi since 2011.'}
+                Karachi&apos;s most trusted paint store. {settings?.contact?.phone ? 'Call us at ' + settings.contact.phone : 'Serving Karachi since 2004.'}
               </p>
               <div className="flex flex-col sm:flex-row gap-3 xs:gap-4">
                 <Link
@@ -132,7 +132,7 @@ export default function HomePage() {
               {/* Stats */}
               <div className="flex flex-wrap gap-8 mt-12">
                 {[
-                  { number: '13+', label: 'Years' },
+                  { number: '20+', label: 'Years' },
                   { number: '5,000+', label: 'Customers' },
                   { number: '10+', label: 'Brands' }
                 ].map((stat, i) => (

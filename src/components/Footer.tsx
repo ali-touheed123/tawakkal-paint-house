@@ -48,7 +48,7 @@ export function Footer() {
               />
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed pr-4 max-w-sm">
-              Providing premium quality paints, industrial coatings, and painting solutions since 2011. Your trusted partner in color.
+              Providing premium quality paints, industrial coatings, and painting solutions since 2004. Your trusted partner in color across the whole of Karachi.
             </p>
             <div className="flex flex-wrap items-center gap-2 xs:gap-3 pt-2">
               <a

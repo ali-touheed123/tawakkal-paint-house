@@ -343,7 +343,7 @@ export const COLOR_FAMILIES = [
 export const FAQS = [
   {
     question: 'Which areas in Karachi do you deliver to?',
-    answer: 'We deliver to all major areas across Karachi, including DHA, Clifton, Gulshan, Nazimabad, Korangi, Malir, and 30+ other locations. You can select your specific area from the location popup to see service availability.'
+    answer: 'We deliver to the whole of Karachi, including DHA, Clifton, Gulshan, Nazimabad, Korangi, Malir, and all other locations. You can select your specific area from the location popup to see service availability.'
   },
   {
     question: 'Are all products 100% original and sealed?',
