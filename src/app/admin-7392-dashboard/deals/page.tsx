@@ -210,7 +210,8 @@ export default function DealsManagement() {
               <div className="relative group">
                 <input
                   type="number"
-                  value={labourDiscount}
+                  value={labourDiscount || ''}
+                  onFocus={(e) => e.target.select()}
                   onChange={(e) => setLabourDiscount(Number(e.target.value))}
                   className="w-full px-4 py-4 rounded-xl border border-gray-200 focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-all font-bold text-navy"
                   placeholder="e.g. 25"
@@ -230,7 +231,8 @@ export default function DealsManagement() {
                 <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold">Rs.</div>
                 <input
                   type="number"
-                  value={visitFee}
+                  value={visitFee || ''}
+                  onFocus={(e) => e.target.select()}
                   onChange={(e) => setVisitFee(Number(e.target.value))}
                   className="w-full pl-12 pr-4 py-4 rounded-xl border border-gray-200 focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-all font-bold text-navy"
                   placeholder="e.g. 1000"
@@ -284,7 +286,8 @@ export default function DealsManagement() {
                       <span className="text-[10px] text-gray-400 font-bold uppercase">Update:</span>
                       <input 
                           type="number"
-                          value={pricing[pkg.id] || 0}
+                          value={pricing[pkg.id] || ''}
+                          onFocus={(e) => e.target.select()}
                           onChange={(e) => setPricing(prev => ({ ...prev, [pkg.id]: Number(e.target.value) }))}
                           className="text-sm font-bold border border-gray-200 rounded-lg px-2 py-1.5 w-28 outline-none focus:border-gold focus:ring-1 focus:ring-gold bg-white"
                       />

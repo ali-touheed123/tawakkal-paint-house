@@ -373,15 +373,15 @@ export default function ProductsPage() {
               <div className="grid grid-cols-3 col-span-2 gap-4">
                 <div>
                    <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Price (Q)</label>
-                   <input name="price_quarter" type="number" defaultValue={editingProduct?.price_quarter} className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" />
+                   <input name="price_quarter" type="number" defaultValue={editingProduct?.price_quarter} onFocus={(e) => e.target.select()} className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" />
                 </div>
                 <div>
                    <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Price (G)</label>
-                   <input name="price_gallon" type="number" defaultValue={editingProduct?.price_gallon} className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" />
+                   <input name="price_gallon" type="number" defaultValue={editingProduct?.price_gallon} onFocus={(e) => e.target.select()} className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" />
                 </div>
                 <div>
                    <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Price (D)</label>
-                   <input name="price_drum" type="number" defaultValue={editingProduct?.price_drum} className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" />
+                   <input name="price_drum" type="number" defaultValue={editingProduct?.price_drum} onFocus={(e) => e.target.select()} className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" />
                 </div>
               </div>
               <div className="flex items-center gap-2">

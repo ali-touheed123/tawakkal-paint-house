@@ -133,7 +133,8 @@ export function PaintCalculator({ compact = false }: PaintCalculatorProps) {
                   <label className="block text-xs text-gray-500 mb-1">Length (ft)</label>
                   <input
                     type="number"
-                    value={length}
+                    value={length || ''}
+                    onFocus={(e) => e.target.select()}
                     onChange={(e) => setLength(Number(e.target.value))}
                     className="w-full p-3 border border-gray-200 rounded-lg focus:border-gold focus:outline-none"
                     min="1"
@@ -143,7 +144,8 @@ export function PaintCalculator({ compact = false }: PaintCalculatorProps) {
                   <label className="block text-xs text-gray-500 mb-1">Width (ft)</label>
                   <input
                     type="number"
-                    value={width}
+                    value={width || ''}
+                    onFocus={(e) => e.target.select()}
                     onChange={(e) => setWidth(Number(e.target.value))}
                     className="w-full p-3 border border-gray-200 rounded-lg focus:border-gold focus:outline-none"
                     min="1"
@@ -153,7 +155,8 @@ export function PaintCalculator({ compact = false }: PaintCalculatorProps) {
                   <label className="block text-xs text-gray-500 mb-1">Height (ft)</label>
                   <input
                     type="number"
-                    value={height}
+                    value={height || ''}
+                    onFocus={(e) => e.target.select()}
                     onChange={(e) => setHeight(Number(e.target.value))}
                     className="w-full p-3 border border-gray-200 rounded-lg focus:border-gold focus:outline-none"
                     min="1"
@@ -165,7 +168,8 @@ export function PaintCalculator({ compact = false }: PaintCalculatorProps) {
                 <label className="block text-xs text-gray-500 mb-1">Total Wall Area (sq/ft)</label>
                 <input
                   type="number"
-                  value={directArea}
+                  value={directArea || ''}
+                  onFocus={(e) => e.target.select()}
                   onChange={(e) => setDirectArea(Number(e.target.value))}
                   className="w-full p-3 border border-gray-200 rounded-lg focus:border-gold focus:outline-none"
                   min="1"
