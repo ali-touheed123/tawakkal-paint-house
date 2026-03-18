@@ -23,7 +23,8 @@ export default function ProductsPage() {
 
   const [categories, setCategories] = useState<any[]>([]);
   const [subCategories, setSubCategories] = useState<any[]>([]);
-  const [selectedSubCategory, setSelectedSubCategory] = useState('');
+   const [selectedSubCategory, setSelectedSubCategory] = useState('');
+  const [selectedCategorySlug, setSelectedCategorySlug] = useState('');
 
   useEffect(() => {
     fetchProducts();
@@ -78,8 +79,9 @@ export default function ProductsPage() {
     if (isModalOpen) {
       setCurrentImageUrl(editingProduct?.image_url || '');
       setImgError(false);
+      setSelectedCategorySlug(editingProduct?.category || categories[0]?.slug || '');
     }
-  }, [isModalOpen, editingProduct]);
+  }, [isModalOpen, editingProduct, categories]);
 
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
@@ -329,9 +331,10 @@ export default function ProductsPage() {
                   name="category" 
                   defaultValue={editingProduct?.category || categories[0]?.slug} 
                   onChange={(e) => {
-                    const cat = categories.find(c => c.slug === e.target.value);
-                    // Force re-render of sub-category filter
-                    setSelectedSubCategory(''); 
+                    setSelectedCategorySlug(e.target.value);
+                    // Reset sub-category select value when category changes
+                    const subCatSelect = (e.target.form as HTMLFormElement).elements.namedItem('sub_category') as HTMLSelectElement;
+                    if (subCatSelect) subCatSelect.value = '';
                   }}
                   className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm"
                 >
@@ -350,8 +353,7 @@ export default function ProductsPage() {
                   <option value="">None</option>
                   {subCategories
                     .filter(s => {
-                      const currentCategorySlug = (document.querySelector('select[name="category"]') as HTMLSelectElement)?.value || editingProduct?.category;
-                      const cat = categories.find(c => c.slug === currentCategorySlug);
+                      const cat = categories.find(c => c.slug === selectedCategorySlug);
                       return s.category_id === cat?.id;
                     })
                     .map(sub => (
