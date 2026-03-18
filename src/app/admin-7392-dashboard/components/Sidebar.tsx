@@ -19,7 +19,7 @@ import { cn } from '@/lib/utils';
 import { createClient } from '@/lib/supabase/client';
 
 const navItems = [
-  { name: 'Dashboard', href: '/admin-7392-dashboard', icon: LayoutDashboard, adminOnly: true },
+  { name: 'Dashboard', href: '/admin-7392-dashboard', icon: LayoutDashboard, adminOnly: false },
   { name: 'Orders', href: '/admin-7392-dashboard/orders', icon: ShoppingBag, adminOnly: false },
   { name: 'Categories', href: '/admin-7392-dashboard/categories', icon: Layers, adminOnly: true },
   { name: 'Brands', href: '/admin-7392-dashboard/brands', icon: Tag, adminOnly: true },
