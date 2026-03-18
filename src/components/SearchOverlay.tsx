@@ -117,7 +117,7 @@ export function SearchOverlay() {
                       <p className="text-white font-medium truncate">{product.name}</p>
                     </div>
                     <p className="text-gold font-semibold">
-                      Rs. {product.price_gallon.toLocaleString()}
+                      Rs. {product.units?.[0]?.price?.toLocaleString() || 'N/A'}
                     </p>
                   </Link>
                 ))}
