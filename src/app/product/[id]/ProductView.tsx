@@ -513,7 +513,9 @@ export function ProductView({ initialId }: { initialId: string }) {
                                                 : 'bg-white border-gray-100 text-gray-500 hover:border-gray-200'
                                                 }`}
                                         >
-                                            {size.charAt(0).toUpperCase() + size.slice(1)}
+                                            {size === 'quarter' ? product.unit_quarter_label || 'Quarter' : 
+                                             size === 'gallon' ? product.unit_gallon_label || 'Gallon' : 
+                                             product.unit_drum_label || 'Drum'}
                                         </button>
                                     );
                                 })}

@@ -79,7 +79,11 @@ export default function CartPage() {
                       {item.product?.name}
                     </h3>
                     <div className="flex items-center gap-4 text-sm mb-2">
-                      <p className="text-gray-500 capitalize">{item.size}</p>
+                      <p className="text-navy font-bold uppercase text-[10px] tracking-widest bg-gray-50 px-2 py-1 rounded">
+                        {item.size === 'quarter' ? item.product?.unit_quarter_label || 'Quarter' : 
+                         item.size === 'gallon' ? item.product?.unit_gallon_label || 'Gallon' : 
+                         item.product?.unit_drum_label || 'Drum'}
+                      </p>
                       {item.selectedShade && (
                         <div className="flex items-center gap-1.5 border-l border-gray-200 pl-4">
                           <div 

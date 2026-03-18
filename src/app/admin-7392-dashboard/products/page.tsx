@@ -96,6 +96,9 @@ export default function ProductsPage() {
       price_quarter: Number(formData.get('price_quarter')),
       price_gallon: Number(formData.get('price_gallon')),
       price_drum: Number(formData.get('price_drum')),
+      unit_quarter_label: formData.get('unit_quarter_label') || 'Quarter',
+      unit_gallon_label: formData.get('unit_gallon_label') || 'Gallon',
+      unit_drum_label: formData.get('unit_drum_label') || 'Drum',
       in_stock: formData.get('in_stock') === 'on',
       shade_card_url: formData.get('shade_card_url')
     };
@@ -182,7 +185,7 @@ export default function ProductsPage() {
               <tr>
                 <th className="px-6 py-4">Product</th>
                 <th className="px-6 py-4">Category</th>
-                <th className="px-6 py-4">Prices (Q/G/D)</th>
+                <th className="px-6 py-4">Pricing & Units</th>
                 <th className="px-6 py-4">Stock</th>
                 <th className="px-6 py-4 text-right">Actions</th>
               </tr>
@@ -209,10 +212,19 @@ export default function ProductsPage() {
                     {product.category}
                   </td>
                   <td className="px-6 py-4 text-sm font-mono">
-                    <div className="flex gap-2">
-                       <span className="text-gray-400">Q:</span> <span className="text-navy">{product.price_quarter}</span>
-                       <span className="text-gray-400 ml-2">G:</span> <span className="text-navy">{product.price_gallon}</span>
-                       <span className="text-gray-400 ml-2">D:</span> <span className="text-navy">{product.price_drum}</span>
+                    <div className="flex flex-col gap-1">
+                       <div className="flex justify-between gap-4 border-b border-gray-50 pb-1">
+                         <span className="text-[10px] text-gray-400 uppercase font-bold">{product.unit_quarter_label || 'Q'}</span>
+                         <span className="text-navy font-bold">Rs. {product.price_quarter}</span>
+                       </div>
+                       <div className="flex justify-between gap-4 border-b border-gray-50 pb-1">
+                         <span className="text-[10px] text-gray-400 uppercase font-bold">{product.unit_gallon_label || 'G'}</span>
+                         <span className="text-navy font-bold">Rs. {product.price_gallon}</span>
+                       </div>
+                       <div className="flex justify-between gap-4">
+                         <span className="text-[10px] text-gray-400 uppercase font-bold">{product.unit_drum_label || 'D'}</span>
+                         <span className="text-navy font-bold">Rs. {product.price_drum}</span>
+                       </div>
                     </div>
                   </td>
                   <td className="px-6 py-4">
@@ -286,16 +298,16 @@ export default function ProductsPage() {
               </div>
               <div className="grid grid-cols-3 gap-2 bg-gray-50 p-3 rounded-xl border border-gray-200/50">
                  <div className="text-center">
-                    <div className="text-[10px] text-gray-400 uppercase font-bold">Quarter</div>
-                    <div className="font-mono text-navy font-bold">{product.price_quarter}</div>
+                    <div className="text-[9px] text-gray-400 uppercase font-bold truncate px-1">{product.unit_quarter_label || 'Quarter'}</div>
+                    <div className="font-mono text-navy font-bold text-sm">Rs. {product.price_quarter}</div>
                  </div>
                  <div className="text-center border-x border-gray-200/50 px-2">
-                    <div className="text-[10px] text-gray-400 uppercase font-bold">Gallon</div>
-                    <div className="font-mono text-navy font-bold">{product.price_gallon}</div>
+                    <div className="text-[9px] text-gray-400 uppercase font-bold truncate px-1">{product.unit_gallon_label || 'Gallon'}</div>
+                    <div className="font-mono text-navy font-bold text-sm">Rs. {product.price_gallon}</div>
                  </div>
                  <div className="text-center">
-                    <div className="text-[10px] text-gray-400 uppercase font-bold">Drum</div>
-                    <div className="font-mono text-navy font-bold">{product.price_drum}</div>
+                    <div className="text-[9px] text-gray-400 uppercase font-bold truncate px-1">{product.unit_drum_label || 'Drum'}</div>
+                    <div className="font-mono text-navy font-bold text-sm">Rs. {product.price_drum}</div>
                  </div>
               </div>
             </div>
@@ -410,18 +422,36 @@ export default function ProductsPage() {
                   className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" 
                 />
               </div>
-              <div className="grid grid-cols-3 col-span-2 gap-4">
-                <div>
-                   <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Price (Q)</label>
-                   <input name="price_quarter" type="number" defaultValue={editingProduct?.price_quarter} onFocus={(e) => e.target.select()} className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" />
+              <div className="grid grid-cols-3 col-span-2 gap-4 border-t border-gray-100 pt-4">
+                <div className="space-y-3">
+                   <div>
+                     <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Unit 1 (Label)</label>
+                     <input name="unit_quarter_label" defaultValue={editingProduct?.unit_quarter_label || 'Quarter'} placeholder="Quarter / 1 inch" className="w-full p-2 bg-gray-50 border border-gray-100 rounded-lg focus:border-gold focus:outline-none text-xs" />
+                   </div>
+                   <div>
+                     <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Price (Unit 1)</label>
+                     <input name="price_quarter" type="number" defaultValue={editingProduct?.price_quarter} onFocus={(e) => e.target.select()} className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm font-bold" />
+                   </div>
                 </div>
-                <div>
-                   <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Price (G)</label>
-                   <input name="price_gallon" type="number" defaultValue={editingProduct?.price_gallon} onFocus={(e) => e.target.select()} className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" />
+                <div className="space-y-3 px-2 border-x border-gray-100">
+                   <div>
+                     <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Unit 2 (Label)</label>
+                     <input name="unit_gallon_label" defaultValue={editingProduct?.unit_gallon_label || 'Gallon'} placeholder="Gallon / 2 inch" className="w-full p-2 bg-gray-50 border border-gray-100 rounded-lg focus:border-gold focus:outline-none text-xs" />
+                   </div>
+                   <div>
+                     <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Price (Unit 2)</label>
+                     <input name="price_gallon" type="number" defaultValue={editingProduct?.price_gallon} onFocus={(e) => e.target.select()} className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm font-bold" />
+                   </div>
                 </div>
-                <div>
-                   <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Price (D)</label>
-                   <input name="price_drum" type="number" defaultValue={editingProduct?.price_drum} onFocus={(e) => e.target.select()} className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" />
+                <div className="space-y-3 font-bold">
+                   <div>
+                     <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Unit 3 (Label)</label>
+                     <input name="unit_drum_label" defaultValue={editingProduct?.unit_drum_label || 'Drum'} placeholder="Drum / 4 inch" className="w-full p-2 bg-gray-50 border border-gray-100 rounded-lg focus:border-gold focus:outline-none text-xs" />
+                   </div>
+                   <div>
+                     <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Price (Unit 3)</label>
+                     <input name="price_drum" type="number" defaultValue={editingProduct?.price_drum} onFocus={(e) => e.target.select()} className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm font-bold" />
+                   </div>
                 </div>
               </div>
               <div className="flex items-center gap-2">

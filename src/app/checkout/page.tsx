@@ -142,6 +142,9 @@ export default function CheckoutPage() {
         name: item.product?.name || '',
         brand: item.product?.brand || '',
         size: item.size,
+        unit_label: item.size === 'quarter' ? item.product?.unit_quarter_label || 'Quarter' : 
+                    item.size === 'gallon' ? item.product?.unit_gallon_label || 'Gallon' : 
+                    item.product?.unit_drum_label || 'Drum',
         quantity: item.quantity,
         price: item.size === 'quarter'
           ? item.product?.price_quarter || 0
@@ -342,7 +345,9 @@ export default function CheckoutPage() {
                   <div key={item.id} className="flex justify-between items-start gap-4 text-sm pb-4 border-b border-gray-50 last:border-0 last:pb-0">
                     <div className="flex flex-col flex-1 min-w-0">
                       <span className="text-gray-600 font-medium leading-tight mb-1">
-                        {item.product?.name} ({item.size}) <span className="text-navy font-bold whitespace-nowrap ml-1">x {item.quantity}</span>
+                        {item.product?.name} ({item.size === 'quarter' ? item.product?.unit_quarter_label || 'Quarter' : 
+                                               item.size === 'gallon' ? item.product?.unit_gallon_label || 'Gallon' : 
+                                               item.product?.unit_drum_label || 'Drum'}) <span className="text-navy font-bold whitespace-nowrap ml-1">x {item.quantity}</span>
                       </span>
                       {item.selectedShade && (
                         <div className="flex items-center gap-1.5 mt-0.5">

@@ -33,6 +33,9 @@ export interface Product {
   price_quarter: number;
   price_gallon: number;
   price_drum: number;
+  unit_quarter_label?: string;
+  unit_gallon_label?: string;
+  unit_drum_label?: string;
   in_stock: boolean;
   shade_card_url?: string | null;
   selectedShade?: {
@@ -64,6 +67,7 @@ export interface OrderItem {
   name: string;
   brand: string;
   size: ItemSize;
+  unit_label: string;
   quantity: number;
   price: number;
   image_url: string | null;

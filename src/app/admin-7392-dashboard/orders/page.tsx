@@ -292,7 +292,7 @@ export default function OrdersPage() {
                       <div className="flex-1">
                         <h4 className="font-bold text-navy">{item.name || item.product?.name || 'Unknown Product'}</h4>
                         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-gray-500 mt-1 uppercase">
-                          <span>Size: <b className="text-navy">{item.size}</b></span>
+                          <span>Size: <b className="text-navy">{item.unit_label || item.size}</b></span>
                           <span>Qty: <b className="text-navy">{item.quantity}</b></span>
                           {item.selectedShade && (
                             <div className="flex items-center gap-1.5 border-l border-gray-200 pl-4">
