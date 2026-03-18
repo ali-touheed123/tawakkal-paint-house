@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import { 
-  Plus, 
-  Search, 
-  Edit2, 
-  Trash2, 
+import {
+  Plus,
+  Search,
+  Edit2,
+  Trash2,
   Image as ImageIcon,
   CheckCircle2,
   XCircle,
@@ -35,7 +35,7 @@ export default function BrandsPage() {
       .from('brands')
       .select('*')
       .order('name', { ascending: true });
-    
+
     if (data) setBrands(data);
     setLoading(false);
   }
@@ -49,10 +49,10 @@ export default function BrandsPage() {
 
   async function handleDelete(id: string) {
     if (!confirm('Are you sure? This will remove the brand from all categories but will NOT delete products assigned to this brand.')) return;
-    
+
     const supabase = createClient();
     const { error } = await supabase.from('brands').delete().eq('id', id);
-    
+
     if (error) {
       alert('Failed to delete: ' + error.message);
       return;
@@ -77,7 +77,7 @@ export default function BrandsPage() {
         .from('brands')
         .update(brandData)
         .eq('id', editingBrand.id);
-      
+
       if (error) {
         alert('Failed to save: ' + error.message);
         return;
@@ -86,19 +86,19 @@ export default function BrandsPage() {
       const { error } = await supabase
         .from('brands')
         .insert([brandData]);
-      
+
       if (error) {
         alert('Failed to create: ' + error.message);
         return;
       }
     }
-    
+
     fetchBrands();
     setIsModalOpen(false);
     setEditingBrand(null);
   }
 
-  const filteredBrands = brands.filter(b => 
+  const filteredBrands = brands.filter(b =>
     b.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     b.slug.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -110,7 +110,7 @@ export default function BrandsPage() {
           <h1 className="text-3xl font-bold text-navy">Brands</h1>
           <p className="text-gray-500">Manage all product brands and their logos.</p>
         </div>
-        <button 
+        <button
           onClick={() => { setEditingBrand(null); setIsModalOpen(true); }}
           className="bg-gold hover:bg-gold-dark text-navy font-bold px-6 py-2.5 rounded-lg flex items-center gap-2 shadow-lg transition-all active:scale-95"
         >
@@ -120,9 +120,9 @@ export default function BrandsPage() {
 
       <div className="relative mb-6">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-        <input 
-          type="text" 
-          placeholder="Search brands..." 
+        <input
+          type="text"
+          placeholder="Search brands..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="w-full pl-10 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold/50 text-sm shadow-sm"
@@ -136,20 +136,21 @@ export default function BrandsPage() {
               {brand.logo_url ? (
                 <img src={brand.logo_url} alt={brand.name} className="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-500" />
               ) : (
-                <div className="w-16 h-16 rounded-full bg-navy/5 flex items-center justify-center text-navy/20 font-bold text-2xl">
-                  {brand.name.charAt(0)}
+                <div className="flex flex-col items-center justify-center text-center px-2">
+                  <span className="text-xl font-black text-navy/20 uppercase tracking-tighter leading-none">{brand.name.charAt(0)}</span>
+                  <span className="text-[8px] font-bold text-navy/30 uppercase mt-1">{brand.name}</span>
                 </div>
               )}
               <div className="absolute top-3 right-3 flex gap-1">
-                 <span className={cn(
-                    "px-2 py-1 rounded-md text-[10px] font-bold uppercase shadow-sm",
-                    brand.is_active ? "bg-green-500 text-white" : "bg-gray-400 text-white"
-                 )}>
-                   {brand.is_active ? 'Active' : 'Hidden'}
-                 </span>
+                <span className={cn(
+                  "px-2 py-1 rounded-md text-[10px] font-bold uppercase shadow-sm",
+                  brand.is_active ? "bg-green-500 text-white" : "bg-gray-400 text-white"
+                )}>
+                  {brand.is_active ? 'Active' : 'Hidden'}
+                </span>
               </div>
             </div>
-            
+
             <div className="p-4">
               <div className="flex items-start justify-between">
                 <div>
@@ -157,13 +158,13 @@ export default function BrandsPage() {
                   <code className="text-[10px] bg-gray-50 px-1.5 py-0.5 rounded text-gray-400">{brand.slug}</code>
                 </div>
                 <div className="flex gap-1">
-                  <button 
+                  <button
                     onClick={() => { setEditingBrand(brand); setIsModalOpen(true); }}
                     className="p-2 text-gray-400 hover:text-navy hover:bg-gray-50 rounded-lg transition-colors"
                   >
                     <Edit2 size={16} />
                   </button>
-                  <button 
+                  <button
                     onClick={() => handleDelete(brand.id)}
                     className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                   >
@@ -186,22 +187,22 @@ export default function BrandsPage() {
                 <X size={20} />
               </button>
             </div>
-            
+
             <div className="p-6 space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Name</label>
-                  <input 
-                    name="name" 
-                    defaultValue={editingBrand?.name} 
-                    required 
+                  <input
+                    name="name"
+                    defaultValue={editingBrand?.name}
+                    required
                     onChange={(e) => {
                       if (!editingBrand) {
                         const slugInput = (e.target.form as HTMLFormElement).elements.namedItem('slug') as HTMLInputElement;
                         if (slugInput) slugInput.value = e.target.value.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
                       }
                     }}
-                    className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm font-medium" 
+                    className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm font-medium"
                   />
                 </div>
                 <div>
@@ -211,27 +212,27 @@ export default function BrandsPage() {
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Logo URL</label>
+                <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Logo URL (Optional)</label>
                 <div className="flex gap-4 items-start">
                   <div className="flex-1">
-                    <input 
-                      name="logo_url" 
+                    <input
+                      name="logo_url"
                       value={currentLogoUrl}
                       onChange={(e) => {
                         setCurrentLogoUrl(e.target.value);
                         setImgError(false);
                       }}
-                      placeholder="/images/brands/logo.png" 
-                      className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" 
+                      placeholder="/images/brands/logo.png"
+                      className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm"
                     />
                   </div>
                   <div className="w-16 h-12 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden border border-gray-100 shrink-0">
                     {currentLogoUrl && !imgError ? (
-                      <img 
-                        src={currentLogoUrl} 
-                        alt="Preview" 
+                      <img
+                        src={currentLogoUrl}
+                        alt="Preview"
                         onError={() => setImgError(true)}
-                        className="w-full h-full object-contain p-1" 
+                        className="w-full h-full object-contain p-1"
                       />
                     ) : (
                       <ImageIcon size={20} className="text-gray-300" />
@@ -241,8 +242,8 @@ export default function BrandsPage() {
               </div>
 
               <div className="flex items-center gap-2 pt-2">
-                 <input type="checkbox" name="is_active" id="is_active" defaultChecked={editingBrand ? editingBrand.is_active : true} className="w-4 h-4 accent-gold" />
-                 <label htmlFor="is_active" className="text-xs font-bold text-navy">Brand is Active & Visible</label>
+                <input type="checkbox" name="is_active" id="is_active" defaultChecked={editingBrand ? editingBrand.is_active : true} className="w-4 h-4 accent-gold" />
+                <label htmlFor="is_active" className="text-xs font-bold text-navy">Brand is Active & Visible</label>
               </div>
             </div>
 

@@ -21,7 +21,7 @@ export function BrandSection() {
     const logos = brands.map(brand => ({
         name: brand.name,
         url: brand.logo_url
-    })).filter(l => !!l.url);
+    }));
 
     // Duplicate logos for a seamless marquee
     const displayLogos = [...logos, ...logos, ...logos];
@@ -36,7 +36,7 @@ export function BrandSection() {
                             Trusted Partners
                         </h2>
                         <div className="hidden md:block w-px h-12 bg-gradient-to-b from-transparent via-gray-200 to-transparent" />
-                        <motion.div 
+                        <motion.div
                             className="absolute -top-1 -right-1 w-2 h-2 bg-gold rounded-full"
                             animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
                             transition={{ duration: 2, repeat: Infinity }}
@@ -62,11 +62,17 @@ export function BrandSection() {
                                     whileHover={{ scale: 1.15, y: -5 }}
                                     className="shrink-0 grayscale hover:grayscale-0 transition-all duration-500 opacity-50 hover:opacity-100 cursor-pointer"
                                 >
-                                    <img
-                                        src={logo.url}
-                                        alt={logo.name}
-                                        className={`h-10 md:h-14 w-auto object-contain pointer-events-none drop-shadow-sm ${logo.name === 'Dior' ? 'scale-125 p-1' : ''}`}
-                                    />
+                                    {logo.url ? (
+                                        <img
+                                            src={logo.url}
+                                            alt={logo.name}
+                                            className={`h-10 md:h-14 w-auto object-contain pointer-events-none drop-shadow-sm ${logo.name === 'Dior' ? 'scale-125 p-1' : ''}`}
+                                        />
+                                    ) : (
+                                        <span className="text-xl md:text-2xl font-black text-navy uppercase tracking-tighter whitespace-nowrap">
+                                            {logo.name}
+                                        </span>
+                                    )}
                                 </motion.div>
                             ))}
                         </motion.div>

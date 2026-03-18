@@ -61,14 +61,14 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
   useEffect(() => {
     async function fetchCategoryData() {
       const supabase = createClient();
-      
+
       // 1. Fetch Category Details
       const { data: catData } = await supabase
         .from('categories')
         .select('*')
         .eq('slug', category)
         .single();
-      
+
       if (catData) {
         setCategoryDetails({
           ...catData,
@@ -81,7 +81,7 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
           .from('category_brands')
           .select('brand_id')
           .eq('category_id', catData.id);
-        
+
         if (associations && associations.length > 0) {
           const brandIds = associations.map(a => a.brand_id);
           const { data: brandsRes } = await supabase
@@ -116,7 +116,7 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
         let supabaseQuery = supabase.from('products').select('*').eq('category', category);
 
         if (selectedBrand && selectedBrand !== 'all') {
-          const exactBrand = dynamicBrands.find(b => 
+          const exactBrand = dynamicBrands.find(b =>
             b.name.toLowerCase().replace(/['\s\.]/g, '') === selectedBrand.toLowerCase().replace(/['\s\.]/g, '')
           );
           supabaseQuery = supabaseQuery.eq('brand', exactBrand?.name || selectedBrand);
@@ -165,7 +165,7 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
     <div className="min-h-screen overflow-x-hidden">
       {/* Hero */}
       <section ref={heroRef} className="relative h-[40vh] xs:h-[50vh] flex items-center overflow-hidden">
-        <motion.div 
+        <motion.div
           style={{ y: heroY, scale: heroScale }}
           className="absolute inset-0"
         >
@@ -174,19 +174,19 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
             alt={`${info.title} - Tawakkal Paint House Karachi`}
             className="w-full h-full object-cover"
           />
-          <motion.div 
+          <motion.div
             style={{ opacity: useTransform(scrollYProgress, [0, 0.5], [0.8, 0.95]) }}
-            className="absolute inset-0 bg-navy" 
+            className="absolute inset-0 bg-navy"
           />
         </motion.div>
-        
+
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <motion.div
             style={{ opacity: heroOpacity }}
             className="text-center"
           >
             <div className="overflow-hidden mb-4">
-              <motion.h1 
+              <motion.h1
                 initial={{ y: "100%" }}
                 animate={{ y: 0 }}
                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
@@ -196,7 +196,7 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
               </motion.h1>
             </div>
             <div className="overflow-hidden">
-              <motion.p 
+              <motion.p
                 initial={{ y: "100%" }}
                 animate={{ y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
@@ -207,7 +207,7 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
             </div>
           </motion.div>
         </div>
-        
+
 
       </section>
 
@@ -216,7 +216,7 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
         <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8 py-3">
           <div className="flex flex-col gap-4">
             {/* Brand Filter */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -257,7 +257,9 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
                           className={`h-full w-auto object-contain pointer-events-none p-1.5 xs:p-2`}
                         />
                       ) : (
-                        <span className="text-[10px] xs:text-sm font-bold text-navy/60">{brand.name}</span>
+                        <span className="text-[10px] xs:text-xs font-black text-navy uppercase text-center px-1">
+                          {brand.name}
+                        </span>
                       )}
                     </motion.button>
                   );
@@ -267,7 +269,7 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
 
             {/* Sub-category Filter */}
             {dynamicSubs.length > 0 && (
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -312,7 +314,7 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatePresence mode="wait">
             {loading ? (
-              <motion.div 
+              <motion.div
                 key="loading"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -324,7 +326,7 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
                 ))}
               </motion.div>
             ) : products.length === 0 ? (
-              <motion.div 
+              <motion.div
                 key="empty"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -343,7 +345,7 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
                 </button>
               </motion.div>
             ) : (
-              <motion.div 
+              <motion.div
                 key="grid"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
