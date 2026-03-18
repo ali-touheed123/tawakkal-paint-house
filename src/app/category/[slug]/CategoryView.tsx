@@ -244,7 +244,7 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: i * 0.05 }}
                       onClick={() => handleBrandChange(brandValue)}
-                      className={`snap-start shrink-0 h-10 xs:h-12 w-20 xs:w-24 px-2 xs:px-3 rounded-xl border-2 transition-all flex items-center justify-center bg-white ${isActive
+                      className={`snap-start shrink-0 h-10 xs:h-12 w-auto min-w-[5rem] xs:min-w-[6rem] px-4 rounded-xl border-2 transition-all flex items-center justify-center bg-white ${isActive
                         ? 'border-gold shadow-lg shadow-gold/10 scale-105 z-10'
                         : 'border-gray-100 hover:border-gold/30 grayscale opacity-60 hover:grayscale-0 hover:opacity-100'
                         }`}
@@ -257,7 +257,7 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
                           className={`h-full w-auto object-contain pointer-events-none p-1.5 xs:p-2`}
                         />
                       ) : (
-                        <span className="text-[10px] xs:text-xs font-black text-navy uppercase text-center px-1">
+                        <span className="text-[10px] xs:text-xs font-black text-navy uppercase text-center px-1 whitespace-nowrap">
                           {brand.name}
                         </span>
                       )}
