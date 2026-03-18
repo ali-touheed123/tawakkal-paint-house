@@ -23,23 +23,6 @@ export default function OrdersPage() {
 
   useEffect(() => {
     fetchOrders();
-
-    // Subscribe to real-time updates
-    const supabase = createClient();
-    const channel = supabase
-      .channel('orders-real-time')
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'orders' },
-        () => {
-          fetchOrders();
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
   }, []);
 
   async function fetchOrders() {

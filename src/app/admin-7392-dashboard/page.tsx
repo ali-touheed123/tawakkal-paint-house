@@ -73,34 +73,11 @@ export default function AdminDashboard() {
   };
 
   useEffect(() => {
-    fetchDashboardData().then(() => setLoading(true)); // Initial fetch on component mount
+    fetchDashboardData().then(() => setLoading(false));
 
-    const supabase = createClient();
-    
-    // Combined real-time channel for orders and reviews
-    const channel = supabase
-      .channel('dashboard-real-time')
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'orders' },
-        () => {
-          fetchDashboardData(true);
-        }
-      )
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'reviews' },
-        () => {
-          fetchDashboardData(false);
-        }
-      )
-      .subscribe();
-
-    setLoading(false); // Done with the initial setup
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
+    // Polling for new orders every 30 seconds
+    const interval = setInterval(() => fetchDashboardData(true), 30000);
+    return () => clearInterval(interval);
   }, [stats.totalOrders]);
 
   if (loading) {
