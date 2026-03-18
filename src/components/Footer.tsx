@@ -15,6 +15,9 @@ export function Footer() {
   const { settings } = useSettings();
   const [categories, setCategories] = useState<any[]>([]);
 
+  // Hide footer on admin dashboard
+  if (pathname?.startsWith('/admin-7392-dashboard')) return null;
+
   useEffect(() => {
     async function fetchCategories() {
       const supabase = createClient();
