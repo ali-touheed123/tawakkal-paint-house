@@ -39,6 +39,22 @@ export default function AdminReviewsPage() {
 
     useEffect(() => {
         fetchReviews();
+
+        // Subscribe to real-time updates
+        const channel = supabase
+            .channel('reviews-real-time')
+            .on(
+                'postgres_changes',
+                { event: '*', schema: 'public', table: 'reviews' },
+                () => {
+                    fetchReviews();
+                }
+            )
+            .subscribe();
+
+        return () => {
+            supabase.removeChannel(channel);
+        };
     }, []);
 
     async function fetchReviews() {
