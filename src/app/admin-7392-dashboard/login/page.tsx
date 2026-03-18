@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Lock, Mail, Loader2, AlertCircle, ArrowLeft, UserPlus, LogIn } from 'lucide-react';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
 export default function AdminLoginPage() {
     const [email, setEmail] = useState('');
@@ -13,6 +14,7 @@ export default function AdminLoginPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [mode, setMode] = useState<'login' | 'signup'>('login');
+    const [loginType, setLoginType] = useState<'admin' | 'staff'>('admin');
     const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -24,8 +26,9 @@ export default function AdminLoginPage() {
             const supabase = createClient();
             
             if (mode === 'login') {
+                const finalEmail = loginType === 'staff' ? 'staff@tawakkal.com' : email;
                 const { error: loginError } = await supabase.auth.signInWithPassword({
-                    email,
+                    email: finalEmail,
                     password,
                 });
                 if (loginError) throw loginError;
@@ -80,11 +83,34 @@ export default function AdminLoginPage() {
                             </h1>
                             <p className="text-gray-400 mt-2 font-medium">
                                 {mode === 'login' 
-                                    ? 'Please sign in to manage Tawakkal Paint House' 
+                                    ? `Please sign in as ${loginType === 'admin' ? 'Admin' : 'Staff'}` 
                                     : 'Create your new admin account'
                                 }
                             </p>
                         </div>
+
+                        {mode === 'login' && (
+                            <div className="flex bg-gray-50 p-1 rounded-xl mb-6">
+                                <button
+                                    onClick={() => setLoginType('admin')}
+                                    className={cn(
+                                        "flex-1 py-2 text-xs font-bold rounded-lg transition-all",
+                                        loginType === 'admin' ? "bg-white text-navy shadow-sm" : "text-gray-400 hover:text-navy"
+                                    )}
+                                >
+                                    Admin Login
+                                </button>
+                                <button
+                                    onClick={() => setLoginType('staff')}
+                                    className={cn(
+                                        "flex-1 py-2 text-xs font-bold rounded-lg transition-all",
+                                        loginType === 'staff' ? "bg-white text-navy shadow-sm" : "text-gray-400 hover:text-navy"
+                                    )}
+                                >
+                                    Staff Login
+                                </button>
+                            </div>
+                        )}
 
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <AnimatePresence mode="wait">
@@ -106,22 +132,24 @@ export default function AdminLoginPage() {
                             </AnimatePresence>
 
                             <div className="space-y-4">
-                                <div>
-                                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] ml-1 mb-2 block">
-                                        Email Address
-                                    </label>
-                                    <div className="relative group">
-                                        <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 group-focus-within:text-gold transition-colors" size={20} />
-                                        <input 
-                                            type="email"
-                                            required
-                                            value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
-                                            className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:border-gold focus:ring-4 focus:ring-gold/5 transition-all font-medium"
-                                            placeholder="admin@tawakkal.com"
-                                        />
+                                {(mode === 'signup' || loginType === 'admin') && (
+                                    <div>
+                                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] ml-1 mb-2 block">
+                                            Email Address
+                                        </label>
+                                        <div className="relative group">
+                                            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 group-focus-within:text-gold transition-colors" size={20} />
+                                            <input 
+                                                type="email"
+                                                required
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
+                                                className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:border-gold focus:ring-4 focus:ring-gold/5 transition-all font-medium"
+                                                placeholder="admin@tawakkal.com"
+                                            />
+                                        </div>
                                     </div>
-                                </div>
+                                )}
 
                                 <div>
                                     <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] ml-1 mb-2 block">
@@ -158,6 +186,13 @@ export default function AdminLoginPage() {
                         </form>
 
                         <div className="mt-8 flex flex-col items-center gap-4">
+                            <button 
+                                type="button"
+                                onClick={() => setMode(mode === 'login' ? 'signup' : 'login')}
+                                className="text-sm font-bold text-navy hover:text-gold transition-colors"
+                            >
+                                {mode === 'login' ? 'Initial Setup' : 'Back to Login'}
+                            </button>
                             <Link href="/" className="text-sm font-bold text-gray-400 hover:text-navy transition-colors inline-flex items-center gap-2 group">
                                 <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
                                 Back to Website

@@ -14,6 +14,7 @@ export default function AdminLayout({
 }) {
   const [loading, setLoading] = useState(true);
   const [authorized, setAuthorized] = useState(false);
+  const [role, setRole] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
@@ -33,6 +34,33 @@ export default function AdminLayout({
       if (!session) {
         router.push('/admin-7392-dashboard/login');
       } else {
+        // Fetch role
+        const { data: userData } = await supabase
+          .from('users')
+          .select('role')
+          .eq('id', session.user.id)
+          .single();
+        
+        const userRole = userData?.role || 'customer';
+        setRole(userRole);
+
+        // Define Admin-only paths
+        const adminOnlyPaths = [
+          '/admin-7392-dashboard/categories',
+          '/admin-7392-dashboard/products',
+          '/admin-7392-dashboard/brands',
+          '/admin-7392-dashboard/discounts',
+          '/admin-7392-dashboard/deals',
+          '/admin-7392-dashboard/login' // excluding login itself from the check below
+        ];
+
+        const isAdminPath = adminOnlyPaths.some(path => pathname.startsWith(path));
+        
+        if (userRole === 'staff' && isAdminPath && pathname !== '/admin-7392-dashboard/login') {
+          router.push('/admin-7392-dashboard/orders');
+          return;
+        }
+
         setAuthorized(true);
       }
       setLoading(false);

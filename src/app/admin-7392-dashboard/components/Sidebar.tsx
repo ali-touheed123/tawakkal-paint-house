@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { 
@@ -18,14 +19,14 @@ import { cn } from '@/lib/utils';
 import { createClient } from '@/lib/supabase/client';
 
 const navItems = [
-  { name: 'Dashboard', href: '/admin-7392-dashboard', icon: LayoutDashboard },
-  { name: 'Orders', href: '/admin-7392-dashboard/orders', icon: ShoppingBag },
-  { name: 'Categories', href: '/admin-7392-dashboard/categories', icon: Layers },
-  { name: 'Brands', href: '/admin-7392-dashboard/brands', icon: Tag },
-  { name: 'Products', href: '/admin-7392-dashboard/products', icon: Package },
-  { name: 'Reviews', href: '/admin-7392-dashboard/reviews', icon: Star },
-  { name: 'Discounts', href: '/admin-7392-dashboard/discounts', icon: Percent },
-  { name: 'Deals', href: '/admin-7392-dashboard/deals', icon: Briefcase },
+  { name: 'Dashboard', href: '/admin-7392-dashboard', icon: LayoutDashboard, adminOnly: true },
+  { name: 'Orders', href: '/admin-7392-dashboard/orders', icon: ShoppingBag, adminOnly: false },
+  { name: 'Categories', href: '/admin-7392-dashboard/categories', icon: Layers, adminOnly: true },
+  { name: 'Brands', href: '/admin-7392-dashboard/brands', icon: Tag, adminOnly: true },
+  { name: 'Products', href: '/admin-7392-dashboard/products', icon: Package, adminOnly: true },
+  { name: 'Reviews', href: '/admin-7392-dashboard/reviews', icon: Star, adminOnly: false },
+  { name: 'Discounts', href: '/admin-7392-dashboard/discounts', icon: Percent, adminOnly: true },
+  { name: 'Deals', href: '/admin-7392-dashboard/deals', icon: Briefcase, adminOnly: true },
 ];
 
 interface SidebarProps {
@@ -35,6 +36,26 @@ interface SidebarProps {
 
 export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
   const pathname = usePathname();
+  const [role, setRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function getRole() {
+      const supabase = createClient();
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) {
+        const { data } = await supabase
+          .from('users')
+          .select('role')
+          .eq('id', session.user.id)
+          .single();
+        if (data) setRole(data.role);
+      }
+    }
+    getRole();
+  }, []);
+
+  const isAdmin = role === 'admin';
+  const visibleItems = navItems.filter(item => !item.adminOnly || isAdmin);
 
   return (
     <aside className={cn(
@@ -60,7 +81,7 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
 
       {/* Navigation */}
       <nav className="flex-1 px-4 py-6 space-y-2">
-        {navItems.map((item) => {
+        {visibleItems.map((item) => {
           const isActive = pathname === item.href;
           return (
             <Link
