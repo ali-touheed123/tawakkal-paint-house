@@ -330,12 +330,12 @@ export default function ProductsPage() {
 
       {/* Product Edit/Add Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy/60 backdrop-blur-sm">
-          <form onSubmit={handleSave} className="bg-white rounded-2xl w-full max-w-xl shadow-2xl animate-in fade-in zoom-in duration-200 overflow-hidden">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-navy/60 backdrop-blur-sm overflow-hidden">
+          <form onSubmit={handleSave} className="bg-white rounded-2xl w-full max-w-xl max-h-full sm:max-h-[90vh] shadow-2xl animate-in fade-in zoom-in duration-200 flex flex-col overflow-hidden">
             <div className="p-5 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
               <h2 className="text-lg font-bold text-navy">{editingProduct ? 'Edit Product' : 'Add New Product'}</h2>
             </div>
-            <div className="p-6 grid grid-cols-2 gap-4">
+            <div className="p-4 sm:p-6 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 overflow-y-auto custom-scrollbar flex-1">
               <div className="col-span-2">
                 <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Product Name</label>
                 <input name="name" defaultValue={editingProduct?.name} required className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" />
@@ -440,7 +440,7 @@ export default function ProductsPage() {
                     <Plus size={14} /> Add Unit
                   </button>
                 </div>
-                <div className="space-y-2 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
+                <div className="space-y-2 pr-2">
                   {modalUnits.map((unit, idx) => (
                     <div key={idx} className="flex gap-2 items-end bg-gray-50/50 p-2 rounded-lg border border-gray-100">
                       <div className="flex-1">
@@ -482,14 +482,27 @@ export default function ProductsPage() {
                   ))}
                 </div>
               </div>
-              <div className="flex items-center gap-2">
-                 <input type="checkbox" name="in_stock" id="in_stock" defaultChecked={editingProduct ? editingProduct.in_stock : true} className="w-4 h-4 accent-gold" />
-                 <label htmlFor="in_stock" className="text-xs font-bold text-navy">In Stock</label>
+              <div className="col-span-2 pt-2">
+                <label className="flex items-center gap-2 cursor-pointer group">
+                  <input type="checkbox" name="in_stock" defaultChecked={editingProduct?.in_stock ?? true} className="w-4 h-4 rounded border-gray-300 text-gold focus:ring-gold" />
+                  <span className="text-sm font-bold text-navy group-hover:text-gold transition-colors">In Stock</span>
+                </label>
               </div>
             </div>
-            <div className="p-5 bg-gray-50 border-t border-gray-100 flex justify-end gap-3">
-              <button type="button" onClick={() => { setIsModalOpen(false); setEditingProduct(null); }} className="px-5 py-2 text-sm text-gray-500 font-bold hover:text-navy">Cancel</button>
-              <button type="submit" className="px-6 py-2 bg-navy text-white text-sm font-bold rounded-lg hover:bg-navy/90 shadow-md transition-all active:scale-95">Save Product</button>
+            <div className="p-4 bg-gray-50 border-t border-gray-100 flex gap-3">
+              <button 
+                type="button" 
+                onClick={() => { setIsModalOpen(false); setEditingProduct(null); }}
+                className="flex-1 py-3 border border-gray-200 rounded-xl text-gray-500 font-bold text-sm hover:bg-gray-100 transition-colors"
+              >
+                Cancel
+              </button>
+              <button 
+                type="submit" 
+                className="flex-[2] py-3 bg-navy text-white rounded-xl font-bold text-sm hover:bg-gold transition-all shadow-lg shadow-navy/20"
+              >
+                {editingProduct ? 'Save Changes' : 'Add Product'}
+              </button>
             </div>
           </form>
         </div>
