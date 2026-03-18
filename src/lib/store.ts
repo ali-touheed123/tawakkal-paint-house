@@ -4,10 +4,10 @@ import type { CartItem, ItemSize } from '@/types';
 
 interface CartStore {
   items: CartItem[];
-  addItem: (productId: string, size: ItemSize, quantity: number, product?: CartItem['product'], selectedShade?: CartItem['selectedShade']) => void;
+  addItem: (productId: string, size: string, quantity: number, product?: CartItem['product'], selectedShade?: CartItem['selectedShade']) => void;
   removeItem: (itemId: string) => void;
   updateQuantity: (itemId: string, quantity: number) => void;
-  updateSize: (itemId: string, size: ItemSize) => void;
+  updateSize: (itemId: string, size: string) => void;
   clearCart: () => void;
   getTotal: () => number;
   refreshItems: () => Promise<void>;
@@ -85,11 +85,11 @@ export const useCartStore = create<CartStore>()(
       getTotal: () => {
         return get().items.reduce((total, item) => {
           if (!item.product) return total;
-          const price = item.size === 'quarter'
-            ? item.product.price_quarter
-            : item.size === 'gallon'
-              ? item.product.price_gallon
-              : item.product.price_drum;
+          
+          const units = item.product.units || [];
+          const unit = units.find((u: any) => u.label === item.size) || units[0];
+          const price = unit?.price || 0;
+          
           return total + (price * item.quantity);
         }, 0);
       },

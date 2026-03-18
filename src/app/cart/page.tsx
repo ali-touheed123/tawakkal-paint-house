@@ -28,11 +28,9 @@ export default function CartPage() {
 
   const getPrice = (item: typeof items[0]) => {
     if (!item.product) return 0;
-    return item.size === 'quarter'
-      ? item.product.price_quarter
-      : item.size === 'gallon'
-        ? item.product.price_gallon
-        : item.product.price_drum;
+    const units = item.product.units || [];
+    const unit = units.find((u: any) => u.label === item.size) || units[0];
+    return unit?.price || 0;
   };
 
   return (
@@ -80,9 +78,7 @@ export default function CartPage() {
                     </h3>
                     <div className="flex items-center gap-4 text-sm mb-2">
                       <p className="text-navy font-bold uppercase text-[10px] tracking-widest bg-gray-50 px-2 py-1 rounded">
-                        {item.size === 'quarter' ? item.product?.unit_quarter_label || 'Quarter' : 
-                         item.size === 'gallon' ? item.product?.unit_gallon_label || 'Gallon' : 
-                         item.product?.unit_drum_label || 'Drum'}
+                        {item.size}
                       </p>
                       {item.selectedShade && (
                         <div className="flex items-center gap-1.5 border-l border-gray-200 pl-4">

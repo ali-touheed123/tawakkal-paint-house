@@ -4,11 +4,11 @@ import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check } from 'lucide-react';
 
-import { Shade } from '@/types';
+import { Shade, ItemSize } from '@/types';
 
 interface ShadeSelectorProps {
     shades: Shade[];
-    selectedSize: 'quarter' | 'gallon' | 'drum';
+    selectedSize: string;
     onSelect: (shade: Shade) => void;
 }
 

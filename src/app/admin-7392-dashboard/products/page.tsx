@@ -20,6 +20,11 @@ export default function ProductsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [editingProduct, setEditingProduct] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalUnits, setModalUnits] = useState<{ label: string; price: number }[]>([
+    { label: 'Quarter', price: 0 },
+    { label: 'Gallon', price: 0 },
+    { label: 'Drum', price: 0 }
+  ]);
 
   const [categories, setCategories] = useState<any[]>([]);
   const [subCategories, setSubCategories] = useState<any[]>([]);
@@ -80,6 +85,16 @@ export default function ProductsPage() {
       setCurrentImageUrl(editingProduct?.image_url || '');
       setImgError(false);
       setSelectedCategorySlug(editingProduct?.category || categories[0]?.slug || '');
+      
+      if (editingProduct?.units && Array.isArray(editingProduct.units) && editingProduct.units.length > 0) {
+        setModalUnits(editingProduct.units);
+      } else {
+        setModalUnits([
+          { label: 'Quarter', price: 0 },
+          { label: 'Gallon', price: 0 },
+          { label: 'Drum', price: 0 }
+        ]);
+      }
     }
   }, [isModalOpen, editingProduct, categories]);
 
@@ -93,12 +108,7 @@ export default function ProductsPage() {
       sub_category: formData.get('sub_category'),
       description: formData.get('description'),
       image_url: formData.get('image_url'),
-      price_quarter: Number(formData.get('price_quarter')),
-      price_gallon: Number(formData.get('price_gallon')),
-      price_drum: Number(formData.get('price_drum')),
-      unit_quarter_label: formData.get('unit_quarter_label') || 'Quarter',
-      unit_gallon_label: formData.get('unit_gallon_label') || 'Gallon',
-      unit_drum_label: formData.get('unit_drum_label') || 'Drum',
+      units: modalUnits.filter(u => u.label.trim() !== ''),
       in_stock: formData.get('in_stock') === 'on',
       shade_card_url: formData.get('shade_card_url')
     };
@@ -213,18 +223,16 @@ export default function ProductsPage() {
                   </td>
                   <td className="px-6 py-4 text-sm font-mono">
                     <div className="flex flex-col gap-1">
-                       <div className="flex justify-between gap-4 border-b border-gray-50 pb-1">
-                         <span className="text-[10px] text-gray-400 uppercase font-bold">{product.unit_quarter_label || 'Q'}</span>
-                         <span className="text-navy font-bold">Rs. {product.price_quarter}</span>
-                       </div>
-                       <div className="flex justify-between gap-4 border-b border-gray-50 pb-1">
-                         <span className="text-[10px] text-gray-400 uppercase font-bold">{product.unit_gallon_label || 'G'}</span>
-                         <span className="text-navy font-bold">Rs. {product.price_gallon}</span>
-                       </div>
-                       <div className="flex justify-between gap-4">
-                         <span className="text-[10px] text-gray-400 uppercase font-bold">{product.unit_drum_label || 'D'}</span>
-                         <span className="text-navy font-bold">Rs. {product.price_drum}</span>
-                       </div>
+                       {product.units && Array.isArray(product.units) && product.units.length > 0 ? (
+                         product.units.map((unit: any, idx: number) => (
+                           <div key={idx} className="flex justify-between gap-4 border-b border-gray-50 last:border-0 pb-1 last:pb-0">
+                             <span className="text-[10px] text-gray-400 uppercase font-bold">{unit.label}</span>
+                             <span className="text-navy font-bold">Rs. {unit.price}</span>
+                           </div>
+                         ))
+                       ) : (
+                         <span className="text-gray-400 italic text-xs">No pricing</span>
+                       )}
                     </div>
                   </td>
                   <td className="px-6 py-4">
@@ -296,19 +304,18 @@ export default function ProductsPage() {
                    </button>
                  </div>
               </div>
-              <div className="grid grid-cols-3 gap-2 bg-gray-50 p-3 rounded-xl border border-gray-200/50">
-                 <div className="text-center">
-                    <div className="text-[9px] text-gray-400 uppercase font-bold truncate px-1">{product.unit_quarter_label || 'Quarter'}</div>
-                    <div className="font-mono text-navy font-bold text-sm">Rs. {product.price_quarter}</div>
-                 </div>
-                 <div className="text-center border-x border-gray-200/50 px-2">
-                    <div className="text-[9px] text-gray-400 uppercase font-bold truncate px-1">{product.unit_gallon_label || 'Gallon'}</div>
-                    <div className="font-mono text-navy font-bold text-sm">Rs. {product.price_gallon}</div>
-                 </div>
-                 <div className="text-center">
-                    <div className="text-[9px] text-gray-400 uppercase font-bold truncate px-1">{product.unit_drum_label || 'Drum'}</div>
-                    <div className="font-mono text-navy font-bold text-sm">Rs. {product.price_drum}</div>
-                 </div>
+              <div className="grid grid-cols-2 gap-2 bg-gray-50 p-3 rounded-xl border border-gray-200/50">
+                 {product.units && Array.isArray(product.units) && product.units.slice(0, 4).map((unit: any, idx: number) => (
+                   <div key={idx} className="text-center">
+                      <div className="text-[9px] text-gray-400 uppercase font-bold truncate px-1">{unit.label}</div>
+                      <div className="font-mono text-navy font-bold text-sm">Rs. {unit.price}</div>
+                   </div>
+                 ))}
+                 {product.units && product.units.length > 4 && (
+                   <div className="col-span-2 text-[9px] text-gray-400 text-center font-bold">
+                     + {product.units.length - 4} more units
+                   </div>
+                 )}
               </div>
             </div>
           ))}
@@ -422,36 +429,57 @@ export default function ProductsPage() {
                   className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" 
                 />
               </div>
-              <div className="grid grid-cols-3 col-span-2 gap-4 border-t border-gray-100 pt-4">
-                <div className="space-y-3">
-                   <div>
-                     <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Unit 1 (Label)</label>
-                     <input name="unit_quarter_label" defaultValue={editingProduct?.unit_quarter_label || 'Quarter'} placeholder="Quarter / 1 inch" className="w-full p-2 bg-gray-50 border border-gray-100 rounded-lg focus:border-gold focus:outline-none text-xs" />
-                   </div>
-                   <div>
-                     <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Price (Unit 1)</label>
-                     <input name="price_quarter" type="number" defaultValue={editingProduct?.price_quarter} onFocus={(e) => e.target.select()} className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm font-bold" />
-                   </div>
+              <div className="col-span-2 border-t border-gray-100 pt-4">
+                <div className="flex items-center justify-between mb-2">
+                  <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider">Pricing & Units</label>
+                  <button 
+                    type="button" 
+                    onClick={() => setModalUnits([...modalUnits, { label: '', price: 0 }])}
+                    className="text-gold hover:text-gold-dark text-xs font-bold flex items-center gap-1"
+                  >
+                    <Plus size={14} /> Add Unit
+                  </button>
                 </div>
-                <div className="space-y-3 px-2 border-x border-gray-100">
-                   <div>
-                     <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Unit 2 (Label)</label>
-                     <input name="unit_gallon_label" defaultValue={editingProduct?.unit_gallon_label || 'Gallon'} placeholder="Gallon / 2 inch" className="w-full p-2 bg-gray-50 border border-gray-100 rounded-lg focus:border-gold focus:outline-none text-xs" />
-                   </div>
-                   <div>
-                     <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Price (Unit 2)</label>
-                     <input name="price_gallon" type="number" defaultValue={editingProduct?.price_gallon} onFocus={(e) => e.target.select()} className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm font-bold" />
-                   </div>
-                </div>
-                <div className="space-y-3 font-bold">
-                   <div>
-                     <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Unit 3 (Label)</label>
-                     <input name="unit_drum_label" defaultValue={editingProduct?.unit_drum_label || 'Drum'} placeholder="Drum / 4 inch" className="w-full p-2 bg-gray-50 border border-gray-100 rounded-lg focus:border-gold focus:outline-none text-xs" />
-                   </div>
-                   <div>
-                     <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Price (Unit 3)</label>
-                     <input name="price_drum" type="number" defaultValue={editingProduct?.price_drum} onFocus={(e) => e.target.select()} className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm font-bold" />
-                   </div>
+                <div className="space-y-2 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
+                  {modalUnits.map((unit, idx) => (
+                    <div key={idx} className="flex gap-2 items-end bg-gray-50/50 p-2 rounded-lg border border-gray-100">
+                      <div className="flex-1">
+                        <label className="block text-[8px] text-gray-400 mb-0.5 uppercase">Label</label>
+                        <input 
+                          value={unit.label} 
+                          onChange={(e) => {
+                            const newUnits = [...modalUnits];
+                            newUnits[idx].label = e.target.value;
+                            setModalUnits(newUnits);
+                          }}
+                          placeholder="e.g. 1 inch" 
+                          className="w-full p-1.5 bg-white border border-gray-100 rounded focus:border-gold focus:outline-none text-xs" 
+                        />
+                      </div>
+                      <div className="w-24">
+                        <label className="block text-[8px] text-gray-400 mb-0.5 uppercase">Price</label>
+                        <input 
+                          type="number" 
+                          value={unit.price} 
+                          onChange={(e) => {
+                            const newUnits = [...modalUnits];
+                            newUnits[idx].price = Number(e.target.value);
+                            setModalUnits(newUnits);
+                          }}
+                          onFocus={(e) => e.target.select()}
+                          className="w-full p-1.5 bg-white border border-gray-100 rounded focus:border-gold focus:outline-none text-xs font-bold" 
+                        />
+                      </div>
+                      <button 
+                        type="button" 
+                        onClick={() => setModalUnits(modalUnits.filter((_, i) => i !== idx))}
+                        className="p-2 text-gray-400 hover:text-red-500"
+                        disabled={modalUnits.length === 1}
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  ))}
                 </div>
               </div>
               <div className="flex items-center gap-2">

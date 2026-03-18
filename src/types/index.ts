@@ -1,7 +1,7 @@
 export const ORDER_STATUSES = ['pending', 'confirmed', 'shipped', 'delivered', 'cancelled'] as const;
 export type OrderStatus = typeof ORDER_STATUSES[number];
 
-export type ItemSize = 'quarter' | 'gallon' | 'drum';
+export type ItemSize = string; // Was 'quarter' | 'gallon' | 'drum', now dynamic label
 
 export interface Category {
   id: string;
@@ -30,12 +30,7 @@ export interface Product {
   sub_category: string | null;
   description: string | null;
   image_url: string | null;
-  price_quarter: number;
-  price_gallon: number;
-  price_drum: number;
-  unit_quarter_label?: string;
-  unit_gallon_label?: string;
-  unit_drum_label?: string;
+  units?: { label: string; price: number }[];
   in_stock: boolean;
   shade_card_url?: string | null;
   selectedShade?: {
@@ -66,8 +61,8 @@ export interface OrderItem {
   product_id: string;
   name: string;
   brand: string;
-  size: ItemSize;
-  unit_label: string;
+  size: string; // The selected label (e.g., "1 inch")
+  unit_label: string; // Redundant but good for backward compatibility if needed
   quantity: number;
   price: number;
   image_url: string | null;

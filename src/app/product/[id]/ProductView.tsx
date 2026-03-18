@@ -33,7 +33,7 @@ export function ProductView({ initialId }: { initialId: string }) {
     const router = useRouter();
     const [product, setProduct] = useState<Product | null>(null);
     const [loading, setLoading] = useState(true);
-    const [selectedSize, setSelectedSize] = useState<ItemSize>('gallon');
+    const [selectedSize, setSelectedSize] = useState<string>('');
     const [quantity, setQuantity] = useState(1);
     const [shades, setShades] = useState<Shade[]>([]);
     const [selectedShade, setSelectedShade] = useState<Shade | null>(null);
@@ -282,6 +282,11 @@ export function ProductView({ initialId }: { initialId: string }) {
                 } else {
                     setShades(defaultShades);
                 }
+
+                // Set default selected size
+                if (productData.units && productData.units.length > 0) {
+                    setSelectedSize(productData.units[0].label);
+                }
             }
             setLoading(false);
         };
@@ -295,11 +300,11 @@ export function ProductView({ initialId }: { initialId: string }) {
         }
     }, [product]);
 
-    const price = selectedSize === 'quarter'
-        ? product?.price_quarter
-        : selectedSize === 'gallon'
-            ? product?.price_gallon
-            : product?.price_drum;
+    const selectedUnit = useMemo(() => {
+        return product?.units?.find(u => u.label === selectedSize) || product?.units?.[0];
+    }, [product, selectedSize]);
+
+    const price = selectedUnit?.price || 0;
 
     const handleAddToCart = () => {
         if (!product) return;
@@ -499,26 +504,20 @@ export function ProductView({ initialId }: { initialId: string }) {
 
                         {/* Size Selection */}
                         <div className="space-y-4">
-                            <label className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Stock Size</label>
+                            <label className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Select Unit</label>
                             <div className="flex flex-wrap gap-3">
-                                {(['quarter', 'gallon', 'drum'] as ItemSize[]).map((size) => {
-                                    const sizePrice = size === 'quarter' ? product.price_quarter : size === 'gallon' ? product.price_gallon : product.price_drum;
-                                    if (sizePrice === 0) return null;
-                                    return (
-                                        <button
-                                            key={size}
-                                            onClick={() => setSelectedSize(size)}
-                                            className={`px-8 py-3 rounded-xl text-sm font-bold transition-all border-2 ${selectedSize === size
-                                                ? 'bg-navy border-navy text-white shadow-xl shadow-navy/20'
-                                                : 'bg-white border-gray-100 text-gray-500 hover:border-gray-200'
-                                                }`}
-                                        >
-                                            {size === 'quarter' ? product.unit_quarter_label || 'Quarter' : 
-                                             size === 'gallon' ? product.unit_gallon_label || 'Gallon' : 
-                                             product.unit_drum_label || 'Drum'}
-                                        </button>
-                                    );
-                                })}
+                                {product.units && product.units.map((unit, idx) => (
+                                    <button
+                                        key={idx}
+                                        onClick={() => setSelectedSize(unit.label)}
+                                        className={`px-8 py-3 rounded-xl text-sm font-bold transition-all border-2 ${selectedSize === unit.label
+                                            ? 'bg-navy border-navy text-white shadow-xl shadow-navy/20'
+                                            : 'bg-white border-gray-100 text-gray-500 hover:border-gray-200'
+                                            }`}
+                                    >
+                                        {unit.label}
+                                    </button>
+                                ))}
                             </div>
                         </div>
 

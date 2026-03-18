@@ -142,15 +142,13 @@ export default function CheckoutPage() {
         name: item.product?.name || '',
         brand: item.product?.brand || '',
         size: item.size,
-        unit_label: item.size === 'quarter' ? item.product?.unit_quarter_label || 'Quarter' : 
-                    item.size === 'gallon' ? item.product?.unit_gallon_label || 'Gallon' : 
-                    item.product?.unit_drum_label || 'Drum',
+        unit_label: item.size,
         quantity: item.quantity,
-        price: item.size === 'quarter'
-          ? item.product?.price_quarter || 0
-          : item.size === 'gallon'
-            ? item.product?.price_gallon || 0
-            : item.product?.price_drum || 0,
+        price: (() => {
+          const units = item.product?.units || [];
+          const unit = units.find((u: any) => u.label === item.size) || units[0];
+          return unit?.price || 0;
+        })(),
         image_url: item.product?.image_url || null,
         selectedShade: item.selectedShade
       }));
@@ -345,9 +343,7 @@ export default function CheckoutPage() {
                   <div key={item.id} className="flex justify-between items-start gap-4 text-sm pb-4 border-b border-gray-50 last:border-0 last:pb-0">
                     <div className="flex flex-col flex-1 min-w-0">
                       <span className="text-gray-600 font-medium leading-tight mb-1">
-                        {item.product?.name} ({item.size === 'quarter' ? item.product?.unit_quarter_label || 'Quarter' : 
-                                               item.size === 'gallon' ? item.product?.unit_gallon_label || 'Gallon' : 
-                                               item.product?.unit_drum_label || 'Drum'}) <span className="text-navy font-bold whitespace-nowrap ml-1">x {item.quantity}</span>
+                        {item.product?.name} ({item.size}) <span className="text-navy font-bold whitespace-nowrap ml-1">x {item.quantity}</span>
                       </span>
                       {item.selectedShade && (
                         <div className="flex items-center gap-1.5 mt-0.5">
@@ -362,11 +358,11 @@ export default function CheckoutPage() {
                       )}
                     </div>
                     <span className="font-bold text-navy shrink-0 text-right min-w-[80px]">
-                      Rs. {(((item.size === 'quarter'
-                        ? item.product?.price_quarter
-                        : item.size === 'gallon'
-                          ? item.product?.price_gallon
-                          : item.product?.price_drum) || 0) * item.quantity).toLocaleString()}
+                      Rs. {((() => {
+                        const units = item.product?.units || [];
+                        const unit = units.find((u: any) => u.label === item.size) || units[0];
+                        return unit?.price || 0;
+                      })() * item.quantity).toLocaleString()}
                     </span>
                   </div>
                 ))}
