@@ -13,7 +13,6 @@ export default function AdminLoginPage() {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [mode, setMode] = useState<'login' | 'signup'>('login');
     const [loginType, setLoginType] = useState<'admin' | 'staff'>('admin');
     const router = useRouter();
 
@@ -25,25 +24,12 @@ export default function AdminLoginPage() {
         try {
             const supabase = createClient();
             
-            if (mode === 'login') {
-                const finalEmail = loginType === 'staff' ? 'staff@tawakkal.com' : email;
-                const { error: loginError } = await supabase.auth.signInWithPassword({
-                    email: finalEmail,
-                    password,
-                });
-                if (loginError) throw loginError;
-            } else {
-                const { error: signUpError } = await supabase.auth.signUp({
-                    email,
-                    password,
-                });
-                if (signUpError) throw signUpError;
-                
-                // If sign up is successful, switch to login mode and show message
-                setMode('login');
-                setError('Registration successful! You will be able to log in once admin privileges are granted.');
-                return;
-            }
+            const finalEmail = loginType === 'staff' ? 'staff@tawakkal.com' : email;
+            const { error: loginError } = await supabase.auth.signInWithPassword({
+                email: finalEmail,
+                password,
+            });
+            if (loginError) throw loginError;
 
             router.push('/admin-7392-dashboard');
         } catch (err: any) {
@@ -76,21 +62,15 @@ export default function AdminLoginPage() {
                                 animate={{ scale: 1 }}
                                 className="w-16 h-16 bg-gold flex items-center justify-center rounded-2xl mx-auto mb-6 shadow-lg shadow-gold/20"
                             >
-                                {mode === 'login' ? <Lock className="text-navy" size={32} /> : <UserPlus className="text-navy" size={32} />}
+                                <Lock className="text-navy" size={32} />
                             </motion.div>
-                            <h1 className="text-3xl font-black tracking-tight">
-                                {mode === 'login' ? 'Admin Access' : 'Initial Setup'}
-                            </h1>
+                            <h1 className="text-3xl font-black tracking-tight">Admin Access</h1>
                             <p className="text-gray-400 mt-2 font-medium">
-                                {mode === 'login' 
-                                    ? `Please sign in as ${loginType === 'admin' ? 'Admin' : 'Staff'}` 
-                                    : 'Create your new admin account'
-                                }
+                                Please sign in as {loginType === 'admin' ? 'Admin' : 'Staff'}
                             </p>
                         </div>
 
-                        {mode === 'login' && (
-                            <div className="flex bg-gray-50 p-1 rounded-xl mb-6">
+                        <div className="flex bg-gray-50 p-1 rounded-xl mb-6">
                                 <button
                                     onClick={() => setLoginType('admin')}
                                     className={cn(
@@ -110,7 +90,6 @@ export default function AdminLoginPage() {
                                     Staff Login
                                 </button>
                             </div>
-                        )}
 
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <AnimatePresence mode="wait">
@@ -132,7 +111,7 @@ export default function AdminLoginPage() {
                             </AnimatePresence>
 
                             <div className="space-y-4">
-                                {(mode === 'signup' || loginType === 'admin') && (
+                                {loginType === 'admin' && (
                                     <div>
                                         <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] ml-1 mb-2 block">
                                             Email Address
@@ -186,13 +165,6 @@ export default function AdminLoginPage() {
                         </form>
 
                         <div className="mt-8 flex flex-col items-center gap-4">
-                            <button 
-                                type="button"
-                                onClick={() => setMode(mode === 'login' ? 'signup' : 'login')}
-                                className="text-sm font-bold text-navy hover:text-gold transition-colors"
-                            >
-                                {mode === 'login' ? 'Initial Setup' : 'Back to Login'}
-                            </button>
                             <Link href="/" className="text-sm font-bold text-gray-400 hover:text-navy transition-colors inline-flex items-center gap-2 group">
                                 <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
                                 Back to Website
