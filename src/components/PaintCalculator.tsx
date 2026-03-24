@@ -21,8 +21,6 @@ export function PaintCalculator({ compact = false }: PaintCalculatorProps) {
   const [numDoors, setNumDoors] = useState(0);
   const [numWindows, setNumWindows] = useState(0);
 
-  const coverageRate = paintType.coverage;
-
   const calculation = useMemo(() => {
     let wallArea: number;
 
@@ -33,29 +31,31 @@ export function PaintCalculator({ compact = false }: PaintCalculatorProps) {
     }
 
     const adjustmentArea = (numDoors * 21) + (numWindows * 15);
-    const netArea = wallArea + adjustmentArea;
+    const netArea = Math.max(0, wallArea - adjustmentArea);
 
-    const totalArea = netArea * coats * rooms;
-    const amount = totalArea / coverageRate;
-    const withWastage = Math.ceil(amount * 1.1 * 2) / 2;
-
-    const drums = Math.floor(withWastage / 16);
-    const remainderAfterDrums = withWastage - drums * 16;
-    const gallons = Math.floor(remainderAfterDrums / 3.64);
-    const quarters = Math.ceil((remainderAfterDrums - gallons * 3.64) / 0.91);
+    const totalArea = netArea * rooms;
+    const adjustedArea = totalArea * coats;
+    
+    const litres = Math.ceil(adjustedArea / 54);
+    
+    // New breakdown logic: Drum (1000), Gallon (196), Quarter (49)
+    const drumsCount = Math.floor(adjustedArea / 1000);
+    const remainderAfterDrums = adjustedArea % 1000;
+    const gallonsCount = Math.floor(remainderAfterDrums / 196);
+    const quartersCount = Math.ceil((remainderAfterDrums % 196) / 49);
 
     let breakdown = '';
-    if (drums > 0) breakdown += `${drums} Drum${drums > 1 ? 's' : ''} `;
-    if (gallons > 0) breakdown += `${gallons} Gallon${gallons > 1 ? 's' : ''} `;
-    if (quarters > 0) breakdown += `${quarters} Quarter${quarters > 1 ? 's' : ''}`;
+    if (drumsCount > 0) breakdown += `${drumsCount} Drum${drumsCount > 1 ? 's' : ''} `;
+    if (gallonsCount > 0) breakdown += `${gallonsCount} Gallon${gallonsCount > 1 ? 's' : ''} `;
+    if (quartersCount > 0) breakdown += `${quartersCount} Quarter${quartersCount > 1 ? 's' : ''}`;
     if (!breakdown) breakdown = '1 Quarter';
 
     return {
-      litres: withWastage,
+      litres,
       totalArea,
       breakdown: breakdown.trim()
     };
-  }, [dimensionsMode, length, width, height, directArea, coats, rooms, numDoors, numWindows, coverageRate]);
+  }, [dimensionsMode, length, width, height, directArea, coats, rooms, numDoors, numWindows]);
 
   const whatsappMessage = `Hi! The calculator says I need ${calculation.litres} litres of ${paintType.label} for ${calculation.totalArea} sq/ft. Please help me choose the right product.`;
 
