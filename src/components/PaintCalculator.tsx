@@ -31,7 +31,7 @@ export function PaintCalculator({ compact = false }: PaintCalculatorProps) {
     }
 
     const adjustmentArea = (numDoors * 21) + (numWindows * 15);
-    const netArea = Math.max(0, wallArea - adjustmentArea);
+    const netArea = wallArea + adjustmentArea;
 
     const totalArea = netArea * rooms;
     const adjustedArea = totalArea * coats;
