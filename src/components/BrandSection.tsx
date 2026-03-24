@@ -1,30 +1,21 @@
-import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { createClient } from '@/lib/supabase/client';
+
+const BRANDS = [
+    { name: 'Berger', url: '/images/brands/berger.png' },
+    { name: 'Brighto', url: '/images/brands/brighto.png' },
+    { name: 'Choice', url: '/images/brands/choice.png' },
+    { name: 'Diamond Paints', url: '/images/brands/diamond.png' },
+    { name: 'Dior', url: '/images/brands/dior.png' },
+    { name: "Gobi's Paints", url: '/images/brands/gobis.png' },
+    { name: 'Reliable', url: '/images/brands/reliable.png' },
+    { name: 'Reliance', url: '/images/brands/reliance.png' },
+    { name: 'Rozzi', url: '/images/brands/rozzi.png' },
+    { name: 'Saasi', url: '/images/brands/saasi.png' },
+];
 
 export function BrandSection() {
-    const [brands, setBrands] = useState<any[]>([]);
-
-    useEffect(() => {
-        async function fetchBrands() {
-            const supabase = createClient();
-            const { data } = await supabase
-                .from('brands')
-                .select('*')
-                .eq('is_active', true)
-                .order('name');
-            if (data) setBrands(data);
-        }
-        fetchBrands();
-    }, []);
-
-    const logos = brands.map(brand => ({
-        name: brand.name,
-        url: brand.logo_url
-    }));
-
     // Duplicate logos for a seamless marquee
-    const displayLogos = [...logos, ...logos, ...logos];
+    const displayLogos = [...BRANDS, ...BRANDS, ...BRANDS];
 
     return (
         <section className="py-12 bg-white border-b border-gray-100 overflow-hidden">
@@ -48,10 +39,10 @@ export function BrandSection() {
                         <motion.div
                             className="flex items-center gap-16 md:gap-24"
                             animate={{
-                                x: [0, -100 * logos.length],
+                                x: [0, -100 * BRANDS.length],
                             }}
                             transition={{
-                                duration: logos.length * 2, // Faster marquee (was length * 3)
+                                duration: BRANDS.length * 2, // Faster marquee (was length * 3)
                                 repeat: Infinity,
                                 ease: "linear",
                             }}
