@@ -165,7 +165,17 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
     hero: '/images/categories/decorative.jpg'
   };
 
-  const info = categoryDetails || staticInfo;
+  // Build the final info object, preferring curated info but allowing DB to override hero/description
+  const info = {
+    ...staticInfo,
+    description: categoryDetails?.description || staticInfo.description,
+    // Database hero takes precedence if available and not the default
+    hero: (categoryDetails?.image_url && categoryDetails.image_url !== '/images/categories/decorative.jpg') 
+      ? categoryDetails.image_url 
+      : (categoryInfo[category]?.hero || staticInfo.hero),
+    // Curated title ALWAYS takes precedence to prevent "Auto" vs "Automotive Paints" flash
+    title: categoryInfo[category]?.title || categoryDetails?.title || staticInfo.title
+  };
 
   return (
     <div className="min-h-screen overflow-x-hidden">
