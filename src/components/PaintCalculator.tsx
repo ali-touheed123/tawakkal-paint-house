@@ -35,9 +35,9 @@ export function PaintCalculator({ compact = false }: PaintCalculatorProps) {
 
     const totalArea = netArea * rooms;
     const adjustedArea = totalArea * coats;
-    
+
     const litres = Math.ceil(adjustedArea / 54);
-    
+
     // New breakdown logic: Drum (1000), Gallon (196), Quarter (49)
     const drumsCount = Math.floor(adjustedArea / 1000);
     const remainderAfterDrums = adjustedArea % 1000;
@@ -45,10 +45,15 @@ export function PaintCalculator({ compact = false }: PaintCalculatorProps) {
     const quartersCount = Math.ceil((remainderAfterDrums % 196) / 49);
 
     let breakdown = '';
-    if (drumsCount > 0) breakdown += `${drumsCount} Drum${drumsCount > 1 ? 's' : ''} `;
-    if (gallonsCount > 0) breakdown += `${gallonsCount} Gallon${gallonsCount > 1 ? 's' : ''} `;
-    if (quartersCount > 0) breakdown += `${quartersCount} Quarter${quartersCount > 1 ? 's' : ''}`;
-    if (!breakdown) breakdown = '1 Quarter';
+    
+    if (adjustedArea === 0) {
+      breakdown = '-';
+    } else {
+      if (drumsCount > 0) breakdown += `${drumsCount} Drum${drumsCount > 1 ? 's' : ''} `;
+      if (gallonsCount > 0) breakdown += `${gallonsCount} Gallon${gallonsCount > 1 ? 's' : ''} `;
+      if (quartersCount > 0) breakdown += `${quartersCount} Quarter${quartersCount > 1 ? 's' : ''}`;
+      if (!breakdown) breakdown = '1 Quarter';
+    }
 
     return {
       litres,

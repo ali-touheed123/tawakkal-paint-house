@@ -294,6 +294,9 @@ export default function OrdersPage() {
                         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-gray-500 mt-1 uppercase">
                           <span>Size: <b className="text-navy">{item.unit_label || item.size}</b></span>
                           <span>Qty: <b className="text-navy">{item.quantity}</b></span>
+                          <span className={`px-1.5 py-0.5 rounded-sm font-bold tracking-wider text-[8px] ${item.labourMode === 'without' ? 'bg-amber-100 text-amber-700' : 'bg-green-100 text-green-700'}`}>
+                            {item.labourMode === 'without' ? '⚙ Without Service' : '✓ With Service'}
+                          </span>
                           {item.selectedShade && (
                             <div className="flex items-center gap-1.5 border-l border-gray-200 pl-4">
                               <div 
@@ -305,9 +308,22 @@ export default function OrdersPage() {
                           )}
                         </div>
                       </div>
-                      <div className="text-right">
-                        <div className="font-bold text-navy">Rs. {Number(item.price || 0).toLocaleString()}</div>
-                        <div className="text-[10px] text-gray-400 italic">Total: Rs. {Number((item.price || 0) * item.quantity).toLocaleString()}</div>
+                      <div className="text-right shrink-0">
+                        {item.labourMode === 'without' && item.labourDiscount > 0 ? (
+                          <>
+                            <div className="text-[10px] text-gray-400 line-through">Rs. {Number(item.price || 0).toLocaleString()}</div>
+                            <div className="font-bold text-navy">
+                              Rs. {Number(item.discounted_price || item.price).toLocaleString()}
+                              <span className="text-[9px] text-green-600 block leading-none">-{item.labourDiscount}% OFF</span>
+                            </div>
+                            <div className="text-[10px] text-gray-400 italic mt-1">Total: Rs. {Number((item.discounted_price || item.price || 0) * item.quantity).toLocaleString()}</div>
+                          </>
+                        ) : (
+                          <>
+                            <div className="font-bold text-navy">Rs. {Number(item.price || 0).toLocaleString()}</div>
+                            <div className="text-[10px] text-gray-400 italic mt-1">Total: Rs. {Number((item.price || 0) * item.quantity).toLocaleString()}</div>
+                          </>
+                        )}
                       </div>
                     </div>
                   ))}
@@ -319,9 +335,15 @@ export default function OrdersPage() {
                     <span>Rs. {Number(selectedOrder.subtotal).toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between text-sm text-green-400">
-                    <span>Discount ({selectedOrder.discount_percent}%)</span>
-                    <span>- Rs. {Number(selectedOrder.discount_amount).toLocaleString()}</span>
+                    <span>Service Discount</span>
+                    <span>- Rs. {Number(selectedOrder.discount_amount || 0).toLocaleString()}</span>
                   </div>
+                  {(selectedOrder.shipping_amount ?? 0) > 0 && (
+                    <div className="flex justify-between text-sm text-amber-200">
+                      <span>Delivery Options</span>
+                      <span>Rs. {Number(selectedOrder.shipping_amount).toLocaleString()}</span>
+                    </div>
+                  )}
                   <div className="pt-3 border-t border-white/10 flex justify-between items-end">
                     <div className="flex flex-col">
                        <span className="text-xs text-white/40 uppercase font-black">Grand Total</span>
