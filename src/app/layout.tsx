@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { SearchOverlay } from "@/components/SearchOverlay";
 import { CartToast } from "@/components/CartToast";
 import { CartSyncListener } from "@/components/CartSyncListener";
+import { LiveOrderToast } from "@/components/LiveOrderToast";
 
 export const metadata: Metadata = {
   title: "Tawakkal Paint House | Premium Paints in Karachi",
@@ -95,6 +96,7 @@ export default function RootLayout({
         <Footer />
         <CartToast />
         <CartSyncListener />
+        <LiveOrderToast />
       </body>
     </html>
   );

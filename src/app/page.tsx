@@ -12,6 +12,7 @@ import { ProductCard } from '@/components/ProductCard';
 import { BrandSection } from '@/components/BrandSection';
 import { createClient } from '@/lib/supabase/client';
 import { useSettings } from '@/lib/hooks/useSettings';
+import { ValuePromotion } from '@/components/ValuePromotion';
 import { Product, Category } from '@/types';
 
 const staticDealsCategory = {
@@ -128,19 +129,8 @@ export default function HomePage() {
                 </Link>
               </div>
 
-              {/* Stats */}
-              <div className="flex flex-wrap gap-8 mt-12">
-                {[
-                  { number: '20+', label: 'Years' },
-                  { number: '5,000+', label: 'Customers' },
-                  { number: '10+', label: 'Brands' }
-                ].map((stat, i) => (
-                  <div key={i} className="text-center">
-                    <p className="font-heading text-3xl md:text-4xl font-bold text-gold">{stat.number}</p>
-                    <p className="text-gray-400 text-sm">{stat.label}</p>
-                  </div>
-                ))}
-              </div>
+              {/* Discount/Service Promotion */}
+              <ValuePromotion />
             </motion.div>
 
             {/* Right: Hero Image (Desktop only visual) */}
