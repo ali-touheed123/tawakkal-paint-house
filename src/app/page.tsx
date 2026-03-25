@@ -89,7 +89,7 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-r from-navy/90 via-navy/70 to-transparent" />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20">
+        <div className="relative z-10 max-w-7xl px-4 sm:px-6 lg:px-8 pt-32 pb-20">
           <div className="w-full">
             {/* Left: Hero Content */}
             <motion.div
