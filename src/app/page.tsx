@@ -164,36 +164,6 @@ export default function HomePage() {
                      <h4 className="text-white text-xl font-bold">The Luxury Silk Collection</h4>
                   </div>
                 </motion.div>
-
-                {/* Floating Elements (Badges/Mini-Cards) */}
-                <motion.div 
-                  animate={{ y: [0, 15, 0], x: [0, 5, 0] }}
-                  transition={{ repeat: Infinity, duration: 4, ease: "easeInOut", delay: 1 }}
-                  className="absolute -top-10 -left-10 z-20 bg-white p-4 rounded-3xl shadow-2xl border border-gray-100 flex items-center gap-3"
-                >
-                  <div className="w-10 h-10 bg-gold rounded-full flex items-center justify-center text-white font-black text-xs">
-                    #1
-                  </div>
-                  <div>
-                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">Top Rated</p>
-                    <p className="text-navy font-bold text-sm">Best in Karachi</p>
-                  </div>
-                </motion.div>
-
-                <motion.div 
-                  animate={{ y: [0, -15, 0], x: [0, -10, 0] }}
-                  transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 0.5 }}
-                  className="absolute bottom-20 -right-12 z-20 bg-navy-light/80 backdrop-blur-xl p-5 rounded-3xl shadow-2xl border border-gold/30"
-                >
-                  <div className="flex -space-x-3 mb-3">
-                    {[1,2,3,4].map(i => (
-                      <div key={i} className="w-8 h-8 rounded-full border-2 border-navy bg-gold/20 flex items-center justify-center text-[8px] font-bold text-white uppercase">
-                        {i === 4 ? '+5K' : 'U'}
-                      </div>
-                    ))}
-                  </div>
-                  <p className="text-[10px] text-gray-300 font-medium">Trust of 5,000+ homes</p>
-                </motion.div>
               </div>
             </motion.div>
           </div>
