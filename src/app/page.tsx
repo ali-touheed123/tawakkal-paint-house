@@ -90,12 +90,13 @@ export default function HomePage() {
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20">
-          <div className="max-w-4xl">
+          <div className="w-full">
             {/* Left: Hero Content */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: 'easeOut' }}
+              className="flex flex-col items-start text-left"
             >
               <div className="inline-flex items-center gap-2 bg-gold/10 backdrop-blur-md px-4 py-2 rounded-full border border-gold/20 mb-6">
                 <Sparkles className="text-gold" size={14} />

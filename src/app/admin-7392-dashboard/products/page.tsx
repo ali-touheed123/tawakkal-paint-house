@@ -10,7 +10,8 @@ import {
   Package,
   AlertTriangle,
   X as CloseIcon,
-  Save
+  Save,
+  ShieldCheck
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -489,40 +490,60 @@ export default function ProductsPage() {
               </div>
               
               {/* Labour Configuration */}
-              <div className="col-span-2 border-t border-gray-100 pt-4 mt-2">
-                <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-4">Labour & Service Configuration</label>
-                <div className="bg-blue-50/50 rounded-xl p-4 border border-blue-100 space-y-4">
-                  <label className="flex items-center gap-2 cursor-pointer group">
-                    <input 
-                      type="checkbox" 
-                      name="labour_enabled" 
-                      defaultChecked={editingProduct?.labour_config?.enabled ?? true} 
-                      className="w-4 h-4 rounded border-gray-300 text-navy focus:ring-navy" 
-                    />
-                    <span className="text-sm font-bold text-navy group-hover:text-gold transition-colors">Enable Labour Selection on Product Page</span>
+              <div className="col-span-2 border-t-2 border-dashed border-gray-100 pt-6 mt-4">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-8 h-8 bg-gold/10 rounded-lg flex items-center justify-center text-gold">
+                   <ShieldCheck size={18} />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-black text-navy uppercase tracking-[2px]">Labour & Service Controls</label>
+                    <p className="text-[9px] text-gray-400 font-medium">Configure if this product qualifies for savings mode vs service mode.</p>
+                  </div>
+                </div>
+                
+                <div className="bg-navy/[0.02] rounded-2xl p-5 border border-navy/5 space-y-5">
+                  <label className="flex items-center gap-3 cursor-pointer group bg-white p-3 rounded-xl border border-gray-100 hover:border-gold/30 transition-all">
+                    <div className="relative flex items-center">
+                      <input 
+                        type="checkbox" 
+                        name="labour_enabled" 
+                        defaultChecked={editingProduct?.labour_config?.enabled ?? true} 
+                        className="peer w-5 h-5 rounded border-gray-300 text-navy focus:ring-navy" 
+                      />
+                    </div>
+                    <div>
+                      <span className="text-sm font-bold text-navy group-hover:text-gold transition-colors block">Enable Service/Savings Toggle</span>
+                      <span className="text-[10px] text-gray-500">Allow customers to choose between "With Labour" and "Without Labour"</span>
+                    </div>
                   </label>
                   
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                  <div className={cn(
+                    "grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 transition-opacity",
+                    editingProduct?.labour_config?.enabled === false ? "opacity-50 pointer-events-none" : ""
+                  )}>
                     <div>
-                      <label className="block text-[10px] font-bold text-gray-500 uppercase mb-1 tracking-wider">Default Mode Selection</label>
+                      <label className="block text-[10px] font-bold text-gray-500 uppercase mb-1.5 tracking-wider">Default Option</label>
                       <select 
                         name="labour_default"
                         defaultValue={editingProduct?.labour_config?.default || 'with'}
-                        className="w-full p-2.5 bg-white border border-gray-200 rounded-lg focus:border-gold focus:outline-none text-sm"
+                        className="w-full p-3 bg-white border border-gray-200 rounded-xl focus:border-gold focus:outline-none text-sm font-medium shadow-sm"
                       >
-                        <option value="with">With Labour (Default)</option>
-                        <option value="without">Without Labour</option>
+                        <option value="with">With Labour (Full Service)</option>
+                        <option value="without">Without Labour (Savings Mode)</option>
                       </select>
                     </div>
                     <div>
-                      <label className="block text-[10px] font-bold text-gray-500 uppercase mb-1 tracking-wider">Without-Labour Discount %</label>
-                      <input 
-                        type="number"
-                        name="labour_discount"
-                        defaultValue={editingProduct?.labour_config?.without_discount_percent ?? 10}
-                        className="w-full p-2.5 bg-white border border-gray-200 rounded-lg focus:border-gold focus:outline-none text-sm"
-                      />
-                      <p className="text-[9px] text-gray-400 mt-1">Leave empty or 10 to use global default.</p>
+                      <label className="block text-[10px] font-bold text-gray-500 uppercase mb-1.5 tracking-wider">Savings Discount %</label>
+                      <div className="relative">
+                        <input 
+                          type="number"
+                          name="labour_discount"
+                          defaultValue={editingProduct?.labour_config?.without_discount_percent ?? 10}
+                          className="w-full p-3 bg-white border border-gray-200 rounded-xl focus:border-gold focus:outline-none text-sm font-bold shadow-sm pr-8"
+                        />
+                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 font-bold">%</span>
+                      </div>
+                      <p className="text-[9px] text-gray-400 mt-1 italic">Set to 0 if no discount should apply (e.g. for Thinners)</p>
                     </div>
                   </div>
                 </div>

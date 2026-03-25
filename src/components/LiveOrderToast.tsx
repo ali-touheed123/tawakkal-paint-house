@@ -29,8 +29,8 @@ export function LiveOrderToast() {
         };
 
         fetchRecentOrders();
-        // Refresh every 5 minutes
-        const interval = setInterval(fetchRecentOrders, 5 * 60 * 1000);
+        // Refresh every 2 minutes for latest 15
+        const interval = setInterval(fetchRecentOrders, 2 * 60 * 1000);
         return () => clearInterval(interval);
     }, []);
 
@@ -42,20 +42,20 @@ export function LiveOrderToast() {
             setCurrentOrder(orders[index]);
             setIsVisible(true);
 
-            // Hide after 6 seconds
+            // Hide after 8 seconds
             setTimeout(() => {
                 setIsVisible(false);
-            }, 6000);
+            }, 8000);
 
             // Move to next order
             index = (index + 1) % orders.length;
         };
 
         // Initial delay
-        const initialTimeout = setTimeout(showNextOrder, 8000);
+        const initialTimeout = setTimeout(showNextOrder, 5000);
 
-        // Repeat every 25 seconds
-        const repeatInterval = setInterval(showNextOrder, 25000);
+        // Repeat every 1 minute (60,000ms)
+        const repeatInterval = setInterval(showNextOrder, 60000);
 
         return () => {
             clearTimeout(initialTimeout);

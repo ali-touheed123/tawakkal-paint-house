@@ -28,11 +28,21 @@ export const useCartStore = create<CartStore>()(
       items: [],
       addItem: (productId, size, quantity, product, selectedShade, labourMode = 'with', labourDiscount = 0) => {
         const items = get().items;
+        
+        // Safety check: If product explicitly disables labour selection, force 'without' mode
+        let finalLabourMode = labourMode;
+        let finalLabourDiscount = labourDiscount;
+        if (product?.labour_config?.enabled === false) {
+          finalLabourMode = 'without';
+          // Ensure discount is only applied if it was intended, or leave as 0 if 'without' means 'standard price'
+          // In the current logic, 'without' usually has a discount.
+        }
+
         const existingItem = items.find(
           item =>
             item.product_id === productId &&
             item.size === size &&
-            item.labourMode === labourMode &&
+            item.labourMode === finalLabourMode &&
             JSON.stringify(item.selectedShade) === JSON.stringify(selectedShade)
         );
 
@@ -65,8 +75,8 @@ export const useCartStore = create<CartStore>()(
                 created_at: new Date().toISOString(),
                 product,
                 selectedShade,
-                labourMode,
-                labourDiscount
+                labourMode: finalLabourMode,
+                labourDiscount: finalLabourDiscount
               }
             ]
           });
