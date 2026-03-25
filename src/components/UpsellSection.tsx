@@ -31,9 +31,9 @@ export function UpsellSection({ labourMode, upsellItemIds, currentProductId }: U
                 // Show admin-configured upsell items
                 query = query.in('id', upsellItemIds).limit(4);
             } else {
-                // Fallback: show paint tools / brushes / related items
+                // Fallback: show paint tools category items
                 query = query
-                    .or('category.eq.projects,sub_category.ilike.%tool%,sub_category.ilike.%brush%')
+                    .eq('category', 'paint-tools')
                     .limit(4);
             }
 
@@ -215,10 +215,9 @@ export function UpsellSection({ labourMode, upsellItemIds, currentProductId }: U
                     </div>
                 )}
 
-                {/* See More Button */}
                 <div className="mt-4 flex justify-center">
                     <Link
-                        href="/category/decorative"
+                        href="/category/paint-tools"
                         className={`inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold transition-all ${
                             isHighlighted
                                 ? 'bg-amber-400/20 text-amber-700 hover:bg-amber-400/40 border border-amber-300'
