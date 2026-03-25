@@ -32,9 +32,9 @@ export function ValuePromotion() {
                             Direct wholesale rates. Save up to <span className="text-gold font-bold">12% OFF</span> on bulk orders.
                         </p>
                         <div className="flex flex-wrap gap-2">
-                            {tiers.slice(0, 3).map((tier, i) => (
+                            {['8%', '10%', '12%'].map((val, i) => (
                                 <span key={i} className="text-[9px] font-bold bg-white/5 text-gold border border-gold/20 px-2 py-0.5 rounded-md">
-                                    {tier.discount_value}{tier.discount_type === 'percent' ? '%' : ' OFF'}
+                                    {val} OFF
                                 </span>
                             ))}
                         </div>
