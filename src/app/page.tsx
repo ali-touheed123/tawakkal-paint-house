@@ -149,14 +149,13 @@ export default function HomePage() {
                 <motion.div 
                    animate={{ y: [0, -20, 0] }}
                    transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-                   className="relative z-10 w-full aspect-[4/5] max-w-lg mx-auto rounded-[40px] overflow-hidden border border-white/10 shadow-[0_50px_100px_rgba(0,0,0,0.5)] bg-navy/20 backdrop-blur-sm"
+                   className="relative z-10 w-full aspect-[4/5] max-w-lg mx-auto rounded-[40px] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.5)]"
                 >
                   <img
                     src="https://images.unsplash.com/photo-1589939705384-5185138a04b9?w=1200"
                     alt="Interior Design Masterpiece"
-                    className="w-full h-full object-cover grayscale-[0.3] hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100"
+                    className="w-full h-full object-cover hover:scale-105 transition-all duration-1000"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-navy via-transparent to-transparent opacity-60" />
                 </motion.div>
               </div>
             </motion.div>
