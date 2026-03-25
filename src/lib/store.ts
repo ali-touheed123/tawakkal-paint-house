@@ -1,15 +1,24 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { CartItem, ItemSize } from '@/types';
+import type { CartItem } from '@/types';
 
 interface CartStore {
   items: CartItem[];
-  addItem: (productId: string, size: string, quantity: number, product?: CartItem['product'], selectedShade?: CartItem['selectedShade']) => void;
+  addItem: (
+    productId: string,
+    size: string,
+    quantity: number,
+    product?: CartItem['product'],
+    selectedShade?: CartItem['selectedShade'],
+    labourMode?: 'with' | 'without',
+    labourDiscount?: number
+  ) => void;
   removeItem: (itemId: string) => void;
   updateQuantity: (itemId: string, quantity: number) => void;
   updateSize: (itemId: string, size: string) => void;
   clearCart: () => void;
   getTotal: () => number;
+  getLabourSubtotals: () => { withLabourSubtotal: number; withoutLabourSubtotal: number };
   refreshItems: () => Promise<void>;
 }
 
@@ -17,20 +26,21 @@ export const useCartStore = create<CartStore>()(
   persist(
     (set, get) => ({
       items: [],
-      addItem: (productId, size, quantity, product, selectedShade) => {
+      addItem: (productId, size, quantity, product, selectedShade, labourMode = 'with', labourDiscount = 0) => {
         const items = get().items;
         const existingItem = items.find(
-          item => 
-            item.product_id === productId && 
-            item.size === size && 
+          item =>
+            item.product_id === productId &&
+            item.size === size &&
+            item.labourMode === labourMode &&
             JSON.stringify(item.selectedShade) === JSON.stringify(selectedShade)
         );
 
         // Update UI Store for Notification
         const uiStore = useUIStore.getState();
-        uiStore.setLastAddedItem({ 
-          name: product?.name || 'Product', 
-          image: product?.image_url || null 
+        uiStore.setLastAddedItem({
+          name: product?.name || 'Product',
+          image: product?.image_url || null
         });
         uiStore.setCartToastOpen(true);
 
@@ -54,7 +64,9 @@ export const useCartStore = create<CartStore>()(
                 quantity,
                 created_at: new Date().toISOString(),
                 product,
-                selectedShade
+                selectedShade,
+                labourMode,
+                labourDiscount
               }
             ]
           });
@@ -85,13 +97,39 @@ export const useCartStore = create<CartStore>()(
       getTotal: () => {
         return get().items.reduce((total, item) => {
           if (!item.product) return total;
-          
+
           const units = item.product.units || [];
           const unit = units.find((u: any) => u.label === item.size) || units[0];
-          const price = unit?.price || 0;
-          
-          return total + (price * item.quantity);
+          const basePrice = unit?.price || 0;
+
+          // Apply without-labour discount if applicable
+          const discount = item.labourMode === 'without' ? (item.labourDiscount || 0) : 0;
+          const effectivePrice = basePrice * (1 - discount / 100);
+
+          return total + effectivePrice * item.quantity;
         }, 0);
+      },
+      getLabourSubtotals: () => {
+        const items = get().items;
+        let withLabourSubtotal = 0;
+        let withoutLabourSubtotal = 0;
+
+        items.forEach(item => {
+          if (!item.product) return;
+          const units = item.product.units || [];
+          const unit = units.find((u: any) => u.label === item.size) || units[0];
+          const basePrice = unit?.price || 0;
+
+          if (item.labourMode === 'without') {
+            const discount = item.labourDiscount || 0;
+            const effectivePrice = basePrice * (1 - discount / 100);
+            withoutLabourSubtotal += effectivePrice * item.quantity;
+          } else {
+            withLabourSubtotal += basePrice * item.quantity;
+          }
+        });
+
+        return { withLabourSubtotal, withoutLabourSubtotal };
       },
       refreshItems: async () => {
         const items = get().items;

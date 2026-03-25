@@ -22,6 +22,12 @@ export interface Brand {
   created_at: string;
 }
 
+export interface LabourConfig {
+  enabled: boolean;
+  default: 'with' | 'without';
+  without_discount_percent: number;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -33,6 +39,7 @@ export interface Product {
   units?: { label: string; price: number }[];
   in_stock: boolean;
   shade_card_url?: string | null;
+  labour_config?: LabourConfig | null;
   selectedShade?: {
     name: string;
     code: string;
@@ -55,6 +62,8 @@ export interface CartItem {
     code: string;
     hex: string;
   };
+  labourMode?: 'with' | 'without';
+  labourDiscount?: number; // percent applied for without-labour
 }
 
 export interface OrderItem {
@@ -65,7 +74,10 @@ export interface OrderItem {
   unit_label: string; // Redundant but good for backward compatibility if needed
   quantity: number;
   price: number;
+  discounted_price?: number; // final price after without-labour discount
   image_url: string | null;
+  labourMode?: 'with' | 'without';
+  labourDiscount?: number;
   selectedShade?: {
     name: string;
     code: string;
@@ -101,6 +113,13 @@ export interface DealPackage {
   border?: string;
 }
 
+export interface LabourCheckoutTier {
+  min_amount: number;
+  discount_type: 'flat' | 'percent';
+  discount_value: number;
+  label: string;
+}
+
 export interface SiteSettings {
   logo?: string;
   contact?: {
@@ -123,6 +142,10 @@ export interface SiteSettings {
   deals_packages_config?: DealPackage[];
   deals_labour_discount?: number;
   deals_visit_fee?: number;
+  // Labour system
+  labour_checkout_tiers?: LabourCheckoutTier[];
+  labour_without_default_discount?: number;
+  labour_upsell_items?: string[]; // product IDs
 }
 
 export interface DiscountRule {

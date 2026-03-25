@@ -3,13 +3,13 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Trash2, Minus, Plus, MessageCircle, ArrowRight } from 'lucide-react';
+import { Trash2, Minus, Plus, MessageCircle, ArrowRight, Truck, Wrench } from 'lucide-react';
 import { useCartStore } from '@/lib/store';
-import { useDiscountRules } from '@/lib/hooks/useSettings';
+import { useDiscountRules, useLabourSettings } from '@/lib/hooks/useSettings';
 
 export default function CartPage() {
-  const { items, updateQuantity, removeItem, getTotal, refreshItems } = useCartStore();
-  const { calculateDiscount, getNextTier } = useDiscountRules();
+  const { items, updateQuantity, removeItem, getTotal, getLabourSubtotals, refreshItems } = useCartStore();
+  const { calculateLabourDiscount, getNextLabourTier } = useLabourSettings();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -20,17 +20,29 @@ export default function CartPage() {
 
   if (!mounted) return null;
 
-  const subtotal = getTotal();
-  const discountPercent = calculateDiscount(subtotal);
-  const discountAmount = subtotal * (discountPercent / 100);
-  const total = subtotal - discountAmount;
-  const nextTier = getNextTier(subtotal);
+  const { withLabourSubtotal, withoutLabourSubtotal } = getLabourSubtotals();
+  const subtotal = getTotal(); // total after per-item without-labour discounts
+  const hasAnyWithoutLabour = withoutLabourSubtotal > 0;
+  const hasAnyWithLabour = withLabourSubtotal > 0;
 
-  const getPrice = (item: typeof items[0]) => {
+  const { discountAmount: serviceDiscount, tierLabel } = calculateLabourDiscount(withLabourSubtotal);
+  const total = subtotal - serviceDiscount;
+  const nextTier = getNextLabourTier(withLabourSubtotal);
+
+  const getItemBasePrice = (item: typeof items[0]) => {
     if (!item.product) return 0;
     const units = item.product.units || [];
     const unit = units.find((u: any) => u.label === item.size) || units[0];
     return unit?.price || 0;
+  };
+
+  const getItemEffectivePrice = (item: typeof items[0]) => {
+    const base = getItemBasePrice(item);
+    if (item.labourMode === 'without') {
+      const d = item.labourDiscount || 0;
+      return Math.round(base * (1 - d / 100));
+    }
+    return base;
   };
 
   return (
@@ -52,89 +64,146 @@ export default function CartPage() {
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Cart Items */}
             <div className="lg:col-span-2 space-y-4">
-              {items.map((item) => (
-                <motion.div
-                  key={item.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="bg-white rounded-xl p-4 shadow-md flex flex-col sm:flex-row gap-4"
-                >
-                  {/* Image */}
-                  <div className="w-24 h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
-                    <img
-                      src={item.product?.image_url || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200'}
-                      alt={item.product?.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
+              {items.map((item) => {
+                const basePrice = getItemBasePrice(item);
+                const effectivePrice = getItemEffectivePrice(item);
+                const isWithout = item.labourMode === 'without';
+                const discount = item.labourDiscount || 0;
 
-                  {/* Details */}
-                  <div className="flex-1 min-w-0">
-                    <p className="text-gold text-xs uppercase tracking-wider font-semibold">
-                      {item.product?.brand}
-                    </p>
-                    <h3 className="font-heading text-base font-semibold text-navy truncate">
-                      {item.product?.name}
-                    </h3>
-                    <div className="flex items-center gap-4 text-sm mb-2">
-                      <p className="text-navy font-bold uppercase text-[10px] tracking-widest bg-gray-50 px-2 py-1 rounded">
-                        {item.size}
-                      </p>
-                      {item.selectedShade && (
-                        <div className="flex items-center gap-1.5 border-l border-gray-200 pl-4">
-                          <div 
-                            className="w-3 h-3 rounded-full shadow-sm border border-gray-100" 
-                            style={{ backgroundColor: item.selectedShade.hex }}
-                          />
-                          <span className="text-navy font-medium text-xs">
-                            {item.selectedShade.name}
-                          </span>
-                        </div>
-                      )}
+                return (
+                  <motion.div
+                    key={item.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className={`bg-white rounded-xl p-4 shadow-md flex flex-col sm:flex-row gap-4 border-2 transition-all ${
+                      isWithout ? 'border-amber-100' : 'border-transparent'
+                    }`}
+                  >
+                    {/* Image */}
+                    <div className="w-24 h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                      <img
+                        src={item.product?.image_url || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200'}
+                        alt={item.product?.name}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
 
-                    <div className="flex flex-wrap items-center justify-between gap-y-3">
-                      {/* Quantity */}
-                      <div className="flex items-center gap-1.5 xs:gap-2">
-                        <button
-                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                          className="w-7 h-7 xs:w-8 xs:h-8 rounded-lg bg-gray-100 flex items-center justify-center hover:bg-gold-pale transition-colors"
-                        >
-                          <Minus size={14} className="xs:w-4 xs:h-4" />
-                        </button>
-                        <span className="w-6 text-center font-medium text-sm xs:text-base">{item.quantity}</span>
-                        <button
-                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                          className="w-7 h-7 xs:w-8 xs:h-8 rounded-lg bg-gray-100 flex items-center justify-center hover:bg-gold-pale transition-colors"
-                        >
-                          <Plus size={14} className="xs:w-4 xs:h-4" />
-                        </button>
+                    {/* Details */}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-gold text-xs uppercase tracking-wider font-semibold">
+                        {item.product?.brand}
+                      </p>
+                      <h3 className="font-heading text-base font-semibold text-navy truncate">
+                        {item.product?.name}
+                      </h3>
+
+                      <div className="flex flex-wrap items-center gap-2 text-sm mb-2 mt-1">
+                        <p className="text-navy font-bold uppercase text-[10px] tracking-widest bg-gray-50 px-2 py-1 rounded">
+                          {item.size}
+                        </p>
+
+                        {/* Labour Mode Badge */}
+                        <span className={`text-[9px] font-black uppercase tracking-widest px-2 py-1 rounded-full flex items-center gap-1 ${
+                          isWithout
+                            ? 'bg-amber-100 text-amber-700'
+                            : 'bg-green-50 text-green-700'
+                        }`}>
+                          {isWithout ? <Wrench size={9} /> : <Truck size={9} />}
+                          {isWithout ? 'Without Labour' : 'With Labour'}
+                        </span>
+
+                        {item.selectedShade && (
+                          <div className="flex items-center gap-1.5 border-l border-gray-200 pl-2">
+                            <div
+                              className="w-3 h-3 rounded-full shadow-sm border border-gray-100"
+                              style={{ backgroundColor: item.selectedShade.hex }}
+                            />
+                            <span className="text-navy font-medium text-xs">
+                              {item.selectedShade.name}
+                            </span>
+                          </div>
+                        )}
                       </div>
 
-                      {/* Price */}
-                      <p className="font-heading text-base xs:text-lg font-bold text-navy whitespace-nowrap">
-                        Rs. {(getPrice(item) * item.quantity).toLocaleString()}
-                      </p>
-                    </div>
-                  </div>
+                      {/* Without Labour discount info */}
+                      {isWithout && discount > 0 && (
+                        <p className="text-[10px] text-green-600 font-bold mb-1.5">
+                          {discount}% product discount applied · No service included · Delivery charges apply
+                        </p>
+                      )}
+                      {!isWithout && (
+                        <p className="text-[10px] text-green-600 font-bold mb-1.5">
+                          Includes free service &amp; delivery · Eligible for service discount
+                        </p>
+                      )}
 
-                  {/* Remove */}
-                  <button
-                    onClick={() => removeItem(item.id)}
-                    className="text-gray-400 hover:text-red-500 transition-colors"
-                    aria-label="Remove item"
-                  >
-                    <Trash2 size={20} />
-                  </button>
-                </motion.div>
-              ))}
+                      <div className="flex flex-wrap items-center justify-between gap-y-3">
+                        {/* Quantity */}
+                        <div className="flex items-center gap-1.5 xs:gap-2">
+                          <button
+                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            className="w-7 h-7 xs:w-8 xs:h-8 rounded-lg bg-gray-100 flex items-center justify-center hover:bg-gold-pale transition-colors"
+                          >
+                            <Minus size={14} className="xs:w-4 xs:h-4" />
+                          </button>
+                          <span className="w-6 text-center font-medium text-sm xs:text-base">{item.quantity}</span>
+                          <button
+                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            className="w-7 h-7 xs:w-8 xs:h-8 rounded-lg bg-gray-100 flex items-center justify-center hover:bg-gold-pale transition-colors"
+                          >
+                            <Plus size={14} className="xs:w-4 xs:h-4" />
+                          </button>
+                        </div>
+
+                        {/* Price */}
+                        <div className="text-right">
+                          {isWithout && discount > 0 && (
+                            <p className="text-xs text-gray-400 line-through">
+                              Rs. {(basePrice * item.quantity).toLocaleString()}
+                            </p>
+                          )}
+                          <p className="font-heading text-base xs:text-lg font-bold text-navy whitespace-nowrap">
+                            Rs. {(effectivePrice * item.quantity).toLocaleString()}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Remove */}
+                    <button
+                      onClick={() => removeItem(item.id)}
+                      className="text-gray-400 hover:text-red-500 transition-colors"
+                      aria-label="Remove item"
+                    >
+                      <Trash2 size={20} />
+                    </button>
+                  </motion.div>
+                );
+              })}
             </div>
 
             {/* Summary */}
             <div className="lg:col-span-1">
-              <div className="bg-white rounded-xl p-6 shadow-md sticky top-24">
-                <h2 className="font-heading text-xl font-semibold text-navy mb-6">Order Summary</h2>
+              <div className="bg-white rounded-xl p-6 shadow-md sticky top-24 space-y-4">
+                <h2 className="font-heading text-xl font-semibold text-navy">Order Summary</h2>
 
+                {/* Mixed cart info */}
+                {hasAnyWithLabour && hasAnyWithoutLabour && (
+                  <div className="bg-blue-50 border border-blue-100 rounded-lg p-3 text-xs text-blue-700">
+                    <p className="font-bold mb-0.5">Mixed Cart</p>
+                    <p>With-Labour items: Rs. {withLabourSubtotal.toLocaleString()} — eligible for service discount</p>
+                    <p>Without-Labour items: Rs. {withoutLabourSubtotal.toLocaleString()} — delivery charges apply</p>
+                  </div>
+                )}
+
+                {/* Next tier nudge */}
+                {nextTier && withLabourSubtotal > 0 && (
+                  <div className="bg-gold/5 border border-gold/20 rounded-lg p-3 text-xs text-navy">
+                    <span className="font-bold">Almost there! </span>
+                    Add Rs. {nextTier.amountNeeded.toLocaleString()} more in With-Labour items to unlock{' '}
+                    <span className="text-gold font-bold">{nextTier.discount}</span>
+                  </div>
+                )}
 
                 {/* Totals */}
                 <div className="space-y-3 border-t border-gray-100 pt-4">
@@ -143,16 +212,29 @@ export default function CartPage() {
                     <span className="font-medium">Rs. {subtotal.toLocaleString()}</span>
                   </div>
 
-                  {discountPercent > 0 && (
+                  {serviceDiscount > 0 && (
                     <div className="flex justify-between text-green-600">
-                      <span>Discount ({discountPercent}%)</span>
-                      <span>- Rs. {discountAmount.toLocaleString()}</span>
+                      <span>Service Discount ({tierLabel})</span>
+                      <span>- Rs. {serviceDiscount.toLocaleString()}</span>
                     </div>
                   )}
 
-                  {discountAmount > 0 && (
+                  {hasAnyWithoutLabour && (
+                    <div className="flex justify-between text-amber-600 text-xs">
+                      <span>Delivery (Without Labour items)</span>
+                      <span>Calculated at checkout</span>
+                    </div>
+                  )}
+                  {!hasAnyWithoutLabour && (
+                    <div className="flex justify-between text-green-600 text-xs">
+                      <span>Delivery</span>
+                      <span className="font-bold">FREE</span>
+                    </div>
+                  )}
+
+                  {serviceDiscount > 0 && (
                     <div className="flex items-center gap-2 bg-green-50 px-3 py-2 rounded-lg">
-                      <span className="text-green-700 text-sm">You save Rs. {discountAmount.toLocaleString()}</span>
+                      <span className="text-green-700 text-sm">Service Discount Applied: Rs. {serviceDiscount.toLocaleString()}</span>
                     </div>
                   )}
 
@@ -167,7 +249,7 @@ export default function CartPage() {
                   href={`https://wa.me/923475658761?text=Hi! I have ${items.length} items in my cart totaling Rs. ${total}. Can you help me with my order?`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 w-full py-3 mt-6 border-2 border-green-500 text-green-500 rounded-lg font-medium hover:bg-green-500 hover:text-white transition-colors"
+                  className="flex items-center justify-center gap-2 w-full py-3 border-2 border-green-500 text-green-500 rounded-lg font-medium hover:bg-green-500 hover:text-white transition-colors"
                 >
                   <MessageCircle size={18} />
                   Enquire on WhatsApp
@@ -176,7 +258,7 @@ export default function CartPage() {
                 {/* Checkout Button */}
                 <Link
                   href="/checkout"
-                  className="block w-full text-center mt-4 py-4 rounded-lg font-semibold bg-navy text-white hover:bg-navy/90 transition-colors"
+                  className="block w-full text-center py-4 rounded-lg font-semibold bg-navy text-white hover:bg-navy/90 transition-colors"
                 >
                   Proceed to Checkout
                 </Link>

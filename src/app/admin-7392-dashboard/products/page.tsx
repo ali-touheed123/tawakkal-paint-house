@@ -110,7 +110,12 @@ export default function ProductsPage() {
       image_url: formData.get('image_url'),
       units: modalUnits.filter(u => u.label.trim() !== ''),
       in_stock: formData.get('in_stock') === 'on',
-      shade_card_url: formData.get('shade_card_url')
+      shade_card_url: formData.get('shade_card_url'),
+      labour_config: {
+        enabled: formData.get('labour_enabled') === 'on',
+        default: formData.get('labour_default') as 'with' | 'without',
+        without_discount_percent: Number(formData.get('labour_discount') || 10)
+      }
     };
 
     const supabase = createClient();
@@ -482,6 +487,47 @@ export default function ProductsPage() {
                   ))}
                 </div>
               </div>
+              
+              {/* Labour Configuration */}
+              <div className="col-span-2 border-t border-gray-100 pt-4 mt-2">
+                <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-4">Labour & Service Configuration</label>
+                <div className="bg-blue-50/50 rounded-xl p-4 border border-blue-100 space-y-4">
+                  <label className="flex items-center gap-2 cursor-pointer group">
+                    <input 
+                      type="checkbox" 
+                      name="labour_enabled" 
+                      defaultChecked={editingProduct?.labour_config?.enabled ?? true} 
+                      className="w-4 h-4 rounded border-gray-300 text-navy focus:ring-navy" 
+                    />
+                    <span className="text-sm font-bold text-navy group-hover:text-gold transition-colors">Enable Labour Selection on Product Page</span>
+                  </label>
+                  
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                    <div>
+                      <label className="block text-[10px] font-bold text-gray-500 uppercase mb-1 tracking-wider">Default Mode Selection</label>
+                      <select 
+                        name="labour_default"
+                        defaultValue={editingProduct?.labour_config?.default || 'with'}
+                        className="w-full p-2.5 bg-white border border-gray-200 rounded-lg focus:border-gold focus:outline-none text-sm"
+                      >
+                        <option value="with">With Labour (Default)</option>
+                        <option value="without">Without Labour</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold text-gray-500 uppercase mb-1 tracking-wider">Without-Labour Discount %</label>
+                      <input 
+                        type="number"
+                        name="labour_discount"
+                        defaultValue={editingProduct?.labour_config?.without_discount_percent ?? 10}
+                        className="w-full p-2.5 bg-white border border-gray-200 rounded-lg focus:border-gold focus:outline-none text-sm"
+                      />
+                      <p className="text-[9px] text-gray-400 mt-1">Leave empty or 10 to use global default.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <div className="col-span-2 pt-2">
                 <label className="flex items-center gap-2 cursor-pointer group">
                   <input type="checkbox" name="in_stock" defaultChecked={editingProduct?.in_stock ?? true} className="w-4 h-4 rounded border-gray-300 text-gold focus:ring-gold" />

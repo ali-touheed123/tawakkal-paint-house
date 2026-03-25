@@ -12,16 +12,19 @@ import {
     Package,
     Info,
     ArrowRight,
-    Search,
     FileText,
-    Download
+    Download,
+    CheckCircle,
+    XCircle
 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { Product, ItemSize, Shade } from '@/types';
 import { useCartStore } from '@/lib/store';
+import { useLabourSettings } from '@/lib/hooks/useSettings';
 import { ShadeSelector } from '@/components/ShadeSelector';
 import { SimpleVisualizer } from '@/components/SimpleVisualizer';
 import { PaintCalculator } from '@/components/PaintCalculator';
+import { UpsellSection } from '@/components/UpsellSection';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { BRIGHTO_SHADES, BRIGHTO_ENAMEL_SHADES, BRIGHTO_PLASTIC_EMULSION_SHADES, BRIGHTO_ALL_WEATHER_SHADES, SAASI_HYDROUS_SHADES, SAASI_MATT_ENAMEL_SHADES, SAASI_PLASTIC_EMULSION_SHADES, SAASI_SUPER_GLOSS_ENAMEL_SHADES, SAASI_WEATHER_SAFE_SHADES, GOBIS_INDUSTRIAL_ENAMEL_SHADES, GOBIS_STOVING_PAINT_SHADES, GOBIS_CARMAN_SERIES_SHADES, GOBIS_SILVERLINE_ENAMEL_SHADES, GOBIS_SILVERLINE_EMULSION_SHADES, GOBIS_GOLD_LUXURIOUS_WALL_EMULSION_SHADES, GOBIS_SILKSHEEN_EMULSION_SHADES, GOBIS_GOLD_ENAMEL_SHADES, GOBIS_AQUEOUS_MATT_FINISH_SHADES, GOBIS_GOLD_AQUEOUS_MATT_FINISH_SHADES, GOBIS_GOLD_EGGSHELL_MATT_FINISH_SHADES, GOBIS_GLOSS_ENAMEL_SHADES, GOBIS_EGGSHELL_MATT_ENAMEL_SHADES, RELIABLE_WEATHER_PROTECTOR_SHADES, RELIABLE_MATT_ENAMEL_SHADES, RELIABLE_EMULSION_SHADES, RELIABLE_ENAMEL_SHADES, RELIABLE_WATER_MATT_SHADES, CHOICE_SYNTHETIC_ENAMEL_SHADES, CHOICE_WEATHER_SEALER_SHADES, RELIANCE_STAINLESS_MATT_SHADES, RELIANCE_SEMI_PLASTIC_EMULSION_SHADES, RELIANCE_MATT_ENAMEL_SHADES, RELIANCE_WEATHER_GUARD_SHADES, RELIANCE_SYNTHETIC_ENAMEL_SHADES, BERGER_WEATHER_PRO_SHADES, BERGER_NU_ENAMEL_SHADES, BERGER_NU_EMULSION_SHADES, BERGER_ELEGANCE_SILK_EMULSION_SHADES, BERGER_SUPERIOR_MATT_FINISH_SHADES, DIAMOND_ACE_WEATHER_DEFENDER_SHADES, DIAMOND_OVERALL_PLASTICCOAT_EMULSION_SHADES, DIAMOND_ACE_ACRYLIC_PLASTIC_EMULSION_SHADES, DIAMOND_ACE_MATT_ENAMEL_SHADES, DIAMOND_ACE_SUPER_GLOSS_ENAMEL_SHADES, DIAMOND_OVERALL_SUPER_EMULSION_SHADES, DIAMOND_OVERALL_HIGH_GLOSS_ENAMEL_SHADES, DIAMOND_OVERALL_WEATHER_MAX_SHADES, DIAMOND_EVERLAST_HIGH_GLOSS_ENAMEL_SHADES, DIAMOND_ACE_DURASILK_EMULSION_SHADES, DIAMOND_VALUE_EMULSION_SHADES, DIAMOND_OVERALL_MATT_ENAMEL_SHADES, DIAMOND_OVERALL_AQUAMAX_WATER_MATT_SHADES, DIAMOND_ACE_TIMBERLAC_WOOD_STAINS_SHADES, BERGER_WEATHER_COAT_GLOW_365_SHADES, BERGER_VIP_WEATHER_COAT_SHADES, BERGER_ALLROUNDER_MATT_ENAMEL_SHADES, BERGER_TOP_SUPER_EMULSION_SHADES, BERGER_SUPER_GLOSS_ENAMEL_SHADES, BERGER_SEMI_PLASTIC_EMULSION_SHADES, BERGER_ELEGANCE_MATT_EMULSION_SHADES } from '@/constants/shades';
@@ -38,8 +41,10 @@ export function ProductView({ initialId }: { initialId: string }) {
     const [selectedShade, setSelectedShade] = useState<Shade | null>(null);
     const [addingToCart, setAddingToCart] = useState(false);
     const [activeTab, setActiveTab] = useState<'visualizer' | 'calculator'>('visualizer');
+    const [labourMode, setLabourMode] = useState<'with' | 'without'>('with');
 
     const { addItem } = useCartStore();
+    const { defaultWithoutDiscount, upsellItemIds } = useLabourSettings();
 
     const isBrightoSuperEmulsion = product?.name === 'Brighto Super Emulsion';
     const isBrightoSyntheticEnamel = product?.name === 'Brighto Synthetic Enamel';
@@ -286,6 +291,16 @@ export function ProductView({ initialId }: { initialId: string }) {
                 if (productData.units && productData.units.length > 0) {
                     setSelectedSize(productData.units[0].label);
                 }
+
+                // Set labour default from product config
+                const labourCfg = productData.labour_config;
+                if (labourCfg && labourCfg.enabled === false) {
+                    setLabourMode('without');
+                } else if (labourCfg?.default === 'without') {
+                    setLabourMode('without');
+                } else {
+                    setLabourMode('with');
+                }
             }
             setLoading(false);
         };
@@ -298,21 +313,35 @@ export function ProductView({ initialId }: { initialId: string }) {
         return product?.units?.find(u => u.label === selectedSize) || product?.units?.[0];
     }, [product, selectedSize]);
 
-    const price = selectedUnit?.price || 0;
+    const basePrice = selectedUnit?.price || 0;
+
+    // Determine the without-labour discount: product-specific override or global default
+    const withoutDiscount = useMemo(() => {
+        const productDiscount = product?.labour_config?.without_discount_percent;
+        return typeof productDiscount === 'number' ? productDiscount : defaultWithoutDiscount;
+    }, [product, defaultWithoutDiscount]);
+
+    const price = labourMode === 'without'
+        ? Math.round(basePrice * (1 - withoutDiscount / 100))
+        : basePrice;
+
+    const labourEnabled = product?.labour_config?.enabled !== false;
 
     const handleAddToCart = () => {
         if (!product) return;
         setAddingToCart(true);
         addItem(
-            product.id, 
-            selectedSize, 
-            quantity, 
+            product.id,
+            selectedSize,
+            quantity,
             product,
             selectedShade ? {
                 name: selectedShade.name,
                 code: selectedShade.code,
                 hex: selectedShade.hex
-            } : undefined
+            } : undefined,
+            labourMode,
+            labourMode === 'without' ? withoutDiscount : 0
         );
         setTimeout(() => setAddingToCart(false), 500);
     };
@@ -517,8 +546,106 @@ export function ProductView({ initialId }: { initialId: string }) {
 
                         {/* Price & POS */}
                         <div className="space-y-8 pt-4">
+
+                            {/* Labour Mode Toggle */}
+                            {labourEnabled && (
+                                <div className="space-y-3">
+                                    <label className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Service Option</label>
+                                    <div className="grid grid-cols-1 xs:grid-cols-2 gap-3">
+                                        {/* With Labour */}
+                                        <button
+                                            onClick={() => setLabourMode('with')}
+                                            className={cn(
+                                                'relative flex flex-col items-start gap-1 p-4 rounded-xl border-2 text-left transition-all duration-200',
+                                                labourMode === 'with'
+                                                    ? 'border-navy bg-navy/5 shadow-md'
+                                                    : 'border-gray-100 bg-white hover:border-gray-200'
+                                            )}
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                <div className={cn(
+                                                    'w-4 h-4 rounded-full border-2 flex items-center justify-center transition-all',
+                                                    labourMode === 'with' ? 'border-navy bg-navy' : 'border-gray-300'
+                                                )}>
+                                                    {labourMode === 'with' && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
+                                                </div>
+                                                <span className={cn('text-sm font-bold', labourMode === 'with' ? 'text-navy' : 'text-gray-500')}>
+                                                    With Labour
+                                                </span>
+                                            </div>
+                                            <p className="text-[10px] text-gray-400 pl-6">Free service & delivery</p>
+                                            <div className="mt-1 pl-6">
+                                                <span className="text-base font-bold text-navy">Rs. {basePrice.toLocaleString()}</span>
+                                            </div>
+                                            {labourMode === 'with' && (
+                                                <span className="absolute top-2 right-2 text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 bg-green-500 text-white rounded-full">Default</span>
+                                            )}
+                                        </button>
+
+                                        {/* Without Labour */}
+                                        <button
+                                            onClick={() => setLabourMode('without')}
+                                            className={cn(
+                                                'relative flex flex-col items-start gap-1 p-4 rounded-xl border-2 text-left transition-all duration-200',
+                                                labourMode === 'without'
+                                                    ? 'border-amber-400 bg-amber-50 shadow-md'
+                                                    : 'border-gray-100 bg-white hover:border-amber-200'
+                                            )}
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                <div className={cn(
+                                                    'w-4 h-4 rounded-full border-2 flex items-center justify-center transition-all',
+                                                    labourMode === 'without' ? 'border-amber-500 bg-amber-500' : 'border-gray-300'
+                                                )}>
+                                                    {labourMode === 'without' && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
+                                                </div>
+                                                <span className={cn('text-sm font-bold', labourMode === 'without' ? 'text-amber-700' : 'text-gray-500')}>
+                                                    Without Labour
+                                                </span>
+                                            </div>
+                                            <p className="text-[10px] text-gray-400 pl-6">Delivery charges apply</p>
+                                            <div className="mt-1 pl-6 flex items-baseline gap-2">
+                                                <span className="text-base font-bold text-amber-600">Rs. {Math.round(basePrice * (1 - withoutDiscount / 100)).toLocaleString()}</span>
+                                                <span className="text-[9px] font-black text-green-600 bg-green-50 px-1.5 py-0.5 rounded-full">{withoutDiscount}% OFF</span>
+                                            </div>
+                                        </button>
+                                    </div>
+
+                                    {/* Service messaging */}
+                                    <AnimatePresence mode="wait">
+                                        {labourMode === 'with' ? (
+                                            <motion.div
+                                                key="with-msg"
+                                                initial={{ opacity: 0, y: -4 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                exit={{ opacity: 0, y: 4 }}
+                                                className="flex items-center gap-2 px-3 py-2 bg-green-50 border border-green-100 rounded-lg"
+                                            >
+                                                <CheckCircle size={14} className="text-green-500 shrink-0" />
+                                                <span className="text-xs text-green-700 font-medium">Includes free service &amp; delivery</span>
+                                            </motion.div>
+                                        ) : (
+                                            <motion.div
+                                                key="without-msg"
+                                                initial={{ opacity: 0, y: -4 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                exit={{ opacity: 0, y: 4 }}
+                                                className="flex items-center gap-2 px-3 py-2 bg-amber-50 border border-amber-100 rounded-lg"
+                                            >
+                                                <XCircle size={14} className="text-amber-500 shrink-0" />
+                                                <span className="text-xs text-amber-700 font-medium">Save {withoutDiscount}% (no service included) · Delivery charges apply</span>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+                            )}
+
+                            {/* Price Display */}
                             <div className="flex items-baseline gap-4">
                                 <div className="text-2xl xs:text-4xl font-bold text-navy">Rs. {price?.toLocaleString()}</div>
+                                {labourMode === 'without' && (
+                                    <div className="text-sm text-gray-400 line-through">Rs. {basePrice.toLocaleString()}</div>
+                                )}
                             </div>
 
                             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6">
@@ -533,12 +660,12 @@ export function ProductView({ initialId }: { initialId: string }) {
                                     className="w-full sm:flex-1 h-14 bg-navy text-white font-bold rounded-xl shadow-xl shadow-navy/20 hover:bg-gold hover:shadow-gold/30 transition-all flex items-center justify-center gap-3 active:scale-95 disabled:opacity-50"
                                 >
                                     <ShoppingCart size={20} />
-                                    {addingToCart ? 'Success!' : product.in_stock ? 'Add to Cart' : 'Out of Stock'}
+                                    {addingToCart ? 'Added to Cart!' : product.in_stock ? 'Add to Cart' : 'Out of Stock'}
                                 </button>
                             </div>
 
                             <Link
-                                href={`https://wa.me/923475658761?text=Hi! I want to order ${product.name} (${selectedSize}) with shade ${selectedShade?.name || 'Standard'}.`}
+                                href={`https://wa.me/923475658761?text=Hi! I want to order ${product.name} (${selectedSize}) ${labourMode === 'without' ? 'without labour service' : 'with labour service'} - shade: ${selectedShade?.name || 'Standard'}.`}
                                 target="_blank"
                                 className="flex items-center gap-2 text-green-500 font-bold hover:underline"
                             >
@@ -551,7 +678,7 @@ export function ProductView({ initialId }: { initialId: string }) {
                         <div className="grid grid-cols-3 gap-4 pt-10 border-t border-gray-100">
                             {[
                                 { icon: ShieldCheck, label: '100% Original' },
-                                { icon: Truck, label: 'Standard Delivery' },
+                                { icon: Truck, label: labourMode === 'with' ? 'Free Delivery' : 'Paid Delivery' },
                                 { icon: Package, label: 'Secure Packing' }
                             ].map((b, i) => (
                                 <div key={i} className="flex flex-col items-center gap-2 text-center grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
@@ -563,6 +690,15 @@ export function ProductView({ initialId }: { initialId: string }) {
                     </div>
                 </div>
 
+            </div>
+
+            {/* Upsell Section – always visible */}
+            <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8 pb-12">
+                <UpsellSection
+                    labourMode={labourMode}
+                    upsellItemIds={upsellItemIds}
+                    currentProductId={product?.id || ''}
+                />
             </div>
         </div>
     );

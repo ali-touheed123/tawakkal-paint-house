@@ -25,7 +25,7 @@ const navItems = [
   { name: 'Brands', href: '/admin-7392-dashboard/brands', icon: Tag, adminOnly: true },
   { name: 'Products', href: '/admin-7392-dashboard/products', icon: Package, adminOnly: true },
   { name: 'Reviews', href: '/admin-7392-dashboard/reviews', icon: Star, adminOnly: false },
-  { name: 'Discounts', href: '/admin-7392-dashboard/discounts', icon: Percent, adminOnly: true },
+  { name: 'Discounts & Services', href: '/admin-7392-dashboard/discounts', icon: Percent, adminOnly: true },
   { name: 'Deals', href: '/admin-7392-dashboard/deals', icon: Briefcase, adminOnly: true },
 ];
 

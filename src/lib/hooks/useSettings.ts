@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import { SiteSettings, DiscountRule, ShippingRate, PaymentMethod } from '@/types';
+import { SiteSettings, DiscountRule, ShippingRate, PaymentMethod, LabourCheckoutTier } from '@/types';
 
 export function useSettings() {
     const [settings, setSettings] = useState<SiteSettings | null>(null);
@@ -62,6 +62,77 @@ export function useDiscountRules() {
     };
 
     return { rules, loading, calculateDiscount, getNextTier };
+}
+
+export function useLabourSettings() {
+    const [tiers, setTiers] = useState<LabourCheckoutTier[]>([]);
+    const [defaultWithoutDiscount, setDefaultWithoutDiscount] = useState(10);
+    const [upsellItemIds, setUpsellItemIds] = useState<string[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function load() {
+            const supabase = createClient();
+            const { data } = await supabase
+                .from('site_settings')
+                .select('key, value')
+                .in('key', ['labour_checkout_tiers', 'labour_without_default_discount', 'labour_upsell_items']);
+
+            if (data) {
+                data.forEach((row: any) => {
+                    if (row.key === 'labour_checkout_tiers') setTiers(row.value || []);
+                    if (row.key === 'labour_without_default_discount') setDefaultWithoutDiscount(Number(row.value) || 10);
+                    if (row.key === 'labour_upsell_items') setUpsellItemIds(row.value || []);
+                });
+            }
+            setLoading(false);
+        }
+        load();
+    }, []);
+
+    /**
+     * Calculates the labour service discount for With-Labour items only.
+     * Returns { discountAmount, tierLabel } based on the highest qualifying tier.
+     */
+    const calculateLabourDiscount = (withLabourSubtotal: number): { discountAmount: number; tierLabel: string } => {
+        if (tiers.length === 0 || withLabourSubtotal <= 0) return { discountAmount: 0, tierLabel: '' };
+
+        // Find the highest qualifying tier
+        const qualifyingTiers = tiers.filter(t => withLabourSubtotal >= t.min_amount);
+        if (qualifyingTiers.length === 0) return { discountAmount: 0, tierLabel: '' };
+
+        const tier = qualifyingTiers[qualifyingTiers.length - 1]; // highest
+
+        let discountAmount = 0;
+        if (tier.discount_type === 'flat') {
+            discountAmount = tier.discount_value;
+        } else {
+            discountAmount = withLabourSubtotal * (tier.discount_value / 100);
+        }
+
+        return { discountAmount: Math.round(discountAmount), tierLabel: tier.label };
+    };
+
+    const getNextLabourTier = (withLabourSubtotal: number): { amountNeeded: number; tierLabel: string; discount: string } | null => {
+        const nextTier = tiers.find(t => t.min_amount > withLabourSubtotal);
+        if (!nextTier) return null;
+        return {
+            amountNeeded: nextTier.min_amount - withLabourSubtotal,
+            tierLabel: nextTier.label,
+            discount: nextTier.discount_type === 'flat'
+                ? `Rs. ${nextTier.discount_value} OFF`
+                : `${nextTier.discount_value}% OFF`
+        };
+    };
+
+    return {
+        tiers,
+        defaultWithoutDiscount,
+        upsellItemIds,
+        loading,
+        calculateLabourDiscount,
+        getNextLabourTier
+    };
 }
 
 export function useShippingRates() {
