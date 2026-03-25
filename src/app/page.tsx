@@ -157,12 +157,6 @@ export default function HomePage() {
                     className="w-full h-full object-cover grayscale-[0.3] hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-navy via-transparent to-transparent opacity-60" />
-                  
-                  {/* Glass Card Overlay */}
-                  <div className="absolute bottom-10 left-10 right-10 p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl shadow-2xl translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                     <p className="text-gold text-[10px] font-black uppercase tracking-widest mb-1">Modern Palette</p>
-                     <h4 className="text-white text-xl font-bold">The Luxury Silk Collection</h4>
-                  </div>
                 </motion.div>
               </div>
             </motion.div>
