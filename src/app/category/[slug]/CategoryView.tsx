@@ -159,7 +159,13 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
     router.push(`/category/${category}?${params.toString()}`);
   };
 
-  const info = categoryDetails || categoryInfo.decorative;
+  const staticInfo = categoryInfo[category] || {
+    title: category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
+    description: 'Premium Quality Products',
+    hero: '/images/categories/decorative.jpg'
+  };
+
+  const info = categoryDetails || staticInfo;
 
   return (
     <div className="min-h-screen overflow-x-hidden">
