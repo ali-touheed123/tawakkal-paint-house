@@ -678,7 +678,7 @@ export function ProductView({ initialId }: { initialId: string }) {
                         <div className="grid grid-cols-3 gap-4 pt-10 border-t border-gray-100">
                             {[
                                 { icon: ShieldCheck, label: '100% Original' },
-                                { icon: Truck, label: labourMode === 'with' ? 'Free Delivery' : 'Paid Delivery' },
+                                { icon: Truck, label: 'Fast Shipping' },
                                 { icon: Package, label: 'Secure Packing' }
                             ].map((b, i) => (
                                 <div key={i} className="flex flex-col items-center gap-2 text-center grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
