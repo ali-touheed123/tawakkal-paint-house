@@ -72,8 +72,8 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
       if (catData) {
         setCategoryDetails({
           ...catData,
-          title: catData.name,
-          hero: catData.image_url || '/images/categories/decorative.jpg'
+          title: categoryInfo[category]?.title || catData.name.charAt(0).toUpperCase() + catData.name.slice(1),
+          hero: catData.image_url || categoryInfo[category]?.hero || '/images/categories/decorative.jpg'
         });
 
         // 2. Fetch Associated Brands
