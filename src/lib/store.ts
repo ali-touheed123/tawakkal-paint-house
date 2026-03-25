@@ -140,22 +140,33 @@ export const useCartStore = create<CartStore>()(
           const supabase = createClient();
           const productIds = Array.from(new Set(items.map(item => item.product_id))).filter(id => id && id.length === 36);
 
-          const { data: latestProducts, error } = await supabase
-            .from('products')
-            .select('*')
-            .in('id', productIds);
+          const [productsRes, settingsRes] = await Promise.all([
+             supabase.from('products').select('*').in('id', productIds),
+             supabase.from('site_settings').select('value').eq('key', 'labour_without_default_discount').single()
+          ]);
 
-          if (error) throw error;
+          const latestProducts = productsRes.data;
+          const defaultWithoutDiscount = Number(settingsRes.data?.value) || 10;
 
           if (latestProducts) {
-            const updatedItems = items.map(item => {
-              const latestProduct = latestProducts.find(p => p.id === item.product_id);
-              if (latestProduct) {
-                return { ...item, product: latestProduct };
-              }
-              return item;
-            });
-            set({ items: updatedItems });
+             const updatedItems = items.map(item => {
+               const latestProduct = latestProducts.find(p => p.id === item.product_id);
+               if (latestProduct) {
+                 // Recompute the discount based on latest data
+                 let updatedDiscount = item.labourDiscount || 0;
+                 if (item.labourMode === 'without') {
+                    updatedDiscount = latestProduct.labour_config?.without_discount_percent ?? defaultWithoutDiscount;
+                 }
+                 
+                 return { 
+                   ...item, 
+                   product: latestProduct,
+                   labourDiscount: updatedDiscount 
+                 };
+               }
+               return item;
+             });
+             set({ items: updatedItems });
           }
         } catch (err) {
           console.error('Failed to refresh cart items:', err);

@@ -41,14 +41,7 @@ export function UpsellSection({ labourMode, upsellItemIds, currentProductId }: U
             if (data && data.length > 0) {
                 setUpsellProducts(data);
             } else {
-                // Second fallback: any 4 products
-                const { data: anyProducts } = await supabase
-                    .from('products')
-                    .select('*')
-                    .eq('in_stock', true)
-                    .neq('id', currentProductId)
-                    .limit(4);
-                setUpsellProducts(anyProducts || []);
+                setUpsellProducts([]);
             }
             setLoading(false);
         }
@@ -82,6 +75,10 @@ export function UpsellSection({ labourMode, upsellItemIds, currentProductId }: U
     };
 
     const isHighlighted = labourMode === 'without';
+
+    if (!loading && upsellProducts.length === 0) {
+        return null;
+    }
 
     return (
         <motion.div
