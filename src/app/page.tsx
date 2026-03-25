@@ -90,7 +90,7 @@ export default function HomePage() {
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="max-w-4xl">
             {/* Left: Hero Content */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
@@ -131,33 +131,6 @@ export default function HomePage() {
 
               {/* Discount/Service Promotion */}
               <ValuePromotion />
-            </motion.div>
-
-            {/* Right: Modern Floating Showcase */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8, x: 50 }}
-              animate={{ opacity: 1, scale: 1, x: 0 }}
-              transition={{ duration: 1, ease: 'easeOut', delay: 0.2 }}
-              className="hidden lg:block relative"
-            >
-              {/* Artistic Background Splashes */}
-              <div className="absolute -top-20 -right-20 w-96 h-96 bg-gold/10 rounded-full blur-[120px] animate-pulse" />
-              <div className="absolute top-1/2 left-0 w-64 h-64 bg-navy-light/40 rounded-full blur-[100px]" />
-              
-              <div className="relative group">
-                {/* Main Large Visual */}
-                <motion.div 
-                   animate={{ y: [0, -20, 0] }}
-                   transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-                   className="relative z-10 w-full aspect-[4/5] max-w-lg mx-auto rounded-[40px] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.5)]"
-                >
-                  <img
-                    src="https://images.unsplash.com/photo-1589939705384-5185138a04b9?w=1200"
-                    alt="Interior Design Masterpiece"
-                    className="w-full h-full object-cover hover:scale-105 transition-all duration-1000"
-                  />
-                </motion.div>
-              </div>
             </motion.div>
           </div>
         </div>
