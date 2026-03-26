@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Trash2, Minus, Plus, MessageCircle, ArrowRight, Truck, Wrench } from 'lucide-react';
+import { Trash2, Minus, Plus, MessageCircle, ArrowRight, Truck, Wrench, Check } from 'lucide-react';
 import { useCartStore } from '@/lib/store';
 import { useDiscountRules, useLabourSettings } from '@/lib/hooks/useSettings';
 
@@ -187,14 +187,7 @@ export default function CartPage() {
               <div className="bg-white rounded-xl p-6 shadow-md sticky top-24 space-y-4">
                 <h2 className="font-heading text-xl font-semibold text-navy">Order Summary</h2>
 
-                {/* Mixed cart info */}
-                {hasAnyWithLabour && hasAnyWithoutLabour && (
-                  <div className="bg-blue-50 border border-blue-100 rounded-lg p-3 text-xs text-blue-700">
-                    <p className="font-bold mb-0.5">Mixed Cart</p>
-                    <p>With-Labour items: Rs. {withLabourSubtotal.toLocaleString()} — eligible for service discount</p>
-                    <p>Without-Labour items: Rs. {withoutLabourSubtotal.toLocaleString()} — delivery charges apply</p>
-                  </div>
-                )}
+                {/* Mixed cart info removed for cleaner UI */}
 
                 {/* Next tier nudge */}
                 {nextTier && (
@@ -209,38 +202,50 @@ export default function CartPage() {
                 <div className="space-y-3 border-t border-gray-100 pt-4">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Subtotal</span>
-                    <span className="font-medium">Rs. {subtotal.toLocaleString()}</span>
+                    <span>Rs. {subtotal.toLocaleString()}</span>
                   </div>
 
                   {serviceDiscount > 0 && (
                     <div className="flex justify-between text-green-600">
-                      <span>Service Discount ({tierLabel})</span>
+                      <span className="text-sm">Service Discount</span>
                       <span>- Rs. {serviceDiscount.toLocaleString()}</span>
                     </div>
                   )}
 
-                  {hasAnyWithoutLabour && (
-                    <div className="flex justify-between text-amber-600 text-xs">
-                      <span>Delivery (Without Labour items)</span>
-                      <span>Calculated at checkout</span>
-                    </div>
-                  )}
-                  {!hasAnyWithoutLabour && (
-                    <div className="flex justify-between text-green-600 text-xs">
-                      <span>Delivery</span>
-                      <span className="font-bold">FREE</span>
-                    </div>
-                  )}
-
-                  {serviceDiscount > 0 && (
-                    <div className="flex items-center gap-2 bg-green-50 px-3 py-2 rounded-lg">
-                      <span className="text-green-700 text-sm">Service Discount Applied: Rs. {serviceDiscount.toLocaleString()}</span>
-                    </div>
-                  )}
+                  <div className="flex justify-between text-gray-600">
+                    <span>Delivery</span>
+                    <span>{hasAnyWithoutLabour ? 'Calculated at checkout' : 'FREE'}</span>
+                  </div>
 
                   <div className="flex justify-between font-heading text-xl font-bold text-navy pt-3 border-t">
                     <span>Total</span>
                     <span>Rs. {total.toLocaleString()}</span>
+                  </div>
+
+                  {serviceDiscount > 0 && (
+                    <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg animate-fade-in">
+                      <p className="text-green-700 text-sm font-medium flex items-center gap-2">
+                        <Check size={16} />
+                        Service Discount Applied: Rs. {serviceDiscount.toLocaleString()}
+                        {tierLabel && <span className="text-xs opacity-70">({tierLabel})</span>}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Delivery info per labour mode */}
+                  <div className="space-y-1.5 pt-2">
+                    {hasAnyWithLabour && (
+                      <div className="flex items-center gap-2 text-xs text-green-600">
+                        <Truck size={12} />
+                        <span>With-Labour items: Free delivery included</span>
+                      </div>
+                    )}
+                    {hasAnyWithoutLabour && (
+                      <div className="flex items-center gap-2 text-xs text-amber-600">
+                        <Wrench size={12} />
+                        <span>Without-Labour items: Standard delivery charges</span>
+                      </div>
+                    )}
                   </div>
                 </div>
 
