@@ -14,16 +14,29 @@ export function LocationPopup() {
 
   // Hide location popup on admin dashboard
   if (pathname?.startsWith('/admin-7392-dashboard')) return null;
-  const [isVisible, setIsVisible] = useState(true);
+  
+  const [isVisible, setIsVisible] = useState(false);
   const [selectedArea, setSelectedArea] = useState<string | null>(area);
 
   useEffect(() => {
+    // Check localStorage and store after hydration
     const storedArea = localStorage.getItem('tawakkal-area');
+    
     if (storedArea && !hasSelectedArea) {
       setArea(storedArea);
       setSelectedArea(storedArea);
     }
-  }, [hasSelectedArea, setArea]);
+
+    // Show popup only if no area is selected, after a brief delay
+    // This prevents the "invisible blocker" issue on first load
+    const timer = setTimeout(() => {
+      if (!storedArea && !area && !hasSelectedArea) {
+        setIsVisible(true);
+      }
+    }, 1500); // 1.5s delay allows the page to load and user to see content first
+
+    return () => clearTimeout(timer);
+  }, [hasSelectedArea, setArea, area]);
 
   const handleConfirm = () => {
     if (selectedArea) {
