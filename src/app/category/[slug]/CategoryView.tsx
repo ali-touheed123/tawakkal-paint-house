@@ -31,6 +31,11 @@ const categoryInfo: Record<string, { title: string; description: string; hero: s
     title: 'Bulk Projects',
     description: 'Bulk supply for construction projects at competitive prices',
     hero: '/images/categories/projects.jpg'
+  },
+  'paint-tools': {
+    title: 'Paint Tools',
+    description: 'Essential tools for perfect finishing and professional results',
+    hero: '/images/categories/tools.jpg'
   }
 };
 
@@ -38,7 +43,7 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
   const params = useParams();
   const searchParams = useSearchParams();
   const router = useRouter();
-  const category = (params.slug as string) || initialCategory;
+  const category = ((params.slug as string) || initialCategory).toLowerCase().replace(/%20/g, '-');
   const heroRef = useRef(null);
 
   const { scrollYProgress } = useScroll({

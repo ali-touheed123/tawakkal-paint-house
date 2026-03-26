@@ -97,30 +97,36 @@ export function SearchOverlay() {
                 animate={{ opacity: 1, y: 0 }}
                 className="mt-8 space-y-2"
               >
-                {results.map((product) => (
-                  <Link
-                    key={product.id}
-                    href={`/product/${product.id}`}
-                    onClick={() => {
-                      setSearchOpen(false);
-                      setQuery('');
-                    }}
-                    className="flex items-center gap-4 p-4 bg-white/10 rounded-xl hover:bg-white/20 transition-colors"
-                  >
-                    <img
-                      src={product.image_url || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=100'}
-                      alt={product.name}
-                      className="w-12 h-12 rounded-lg object-cover"
-                    />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-gold text-xs uppercase">{product.brand}</p>
-                      <p className="text-white font-medium truncate">{product.name}</p>
-                    </div>
-                    <p className="text-gold font-semibold">
-                      Rs. {product.units?.[0]?.price?.toLocaleString() || 'N/A'}
-                    </p>
-                  </Link>
-                ))}
+                {results.map((product) => {
+                  const isPaintTool = product.category === 'paint-tools' || product.category === 'Paint Tools';
+                  const unitPrice = product.price_quarter || (product.units && product.units.length > 0 ? product.units[0].price : 0);
+                  
+                  return (
+                    <Link
+                      key={product.id}
+                      href={isPaintTool ? `/category/paint-tools` : `/product/${product.id}`}
+                      onClick={() => {
+                        setSearchOpen(false);
+                        setQuery('');
+                      }}
+                      className="flex items-center gap-4 p-4 bg-white/10 rounded-xl hover:bg-white/20 transition-colors"
+                    >
+                      <img
+                        src={product.image_url || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=100'}
+                        alt={product.name}
+                        className="w-12 h-12 rounded-lg object-cover"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-gold text-xs uppercase">{product.brand}</p>
+                        <p className="text-white font-medium truncate">{product.name}</p>
+                      </div>
+                      <p className="text-gold font-semibold text-right">
+                        {unitPrice > 0 ? `Rs. ${unitPrice.toLocaleString()}` : 'Rs. N/A'}
+                        {isPaintTool && <span className="block text-[10px] text-gray-400 font-normal">Quick Buy</span>}
+                      </p>
+                    </Link>
+                  );
+                })}
               </motion.div>
             )}
 

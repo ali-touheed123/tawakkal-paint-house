@@ -308,6 +308,13 @@ export function ProductView({ initialId }: { initialId: string }) {
         if (id) fetchProduct();
     }, [id]);
 
+    // Redirect tools to category page
+    useEffect(() => {
+        if (!loading && product && (product.category === 'paint-tools' || product.category === 'Paint Tools')) {
+            router.replace('/category/paint-tools');
+        }
+    }, [product, loading, router]);
+
 
     const selectedUnit = useMemo(() => {
         return product?.units?.find(u => u.label === selectedSize) || product?.units?.[0];
