@@ -158,28 +158,30 @@ export const useCartStore = create<CartStore>()(
           const defaultWithoutDiscount = Number(settingsRes.data?.value) || 10;
 
           if (latestProducts) {
-             const updatedItems = items.map(item => {
-               const latestProduct = latestProducts.find(p => p.id === item.product_id);
-               if (latestProduct) {
-                 // Recompute the discount based on latest data
-                 let updatedDiscount = item.labourDiscount || 0;
-                 if (item.labourMode === 'without') {
-                    if (latestProduct.labour_config?.enabled === false) {
-                      updatedDiscount = 0;
-                    } else {
-                      updatedDiscount = latestProduct.labour_config?.without_discount_percent ?? defaultWithoutDiscount;
-                    }
+             set((state) => {
+               const updatedItems = state.items.map(item => {
+                 const latestProduct = latestProducts.find(p => p.id === item.product_id);
+                 if (latestProduct) {
+                   // Recompute the discount based on latest data
+                   let updatedDiscount = item.labourDiscount || 0;
+                   if (item.labourMode === 'without') {
+                      if (latestProduct.labour_config?.enabled === false) {
+                        updatedDiscount = 0;
+                      } else {
+                        updatedDiscount = latestProduct.labour_config?.without_discount_percent ?? defaultWithoutDiscount;
+                      }
+                   }
+                   
+                   return { 
+                     ...item, 
+                     product: latestProduct,
+                     labourDiscount: updatedDiscount 
+                   };
                  }
-                 
-                 return { 
-                   ...item, 
-                   product: latestProduct,
-                   labourDiscount: updatedDiscount 
-                 };
-               }
-               return item;
+                 return item;
+               });
+               return { items: updatedItems };
              });
-             set({ items: updatedItems });
           }
         } catch (err) {
           console.error('Failed to refresh cart items:', err);
