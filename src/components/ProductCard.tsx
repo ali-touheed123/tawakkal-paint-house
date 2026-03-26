@@ -25,7 +25,10 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
     return product.image_url;
   };
 
-  const isPaintTool = product.category === 'Paint Tools';
+  const isPaintTool = product.category === 'Paint Tools' || product.category === 'paint-tools';
+
+  // Get price from either legacy column or units array
+  const unitPrice = product.price_quarter || (product.units && product.units.length > 0 ? product.units[0].price : 0);
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -35,7 +38,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
     // The store should handle null shades and default labour config
     addItem(
       product.id,
-      'quarter', // Default size mapping for tools
+      product.units?.[0]?.label || 'Pc', // Use specific label for tools if available
       quantity,
       product,
       undefined, // No shades for tools
@@ -79,12 +82,12 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
         })()}
       </h3>
 
-      {isPaintTool && product.price_quarter > 0 && (
+      {isPaintTool && unitPrice > 0 && (
         <div className="mb-4">
           <div className="text-gold font-bold text-lg">
-            Rs. {product.price_quarter.toLocaleString()}
+            Rs. {unitPrice.toLocaleString()}
           </div>
-          <p className="text-[10px] text-gray-500 font-medium">Unit Price</p>
+          <p className="text-[10px] text-gray-500 font-medium">{product.units?.[0]?.label || 'Unit Price'}</p>
           
           <div className="flex items-center gap-3 mt-3 bg-gray-50 p-2 rounded-xl justify-between border border-gray-100">
             <button 
