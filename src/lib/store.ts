@@ -29,13 +29,12 @@ export const useCartStore = create<CartStore>()(
       addItem: (productId, size, quantity, product, selectedShade, labourMode = 'with', labourDiscount = 0) => {
         const items = get().items;
         
-        // Safety check: If product explicitly disables labour selection, force 'without' mode
+        // If product disables labour selection, force 'without' mode with NO discount
         let finalLabourMode = labourMode;
         let finalLabourDiscount = labourDiscount;
         if (product?.labour_config?.enabled === false) {
           finalLabourMode = 'without';
-          // Ensure discount is only applied if it was intended, or leave as 0 if 'without' means 'standard price'
-          // In the current logic, 'without' usually has a discount.
+          finalLabourDiscount = 0; // No discount when toggle is disabled
         }
 
         const existingItem = items.find(
@@ -165,7 +164,11 @@ export const useCartStore = create<CartStore>()(
                  // Recompute the discount based on latest data
                  let updatedDiscount = item.labourDiscount || 0;
                  if (item.labourMode === 'without') {
-                    updatedDiscount = latestProduct.labour_config?.without_discount_percent ?? defaultWithoutDiscount;
+                    if (latestProduct.labour_config?.enabled === false) {
+                      updatedDiscount = 0;
+                    } else {
+                      updatedDiscount = latestProduct.labour_config?.without_discount_percent ?? defaultWithoutDiscount;
+                    }
                  }
                  
                  return { 
