@@ -8,7 +8,8 @@ import Link from 'next/link';
 export function ValuePromotion() {
     const { tiers, loading } = useLabourSettings();
 
-    if (loading) return null;
+    // We no longer return null while loading to prevent "popping" and layout shifts.
+    // Static content is shown immediately.
 
     return (
         <motion.div 
