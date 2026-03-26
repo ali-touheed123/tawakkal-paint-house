@@ -324,6 +324,7 @@ export function ProductView({ initialId }: { initialId: string }) {
 
     // Determine the without-labour discount: product-specific override or global default
     const withoutDiscount = useMemo(() => {
+        if (product?.labour_config?.enabled === false) return 0;
         const productDiscount = product?.labour_config?.without_discount_percent;
         return typeof productDiscount === 'number' ? productDiscount : defaultWithoutDiscount;
     }, [product, defaultWithoutDiscount]);
