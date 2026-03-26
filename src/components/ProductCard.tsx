@@ -123,7 +123,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
           <button
             onClick={handleAddToCart}
             disabled={!product.in_stock}
-            className="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 rounded-lg text-[10px] xs:text-xs font-bold bg-green-600 text-white hover:bg-green-700 transition-colors cursor-pointer whitespace-nowrap disabled:bg-gray-400 disabled:cursor-not-allowed group/btn"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 rounded-lg text-[10px] xs:text-xs font-bold bg-gold text-white hover:bg-gold/80 transition-colors cursor-pointer whitespace-nowrap disabled:bg-gray-400 disabled:cursor-not-allowed group/btn"
           >
             <ShoppingCart size={14} className="shrink-0 group-hover/btn:scale-110 transition-transform" />
             <span>Add to Cart</span>
