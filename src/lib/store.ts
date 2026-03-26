@@ -189,7 +189,8 @@ export const useCartStore = create<CartStore>()(
       }
     }),
     {
-      name: 'tawakkal-cart'
+      name: 'tawakkal-cart',
+      version: 1
     }
   )
 );
