@@ -651,7 +651,7 @@ export function ProductView({ initialId }: { initialId: string }) {
                             {/* Price Display */}
                             <div className="flex items-baseline gap-4">
                                 <div className="text-2xl xs:text-4xl font-bold text-navy">Rs. {price?.toLocaleString()}</div>
-                                {labourMode === 'without' && (
+                                {labourMode === 'without' && withoutDiscount > 0 && (
                                     <div className="text-sm text-gray-400 line-through">Rs. {basePrice.toLocaleString()}</div>
                                 )}
                             </div>
