@@ -36,6 +36,12 @@ export interface Product {
   sub_category: string | null;
   description: string | null;
   image_url: string | null;
+  price_quarter: number;
+  price_gallon: number;
+  price_drum: number;
+  unit_quarter_label?: string;
+  unit_gallon_label?: string;
+  unit_drum_label?: string;
   units?: { label: string; price: number }[];
   in_stock: boolean;
   shade_card_url?: string | null;
