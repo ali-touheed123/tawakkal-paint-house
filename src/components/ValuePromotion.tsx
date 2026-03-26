@@ -55,8 +55,8 @@ export function ValuePromotion() {
                     <div>
                         <h3 className="text-white font-bold text-sm mb-1 uppercase tracking-wide">Service Mode</h3>
                         <p className="text-gray-300 text-[11px] leading-relaxed mb-3">
-                            Hassle-free professional application. <br />
-                            <span className="text-green-400 font-bold italic">Labour & Delivery at zero cost.</span>
+                            Purchase at standard price to unlock <br />
+                            <span className="text-green-400 font-bold italic">Free Professional Labour & Delivery!</span>
                         </p>
                         <Link 
                             href="/#categories"
