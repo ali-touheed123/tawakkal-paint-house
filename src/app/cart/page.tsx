@@ -25,9 +25,9 @@ export default function CartPage() {
   const hasAnyWithoutLabour = withoutLabourSubtotal > 0;
   const hasAnyWithLabour = withLabourSubtotal > 0;
 
-  const { discountAmount: serviceDiscount, tierLabel } = calculateLabourDiscount(withLabourSubtotal);
+  const { discountAmount: serviceDiscount, tierLabel } = calculateLabourDiscount(subtotal, withLabourSubtotal);
   const total = subtotal - serviceDiscount;
-  const nextTier = getNextLabourTier(withLabourSubtotal);
+  const nextTier = getNextLabourTier(subtotal);
 
   const getItemBasePrice = (item: typeof items[0]) => {
     if (!item.product) return 0;
@@ -197,10 +197,10 @@ export default function CartPage() {
                 )}
 
                 {/* Next tier nudge */}
-                {nextTier && withLabourSubtotal > 0 && (
+                {nextTier && (
                   <div className="bg-gold/5 border border-gold/20 rounded-lg p-3 text-xs text-navy">
                     <span className="font-bold">Almost there! </span>
-                    Add Rs. {nextTier.amountNeeded.toLocaleString()} more in With-Labour items to unlock{' '}
+                    Add Rs. {nextTier.amountNeeded.toLocaleString()} more to your cart to unlock{' '}
                     <span className="text-gold font-bold">{nextTier.discount}</span>
                   </div>
                 )}

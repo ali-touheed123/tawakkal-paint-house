@@ -91,14 +91,15 @@ export function useLabourSettings() {
     }, []);
 
     /**
-     * Calculates the labour service discount for With-Labour items only.
+     * Calculates the labour service discount.
+     * Threshold depends on overall cart subtotal. Percentage applies to With-Labour items only.
      * Returns { discountAmount, tierLabel } based on the highest qualifying tier.
      */
-    const calculateLabourDiscount = (withLabourSubtotal: number): { discountAmount: number; tierLabel: string } => {
-        if (tiers.length === 0 || withLabourSubtotal <= 0) return { discountAmount: 0, tierLabel: '' };
+    const calculateLabourDiscount = (cartSubtotal: number, withLabourSubtotal: number): { discountAmount: number; tierLabel: string } => {
+        if (tiers.length === 0 || cartSubtotal <= 0) return { discountAmount: 0, tierLabel: '' };
 
         // Find the highest qualifying tier
-        const qualifyingTiers = tiers.filter(t => withLabourSubtotal >= t.min_amount);
+        const qualifyingTiers = tiers.filter(t => cartSubtotal >= t.min_amount);
         if (qualifyingTiers.length === 0) return { discountAmount: 0, tierLabel: '' };
 
         const tier = qualifyingTiers[qualifyingTiers.length - 1]; // highest
@@ -113,11 +114,11 @@ export function useLabourSettings() {
         return { discountAmount: Math.round(discountAmount), tierLabel: tier.label };
     };
 
-    const getNextLabourTier = (withLabourSubtotal: number): { amountNeeded: number; tierLabel: string; discount: string } | null => {
-        const nextTier = tiers.find(t => t.min_amount > withLabourSubtotal);
+    const getNextLabourTier = (cartSubtotal: number): { amountNeeded: number; tierLabel: string; discount: string } | null => {
+        const nextTier = tiers.find(t => t.min_amount > cartSubtotal);
         if (!nextTier) return null;
         return {
-            amountNeeded: nextTier.min_amount - withLabourSubtotal,
+            amountNeeded: nextTier.min_amount - cartSubtotal,
             tierLabel: nextTier.label,
             discount: nextTier.discount_type === 'flat'
                 ? `Rs. ${nextTier.discount_value} OFF`

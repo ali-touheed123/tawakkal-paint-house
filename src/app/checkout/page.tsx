@@ -104,8 +104,8 @@ export default function CheckoutPage() {
   const hasWithoutLabour = withoutLabourSubtotal > 0;
   const hasWithLabour = withLabourSubtotal > 0;
 
-  // Service discount applies ONLY on With-Labour subtotal
-  const { discountAmount: serviceDiscount, tierLabel } = calculateLabourDiscount(withLabourSubtotal);
+  // Service discount eligibility based on total cart value
+  const { discountAmount: serviceDiscount, tierLabel } = calculateLabourDiscount(subtotal, withLabourSubtotal);
 
   // Shipping: Without Labour items → standard rate; With Labour → free
   // If mixed cart, apply shipping only to without-labour portion (same rate for simplicity)
