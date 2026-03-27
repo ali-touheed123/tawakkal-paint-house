@@ -102,14 +102,14 @@ export const useCartStore = create<CartStore>()(
         });
       },
       addGiftItem: (productId, size, quantity, product, originalPrice) => {
-        // Check if there is enough remaining credit
-        const remaining = get().getRemainingCredit();
-        if (originalPrice > remaining) return false;
+        const state = get();
+        const remaining = state.getRemainingCredit();
+        const addedCost = originalPrice * quantity;
+        
+        if (addedCost > remaining) return false;
 
-        // Don't double-add the same gift
-        const existing = get().items.find(i => i.product_id === productId && i.isGift);
-        if (existing) return true;
-
+        const existing = state.items.find(i => i.product_id === productId && i.isGift);
+        
         const uiStore = useUIStore.getState();
         uiStore.setLastAddedItem({
           name: product?.name || 'Free Gift',
@@ -117,9 +117,20 @@ export const useCartStore = create<CartStore>()(
         });
         uiStore.setCartToastOpen(true);
 
-        set((state) => ({
+        if (existing) {
+          set((s) => ({
+            items: s.items.map(item =>
+              item.id === existing.id
+                ? { ...item, quantity: item.quantity + quantity }
+                : item
+            )
+          }));
+          return true;
+        }
+
+        set((s) => ({
           items: [
-            ...state.items,
+            ...s.items,
             {
               id: crypto.randomUUID(),
               user_id: '',
@@ -199,18 +210,69 @@ export const useCartStore = create<CartStore>()(
             }
           }
 
-          return {
-            items: state.items.map(i =>
-              i.id === itemId ? { ...i, quantity } : i
-            )
-          };
+          const newItems = state.items.map(i =>
+            i.id === itemId ? { ...i, quantity } : i
+          );
+
+          // Re-calculate allowance to see if gifts need to be dropped
+          const newAllowance = newItems.reduce((pool, item) => {
+            if (!item.product || item.isGift) return pool;
+            if (item.labourMode !== 'without') return pool;
+            if (item.product.category === 'paint-tools' || item.product.category === 'Paint Tools') return pool;
+            const units = item.product.units || [];
+            const unit = units.find((u: any) => u.label === item.size) || units[0];
+            const basePrice = unit?.price || 0;
+            const discount = item.labourDiscount || 0;
+            const effectivePrice = basePrice * (1 - discount / 100);
+            return pool + effectivePrice * item.quantity * 0.10;
+          }, 0);
+
+          let usedSoFar = 0;
+          const revalidated = newItems.map(item => {
+            if (!item.isGift) return item;
+            const price = item.originalPrice || 0;
+            const itemTotalCost = price * item.quantity;
+            if (usedSoFar + itemTotalCost <= newAllowance) {
+              usedSoFar += itemTotalCost;
+              return item;
+            }
+            return null; // remove gift
+          }).filter(Boolean) as CartItem[];
+
+          return { items: revalidated };
         });
       },
       updateSize: (itemId, size) => {
-        set({
-          items: get().items.map(item =>
+        set((state) => {
+          const newItems = state.items.map(item =>
             item.id === itemId ? { ...item, size } : item
-          )
+          );
+
+          const newAllowance = newItems.reduce((pool, item) => {
+            if (!item.product || item.isGift) return pool;
+            if (item.labourMode !== 'without') return pool;
+            if (item.product.category === 'paint-tools' || item.product.category === 'Paint Tools') return pool;
+            const units = item.product.units || [];
+            const unit = units.find((u: any) => u.label === item.size) || units[0];
+            const basePrice = unit?.price || 0;
+            const discount = item.labourDiscount || 0;
+            const effectivePrice = basePrice * (1 - discount / 100);
+            return pool + effectivePrice * item.quantity * 0.10;
+          }, 0);
+
+          let usedSoFar = 0;
+          const revalidated = newItems.map(item => {
+            if (!item.isGift) return item;
+            const price = item.originalPrice || 0;
+            const itemTotalCost = price * item.quantity;
+            if (usedSoFar + itemTotalCost <= newAllowance) {
+              usedSoFar += itemTotalCost;
+              return item;
+            }
+            return null;
+          }).filter(Boolean) as CartItem[];
+
+          return { items: revalidated };
         });
       },
       clearCart: () => set({ items: [] }),

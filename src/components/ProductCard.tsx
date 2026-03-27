@@ -121,7 +121,16 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
         <div className="mb-4">
           {/* If saving session is active, show eligibility. Otherwise, show general complimentary message */}
           {isSavingActive ? (
-            <div className={`font-bold text-sm py-2 text-center rounded-xl border ${
+            <>
+              <div className="flex justify-between items-end mb-2">
+                <div>
+                  <div className="text-amber-600 font-bold text-lg leading-tight">
+                    Rs. {unitPrice.toLocaleString()}
+                  </div>
+                  <p className="text-[10px] text-gray-500 font-medium">{product.units?.[0]?.label || 'Unit Price'}</p>
+                </div>
+              </div>
+              <div className={`font-bold text-sm py-2 text-center rounded-xl border ${
               claimStatus === 'claimed' ? 'bg-green-50 border-green-200 text-green-600' :
               (claimStatus === 'rejected' || isLimitReached) ? 'bg-red-50 border-red-200 text-red-500' :
               'bg-amber-50 border-amber-200 text-amber-600'
@@ -130,6 +139,25 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
                (claimStatus === 'rejected' || isLimitReached) ? '✗ Not Eligible' :
                '✦ Eligible for Credit'}
             </div>
+            
+            <div className={`flex items-center gap-3 mt-3 bg-gray-50 p-2 rounded-xl justify-between border border-gray-100 ${
+              (claimStatus === 'rejected' || isLimitReached) ? 'opacity-50 pointer-events-none' : ''
+            }`}>
+              <button
+                onClick={(e) => { e.preventDefault(); setQuantity(q => Math.max(1, q - 1)); }}
+                className="w-7 h-7 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-navy hover:bg-amber-400 hover:border-amber-400 hover:text-white transition-all active:scale-90"
+              >
+                <Minus size={14} />
+              </button>
+              <span className="font-bold text-navy text-sm">{quantity}</span>
+              <button
+                onClick={(e) => { e.preventDefault(); setQuantity(q => q + 1); }}
+                className="w-7 h-7 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-navy hover:bg-amber-400 hover:border-amber-400 hover:text-white transition-all active:scale-90"
+              >
+                <Plus size={14} />
+              </button>
+            </div>
+          </>
           ) : (
             <div className="bg-amber-50 border border-amber-200 p-2 rounded-xl text-center">
               <Gift size={16} className="text-amber-500 mx-auto mb-1" />
