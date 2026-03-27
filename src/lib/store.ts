@@ -321,6 +321,8 @@ interface UIStore {
   setCartToastOpen: (open: boolean) => void;
   lastAddedItem: { name: string; image: string | null } | null;
   setLastAddedItem: (item: { name: string; image: string | null } | null) => void;
+  savingSessionActive: boolean; // true when user has selected Without Labour on any product
+  setSavingSessionActive: (active: boolean) => void;
 }
 
 export const useUIStore = create<UIStore>()(
@@ -335,7 +337,9 @@ export const useUIStore = create<UIStore>()(
       isCartToastOpen: false,
       setCartToastOpen: (open) => set({ isCartToastOpen: open }),
       lastAddedItem: null,
-      setLastAddedItem: (item) => set({ lastAddedItem: item })
+      setLastAddedItem: (item) => set({ lastAddedItem: item }),
+      savingSessionActive: false,
+      setSavingSessionActive: (active) => set({ savingSessionActive: active })
     }),
     {
       name: 'tawakkal-ui'

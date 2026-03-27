@@ -89,6 +89,9 @@ export function UpsellSection({ labourMode, upsellItemIds, currentProductId }: U
     const allowance = getSavingAllowance();
     const remaining = getRemainingCredit();
 
+    // Only show when Without Labour is active
+    if (!isSavingMode) return null;
+
     if (!loading && upsellProducts.length === 0) return null;
 
     return (

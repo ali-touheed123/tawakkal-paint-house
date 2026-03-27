@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { Product, ItemSize, Shade } from '@/types';
-import { useCartStore } from '@/lib/store';
+import { useCartStore, useUIStore } from '@/lib/store';
 import { useLabourSettings } from '@/lib/hooks/useSettings';
 import { ShadeSelector } from '@/components/ShadeSelector';
 import { SimpleVisualizer } from '@/components/SimpleVisualizer';
@@ -44,6 +44,7 @@ export function ProductView({ initialId }: { initialId: string }) {
     const [labourMode, setLabourMode] = useState<'with' | 'without'>('with');
 
     const { addItem } = useCartStore();
+    const { setSavingSessionActive } = useUIStore();
     const { defaultWithoutDiscount, upsellItemIds } = useLabourSettings();
 
     const isBrightoSuperEmulsion = product?.name === 'Brighto Super Emulsion';
@@ -562,7 +563,7 @@ export function ProductView({ initialId }: { initialId: string }) {
                                     <div className="grid grid-cols-1 xs:grid-cols-2 gap-3">
                                         {/* With Labour */}
                                         <button
-                                            onClick={() => setLabourMode('with')}
+                                            onClick={() => { setLabourMode('with'); setSavingSessionActive(false); }}
                                             className={cn(
                                                 'relative flex flex-col items-start gap-1 p-4 rounded-xl border-2 text-left transition-all duration-200',
                                                 labourMode === 'with'
@@ -592,7 +593,7 @@ export function ProductView({ initialId }: { initialId: string }) {
 
                                         {/* Without Labour */}
                                         <button
-                                            onClick={() => setLabourMode('without')}
+                                            onClick={() => { setLabourMode('without'); setSavingSessionActive(true); }}
                                             className={cn(
                                                 'relative flex flex-col items-start gap-1 p-4 rounded-xl border-2 text-left transition-all duration-200',
                                                 labourMode === 'without'

@@ -3,10 +3,10 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { MessageCircle, FileText, ShoppingCart, Plus, Minus } from 'lucide-react';
+import { MessageCircle, FileText, ShoppingCart, Plus, Minus, Gift } from 'lucide-react';
 import { Product } from '@/types';
 import { cn } from '@/lib/utils';
-import { useCartStore } from '@/lib/store';
+import { useCartStore, useUIStore } from '@/lib/store';
 
 interface ProductCardProps {
   product: Product;
@@ -16,10 +16,12 @@ interface ProductCardProps {
 export function ProductCard({ product, index = 0 }: ProductCardProps) {
   const [imgError, setImgError] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const [claimStatus, setClaimStatus] = useState<'idle' | 'claimed' | 'rejected'>('idle');
+
   const addItem = useCartStore(state => state.addItem);
-  const getSavingAllowance = useCartStore(state => state.getSavingAllowance);
-  const savingAllowance = getSavingAllowance();
-  const isSavingActive = savingAllowance > 0;
+  const addGiftItem = useCartStore(state => state.addGiftItem);
+  const getRemainingCredit = useCartStore(state => state.getRemainingCredit);
+  const savingSessionActive = useUIStore(state => state.savingSessionActive);
 
   const getImageUrl = () => {
     if (!product.image_url || imgError) {
@@ -29,6 +31,8 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
   };
 
   const isPaintTool = product.category === 'Paint Tools' || product.category === 'paint-tools';
+  // Only activate saving mode for paint tools when the global session is active
+  const isSavingActive = isPaintTool && savingSessionActive;
 
   // Get price from either legacy column or units array
   const unitPrice = product.price_quarter || (product.units && product.units.length > 0 ? product.units[0].price : 0);
@@ -36,16 +40,41 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    
-    // For tools, we use price_quarter as the unit price and size is 'one-size' or 'quarter'
-    // The store should handle null shades and default labour config
+
+    // When saving session is active on a paint tool, try to claim as gift
+    if (isSavingActive) {
+      const price = product.units?.[0]?.price || unitPrice;
+      const remaining = getRemainingCredit();
+      if (price <= remaining) {
+        const success = addGiftItem(
+          product.id,
+          product.units?.[0]?.label || 'Pc',
+          quantity,
+          product,
+          price
+        );
+        if (success) {
+          setClaimStatus('claimed');
+          setTimeout(() => setClaimStatus('idle'), 1500);
+        } else {
+          setClaimStatus('rejected');
+          setTimeout(() => setClaimStatus('idle'), 1500);
+        }
+      } else {
+        setClaimStatus('rejected');
+        setTimeout(() => setClaimStatus('idle'), 1500);
+      }
+      return;
+    }
+
+    // Normal add to cart
     addItem(
       product.id,
-      product.units?.[0]?.label || 'Pc', // Use specific label for tools if available
+      product.units?.[0]?.label || 'Pc',
       quantity,
       product,
-      undefined, // No shades for tools
-      'without', // Tools don't have labour mode Usually
+      undefined,
+      'with',
       0
     );
   };
@@ -73,7 +102,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
         {(() => {
           const nameLower = product.name.toLowerCase();
           const brandLower = product.brand.toLowerCase();
-          const brandBase = brandLower.replace(/[''’]/g, '');
+          const brandBase = brandLower.replace(/[''']/g, '');
 
           if (nameLower.startsWith(brandLower)) {
             return product.name.slice(product.brand.length).trim();
@@ -87,29 +116,35 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
 
       {isPaintTool && unitPrice > 0 && (
         <div className="mb-4">
-          {/* Hide price from brands when saving is active */}
+          {/* Hide price from brands when saving session is active */}
           {isSavingActive ? (
-            <div className="text-amber-600 font-bold text-sm py-1">
-              ✦ Eligible for Credit
+            <div className={`font-bold text-sm py-1 ${
+              claimStatus === 'claimed' ? 'text-green-600' :
+              claimStatus === 'rejected' ? 'text-red-500' :
+              'text-amber-600'
+            }`}>
+              {claimStatus === 'claimed' ? '✓ Claimed as Gift' :
+               claimStatus === 'rejected' ? '✗ Credit Limit Reached' :
+               '✦ Eligible for Credit'}
             </div>
           ) : (
-            <div className="text-gold font-bold text-lg">
-              Rs. {unitPrice.toLocaleString()}
-            </div>
+            <>
+              <div className="text-gold font-bold text-lg">
+                Rs. {unitPrice.toLocaleString()}
+              </div>
+              <p className="text-[10px] text-gray-500 font-medium">{product.units?.[0]?.label || 'Unit Price'}</p>
+            </>
           )}
-          {!isSavingActive && (
-            <p className="text-[10px] text-gray-500 font-medium">{product.units?.[0]?.label || 'Unit Price'}</p>
-          )}
-          
+
           <div className="flex items-center gap-3 mt-3 bg-gray-50 p-2 rounded-xl justify-between border border-gray-100">
-            <button 
+            <button
               onClick={(e) => { e.preventDefault(); setQuantity(q => Math.max(1, q - 1)); }}
               className="w-7 h-7 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-navy hover:bg-gold hover:border-gold hover:text-white transition-all active:scale-90"
             >
               <Minus size={14} />
             </button>
             <span className="font-bold text-navy text-sm">{quantity}</span>
-            <button 
+            <button
               onClick={(e) => { e.preventDefault(); setQuantity(q => q + 1); }}
               className="w-7 h-7 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-navy hover:bg-gold hover:border-gold hover:text-white transition-all active:scale-90"
             >
@@ -130,15 +165,24 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
           <MessageCircle size={14} className="shrink-0" />
           <span>Inquiry</span>
         </Link>
-        
+
         {isPaintTool ? (
           <button
             onClick={handleAddToCart}
-            disabled={!product.in_stock}
-            className="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 rounded-lg text-[10px] xs:text-xs font-bold bg-gold text-white hover:bg-gold/80 transition-colors cursor-pointer whitespace-nowrap disabled:bg-gray-400 disabled:cursor-not-allowed group/btn"
+            disabled={!product.in_stock || claimStatus === 'rejected'}
+            className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-1 rounded-lg text-[10px] xs:text-xs font-bold transition-colors cursor-pointer whitespace-nowrap disabled:cursor-not-allowed group/btn ${
+              claimStatus === 'claimed' ? 'bg-green-500 text-white' :
+              claimStatus === 'rejected' ? 'bg-gray-300 text-gray-500' :
+              isSavingActive ? 'bg-amber-400 text-white hover:bg-amber-500' :
+              'bg-gold text-white hover:bg-gold/80 disabled:bg-gray-400'
+            }`}
           >
-            <ShoppingCart size={14} className="shrink-0 group-hover/btn:scale-110 transition-transform" />
-            <span>Add to Cart</span>
+            {isSavingActive ? <Gift size={14} /> : <ShoppingCart size={14} className="shrink-0 group-hover/btn:scale-110 transition-transform" />}
+            <span>
+              {claimStatus === 'claimed' ? 'Claimed!' :
+               claimStatus === 'rejected' ? 'Limit Reached' :
+               isSavingActive ? 'Claim Gift' : 'Add to Cart'}
+            </span>
           </button>
         ) : (
           <Link
@@ -158,10 +202,10 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
       initial={{ opacity: 0, y: 40, scale: 0.95 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ 
-        duration: 0.6, 
-        delay: index % 5 * 0.1, // Stagger based on column position
-        ease: [0.22, 1, 0.36, 1] // Custom cubic-bezier for premium feel
+      transition={{
+        duration: 0.6,
+        delay: index % 5 * 0.1,
+        ease: [0.22, 1, 0.36, 1]
       }}
       className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow border border-gold/10 group h-full flex flex-col"
     >
