@@ -726,7 +726,6 @@ export function ProductView({ initialId }: { initialId: string }) {
                         </div>
                     </div>
                 </div>
-
             </div>
 
             {/* Upsell Section – always visible */}

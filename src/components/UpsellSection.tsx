@@ -21,6 +21,7 @@ export function UpsellSection({ labourMode, upsellItemIds, currentProductId }: U
     const [rejectedId, setRejectedId] = useState<string | null>(null);
     const sectionRef = useRef<HTMLDivElement>(null);
     const hasScrolled = useRef(false);
+    const isFirstRender = useRef(true);
     const { addItem, addGiftItem, items, getRemainingCredit, getSavingAllowance } = useCartStore();
 
     useEffect(() => {
@@ -47,10 +48,15 @@ export function UpsellSection({ labourMode, upsellItemIds, currentProductId }: U
 
     // Auto-scroll into view when Without Labour is selected
     useEffect(() => {
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+            return;
+        }
+
         if (labourMode === 'without' && !hasScrolled.current && sectionRef.current && upsellProducts.length > 0) {
             hasScrolled.current = true;
             setTimeout(() => {
-                sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }, 400);
         }
         if (labourMode === 'with') {

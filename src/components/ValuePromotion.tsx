@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Percent, ShieldCheck, ArrowRight } from 'lucide-react';
+import { Percent, ShieldCheck, ArrowRight, Gift, Wrench } from 'lucide-react';
 import { useLabourSettings } from '@/lib/hooks/useSettings';
 import Link from 'next/link';
 
@@ -25,17 +25,17 @@ export function ValuePromotion() {
                 </div>
                 <div className="flex items-start gap-4">
                     <div className="w-10 h-10 bg-gold/20 rounded-xl flex items-center justify-center shrink-0">
-                        <Percent className="text-gold" size={20} />
+                        <Gift className="text-gold" size={20} />
                     </div>
                     <div>
-                        <h3 className="text-white font-bold text-sm mb-1 uppercase tracking-wide">Savings Mode</h3>
+                        <h3 className="text-white font-bold text-sm mb-1 uppercase tracking-wide">Without Labour (DIY)</h3>
                         <p className="text-gray-300 text-[11px] leading-relaxed mb-3">
-                            Direct wholesale rates. Save up to <span className="text-gold font-bold">12% OFF</span> on bulk orders.
+                            Direct wholesale rates. Get a flat <span className="text-gold font-bold">10% OFF</span> on products + <span className="text-gold font-bold">Free Paint Tools</span> with your credits.
                         </p>
                         <div className="flex flex-wrap gap-2">
-                            {['8%', '10%', '12%'].map((val, i) => (
+                            {['10% Discount', 'Free Tools', 'No Service Pack'].map((val, i) => (
                                 <span key={i} className="text-[9px] font-bold bg-white/5 text-gold border border-gold/20 px-2 py-0.5 rounded-md">
-                                    {val} OFF
+                                    {val}
                                 </span>
                             ))}
                         </div>
