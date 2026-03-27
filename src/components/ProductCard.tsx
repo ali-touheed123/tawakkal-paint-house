@@ -133,22 +133,6 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
             Rs. {unitPrice.toLocaleString()}
           </div>
           <p className="text-[10px] text-gray-500 font-medium">{product.units?.[0]?.label || 'Unit Price'}</p>
-
-          <div className="flex items-center gap-3 mt-3 bg-gray-50 p-2 rounded-xl justify-between border border-gray-100">
-            <button
-              onClick={(e) => { e.preventDefault(); setQuantity(q => Math.max(1, q - 1)); }}
-              className="w-7 h-7 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-navy hover:bg-gold hover:border-gold hover:text-white transition-all active:scale-90"
-            >
-              <Minus size={14} />
-            </button>
-            <span className="font-bold text-navy text-sm">{quantity}</span>
-            <button
-              onClick={(e) => { e.preventDefault(); setQuantity(q => q + 1); }}
-              className="w-7 h-7 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-navy hover:bg-gold hover:border-gold hover:text-white transition-all active:scale-90"
-            >
-              <Plus size={14} />
-            </button>
-          </div>
         </div>
       )}
 
@@ -165,22 +149,24 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
         </Link>
 
         {isPaintTool ? (
-          <Link
-            href={`/product/${product.id}`}
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              alert("These tools are exclusively available as free gifts. Select 'Without Labour' on any paint product to claim them!");
+            }}
             className="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 rounded-lg text-[10px] xs:text-xs font-bold bg-amber-400 text-white hover:bg-amber-500 transition-colors cursor-pointer whitespace-nowrap"
           >
             <Gift size={14} className="shrink-0" />
             <span>How to Claim</span>
-          </Link>
-        ) : (
-          <button
-            onClick={handleAddToCart}
-            disabled={!product.in_stock}
-            className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-1 rounded-lg text-[10px] xs:text-xs font-bold transition-colors cursor-pointer whitespace-nowrap disabled:cursor-not-allowed group/btn bg-gold text-white hover:bg-gold/80 disabled:bg-gray-400`}
-          >
-            <ShoppingCart size={14} className="shrink-0 group-hover/btn:scale-110 transition-transform" />
-            <span>Add to Cart</span>
           </button>
+        ) : (
+          <Link
+            href={`/product/${product.id}`}
+            className="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 rounded-lg text-[10px] xs:text-xs font-bold bg-navy text-white hover:bg-gold transition-colors cursor-pointer whitespace-nowrap"
+          >
+            <FileText size={14} className="shrink-0" />
+            <span>Details</span>
+          </Link>
         )}
       </div>
     </div>

@@ -219,7 +219,7 @@ export function UpsellSection({ labourMode, upsellItemIds, currentProductId }: U
                                     )}
 
                                     {/* Image */}
-                                    <Link href={`/product/${product.id}`} className="w-full">
+                                    <div className="w-full">
                                         <div className="w-full aspect-square bg-gray-50 rounded-lg overflow-hidden flex items-center justify-center">
                                             <img
                                                 src={product.image_url || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200'}
@@ -227,16 +227,16 @@ export function UpsellSection({ labourMode, upsellItemIds, currentProductId }: U
                                                 className={`w-full h-full object-contain p-1 group-hover:scale-105 transition-transform duration-300 ${limitReached ? 'opacity-50' : ''}`}
                                             />
                                         </div>
-                                    </Link>
+                                    </div>
 
                                     {/* Info */}
                                     <div className="w-full text-center">
                                         <p className="text-[9px] text-gold font-bold uppercase tracking-widest">{product.brand}</p>
-                                        <Link href={`/product/${product.id}`}>
-                                            <p className="text-xs font-semibold text-navy leading-tight line-clamp-2 hover:text-gold transition-colors">
+                                        <div className="cursor-default">
+                                            <p className="text-xs font-semibold text-navy leading-tight line-clamp-2">
                                                 {product.name}
                                             </p>
-                                        </Link>
+                                        </div>
 
                                         {/* Price — hidden in saving mode, shown normally otherwise */}
                                         {!isSavingMode && (
