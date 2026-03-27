@@ -169,14 +169,9 @@ export default function CartPage() {
                         {/* Price */}
                         <div className="text-right">
                           {item.isGift ? (
-                            <>
-                              <p className="text-xs text-gray-400 line-through">
-                                Rs. {(basePrice * item.quantity).toLocaleString()}
-                              </p>
-                              <p className="font-heading text-base xs:text-lg font-bold text-green-600 whitespace-nowrap">
-                                FREE
-                              </p>
-                            </>
+                            <p className="font-heading text-base xs:text-lg font-bold text-green-600 whitespace-nowrap">
+                              FREE
+                            </p>
                           ) : (
                             <>
                               {isWithout && discount > 0 && (
