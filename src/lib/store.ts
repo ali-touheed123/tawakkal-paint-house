@@ -37,61 +37,63 @@ export const useCartStore = create<CartStore>()(
     (set, get) => ({
       items: [],
       addItem: (productId, size, quantity, product, selectedShade, labourMode = 'with', labourDiscount = 0) => {
-        const items = get().items;
-        
-        // If product disables labour selection, force 'without' mode with NO discount
-        let finalLabourMode = labourMode;
-        let finalLabourDiscount = labourDiscount;
-        if (product?.labour_config?.enabled === false) {
-          finalLabourMode = 'without';
-          finalLabourDiscount = 0;
-        }
+        set((state) => {
+          const items = state.items;
+          
+          // If product disables labour selection, force 'without' mode with NO discount
+          let finalLabourMode = labourMode;
+          let finalLabourDiscount = labourDiscount;
+          if (product?.labour_config?.enabled === false) {
+            finalLabourMode = 'without';
+            finalLabourDiscount = 0;
+          }
 
-        const existingItem = items.find(
-          item =>
-            item.product_id === productId &&
-            item.size === size &&
-            item.labourMode === finalLabourMode &&
-            !item.isGift &&
-            JSON.stringify(item.selectedShade) === JSON.stringify(selectedShade)
-        );
+          const existingItem = items.find(
+            item =>
+              item.product_id === productId &&
+              item.size === size &&
+              item.labourMode === finalLabourMode &&
+              !item.isGift &&
+              JSON.stringify(item.selectedShade) === JSON.stringify(selectedShade)
+          );
 
-        // Update UI Store for Notification
-        const uiStore = useUIStore.getState();
-        uiStore.setLastAddedItem({
-          name: product?.name || 'Product',
-          image: product?.image_url || null
+          // Update UI Store for Notification
+          const uiStore = useUIStore.getState();
+          uiStore.setLastAddedItem({
+            name: product?.name || 'Product',
+            image: product?.image_url || null
+          });
+          uiStore.setCartToastOpen(true);
+
+          if (existingItem) {
+            return {
+              items: items.map(item =>
+                item.id === existingItem.id
+                  ? { ...item, quantity: item.quantity + quantity }
+                  : item
+              )
+            };
+          } else {
+            return {
+              items: [
+                ...items,
+                {
+                  id: crypto.randomUUID(),
+                  user_id: '',
+                  product_id: productId,
+                  size,
+                  quantity,
+                  created_at: new Date().toISOString(),
+                  product,
+                  selectedShade,
+                  labourMode: finalLabourMode,
+                  labourDiscount: finalLabourDiscount,
+                  isGift: false
+                }
+              ]
+            };
+          }
         });
-        uiStore.setCartToastOpen(true);
-
-        if (existingItem) {
-          set({
-            items: items.map(item =>
-              item.id === existingItem.id
-                ? { ...item, quantity: item.quantity + quantity }
-                : item
-            )
-          });
-        } else {
-          set({
-            items: [
-              ...items,
-              {
-                id: crypto.randomUUID(),
-                user_id: '',
-                product_id: productId,
-                size,
-                quantity,
-                created_at: new Date().toISOString(),
-                product,
-                selectedShade,
-                labourMode: finalLabourMode,
-                labourDiscount: finalLabourDiscount,
-                isGift: false
-              }
-            ]
-          });
-        }
       },
       addGiftItem: (productId, size, quantity, product, originalPrice) => {
         // Check if there is enough remaining credit
@@ -109,9 +111,9 @@ export const useCartStore = create<CartStore>()(
         });
         uiStore.setCartToastOpen(true);
 
-        set({
+        set((state) => ({
           items: [
-            ...get().items,
+            ...state.items,
             {
               id: crypto.randomUUID(),
               user_id: '',
@@ -126,30 +128,42 @@ export const useCartStore = create<CartStore>()(
               originalPrice
             }
           ]
-        });
+        }));
         return true;
       },
       removeItem: (itemId) => {
-        const newItems = get().items.filter(item => item.id !== itemId);
-        set({ items: newItems });
-        // After removing, re-validate gifts against updated allowance
-        // Use setTimeout to let the state settle first
-        setTimeout(() => {
-          const state = get();
-          const allowance = state.getSavingAllowance();
+        set((state) => {
+          // 1. Filter out the item
+          const filteredItems = state.items.filter(item => item.id !== itemId);
+          
+          // 2. Re-calculate allowance from scratch (same logic as getSavingAllowance)
+          const allowance = filteredItems.reduce((pool, item) => {
+            if (!item.product || item.isGift) return pool;
+            if (item.labourMode !== 'without') return pool;
+            if (item.product.category === 'paint-tools') return pool;
+            const units = item.product.units || [];
+            const unit = units.find((u: any) => u.label === item.size) || units[0];
+            const basePrice = unit?.price || 0;
+            const discount = item.labourDiscount || 0;
+            const effectivePrice = basePrice * (1 - discount / 100);
+            return pool + effectivePrice * item.quantity * 0.10;
+          }, 0);
+
+          // 3. Re-validate gifts
           let usedSoFar = 0;
-          const revalidated = state.items.map(item => {
+          const revalidated = filteredItems.map(item => {
             if (!item.isGift) return item;
             const price = item.originalPrice || 0;
             if (usedSoFar + price <= allowance) {
               usedSoFar += price;
-              return item; // stays free
+              return item;
             }
             // Revert to paid
             return { ...item, isGift: false, originalPrice: undefined };
           });
-          set({ items: revalidated });
-        }, 0);
+
+          return { items: revalidated };
+        });
       },
       updateQuantity: (itemId, quantity) => {
         if (quantity <= 0) {
@@ -157,21 +171,28 @@ export const useCartStore = create<CartStore>()(
           return;
         }
 
-        const item = get().items.find(i => i.id === itemId);
+        set((state) => {
+          const item = state.items.find(i => i.id === itemId);
+          if (!item) return state;
 
-        // For gift items, ensure the new quantity doesn't exceed credit
-        if (item?.isGift && quantity > item.quantity) {
-          const pricePerUnit = item.originalPrice || 0;
-          const addedUnits = quantity - item.quantity;
-          const extraCost = pricePerUnit * addedUnits;
-          const remaining = get().getRemainingCredit();
-          if (extraCost > remaining) return; // silently block
-        }
+          // For gift items, ensure the new quantity doesn't exceed credit
+          if (item.isGift && quantity > item.quantity) {
+            const pricePerUnit = item.originalPrice || 0;
+            const addedUnits = quantity - item.quantity;
+            const extraCost = pricePerUnit * addedUnits;
+            // Calculating remaining credit on the fly to avoid external dependencies
+            const allowance = state.getSavingAllowance();
+            const used = state.getUsedCredit();
+            const remaining = Math.max(0, allowance - used);
+            
+            if (extraCost > remaining) return state; // silently block
+          }
 
-        set({
-          items: get().items.map(i =>
-            i.id === itemId ? { ...i, quantity } : i
-          )
+          return {
+            items: state.items.map(i =>
+              i.id === itemId ? { ...i, quantity } : i
+            )
+          };
         });
       },
       updateSize: (itemId, size) => {
