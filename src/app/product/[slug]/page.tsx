@@ -22,8 +22,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  const title = `${product.brand} ${product.name} | Tawakkal Paint House Karachi`;
-  const description = `Buy ${product.brand} ${product.name} at the best price in Karachi. Authorized dealer for ${product.brand}. Original sealed paint with doorstep delivery. Shop ${product.category} products online.`;
+  const title = `${product.brand} ${product.name} - Best Price in Pakistan | Tawakkal Paint`;
+  const description = `Get the best price for ${product.brand} ${product.name} in Pakistan at Tawakkal Paint House. Authorized dealer for ${product.brand}. Original sealed products with fast delivery in Karachi. Shop ${product.category} now.`;
 
   return {
     title,
