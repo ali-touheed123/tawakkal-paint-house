@@ -52,11 +52,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // We'll use the public client for now to fetch published products.
   const { data: products } = await supabase
     .from('products')
-    .select('id, updated_at')
+    .select('slug, updated_at')
     .limit(1000);
 
   const productRoutes = (products || []).map((product) => ({
-    url: `${baseUrl}/product/${product.id}`,
+    url: `${baseUrl}/product/${product.slug}`,
     lastModified: product.updated_at ? new Date(product.updated_at) : new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.7,

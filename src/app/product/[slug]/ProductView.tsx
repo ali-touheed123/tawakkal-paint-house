@@ -30,8 +30,8 @@ import { cn } from '@/lib/utils';
 import { BRIGHTO_SHADES, BRIGHTO_ENAMEL_SHADES, BRIGHTO_PLASTIC_EMULSION_SHADES, BRIGHTO_ALL_WEATHER_SHADES, SAASI_HYDROUS_SHADES, SAASI_MATT_ENAMEL_SHADES, SAASI_PLASTIC_EMULSION_SHADES, SAASI_SUPER_GLOSS_ENAMEL_SHADES, SAASI_WEATHER_SAFE_SHADES, GOBIS_INDUSTRIAL_ENAMEL_SHADES, GOBIS_STOVING_PAINT_SHADES, GOBIS_CARMAN_SERIES_SHADES, GOBIS_SILVERLINE_ENAMEL_SHADES, GOBIS_SILVERLINE_EMULSION_SHADES, GOBIS_GOLD_LUXURIOUS_WALL_EMULSION_SHADES, GOBIS_SILKSHEEN_EMULSION_SHADES, GOBIS_GOLD_ENAMEL_SHADES, GOBIS_AQUEOUS_MATT_FINISH_SHADES, GOBIS_GOLD_AQUEOUS_MATT_FINISH_SHADES, GOBIS_GOLD_EGGSHELL_MATT_FINISH_SHADES, GOBIS_GLOSS_ENAMEL_SHADES, GOBIS_EGGSHELL_MATT_ENAMEL_SHADES, RELIABLE_WEATHER_PROTECTOR_SHADES, RELIABLE_MATT_ENAMEL_SHADES, RELIABLE_EMULSION_SHADES, RELIABLE_ENAMEL_SHADES, RELIABLE_WATER_MATT_SHADES, CHOICE_SYNTHETIC_ENAMEL_SHADES, CHOICE_WEATHER_SEALER_SHADES, RELIANCE_STAINLESS_MATT_SHADES, RELIANCE_SEMI_PLASTIC_EMULSION_SHADES, RELIANCE_MATT_ENAMEL_SHADES, RELIANCE_WEATHER_GUARD_SHADES, RELIANCE_SYNTHETIC_ENAMEL_SHADES, BERGER_WEATHER_PRO_SHADES, BERGER_NU_ENAMEL_SHADES, BERGER_NU_EMULSION_SHADES, BERGER_ELEGANCE_SILK_EMULSION_SHADES, BERGER_SUPERIOR_MATT_FINISH_SHADES, DIAMOND_ACE_WEATHER_DEFENDER_SHADES, DIAMOND_OVERALL_PLASTICCOAT_EMULSION_SHADES, DIAMOND_ACE_ACRYLIC_PLASTIC_EMULSION_SHADES, DIAMOND_ACE_MATT_ENAMEL_SHADES, DIAMOND_ACE_SUPER_GLOSS_ENAMEL_SHADES, DIAMOND_OVERALL_SUPER_EMULSION_SHADES, DIAMOND_OVERALL_HIGH_GLOSS_ENAMEL_SHADES, DIAMOND_OVERALL_WEATHER_MAX_SHADES, DIAMOND_EVERLAST_HIGH_GLOSS_ENAMEL_SHADES, DIAMOND_ACE_DURASILK_EMULSION_SHADES, DIAMOND_VALUE_EMULSION_SHADES, DIAMOND_OVERALL_MATT_ENAMEL_SHADES, DIAMOND_OVERALL_AQUAMAX_WATER_MATT_SHADES, DIAMOND_ACE_TIMBERLAC_WOOD_STAINS_SHADES, BERGER_WEATHER_COAT_GLOW_365_SHADES, BERGER_VIP_WEATHER_COAT_SHADES, BERGER_ALLROUNDER_MATT_ENAMEL_SHADES, BERGER_TOP_SUPER_EMULSION_SHADES, BERGER_SUPER_GLOSS_ENAMEL_SHADES, BERGER_SEMI_PLASTIC_EMULSION_SHADES, BERGER_ELEGANCE_MATT_EMULSION_SHADES } from '@/constants/shades';
 
 
-export function ProductView({ initialId }: { initialId: string }) {
-    const { id } = useParams() || { id: initialId };
+export function ProductView({ initialSlug }: { initialSlug: string }) {
+    const { slug } = useParams() || { slug: initialSlug };
     const router = useRouter();
     const [product, setProduct] = useState<Product | null>(null);
     const [loading, setLoading] = useState(true);
@@ -206,7 +206,7 @@ export function ProductView({ initialId }: { initialId: string }) {
             const { data: productData } = await supabase
                 .from('products')
                 .select('*')
-                .eq('id', id)
+                .eq('slug', slug)
                 .single();
 
             if (productData) {
@@ -279,7 +279,7 @@ export function ProductView({ initialId }: { initialId: string }) {
                 const { data: shadeData } = await supabase
                     .from('product_shades')
                     .select('*')
-                    .eq('product_id', id)
+                    .eq('product_id', productData.id)
                     .order('name');
 
                 if (shadeData && shadeData.length > 0) {
@@ -313,8 +313,8 @@ export function ProductView({ initialId }: { initialId: string }) {
             setLoading(false);
         };
 
-        if (id) fetchProduct();
-    }, [id]);
+        if (slug) fetchProduct();
+    }, [slug]);
 
     // Redirect tools to category page
     useEffect(() => {

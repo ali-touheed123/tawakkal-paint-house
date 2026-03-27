@@ -3,17 +3,17 @@ import { ProductView } from './ProductView';
 import { createClient } from '@/lib/supabase/client';
 
 type Props = {
-  params: { id: string };
+  params: { slug: string };
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const id = params.id;
+  const slug = params.slug;
   const supabase = createClient();
   
   const { data: product } = await supabase
     .from('products')
     .select('name, brand, category, image_url')
-    .eq('id', id)
+    .eq('slug', slug)
     .single();
 
   if (!product) {
@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       images: product.image_url ? [product.image_url] : [],
-      url: `https://tawakkalpainthouse.com/product/${id}`,
+      url: `https://tawakkalpainthouse.com/product/${slug}`,
     },
     twitter: {
       card: 'summary_large_image',
@@ -44,5 +44,5 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default function ProductPage({ params }: Props) {
-  return <ProductView initialId={params.id} />;
+  return <ProductView initialSlug={params.slug} />;
 }

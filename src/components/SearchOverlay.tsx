@@ -104,7 +104,7 @@ export function SearchOverlay() {
                   return (
                     <Link
                       key={product.id}
-                      href={isPaintTool ? `/category/paint-tools` : `/product/${product.id}`}
+                      href={isPaintTool ? `/category/paint-tools` : `/product/${product.slug}`}
                       onClick={() => {
                         setSearchOpen(false);
                         setQuery('');

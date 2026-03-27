@@ -224,7 +224,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
           )
         ) : (
           <Link
-            href={`/product/${product.id}`}
+            href={`/product/${product.slug}`}
             className="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 rounded-lg text-[10px] xs:text-xs font-bold bg-navy text-white hover:bg-gold transition-colors cursor-pointer whitespace-nowrap"
           >
             <FileText size={14} className="shrink-0" />
@@ -263,7 +263,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
           )}
         </div>
       ) : (
-        <Link href={`/product/${product.id}`} className="relative aspect-square overflow-hidden bg-white border-b border-gray-100 block">
+        <Link href={`/product/${product.slug}`} className="relative aspect-square overflow-hidden bg-white border-b border-gray-100 block">
           <img
             src={getImageUrl()}
             alt={`${product.brand} ${product.name} - ${product.category} Paint`}
