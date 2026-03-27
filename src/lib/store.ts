@@ -304,13 +304,15 @@ export const useCartStore = create<CartStore>()(
                   if (finalLabourMode === 'without') {
                     if (latestProduct.labour_config?.enabled === false) {
                       updatedDiscount = 0;
+                    } else if (unit?.discount !== undefined) {
+                      // 1. Explicit unit-level discount
+                      updatedDiscount = unit.discount;
+                    } else if (unitLabourMode !== 'both') {
+                      // 2. Restricted mode (With Only / Without Only) defaults to 0%
+                      updatedDiscount = 0;
                     } else {
-                      // Prioritize unit-specific discount, fallback to product-level, then global default
-                      if (unit?.discount !== undefined) {
-                        updatedDiscount = unit.discount;
-                      } else {
-                        updatedDiscount = latestProduct.labour_config?.without_discount_percent ?? defaultWithoutDiscount;
-                      }
+                      // 3. Standard 'Both' mode falls back to product or global default
+                      updatedDiscount = latestProduct.labour_config?.without_discount_percent ?? defaultWithoutDiscount;
                     }
                   } else {
                     updatedDiscount = 0;

@@ -293,9 +293,16 @@ export function ProductView({ initialId }: { initialId: string }) {
                     setSelectedSize(productData.units[0].label);
                 }
 
-                // Set labour default from product config
+                // Set labour default: check first unit mode, then product config
+                const firstUnit = productData.units?.[0];
                 const labourCfg = productData.labour_config;
-                if (labourCfg && labourCfg.enabled === false) {
+
+                if (firstUnit?.labour_mode === 'with_only') {
+                    setLabourMode('with');
+                } else if (firstUnit?.labour_mode === 'without_only') {
+                    setLabourMode('without');
+                    setSavingSessionActive(true);
+                } else if (labourCfg && labourCfg.enabled === false) {
                     setLabourMode('without');
                 } else if (labourCfg?.default === 'without') {
                     setLabourMode('without');
@@ -330,7 +337,11 @@ export function ProductView({ initialId }: { initialId: string }) {
         // 1. Check if the currently selected unit has a specific discount
         if (selectedUnit?.discount !== undefined) return selectedUnit.discount;
 
-        // 2. Fallback to product-level discount
+        // 2. If unit is restricted to one mode only, don't fallback to the 10% auto-discount
+        // (If the admin wanted a discount here, they would have set it explicitly above)
+        if (selectedUnit?.labour_mode && selectedUnit.labour_mode !== 'both') return 0;
+
+        // 3. Fallback to product-level discount
         const productDiscount = product?.labour_config?.without_discount_percent;
         return typeof productDiscount === 'number' ? productDiscount : defaultWithoutDiscount;
     }, [product, selectedUnit, defaultWithoutDiscount]);
