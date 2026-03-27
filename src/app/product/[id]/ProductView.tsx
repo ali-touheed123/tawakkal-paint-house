@@ -323,18 +323,34 @@ export function ProductView({ initialId }: { initialId: string }) {
 
     const basePrice = selectedUnit?.price || 0;
 
-    // Determine the without-labour discount: product-specific override or global default
+    // Determine the without-labour discount: unit-specific, product-specific override, or global default
     const withoutDiscount = useMemo(() => {
         if (product?.labour_config?.enabled === false) return 0;
+        
+        // 1. Check if the currently selected unit has a specific discount
+        if (selectedUnit?.discount !== undefined) return selectedUnit.discount;
+
+        // 2. Fallback to product-level discount
         const productDiscount = product?.labour_config?.without_discount_percent;
         return typeof productDiscount === 'number' ? productDiscount : defaultWithoutDiscount;
-    }, [product, defaultWithoutDiscount]);
+    }, [product, selectedUnit, defaultWithoutDiscount]);
 
     const price = labourMode === 'without'
         ? Math.round(basePrice * (1 - withoutDiscount / 100))
         : basePrice;
 
-    const labourEnabled = product?.labour_config?.enabled !== false;
+    const labourEnabled = product?.labour_config?.enabled !== false && 
+                         (selectedUnit?.labour_mode === 'both' || !selectedUnit?.labour_mode);
+
+    // Force labour mode if unit only supports one
+    useEffect(() => {
+        if (selectedUnit?.labour_mode === 'with_only') {
+            setLabourMode('with');
+        } else if (selectedUnit?.labour_mode === 'without_only') {
+            setLabourMode('without');
+            setSavingSessionActive(true);
+        }
+    }, [selectedUnit]);
 
     const handleAddToCart = () => {
         if (!product) return;

@@ -42,7 +42,7 @@ export interface Product {
   unit_quarter_label?: string;
   unit_gallon_label?: string;
   unit_drum_label?: string;
-  units?: { label: string; price: number }[];
+  units?: { label: string; price: number; discount?: number; labour_mode?: 'both' | 'with_only' | 'without_only' }[];
   in_stock: boolean;
   shade_card_url?: string | null;
   labour_config?: LabourConfig | null;

@@ -21,10 +21,10 @@ export default function ProductsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [editingProduct, setEditingProduct] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalUnits, setModalUnits] = useState<{ label: string; price: number }[]>([
-    { label: 'Quarter', price: 0 },
-    { label: 'Gallon', price: 0 },
-    { label: 'Drum', price: 0 }
+  const [modalUnits, setModalUnits] = useState<{ label: string; price: number; discount?: number; labour_mode?: 'both' | 'with_only' | 'without_only' }[]>([
+    { label: 'Quarter', price: 0, labour_mode: 'both' },
+    { label: 'Gallon', price: 0, labour_mode: 'both' },
+    { label: 'Drum', price: 0, labour_mode: 'both' }
   ]);
 
   const [categories, setCategories] = useState<any[]>([]);
@@ -109,7 +109,12 @@ export default function ProductsPage() {
       sub_category: formData.get('sub_category'),
       description: formData.get('description'),
       image_url: formData.get('image_url'),
-      units: modalUnits.filter(u => u.label.trim() !== ''),
+      units: modalUnits.filter(u => u.label.trim() !== '').map(u => ({
+        label: u.label,
+        price: u.price,
+        discount: u.discount || undefined,
+        labour_mode: u.labour_mode || 'both'
+      })),
       in_stock: formData.get('in_stock') === 'on',
       shade_card_url: formData.get('shade_card_url'),
       labour_config: {
@@ -201,7 +206,7 @@ export default function ProductsPage() {
               <tr>
                 <th className="px-6 py-4">Product</th>
                 <th className="px-6 py-4">Category</th>
-                <th className="px-6 py-4">Pricing & Units</th>
+                <th className="px-6 py-4">Units, Pricing & Disc %</th>
                 <th className="px-6 py-4">Stock</th>
                 <th className="px-6 py-4 text-right">Actions</th>
               </tr>
@@ -231,9 +236,17 @@ export default function ProductsPage() {
                     <div className="flex flex-col gap-1">
                        {product.units && Array.isArray(product.units) && product.units.length > 0 ? (
                          product.units.map((unit: any, idx: number) => (
-                           <div key={idx} className="flex justify-between gap-4 border-b border-gray-50 last:border-0 pb-1 last:pb-0">
-                             <span className="text-[10px] text-gray-400 uppercase font-bold">{unit.label}</span>
-                             <span className="text-navy font-bold">Rs. {unit.price}</span>
+                            <div key={idx} className="flex justify-between gap-4 border-b border-gray-50 last:border-0 pb-1 last:pb-0">
+                             <div className="flex flex-col">
+                               <span className="text-[10px] text-gray-400 hide-on-mobile uppercase font-bold">{unit.label}</span>
+                               <span className="text-navy font-bold">Rs. {unit.price}</span>
+                             </div>
+                             {unit.discount !== undefined && (
+                               <div className="flex flex-col items-end">
+                                 <span className="text-[9px] text-green-600 font-bold">W/O Disc</span>
+                                 <span className="text-[10px] bg-green-50 text-green-700 px-1 rounded font-bold">{unit.discount}%</span>
+                               </div>
+                             )}
                            </div>
                          ))
                        ) : (
@@ -437,7 +450,7 @@ export default function ProductsPage() {
               </div>
               <div className="col-span-2 border-t border-gray-100 pt-4">
                 <div className="flex items-center justify-between mb-2">
-                  <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider">Pricing & Units</label>
+                  <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider">Units, Pricing & Unit-Specific Savings Disc %</label>
                   <button 
                     type="button" 
                     onClick={() => setModalUnits([...modalUnits, { label: '', price: 0 }])}
@@ -462,7 +475,7 @@ export default function ProductsPage() {
                           className="w-full p-1.5 bg-white border border-gray-100 rounded focus:border-gold focus:outline-none text-xs" 
                         />
                       </div>
-                      <div className="w-24">
+                      <div className="w-20">
                         <label className="block text-[8px] text-gray-400 mb-0.5 uppercase">Price</label>
                         <input 
                           type="number" 
@@ -476,13 +489,44 @@ export default function ProductsPage() {
                           className="w-full p-1.5 bg-white border border-gray-100 rounded focus:border-gold focus:outline-none text-xs font-bold" 
                         />
                       </div>
+                      <div className="w-12">
+                        <label className="block text-[8px] text-gray-400 mb-0.5 uppercase">Disc %</label>
+                        <input 
+                          type="number" 
+                          value={unit.discount || ''} 
+                          onChange={(e) => {
+                            const newUnits = [...modalUnits];
+                            newUnits[idx].discount = e.target.value === '' ? undefined : Number(e.target.value);
+                            setModalUnits(newUnits);
+                          }}
+                          placeholder="Opt"
+                          onFocus={(e) => e.target.select()}
+                          className="w-full p-1.5 bg-white border border-gray-100 rounded focus:border-gold focus:outline-none text-xs text-green-600 font-bold" 
+                        />
+                      </div>
+                      <div className="w-24">
+                        <label className="block text-[8px] text-gray-400 mb-0.5 uppercase">Labour Mode</label>
+                        <select 
+                          value={unit.labour_mode || 'both'} 
+                          onChange={(e) => {
+                            const newUnits = [...modalUnits];
+                            newUnits[idx].labour_mode = e.target.value as any;
+                            setModalUnits(newUnits);
+                          }}
+                          className="w-full p-1.5 bg-white border border-gray-100 rounded focus:border-gold focus:outline-none text-[10px] uppercase font-bold text-navy"
+                        >
+                          <option value="both">Both</option>
+                          <option value="with_only">With Only</option>
+                          <option value="without_only">Without Only</option>
+                        </select>
+                      </div>
                       <button 
                         type="button" 
                         onClick={() => setModalUnits(modalUnits.filter((_, i) => i !== idx))}
-                        className="p-2 text-gray-400 hover:text-red-500"
+                        className="p-1.5 text-gray-400 hover:text-red-500"
                         disabled={modalUnits.length === 1}
                       >
-                        <Trash2 size={16} />
+                        <Trash2 size={14} />
                       </button>
                     </div>
                   ))}

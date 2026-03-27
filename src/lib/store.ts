@@ -39,7 +39,7 @@ export const useCartStore = create<CartStore>()(
       addItem: (productId, size, quantity, product, selectedShade, labourMode = 'with', labourDiscount = 0) => {
         set((state) => {
           const items = state.items;
-          
+
           // If product disables labour selection, force 'without' mode with NO discount
           let finalLabourMode = labourMode;
           let finalLabourDiscount = labourDiscount;
@@ -135,7 +135,7 @@ export const useCartStore = create<CartStore>()(
         set((state) => {
           // 1. Filter out the item
           const filteredItems = state.items.filter(item => item.id !== itemId);
-          
+
           // 2. Re-calculate allowance from scratch (same logic as getSavingAllowance)
           const allowance = filteredItems.reduce((pool, item) => {
             if (!item.product || item.isGift) return pool;
@@ -184,7 +184,7 @@ export const useCartStore = create<CartStore>()(
             const allowance = state.getSavingAllowance();
             const used = state.getUsedCredit();
             const remaining = Math.max(0, allowance - used);
-            
+
             if (extraCost > remaining) return state; // silently block
           }
 
@@ -276,38 +276,57 @@ export const useCartStore = create<CartStore>()(
           const productIds = Array.from(new Set(items.map(item => item.product_id))).filter(id => id && id.length === 36);
 
           const [productsRes, settingsRes] = await Promise.all([
-             supabase.from('products').select('*').in('id', productIds),
-             supabase.from('site_settings').select('value').eq('key', 'labour_without_default_discount').single()
+            supabase.from('products').select('*').in('id', productIds),
+            supabase.from('site_settings').select('value').eq('key', 'labour_without_default_discount').single()
           ]);
 
           const latestProducts = productsRes.data;
           const defaultWithoutDiscount = Number(settingsRes.data?.value) || 10;
 
           if (latestProducts) {
-             set((state) => {
-               const updatedItems = state.items.map(item => {
-                 const latestProduct = latestProducts.find(p => p.id === item.product_id);
-                 if (latestProduct) {
-                   // Recompute the discount based on latest data
-                   let updatedDiscount = item.labourDiscount || 0;
-                   if (item.labourMode === 'without') {
-                      if (latestProduct.labour_config?.enabled === false) {
-                        updatedDiscount = 0;
+            set((state) => {
+              const updatedItems = state.items.map(item => {
+                const latestProduct = latestProducts.find(p => p.id === item.product_id);
+                if (latestProduct) {
+                  // Enforce unit-level labour mode if specified
+                  const unit = latestProduct.units?.find((u: any) => u.label === item.size);
+                  const unitLabourMode = unit?.labour_mode || 'both';
+                  
+                  let finalLabourMode = item.labourMode || 'with';
+                  if (unitLabourMode === 'with_only') {
+                    finalLabourMode = 'with';
+                  } else if (unitLabourMode === 'without_only') {
+                    finalLabourMode = 'without';
+                  }
+
+                  // Recompute the discount based on latest data
+                  let updatedDiscount = item.labourDiscount || 0;
+                  if (finalLabourMode === 'without') {
+                    if (latestProduct.labour_config?.enabled === false) {
+                      updatedDiscount = 0;
+                    } else {
+                      // Prioritize unit-specific discount, fallback to product-level, then global default
+                      if (unit?.discount !== undefined) {
+                        updatedDiscount = unit.discount;
                       } else {
                         updatedDiscount = latestProduct.labour_config?.without_discount_percent ?? defaultWithoutDiscount;
                       }
-                   }
-                   
-                   return { 
-                     ...item, 
-                     product: latestProduct,
-                     labourDiscount: updatedDiscount 
-                   };
-                 }
-                 return item;
-               });
-               return { items: updatedItems };
-             });
+                    }
+                  } else {
+                    updatedDiscount = 0;
+                  }
+
+                  return {
+                    ...item,
+                    product: latestProduct,
+                    labourMode: finalLabourMode,
+                    labourDiscount: updatedDiscount
+                  };
+                }
+                return item;
+              });
+              return { items: updatedItems };
+            });
           }
         } catch (err) {
           console.error('Failed to refresh cart items:', err);
