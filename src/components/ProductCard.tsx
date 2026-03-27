@@ -31,8 +31,10 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
   };
 
   const isPaintTool = product.category === 'Paint Tools' || product.category === 'paint-tools';
-  // Only activate saving mode for paint tools when the global session is active
-  const isSavingActive = isPaintTool && savingSessionActive;
+  const hasAllowance = useCartStore(state => state.getSavingAllowance() > 0);
+  
+  // Activate saving mode for paint tools if global session is active OR if they already have saving allowance in cart
+  const isSavingActive = isPaintTool && (savingSessionActive || hasAllowance);
 
   // Get price from either legacy column or units array
   const unitPrice = product.price_quarter || (product.units && product.units.length > 0 ? product.units[0].price : 0);
@@ -117,15 +119,28 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
 
       {isPaintTool ? (
         <div className="mb-4">
-          <div className="bg-amber-50 border border-amber-200 p-2 rounded-xl text-center">
-            <Gift size={16} className="text-amber-500 mx-auto mb-1" />
-            <p className="text-xs font-bold text-amber-700 leading-tight">
-              Complimentary Gift
-            </p>
-            <p className="text-[9px] text-amber-600 mt-0.5">
-              Available with "Without Labour" paint orders
-            </p>
-          </div>
+          {/* If saving session is active, show eligibility. Otherwise, show general complimentary message */}
+          {isSavingActive ? (
+            <div className={`font-bold text-sm py-2 text-center rounded-xl border ${
+              claimStatus === 'claimed' ? 'bg-green-50 border-green-200 text-green-600' :
+              (claimStatus === 'rejected' || isLimitReached) ? 'bg-red-50 border-red-200 text-red-500' :
+              'bg-amber-50 border-amber-200 text-amber-600'
+            }`}>
+              {claimStatus === 'claimed' ? '✓ Claimed as Gift' :
+               (claimStatus === 'rejected' || isLimitReached) ? '✗ Not Eligible' :
+               '✦ Eligible for Credit'}
+            </div>
+          ) : (
+            <div className="bg-amber-50 border border-amber-200 p-2 rounded-xl text-center">
+              <Gift size={16} className="text-amber-500 mx-auto mb-1" />
+              <p className="text-xs font-bold text-amber-700 leading-tight">
+                Complimentary Gift
+              </p>
+              <p className="text-[9px] text-amber-600 mt-0.5">
+                Available with "Without Labour" paint orders
+              </p>
+            </div>
+          )}
         </div>
       ) : unitPrice > 0 && (
         <div className="mb-4">
@@ -149,16 +164,35 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
         </Link>
 
         {isPaintTool ? (
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              alert("These tools are exclusively available as free gifts. Select 'Without Labour' on any paint product to claim them!");
-            }}
-            className="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 rounded-lg text-[10px] xs:text-xs font-bold bg-amber-400 text-white hover:bg-amber-500 transition-colors cursor-pointer whitespace-nowrap"
-          >
-            <Gift size={14} className="shrink-0" />
-            <span>How to Claim</span>
-          </button>
+          isSavingActive ? (
+            <button
+              onClick={handleAddToCart}
+              disabled={!product.in_stock || claimStatus === 'rejected' || isLimitReached}
+              className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-1 rounded-lg text-[10px] xs:text-xs font-bold transition-colors cursor-pointer whitespace-nowrap disabled:cursor-not-allowed group/btn ${
+                claimStatus === 'claimed' ? 'bg-green-500 text-white' :
+                (claimStatus === 'rejected' || isLimitReached) ? 'bg-gray-300 text-gray-500' :
+                'bg-amber-400 text-white hover:bg-amber-500'
+              }`}
+            >
+              <Gift size={14} className="shrink-0" />
+              <span>
+                {claimStatus === 'claimed' ? 'Claimed!' :
+                 (claimStatus === 'rejected' || isLimitReached) ? 'Not Eligible' :
+                 'Claim Gift'}
+              </span>
+            </button>
+          ) : (
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                alert("These tools are exclusively available as free gifts. Select 'Without Labour' on any paint product to claim them!");
+              }}
+              className="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 rounded-lg text-[10px] xs:text-xs font-bold bg-amber-400 text-white hover:bg-amber-500 transition-colors cursor-pointer whitespace-nowrap"
+            >
+              <Gift size={14} className="shrink-0" />
+              <span>How to Claim</span>
+            </button>
+          )
         ) : (
           <Link
             href={`/product/${product.id}`}
