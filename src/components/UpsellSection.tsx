@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingCart, Sparkles, ArrowRight, Wrench } from 'lucide-react';
+import { ShoppingCart, Sparkles, ArrowRight, Wrench, Gift, Lock } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { useCartStore } from '@/lib/store';
 import type { Product } from '@/types';
@@ -17,10 +17,11 @@ interface UpsellSectionProps {
 export function UpsellSection({ labourMode, upsellItemIds, currentProductId }: UpsellSectionProps) {
     const [upsellProducts, setUpsellProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
-    const [addingId, setAddingId] = useState<string | null>(null);
+    const [claimingId, setClaimingId] = useState<string | null>(null);
+    const [rejectedId, setRejectedId] = useState<string | null>(null);
     const sectionRef = useRef<HTMLDivElement>(null);
     const hasScrolled = useRef(false);
-    const { addItem } = useCartStore();
+    const { addItem, addGiftItem, items, getRemainingCredit, getSavingAllowance } = useCartStore();
 
     useEffect(() => {
         async function fetchUpsell() {
@@ -28,13 +29,9 @@ export function UpsellSection({ labourMode, upsellItemIds, currentProductId }: U
             let query = supabase.from('products').select('*').eq('in_stock', true).neq('id', currentProductId);
 
             if (upsellItemIds.length > 0) {
-                // Show admin-configured upsell items
                 query = query.in('id', upsellItemIds).limit(4);
             } else {
-                // Fallback: show paint tools category items
-                query = query
-                    .eq('category', 'paint-tools')
-                    .limit(4);
+                query = query.eq('category', 'paint-tools').limit(4);
             }
 
             const { data } = await query;
@@ -48,7 +45,7 @@ export function UpsellSection({ labourMode, upsellItemIds, currentProductId }: U
         fetchUpsell();
     }, [upsellItemIds, currentProductId]);
 
-    // Auto-scroll into view when Without Labour is selected (only once per page load)
+    // Auto-scroll into view when Without Labour is selected
     useEffect(() => {
         if (labourMode === 'without' && !hasScrolled.current && sectionRef.current && upsellProducts.length > 0) {
             hasScrolled.current = true;
@@ -61,24 +58,38 @@ export function UpsellSection({ labourMode, upsellItemIds, currentProductId }: U
         }
     }, [labourMode, upsellProducts.length]);
 
-    const handleAddToCart = (product: Product) => {
-        const firstUnit = product.units?.[0];
-        if (!firstUnit) return;
-        setAddingId(product.id);
-        addItem(product.id, firstUnit.label, 1, product, undefined, 'with', 0);
-        setTimeout(() => setAddingId(null), 800);
-    };
-
     const getItemPrice = (product: Product) => {
         const unit = product.units?.[0];
         return unit?.price || 0;
     };
 
-    const isHighlighted = labourMode === 'without';
+    const isAlreadyInCart = (productId: string) =>
+        items.some(i => i.product_id === productId && i.isGift);
 
-    if (!loading && upsellProducts.length === 0) {
-        return null;
-    }
+    const handleClaimGift = (product: Product) => {
+        const firstUnit = product.units?.[0];
+        if (!firstUnit) return;
+        const price = firstUnit.price;
+        setClaimingId(product.id);
+        const success = addGiftItem(product.id, firstUnit.label, 1, product, price);
+        if (!success) {
+            setRejectedId(product.id);
+            setTimeout(() => setRejectedId(null), 1200);
+        }
+        setTimeout(() => setClaimingId(null), 800);
+    };
+
+    const handleAddToCart = (product: Product) => {
+        const firstUnit = product.units?.[0];
+        if (!firstUnit) return;
+        addItem(product.id, firstUnit.label, 1, product, undefined, 'with', 0);
+    };
+
+    const isSavingMode = labourMode === 'without';
+    const allowance = getSavingAllowance();
+    const remaining = getRemainingCredit();
+
+    if (!loading && upsellProducts.length === 0) return null;
 
     return (
         <motion.div
@@ -87,30 +98,30 @@ export function UpsellSection({ labourMode, upsellItemIds, currentProductId }: U
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             className={`mt-12 rounded-2xl border-2 transition-all duration-500 overflow-hidden ${
-                isHighlighted
+                isSavingMode
                     ? 'border-amber-300 shadow-[0_0_30px_rgba(251,191,36,0.25)] bg-amber-50/40'
                     : 'border-gray-100 bg-gray-50/50'
             }`}
         >
             {/* Header */}
             <div className={`px-6 py-5 border-b transition-all duration-500 ${
-                isHighlighted ? 'border-amber-200 bg-amber-50' : 'border-gray-100 bg-white'
+                isSavingMode ? 'border-amber-200 bg-amber-50' : 'border-gray-100 bg-white'
             }`}>
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-500 ${
-                            isHighlighted ? 'bg-amber-400 text-white' : 'bg-navy/10 text-navy'
+                            isSavingMode ? 'bg-amber-400 text-white' : 'bg-navy/10 text-navy'
                         }`}>
-                            {isHighlighted ? <Sparkles size={18} /> : <Wrench size={18} />}
+                            {isSavingMode ? <Gift size={18} /> : <Wrench size={18} />}
                         </div>
                         <div>
                             <h3 className={`font-heading font-bold text-base transition-colors duration-500 ${
-                                isHighlighted ? 'text-amber-800' : 'text-navy'
+                                isSavingMode ? 'text-amber-800' : 'text-navy'
                             }`}>
-                                Recommended Tools for Best Results
+                                {isSavingMode ? 'Claim Your Complimentary Tools' : 'Recommended Tools for Best Results'}
                             </h3>
                             <AnimatePresence mode="wait">
-                                {isHighlighted ? (
+                                {isSavingMode ? (
                                     <motion.p
                                         key="without"
                                         initial={{ opacity: 0, y: -4 }}
@@ -118,7 +129,7 @@ export function UpsellSection({ labourMode, upsellItemIds, currentProductId }: U
                                         exit={{ opacity: 0, y: 4 }}
                                         className="text-xs text-amber-600 font-medium mt-0.5"
                                     >
-                                        ✦ Recommended when you choose no labour
+                                        ✦ Select tools included in your saving pack
                                     </motion.p>
                                 ) : (
                                     <motion.p
@@ -134,16 +145,38 @@ export function UpsellSection({ labourMode, upsellItemIds, currentProductId }: U
                             </AnimatePresence>
                         </div>
                     </div>
-                    {isHighlighted && (
+                    {isSavingMode && (
                         <motion.span
                             initial={{ scale: 0.8, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             className="text-[9px] font-black uppercase tracking-widest px-2 py-1 bg-amber-400 text-white rounded-full"
                         >
-                            DIY Tools
+                            COMPLIMENTARY
                         </motion.span>
                     )}
                 </div>
+
+                {/* Credit Progress Bar — visible only in saving mode */}
+                {isSavingMode && allowance > 0 && (
+                    <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        className="mt-3 pt-3 border-t border-amber-200"
+                    >
+                        <div className="flex justify-between text-[10px] text-amber-700 font-semibold mb-1.5">
+                            <span>Pack Credit Used</span>
+                            <span>{Math.round(((allowance - remaining) / allowance) * 100)}%</span>
+                        </div>
+                        <div className="h-1.5 bg-amber-200 rounded-full overflow-hidden">
+                            <motion.div
+                                className="h-full bg-amber-400 rounded-full"
+                                initial={{ width: 0 }}
+                                animate={{ width: `${Math.min(100, ((allowance - remaining) / allowance) * 100)}%` }}
+                                transition={{ duration: 0.5 }}
+                            />
+                        </div>
+                    </motion.div>
+                )}
             </div>
 
             {/* Products Grid */}
@@ -156,59 +189,107 @@ export function UpsellSection({ labourMode, upsellItemIds, currentProductId }: U
                     </div>
                 ) : (
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                        {upsellProducts.map((product, idx) => (
-                            <motion.div
-                                key={product.id}
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: idx * 0.08 }}
-                                className={`bg-white rounded-xl p-3 flex flex-col items-center gap-2 border-2 transition-all duration-300 group hover:shadow-lg hover:-translate-y-1 ${
-                                    isHighlighted
-                                        ? 'border-amber-100 hover:border-amber-300'
-                                        : 'border-gray-50 hover:border-gold/30'
-                                }`}
-                            >
-                                {/* Image */}
-                                <Link href={`/product/${product.id}`} className="w-full">
-                                    <div className="w-full aspect-square bg-gray-50 rounded-lg overflow-hidden flex items-center justify-center">
-                                        <img
-                                            src={product.image_url || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200'}
-                                            alt={product.name}
-                                            className="w-full h-full object-contain p-1 group-hover:scale-105 transition-transform duration-300"
-                                        />
-                                    </div>
-                                </Link>
+                        {upsellProducts.map((product, idx) => {
+                            const price = getItemPrice(product);
+                            const alreadyClaimed = isAlreadyInCart(product.id);
+                            const canClaim = isSavingMode && price <= remaining && !alreadyClaimed;
+                            const limitReached = isSavingMode && price > remaining && !alreadyClaimed;
+                            const isRejected = rejectedId === product.id;
+                            const isClaiming = claimingId === product.id;
 
-                                {/* Info */}
-                                <div className="w-full text-center">
-                                    <p className="text-[9px] text-gold font-bold uppercase tracking-widest">{product.brand}</p>
-                                    <Link href={`/product/${product.id}`}>
-                                        <p className="text-xs font-semibold text-navy leading-tight line-clamp-2 hover:text-gold transition-colors">
-                                            {product.name}
-                                        </p>
-                                    </Link>
-                                    <p className="text-sm font-bold text-navy mt-1">
-                                        Rs. {getItemPrice(product).toLocaleString()}
-                                    </p>
-                                </div>
-
-                                {/* Add to Cart */}
-                                <button
-                                    onClick={() => handleAddToCart(product)}
-                                    disabled={addingId === product.id}
-                                    className={`w-full py-1.5 rounded-lg text-[10px] font-bold flex items-center justify-center gap-1 transition-all active:scale-95 ${
-                                        addingId === product.id
-                                            ? 'bg-green-500 text-white'
-                                            : isHighlighted
-                                            ? 'bg-amber-400 text-white hover:bg-amber-500'
-                                            : 'bg-navy text-white hover:bg-gold hover:text-navy'
+                            return (
+                                <motion.div
+                                    key={product.id}
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: idx * 0.08 }}
+                                    className={`bg-white rounded-xl p-3 flex flex-col items-center gap-2 border-2 transition-all duration-300 group hover:shadow-lg hover:-translate-y-1 ${
+                                        alreadyClaimed
+                                            ? 'border-green-300 bg-green-50/50'
+                                            : isSavingMode
+                                            ? 'border-amber-100 hover:border-amber-300'
+                                            : 'border-gray-50 hover:border-gold/30'
                                     }`}
                                 >
-                                    <ShoppingCart size={12} />
-                                    {addingId === product.id ? 'Added!' : 'Add to Cart'}
-                                </button>
-                            </motion.div>
-                        ))}
+                                    {/* Gift Badge */}
+                                    {alreadyClaimed && (
+                                        <div className="w-full flex justify-center -mb-1">
+                                            <span className="text-[8px] font-black uppercase tracking-widest px-2 py-0.5 bg-green-500 text-white rounded-full">
+                                                ✓ In Pack
+                                            </span>
+                                        </div>
+                                    )}
+
+                                    {/* Image */}
+                                    <Link href={`/product/${product.id}`} className="w-full">
+                                        <div className="w-full aspect-square bg-gray-50 rounded-lg overflow-hidden flex items-center justify-center">
+                                            <img
+                                                src={product.image_url || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200'}
+                                                alt={product.name}
+                                                className={`w-full h-full object-contain p-1 group-hover:scale-105 transition-transform duration-300 ${limitReached ? 'opacity-50' : ''}`}
+                                            />
+                                        </div>
+                                    </Link>
+
+                                    {/* Info */}
+                                    <div className="w-full text-center">
+                                        <p className="text-[9px] text-gold font-bold uppercase tracking-widest">{product.brand}</p>
+                                        <Link href={`/product/${product.id}`}>
+                                            <p className="text-xs font-semibold text-navy leading-tight line-clamp-2 hover:text-gold transition-colors">
+                                                {product.name}
+                                            </p>
+                                        </Link>
+
+                                        {/* Price — hidden in saving mode, shown normally otherwise */}
+                                        {!isSavingMode && (
+                                            <p className="text-sm font-bold text-navy mt-1">
+                                                Rs. {price.toLocaleString()}
+                                            </p>
+                                        )}
+                                        {isSavingMode && (
+                                            <p className={`text-xs font-black mt-1 ${alreadyClaimed ? 'text-green-600' : limitReached ? 'text-red-400' : 'text-amber-600'}`}>
+                                                {alreadyClaimed ? 'INCLUDED' : limitReached ? 'LIMIT REACHED' : 'COMPLIMENTARY'}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    {/* Button */}
+                                    {isSavingMode ? (
+                                        <button
+                                            onClick={() => !alreadyClaimed && handleClaimGift(product)}
+                                            disabled={alreadyClaimed || limitReached || isClaiming}
+                                            className={`w-full py-1.5 rounded-lg text-[10px] font-bold flex items-center justify-center gap-1 transition-all active:scale-95 ${
+                                                alreadyClaimed
+                                                    ? 'bg-green-500 text-white cursor-default'
+                                                    : limitReached || isRejected
+                                                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                                                    : isClaiming
+                                                    ? 'bg-green-500 text-white'
+                                                    : 'bg-amber-400 text-white hover:bg-amber-500'
+                                            }`}
+                                        >
+                                            {alreadyClaimed ? (
+                                                <><Gift size={11} /> Claimed!</>
+                                            ) : limitReached ? (
+                                                <><Lock size={11} /> Limit Reached</>
+                                            ) : isClaiming ? (
+                                                <><Gift size={11} /> Added!</>
+                                            ) : (
+                                                <><Gift size={11} /> Claim Gift</>
+                                            )}
+                                        </button>
+                                    ) : (
+                                        <button
+                                            onClick={() => handleAddToCart(product)}
+                                            className="w-full py-1.5 rounded-lg text-[10px] font-bold flex items-center justify-center gap-1 transition-all active:scale-95 bg-navy text-white hover:bg-gold hover:text-navy"
+                                        >
+                                            <ShoppingCart size={12} />
+                                            Add to Cart
+                                        </button>
+                                    )}
+                                </motion.div>
+                            );
+                        })}
                     </div>
                 )}
 
@@ -216,12 +297,12 @@ export function UpsellSection({ labourMode, upsellItemIds, currentProductId }: U
                     <Link
                         href="/category/paint-tools"
                         className={`inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold transition-all ${
-                            isHighlighted
+                            isSavingMode
                                 ? 'bg-amber-400/20 text-amber-700 hover:bg-amber-400/40 border border-amber-300'
                                 : 'bg-gray-100 text-navy hover:bg-gray-200 border border-gray-200'
                         }`}
                     >
-                        See More Items <ArrowRight size={14} />
+                        {isSavingMode ? 'Browse More Tools' : 'See More Items'} <ArrowRight size={14} />
                     </Link>
                 </div>
             </div>

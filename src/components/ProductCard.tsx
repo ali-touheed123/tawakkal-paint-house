@@ -17,6 +17,9 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
   const [imgError, setImgError] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const addItem = useCartStore(state => state.addItem);
+  const getSavingAllowance = useCartStore(state => state.getSavingAllowance);
+  const savingAllowance = getSavingAllowance();
+  const isSavingActive = savingAllowance > 0;
 
   const getImageUrl = () => {
     if (!product.image_url || imgError) {
@@ -84,10 +87,19 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
 
       {isPaintTool && unitPrice > 0 && (
         <div className="mb-4">
-          <div className="text-gold font-bold text-lg">
-            Rs. {unitPrice.toLocaleString()}
-          </div>
-          <p className="text-[10px] text-gray-500 font-medium">{product.units?.[0]?.label || 'Unit Price'}</p>
+          {/* Hide price from brands when saving is active */}
+          {isSavingActive ? (
+            <div className="text-amber-600 font-bold text-sm py-1">
+              ✦ Eligible for Credit
+            </div>
+          ) : (
+            <div className="text-gold font-bold text-lg">
+              Rs. {unitPrice.toLocaleString()}
+            </div>
+          )}
+          {!isSavingActive && (
+            <p className="text-[10px] text-gray-500 font-medium">{product.units?.[0]?.label || 'Unit Price'}</p>
+          )}
           
           <div className="flex items-center gap-3 mt-3 bg-gray-50 p-2 rounded-xl justify-between border border-gray-100">
             <button 

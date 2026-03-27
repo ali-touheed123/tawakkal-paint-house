@@ -13,11 +13,21 @@ interface CartStore {
     labourMode?: 'with' | 'without',
     labourDiscount?: number
   ) => void;
+  addGiftItem: (
+    productId: string,
+    size: string,
+    quantity: number,
+    product: CartItem['product'],
+    originalPrice: number
+  ) => boolean; // returns false if credit is insufficient
   removeItem: (itemId: string) => void;
   updateQuantity: (itemId: string, quantity: number) => void;
   updateSize: (itemId: string, size: string) => void;
   clearCart: () => void;
   getTotal: () => number;
+  getSavingAllowance: () => number;
+  getUsedCredit: () => number;
+  getRemainingCredit: () => number;
   getLabourSubtotals: () => { withLabourSubtotal: number; withoutLabourSubtotal: number };
   refreshItems: () => Promise<void>;
 }
@@ -34,7 +44,7 @@ export const useCartStore = create<CartStore>()(
         let finalLabourDiscount = labourDiscount;
         if (product?.labour_config?.enabled === false) {
           finalLabourMode = 'without';
-          finalLabourDiscount = 0; // No discount when toggle is disabled
+          finalLabourDiscount = 0;
         }
 
         const existingItem = items.find(
@@ -42,6 +52,7 @@ export const useCartStore = create<CartStore>()(
             item.product_id === productId &&
             item.size === size &&
             item.labourMode === finalLabourMode &&
+            !item.isGift &&
             JSON.stringify(item.selectedShade) === JSON.stringify(selectedShade)
         );
 
@@ -75,14 +86,70 @@ export const useCartStore = create<CartStore>()(
                 product,
                 selectedShade,
                 labourMode: finalLabourMode,
-                labourDiscount: finalLabourDiscount
+                labourDiscount: finalLabourDiscount,
+                isGift: false
               }
             ]
           });
         }
       },
+      addGiftItem: (productId, size, quantity, product, originalPrice) => {
+        // Check if there is enough remaining credit
+        const remaining = get().getRemainingCredit();
+        if (originalPrice > remaining) return false;
+
+        // Don't double-add the same gift
+        const existing = get().items.find(i => i.product_id === productId && i.isGift);
+        if (existing) return true;
+
+        const uiStore = useUIStore.getState();
+        uiStore.setLastAddedItem({
+          name: product?.name || 'Free Gift',
+          image: product?.image_url || null
+        });
+        uiStore.setCartToastOpen(true);
+
+        set({
+          items: [
+            ...get().items,
+            {
+              id: crypto.randomUUID(),
+              user_id: '',
+              product_id: productId,
+              size,
+              quantity,
+              created_at: new Date().toISOString(),
+              product,
+              labourMode: 'with',
+              labourDiscount: 0,
+              isGift: true,
+              originalPrice
+            }
+          ]
+        });
+        return true;
+      },
       removeItem: (itemId) => {
-        set({ items: get().items.filter(item => item.id !== itemId) });
+        const newItems = get().items.filter(item => item.id !== itemId);
+        set({ items: newItems });
+        // After removing, re-validate gifts against updated allowance
+        // Use setTimeout to let the state settle first
+        setTimeout(() => {
+          const state = get();
+          const allowance = state.getSavingAllowance();
+          let usedSoFar = 0;
+          const revalidated = state.items.map(item => {
+            if (!item.isGift) return item;
+            const price = item.originalPrice || 0;
+            if (usedSoFar + price <= allowance) {
+              usedSoFar += price;
+              return item; // stays free
+            }
+            // Revert to paid
+            return { ...item, isGift: false, originalPrice: undefined };
+          });
+          set({ items: revalidated });
+        }, 0);
       },
       updateQuantity: (itemId, quantity) => {
         if (quantity <= 0) {
@@ -103,9 +170,35 @@ export const useCartStore = create<CartStore>()(
         });
       },
       clearCart: () => set({ items: [] }),
+      getSavingAllowance: () => {
+        // 10% of all Without-Labour paint items (excluding gifts)
+        return get().items.reduce((pool, item) => {
+          if (!item.product || item.isGift) return pool;
+          if (item.labourMode !== 'without') return pool;
+          if (item.product.category === 'paint-tools') return pool; // tools don't generate allowance
+          const units = item.product.units || [];
+          const unit = units.find((u: any) => u.label === item.size) || units[0];
+          const basePrice = unit?.price || 0;
+          const discount = item.labourDiscount || 0;
+          const effectivePrice = basePrice * (1 - discount / 100);
+          return pool + effectivePrice * item.quantity * 0.10;
+        }, 0);
+      },
+      getUsedCredit: () => {
+        return get().items.reduce((used, item) => {
+          if (!item.isGift) return used;
+          return used + (item.originalPrice || 0) * item.quantity;
+        }, 0);
+      },
+      getRemainingCredit: () => {
+        const state = get();
+        return Math.max(0, state.getSavingAllowance() - state.getUsedCredit());
+      },
       getTotal: () => {
         return get().items.reduce((total, item) => {
           if (!item.product) return total;
+          // Gift items are free
+          if (item.isGift) return total;
 
           const units = item.product.units || [];
           const unit = units.find((u: any) => u.label === item.size) || units[0];
@@ -190,7 +283,7 @@ export const useCartStore = create<CartStore>()(
     }),
     {
       name: 'tawakkal-cart',
-      version: 1
+      version: 2
     }
   )
 );

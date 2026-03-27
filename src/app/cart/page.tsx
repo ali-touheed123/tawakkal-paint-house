@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Trash2, Minus, Plus, MessageCircle, ArrowRight, Truck, Wrench, Check } from 'lucide-react';
+import { Trash2, Minus, Plus, MessageCircle, ArrowRight, Truck, Wrench, Check, Gift } from 'lucide-react';
 import { useCartStore } from '@/lib/store';
 import { useDiscountRules, useLabourSettings } from '@/lib/hooks/useSettings';
 
@@ -66,8 +66,8 @@ export default function CartPage() {
             <div className="lg:col-span-2 space-y-4">
               {items.map((item) => {
                 const basePrice = getItemBasePrice(item);
-                const effectivePrice = getItemEffectivePrice(item);
-                const isWithout = item.labourMode === 'without';
+                const effectivePrice = item.isGift ? 0 : getItemEffectivePrice(item);
+                const isWithout = item.labourMode === 'without' && !item.isGift;
                 const discount = item.labourDiscount || 0;
 
                 return (
@@ -76,7 +76,7 @@ export default function CartPage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     className={`bg-white rounded-xl p-4 shadow-md flex flex-col sm:flex-row gap-4 border-2 transition-all ${
-                      isWithout ? 'border-amber-100' : 'border-transparent'
+                      item.isGift ? 'border-green-300 bg-green-50/30' : isWithout ? 'border-amber-100' : 'border-transparent'
                     }`}
                   >
                     {/* Image */}
@@ -102,15 +102,21 @@ export default function CartPage() {
                           {item.size}
                         </p>
 
-                        {/* Labour Mode Badge */}
-                        <span className={`text-[9px] font-black uppercase tracking-widest px-2 py-1 rounded-full flex items-center gap-1 ${
-                          isWithout
-                            ? 'bg-amber-100 text-amber-700'
-                            : 'bg-green-50 text-green-700'
-                        }`}>
-                          {isWithout ? <Wrench size={9} /> : <Truck size={9} />}
-                          {isWithout ? 'Without Labour' : 'With Labour'}
-                        </span>
+                        {/* Gift badge */}
+                        {item.isGift ? (
+                          <span className="text-[9px] font-black uppercase tracking-widest px-2 py-1 rounded-full flex items-center gap-1 bg-green-100 text-green-700">
+                            <Gift size={9} /> Free Gift
+                          </span>
+                        ) : (
+                          <span className={`text-[9px] font-black uppercase tracking-widest px-2 py-1 rounded-full flex items-center gap-1 ${
+                            isWithout
+                              ? 'bg-amber-100 text-amber-700'
+                              : 'bg-green-50 text-green-700'
+                          }`}>
+                            {isWithout ? <Wrench size={9} /> : <Truck size={9} />}
+                            {isWithout ? 'Without Labour' : 'With Labour'}
+                          </span>
+                        )}
 
                         {item.selectedShade && (
                           <div className="flex items-center gap-1.5 border-l border-gray-200 pl-2">
@@ -131,7 +137,12 @@ export default function CartPage() {
                           {discount}% product discount applied · No service included · Delivery charges apply
                         </p>
                       )}
-                      {!isWithout && (
+                      {item.isGift && (
+                        <p className="text-[10px] text-green-600 font-bold mb-1.5">
+                          ✦ Complimentary — Included in your saving pack
+                        </p>
+                      )}
+                      {!isWithout && !item.isGift && (
                         <p className="text-[10px] text-green-600 font-bold mb-1.5">
                           Includes free service &amp; delivery · Eligible for service discount
                         </p>
@@ -157,14 +168,27 @@ export default function CartPage() {
 
                         {/* Price */}
                         <div className="text-right">
-                          {isWithout && discount > 0 && (
-                            <p className="text-xs text-gray-400 line-through">
-                              Rs. {(basePrice * item.quantity).toLocaleString()}
-                            </p>
+                          {item.isGift ? (
+                            <>
+                              <p className="text-xs text-gray-400 line-through">
+                                Rs. {(basePrice * item.quantity).toLocaleString()}
+                              </p>
+                              <p className="font-heading text-base xs:text-lg font-bold text-green-600 whitespace-nowrap">
+                                FREE
+                              </p>
+                            </>
+                          ) : (
+                            <>
+                              {isWithout && discount > 0 && (
+                                <p className="text-xs text-gray-400 line-through">
+                                  Rs. {(basePrice * item.quantity).toLocaleString()}
+                                </p>
+                              )}
+                              <p className="font-heading text-base xs:text-lg font-bold text-navy whitespace-nowrap">
+                                Rs. {(effectivePrice * item.quantity).toLocaleString()}
+                              </p>
+                            </>
                           )}
-                          <p className="font-heading text-base xs:text-lg font-bold text-navy whitespace-nowrap">
-                            Rs. {(effectivePrice * item.quantity).toLocaleString()}
-                          </p>
                         </div>
                       </div>
                     </div>

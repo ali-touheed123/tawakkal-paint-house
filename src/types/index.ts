@@ -70,6 +70,8 @@ export interface CartItem {
   };
   labourMode?: 'with' | 'without';
   labourDiscount?: number; // percent applied for without-labour
+  isGift?: boolean; // claimed from saving pool — price = 0
+  originalPrice?: number; // base price before gift, for reversion
 }
 
 export interface OrderItem {
