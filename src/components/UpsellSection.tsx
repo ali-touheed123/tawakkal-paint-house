@@ -100,27 +100,23 @@ export function UpsellSection({ labourMode, upsellItemIds, currentProductId }: U
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className={`mt-12 rounded-2xl border-2 transition-all duration-500 overflow-hidden ${
-                isSavingMode
+            className={`mt-12 rounded-2xl border-2 transition-all duration-500 overflow-hidden ${isSavingMode
                     ? 'border-amber-300 shadow-[0_0_30px_rgba(251,191,36,0.25)] bg-amber-50/40'
                     : 'border-gray-100 bg-gray-50/50'
-            }`}
+                }`}
         >
             {/* Header */}
-            <div className={`px-6 py-5 border-b transition-all duration-500 ${
-                isSavingMode ? 'border-amber-200 bg-amber-50' : 'border-gray-100 bg-white'
-            }`}>
+            <div className={`px-6 py-5 border-b transition-all duration-500 ${isSavingMode ? 'border-amber-200 bg-amber-50' : 'border-gray-100 bg-white'
+                }`}>
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-500 ${
-                            isSavingMode ? 'bg-amber-400 text-white' : 'bg-navy/10 text-navy'
-                        }`}>
+                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-500 ${isSavingMode ? 'bg-amber-400 text-white' : 'bg-navy/10 text-navy'
+                            }`}>
                             {isSavingMode ? <Gift size={18} /> : <Wrench size={18} />}
                         </div>
                         <div>
-                            <h3 className={`font-heading font-bold text-base transition-colors duration-500 ${
-                                isSavingMode ? 'text-amber-800' : 'text-navy'
-                            }`}>
+                            <h3 className={`font-heading font-bold text-base transition-colors duration-500 ${isSavingMode ? 'text-amber-800' : 'text-navy'
+                                }`}>
                                 {isSavingMode ? 'Claim Your Complimentary Tools' : 'Recommended Tools for Best Results'}
                             </h3>
                             <AnimatePresence mode="wait">
@@ -206,13 +202,12 @@ export function UpsellSection({ labourMode, upsellItemIds, currentProductId }: U
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: idx * 0.08 }}
-                                    className={`bg-white rounded-xl p-3 flex flex-col items-center gap-2 border-2 transition-all duration-300 group hover:shadow-lg hover:-translate-y-1 ${
-                                        alreadyClaimed
+                                    className={`bg-white rounded-xl p-3 flex flex-col items-center gap-2 border-2 transition-all duration-300 group hover:shadow-lg hover:-translate-y-1 ${alreadyClaimed
                                             ? 'border-green-300 bg-green-50/50'
                                             : isSavingMode
-                                            ? 'border-amber-100 hover:border-amber-300'
-                                            : 'border-gray-50 hover:border-gold/30'
-                                    }`}
+                                                ? 'border-amber-100 hover:border-amber-300'
+                                                : 'border-gray-50 hover:border-gold/30'
+                                        }`}
                                 >
                                     {/* Gift Badge */}
                                     {alreadyClaimed && (
@@ -261,15 +256,14 @@ export function UpsellSection({ labourMode, upsellItemIds, currentProductId }: U
                                         <button
                                             onClick={() => !alreadyClaimed && handleClaimGift(product)}
                                             disabled={alreadyClaimed || limitReached || isClaiming}
-                                            className={`w-full py-1.5 rounded-lg text-[10px] font-bold flex items-center justify-center gap-1 transition-all active:scale-95 ${
-                                                alreadyClaimed
+                                            className={`w-full py-1.5 rounded-lg text-[10px] font-bold flex items-center justify-center gap-1 transition-all active:scale-95 ${alreadyClaimed
                                                     ? 'bg-green-500 text-white cursor-default'
                                                     : limitReached || isRejected
-                                                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                                                    : isClaiming
-                                                    ? 'bg-green-500 text-white'
-                                                    : 'bg-amber-400 text-white hover:bg-amber-500'
-                                            }`}
+                                                        ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                                                        : isClaiming
+                                                            ? 'bg-green-500 text-white'
+                                                            : 'bg-amber-400 text-white hover:bg-amber-500'
+                                                }`}
                                         >
                                             {alreadyClaimed ? (
                                                 <><Gift size={11} /> Claimed!</>
@@ -296,10 +290,16 @@ export function UpsellSection({ labourMode, upsellItemIds, currentProductId }: U
                     </div>
                 )}
 
-                <div className="mt-4 flex justify-center">
-                    <span className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold bg-amber-400/20 text-amber-700 border border-amber-300">
+                <div className="mt-4 flex flex-col sm:flex-row justify-center items-center gap-3">
+                    <span className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold bg-gray-50 text-gray-400 border border-gray-100">
                         <Gift size={14} /> Tools are exclusively available as complimentary gifts
                     </span>
+                    <Link
+                        href="/category/paint-tools"
+                        className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold transition-all bg-amber-400/20 text-amber-700 hover:bg-amber-400/40 border border-amber-300"
+                    >
+                        Browse All Tools <ArrowRight size={14} />
+                    </Link>
                 </div>
             </div>
         </motion.div>

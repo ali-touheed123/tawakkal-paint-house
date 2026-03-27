@@ -46,15 +46,6 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
   const category = ((params.slug as string) || initialCategory).toLowerCase().replace(/%20/g, '-');
   const heroRef = useRef(null);
 
-  // Redirect paint-tools to homepage — exclusively available as gifts
-  useEffect(() => {
-    if (category === 'paint-tools') {
-      router.replace('/?tools=gift');
-    }
-  }, [category, router]);
-
-  if (category === 'paint-tools') return null;
-
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"]

@@ -115,27 +115,24 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
         })()}
       </h3>
 
-      {isPaintTool && unitPrice > 0 && (
+      {isPaintTool ? (
         <div className="mb-4">
-          {/* Hide price from brands when saving session is active */}
-          {isSavingActive ? (
-            <div className={`font-bold text-sm py-1 ${
-              claimStatus === 'claimed' ? 'text-green-600' :
-              (claimStatus === 'rejected' || isLimitReached) ? 'text-red-500' :
-              'text-amber-600'
-            }`}>
-              {claimStatus === 'claimed' ? '✓ Claimed as Gift' :
-               (claimStatus === 'rejected' || isLimitReached) ? '✗ Not Eligible' :
-               '✦ Eligible for Credit'}
-            </div>
-          ) : (
-            <>
-              <div className="text-gold font-bold text-lg">
-                Rs. {unitPrice.toLocaleString()}
-              </div>
-              <p className="text-[10px] text-gray-500 font-medium">{product.units?.[0]?.label || 'Unit Price'}</p>
-            </>
-          )}
+          <div className="bg-amber-50 border border-amber-200 p-2 rounded-xl text-center">
+            <Gift size={16} className="text-amber-500 mx-auto mb-1" />
+            <p className="text-xs font-bold text-amber-700 leading-tight">
+              Complimentary Gift
+            </p>
+            <p className="text-[9px] text-amber-600 mt-0.5">
+              Available with "Without Labour" paint orders
+            </p>
+          </div>
+        </div>
+      ) : unitPrice > 0 && (
+        <div className="mb-4">
+          <div className="text-gold font-bold text-lg">
+            Rs. {unitPrice.toLocaleString()}
+          </div>
+          <p className="text-[10px] text-gray-500 font-medium">{product.units?.[0]?.label || 'Unit Price'}</p>
 
           <div className="flex items-center gap-3 mt-3 bg-gray-50 p-2 rounded-xl justify-between border border-gray-100">
             <button
@@ -168,31 +165,22 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
         </Link>
 
         {isPaintTool ? (
-          <button
-            onClick={handleAddToCart}
-            disabled={!product.in_stock || claimStatus === 'rejected' || isLimitReached}
-            className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-1 rounded-lg text-[10px] xs:text-xs font-bold transition-colors cursor-pointer whitespace-nowrap disabled:cursor-not-allowed group/btn ${
-              claimStatus === 'claimed' ? 'bg-green-500 text-white' :
-              (claimStatus === 'rejected' || isLimitReached) ? 'bg-gray-300 text-gray-500' :
-              isSavingActive ? 'bg-amber-400 text-white hover:bg-amber-500' :
-              'bg-gold text-white hover:bg-gold/80 disabled:bg-gray-400'
-            }`}
-          >
-            {isSavingActive ? <Gift size={14} /> : <ShoppingCart size={14} className="shrink-0 group-hover/btn:scale-110 transition-transform" />}
-            <span>
-              {claimStatus === 'claimed' ? 'Claimed!' :
-               (claimStatus === 'rejected' || isLimitReached) ? 'Not Eligible' :
-               isSavingActive ? 'Claim Gift' : 'Add to Cart'}
-            </span>
-          </button>
-        ) : (
           <Link
             href={`/product/${product.id}`}
-            className="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 rounded-lg text-[10px] xs:text-xs font-bold bg-navy text-white hover:bg-gold transition-colors cursor-pointer whitespace-nowrap"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 rounded-lg text-[10px] xs:text-xs font-bold bg-amber-400 text-white hover:bg-amber-500 transition-colors cursor-pointer whitespace-nowrap"
           >
-            <FileText size={14} className="shrink-0" />
-            <span>Details</span>
+            <Gift size={14} className="shrink-0" />
+            <span>How to Claim</span>
           </Link>
+        ) : (
+          <button
+            onClick={handleAddToCart}
+            disabled={!product.in_stock}
+            className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-1 rounded-lg text-[10px] xs:text-xs font-bold transition-colors cursor-pointer whitespace-nowrap disabled:cursor-not-allowed group/btn bg-gold text-white hover:bg-gold/80 disabled:bg-gray-400`}
+          >
+            <ShoppingCart size={14} className="shrink-0 group-hover/btn:scale-110 transition-transform" />
+            <span>Add to Cart</span>
+          </button>
         )}
       </div>
     </div>
