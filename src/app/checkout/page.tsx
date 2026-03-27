@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Loader2, Lock, Check, CreditCard, Smartphone, Truck, Wrench } from 'lucide-react';
+import { Loader2, Lock, Check, CreditCard, Smartphone, Truck, Wrench, Gift } from 'lucide-react';
 import { useCartStore, useLocationStore } from '@/lib/store';
 import { createClient } from '@/lib/supabase/client';
 import { useShippingRates, usePaymentMethods, useLabourSettings } from '@/lib/hooks/useSettings';
@@ -354,6 +354,7 @@ export default function CheckoutPage() {
                   const discount = item.labourMode === 'without' ? (item.labourDiscount || 0) : 0;
                   const effectivePrice = Math.round(basePrice * (1 - discount / 100));
                   const isWithout = item.labourMode === 'without';
+                  const isGift = item.isGift;
 
                   return (
                     <div key={item.id} className="flex justify-between items-start gap-4 text-sm pb-3 border-b border-gray-50 last:border-0 last:pb-0">
@@ -362,13 +363,21 @@ export default function CheckoutPage() {
                           {item.product?.name} ({item.size}) <span className="text-navy font-bold whitespace-nowrap ml-1">x {item.quantity}</span>
                         </span>
                         <div className="flex items-center gap-1">
-                          <span className={`text-[8px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-full ${
-                            isWithout ? 'bg-amber-100 text-amber-700' : 'bg-green-50 text-green-700'
-                          }`}>
-                            {isWithout ? '⚙ Without Labour' : '✓ With Labour'}
-                          </span>
-                          {isWithout && discount > 0 && (
-                            <span className="text-[8px] font-bold text-green-600">{discount}% OFF</span>
+                          {isGift ? (
+                            <span className="text-[8px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-green-100 text-green-700 flex items-center gap-1">
+                              <Gift size={8} /> Free Gift
+                            </span>
+                          ) : (
+                            <>
+                              <span className={`text-[8px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-full ${
+                                isWithout ? 'bg-amber-100 text-amber-700' : 'bg-green-50 text-green-700'
+                              }`}>
+                                {isWithout ? '⚙ Without Labour' : '✓ With Labour'}
+                              </span>
+                              {isWithout && discount > 0 && (
+                                <span className="text-[8px] font-bold text-green-600">{discount}% OFF</span>
+                              )}
+                            </>
                           )}
                         </div>
                         {item.selectedShade && (
@@ -381,14 +390,20 @@ export default function CheckoutPage() {
                         )}
                       </div>
                       <div className="text-right shrink-0 min-w-[80px]">
-                        {isWithout && discount > 0 && (
-                          <p className="text-[10px] text-gray-400 line-through">
-                            Rs. {(basePrice * item.quantity).toLocaleString()}
-                          </p>
+                        {isGift ? (
+                          <span className="font-bold text-green-600">FREE</span>
+                        ) : (
+                          <>
+                            {isWithout && discount > 0 && (
+                              <p className="text-[10px] text-gray-400 line-through">
+                                Rs. {(basePrice * item.quantity).toLocaleString()}
+                              </p>
+                            )}
+                            <span className="font-bold text-navy">
+                              Rs. {(effectivePrice * item.quantity).toLocaleString()}
+                            </span>
+                          </>
                         )}
-                        <span className="font-bold text-navy">
-                          Rs. {(effectivePrice * item.quantity).toLocaleString()}
-                        </span>
                       </div>
                     </div>
                   );

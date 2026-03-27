@@ -8,7 +8,7 @@ import { useCartStore } from '@/lib/store';
 import { useDiscountRules, useLabourSettings } from '@/lib/hooks/useSettings';
 
 export default function CartPage() {
-  const { items, updateQuantity, removeItem, getTotal, getLabourSubtotals, refreshItems } = useCartStore();
+  const { items, updateQuantity, removeItem, getTotal, getLabourSubtotals, refreshItems, getRemainingCredit } = useCartStore();
   const { calculateLabourDiscount, getNextLabourTier } = useLabourSettings();
   const [mounted, setMounted] = useState(false);
 
@@ -69,6 +69,11 @@ export default function CartPage() {
                 const effectivePrice = item.isGift ? 0 : getItemEffectivePrice(item);
                 const isWithout = item.labourMode === 'without' && !item.isGift;
                 const discount = item.labourDiscount || 0;
+
+                // Gift items: can only increase if remaining credit covers one more unit
+                const canIncreaseGift = item.isGift
+                  ? (item.originalPrice || 0) <= getRemainingCredit()
+                  : true;
 
                 return (
                   <motion.div
@@ -159,8 +164,13 @@ export default function CartPage() {
                           </button>
                           <span className="w-6 text-center font-medium text-sm xs:text-base">{item.quantity}</span>
                           <button
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                            className="w-7 h-7 xs:w-8 xs:h-8 rounded-lg bg-gray-100 flex items-center justify-center hover:bg-gold-pale transition-colors"
+                            onClick={() => canIncreaseGift && updateQuantity(item.id, item.quantity + 1)}
+                            disabled={!canIncreaseGift}
+                            className={`w-7 h-7 xs:w-8 xs:h-8 rounded-lg flex items-center justify-center transition-colors ${
+                              canIncreaseGift
+                                ? 'bg-gray-100 hover:bg-gold-pale'
+                                : 'bg-gray-100 opacity-40 cursor-not-allowed'
+                            }`}
                           >
                             <Plus size={14} className="xs:w-4 xs:h-4" />
                           </button>

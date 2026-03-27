@@ -156,9 +156,21 @@ export const useCartStore = create<CartStore>()(
           get().removeItem(itemId);
           return;
         }
+
+        const item = get().items.find(i => i.id === itemId);
+
+        // For gift items, ensure the new quantity doesn't exceed credit
+        if (item?.isGift && quantity > item.quantity) {
+          const pricePerUnit = item.originalPrice || 0;
+          const addedUnits = quantity - item.quantity;
+          const extraCost = pricePerUnit * addedUnits;
+          const remaining = get().getRemainingCredit();
+          if (extraCost > remaining) return; // silently block
+        }
+
         set({
-          items: get().items.map(item =>
-            item.id === itemId ? { ...item, quantity } : item
+          items: get().items.map(i =>
+            i.id === itemId ? { ...i, quantity } : i
           )
         });
       },
