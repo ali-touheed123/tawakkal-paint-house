@@ -318,7 +318,8 @@ export function ProductView({ initialId }: { initialId: string }) {
 
     // Redirect tools to category page
     useEffect(() => {
-        if (!loading && product && (product.category === 'paint-tools' || product.category === 'Paint Tools')) {
+        const cat = product?.category?.toLowerCase();
+        if (!loading && product && (cat === 'paint-tools' || cat === 'paint tools' || product.category === 'Paint Tools')) {
             router.replace('/category/paint-tools');
         }
     }, [product, loading, router]);

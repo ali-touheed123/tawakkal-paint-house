@@ -30,7 +30,9 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
     return product.image_url;
   };
 
-  const isPaintTool = product.category === 'Paint Tools' || product.category === 'paint-tools';
+  const isPaintTool = product.category?.toLowerCase() === 'paint-tools' || 
+                      product.category?.toLowerCase() === 'paint tools' || 
+                      product.category === 'Paint Tools';
   const hasAllowance = useCartStore(state => state.getSavingAllowance() > 0);
   
   // Activate saving mode for paint tools if global session is active OR if they already have saving allowance in cart
@@ -122,13 +124,12 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
           {/* If saving session is active, show eligibility. Otherwise, show general complimentary message */}
           {isSavingActive ? (
             <>
-              <div className="flex justify-between items-end mb-2">
-                <div>
-                  <div className="text-amber-600 font-bold text-lg leading-tight">
-                    Rs. {unitPrice.toLocaleString()}
-                  </div>
-                  <p className="text-[10px] text-gray-500 font-medium">{product.units?.[0]?.label || 'Unit Price'}</p>
+              <div className="flex flex-col gap-1.5 mb-3">
+                <div className="flex items-center gap-1.5 text-amber-600 font-bold bg-amber-50 px-2.5 py-1.5 rounded-lg w-fit border border-amber-200">
+                  <Gift size={15} />
+                  <span className="text-[10px] uppercase tracking-wider">Compiment Pack Item</span>
                 </div>
+                <p className="text-[10px] text-gray-400 font-semibold tracking-tight">Included in your savings credit</p>
               </div>
               <div className={`font-bold text-sm py-2 text-center rounded-xl border ${
               claimStatus === 'claimed' ? 'bg-green-50 border-green-200 text-green-600' :

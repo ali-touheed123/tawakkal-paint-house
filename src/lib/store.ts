@@ -49,7 +49,8 @@ export const useCartStore = create<CartStore>()(
           }
 
           // STRICT ENFORCEMENT: Paint tools can ONLY be added as gifts
-          if (product?.category === 'paint-tools') {
+          const isPaintToolCategory = product?.category?.toLowerCase() === 'paint-tools' || product?.category === 'Paint Tools';
+          if (isPaintToolCategory) {
             console.warn('Attempted to add paint tool via addItem. Blocked. Use addGiftItem instead.');
             return state;
           }
@@ -157,7 +158,8 @@ export const useCartStore = create<CartStore>()(
           const allowance = filteredItems.reduce((pool, item) => {
             if (!item.product || item.isGift) return pool;
             if (item.labourMode !== 'without') return pool;
-            if (item.product.category === 'paint-tools') return pool;
+            const cat = item.product.category?.toLowerCase();
+            if (cat === 'paint-tools' || item.product.category === 'Paint Tools') return pool;
             const units = item.product.units || [];
             const unit = units.find((u: any) => u.label === item.size) || units[0];
             const basePrice = unit?.price || 0;
@@ -171,13 +173,14 @@ export const useCartStore = create<CartStore>()(
           const revalidated = filteredItems.map(item => {
             if (!item.isGift) return item;
             const price = item.originalPrice || 0;
-            if (usedSoFar + price <= allowance) {
-              usedSoFar += price;
+            const itemTotalCost = price * item.quantity;
+            if (usedSoFar + itemTotalCost <= allowance) {
+              usedSoFar += itemTotalCost;
               return item;
             }
-            // Revert to paid
-            return { ...item, isGift: false, originalPrice: undefined };
-          });
+            // REMOVE GIFT COMPLETELY instead of reverting to paid
+            return null;
+          }).filter(Boolean) as CartItem[];
 
           return { items: revalidated };
         });
@@ -203,7 +206,7 @@ export const useCartStore = create<CartStore>()(
             const remaining = Math.max(0, allowance - used);
 
             if (extraCost > remaining) return state; // silently block
-          } else if (item.product?.category === 'paint-tools') {
+          } else if (item.product?.category?.toLowerCase() === 'paint-tools' || item.product?.category === 'Paint Tools') {
             // STRICT ENFORCEMENT: If somehow a non-gift paint tool exists, block any quantity increases
             if (quantity > item.quantity) {
               return state;
@@ -281,7 +284,8 @@ export const useCartStore = create<CartStore>()(
         return get().items.reduce((pool, item) => {
           if (!item.product || item.isGift) return pool;
           if (item.labourMode !== 'without') return pool;
-          if (item.product.category === 'paint-tools') return pool; // tools don't generate allowance
+          const cat = item.product.category?.toLowerCase();
+          if (cat === 'paint-tools' || item.product.category === 'Paint Tools') return pool; // tools don't generate allowance
           const units = item.product.units || [];
           const unit = units.find((u: any) => u.label === item.size) || units[0];
           const basePrice = unit?.price || 0;
