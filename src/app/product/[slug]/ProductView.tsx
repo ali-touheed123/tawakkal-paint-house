@@ -539,6 +539,11 @@ export function ProductView({ initialSlug }: { initialSlug: string }) {
                             <p className="text-gray-400 font-medium text-sm leading-relaxed max-w-xl">
                                 {product.brand} {product.name.replace(product.brand, '').trim()} (color) : <span className="text-navy font-bold">{selectedShade?.name || 'Select a shade'}</span>
                             </p>
+                            {product.description && (
+                                <p className="mt-4 text-gray-600 text-sm leading-relaxed max-w-xl italic">
+                                    {product.description}
+                                </p>
+                            )}
                             {shadeCardPdf && (
                                 <a
                                     href={shadeCardPdf}
