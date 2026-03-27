@@ -20,7 +20,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
 
   const addItem = useCartStore(state => state.addItem);
   const addGiftItem = useCartStore(state => state.addGiftItem);
-  const getRemainingCredit = useCartStore(state => state.getRemainingCredit);
+  const remainingCredit = useCartStore(state => state.getRemainingCredit());
   const savingSessionActive = useUIStore(state => state.savingSessionActive);
 
   const getImageUrl = () => {
@@ -37,6 +37,8 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
   // Get price from either legacy column or units array
   const unitPrice = product.price_quarter || (product.units && product.units.length > 0 ? product.units[0].price : 0);
 
+  const isLimitReached = isSavingActive && unitPrice > remainingCredit;
+
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -44,8 +46,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
     // When saving session is active on a paint tool, try to claim as gift
     if (isSavingActive) {
       const price = product.units?.[0]?.price || unitPrice;
-      const remaining = getRemainingCredit();
-      if (price <= remaining) {
+      if (price <= remainingCredit) {
         const success = addGiftItem(
           product.id,
           product.units?.[0]?.label || 'Pc',
@@ -120,11 +121,11 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
           {isSavingActive ? (
             <div className={`font-bold text-sm py-1 ${
               claimStatus === 'claimed' ? 'text-green-600' :
-              claimStatus === 'rejected' ? 'text-red-500' :
+              (claimStatus === 'rejected' || isLimitReached) ? 'text-red-500' :
               'text-amber-600'
             }`}>
               {claimStatus === 'claimed' ? '✓ Claimed as Gift' :
-               claimStatus === 'rejected' ? '✗ Credit Limit Reached' :
+               (claimStatus === 'rejected' || isLimitReached) ? '✗ Not Eligible' :
                '✦ Eligible for Credit'}
             </div>
           ) : (
@@ -169,10 +170,10 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
         {isPaintTool ? (
           <button
             onClick={handleAddToCart}
-            disabled={!product.in_stock || claimStatus === 'rejected'}
+            disabled={!product.in_stock || claimStatus === 'rejected' || isLimitReached}
             className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-1 rounded-lg text-[10px] xs:text-xs font-bold transition-colors cursor-pointer whitespace-nowrap disabled:cursor-not-allowed group/btn ${
               claimStatus === 'claimed' ? 'bg-green-500 text-white' :
-              claimStatus === 'rejected' ? 'bg-gray-300 text-gray-500' :
+              (claimStatus === 'rejected' || isLimitReached) ? 'bg-gray-300 text-gray-500' :
               isSavingActive ? 'bg-amber-400 text-white hover:bg-amber-500' :
               'bg-gold text-white hover:bg-gold/80 disabled:bg-gray-400'
             }`}
@@ -180,7 +181,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
             {isSavingActive ? <Gift size={14} /> : <ShoppingCart size={14} className="shrink-0 group-hover/btn:scale-110 transition-transform" />}
             <span>
               {claimStatus === 'claimed' ? 'Claimed!' :
-               claimStatus === 'rejected' ? 'Limit Reached' :
+               (claimStatus === 'rejected' || isLimitReached) ? 'Not Eligible' :
                isSavingActive ? 'Claim Gift' : 'Add to Cart'}
             </span>
           </button>
