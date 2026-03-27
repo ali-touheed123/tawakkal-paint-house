@@ -48,6 +48,12 @@ export const useCartStore = create<CartStore>()(
             finalLabourDiscount = 0;
           }
 
+          // STRICT ENFORCEMENT: Paint tools can ONLY be added as gifts
+          if (product?.category === 'paint-tools') {
+            console.warn('Attempted to add paint tool via addItem. Blocked. Use addGiftItem instead.');
+            return state;
+          }
+
           const existingItem = items.find(
             item =>
               item.product_id === productId &&
@@ -186,6 +192,11 @@ export const useCartStore = create<CartStore>()(
             const remaining = Math.max(0, allowance - used);
 
             if (extraCost > remaining) return state; // silently block
+          } else if (item.product?.category === 'paint-tools') {
+            // STRICT ENFORCEMENT: If somehow a non-gift paint tool exists, block any quantity increases
+            if (quantity > item.quantity) {
+              return state;
+            }
           }
 
           return {

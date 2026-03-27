@@ -77,7 +77,8 @@ export function Navbar() {
   ];
 
   const productData = {
-    categories: categories.map(c => ({ name: c.name, slug: c.slug, id: c.id })),
+    // Exclude paint-tools from navbar — exclusively available as gifts
+    categories: categories.filter(c => c.slug !== 'paint-tools').map(c => ({ name: c.name, slug: c.slug, id: c.id })),
     brands: brands.map(b => ({ name: b.name, slug: b.slug, id: b.id })),
     subs: subCategories,
     associations: categoryBrands

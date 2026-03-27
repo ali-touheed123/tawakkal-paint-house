@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowRight, MessageCircle, Calculator, Palette, CheckCircle, Award, Star, Truck, Users, Clock, Sparkles } from 'lucide-react';
+import { ArrowRight, MessageCircle, Calculator, Palette, CheckCircle, Award, Star, Truck, Users, Clock, Sparkles, Gift, Wrench, ShoppingCart } from 'lucide-react';
 import { PaintCalculator } from '@/components/PaintCalculator';
 import { FAQ } from '@/components/FAQ';
 import { TestimonialSlider } from '@/components/TestimonialSlider';
@@ -229,7 +229,7 @@ export default function HomePage() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {categories.map((cat, i) => (
+            {categories.filter(c => c.slug !== 'paint-tools').map((cat, i) => (
               <motion.div
                 key={cat.slug}
                 initial={{ opacity: 0, y: 30 }}
@@ -259,6 +259,65 @@ export default function HomePage() {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Free Paint Tools Promo Banner */}
+      <section className="py-16 bg-gradient-to-br from-amber-50 to-amber-100 border-y border-amber-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="flex flex-col lg:flex-row items-center gap-10"
+          >
+            {/* Left: Text */}
+            <div className="flex-1 text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 bg-amber-400/20 border border-amber-300 px-4 py-1.5 rounded-full mb-4">
+                <Gift size={14} className="text-amber-600" />
+                <span className="text-amber-700 text-xs font-bold uppercase tracking-widest">Exclusive Offer</span>
+              </div>
+              <h2 className="font-heading text-3xl md:text-4xl font-black text-navy mb-4 leading-tight">
+                Get Paint Tools <span className="text-amber-500 italic">Absolutely Free</span>
+              </h2>
+              <p className="text-gray-600 text-lg mb-6 max-w-lg">
+                Choose the <span className="font-bold text-navy">"Without Labour"</span> option on any paint product and claim professional paint tools as complimentary gifts — at no extra cost.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
+                <div className="flex items-center gap-2 text-sm font-semibold text-amber-700 bg-amber-100 border border-amber-200 px-4 py-2 rounded-xl">
+                  <CheckCircle size={16} className="text-amber-500" />
+                  No Service Charges
+                </div>
+                <div className="flex items-center gap-2 text-sm font-semibold text-amber-700 bg-amber-100 border border-amber-200 px-4 py-2 rounded-xl">
+                  <Gift size={16} className="text-amber-500" />
+                  Free Tools Included
+                </div>
+                <div className="flex items-center gap-2 text-sm font-semibold text-amber-700 bg-amber-100 border border-amber-200 px-4 py-2 rounded-xl">
+                  <Wrench size={16} className="text-amber-500" />
+                  Professional Grade
+                </div>
+              </div>
+            </div>
+
+            {/* Right: Steps */}
+            <div className="flex-1 bg-white border border-amber-200 rounded-2xl p-6 shadow-lg shadow-amber-100 max-w-md w-full">
+              <h3 className="font-bold text-navy text-base mb-4 flex items-center gap-2">
+                <Sparkles size={16} className="text-amber-500" /> How it Works
+              </h3>
+              {[
+                { step: '1', text: 'Browse any paint product', icon: Palette },
+                { step: '2', text: 'Select "Without Labour" option', icon: CheckCircle },
+                { step: '3', text: 'Add paint to cart', icon: ShoppingCart },
+                { step: '4', text: 'Claim free tools from the Savings Pack!', icon: Gift }
+              ].map(({ step, text, icon: Icon }) => (
+                <div key={step} className="flex items-center gap-3 py-2.5 border-b border-amber-50 last:border-0">
+                  <div className="w-7 h-7 rounded-full bg-amber-400 text-white font-black text-xs flex items-center justify-center shrink-0">{step}</div>
+                  <Icon size={15} className="text-amber-500 shrink-0" />
+                  <span className="text-sm font-medium text-gray-700">{text}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </section>
 

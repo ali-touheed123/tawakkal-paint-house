@@ -89,7 +89,7 @@ export function UpsellSection({ labourMode, upsellItemIds, currentProductId }: U
     const allowance = getSavingAllowance();
     const remaining = getRemainingCredit();
 
-    // Only show when Without Labour is active
+    // STRICT VISIBILITY: Only show when Without Labour is active
     if (!isSavingMode) return null;
 
     if (!loading && upsellProducts.length === 0) return null;
@@ -297,16 +297,9 @@ export function UpsellSection({ labourMode, upsellItemIds, currentProductId }: U
                 )}
 
                 <div className="mt-4 flex justify-center">
-                    <Link
-                        href="/category/paint-tools"
-                        className={`inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold transition-all ${
-                            isSavingMode
-                                ? 'bg-amber-400/20 text-amber-700 hover:bg-amber-400/40 border border-amber-300'
-                                : 'bg-gray-100 text-navy hover:bg-gray-200 border border-gray-200'
-                        }`}
-                    >
-                        {isSavingMode ? 'Browse More Tools' : 'See More Items'} <ArrowRight size={14} />
-                    </Link>
+                    <span className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold bg-amber-400/20 text-amber-700 border border-amber-300">
+                        <Gift size={14} /> Tools are exclusively available as complimentary gifts
+                    </span>
                 </div>
             </div>
         </motion.div>
