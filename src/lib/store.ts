@@ -155,18 +155,27 @@ export const useCartStore = create<CartStore>()(
           const filteredItems = state.items.filter(item => item.id !== itemId);
 
           // 2. Re-calculate allowance from scratch (same logic as getSavingAllowance)
-          const allowance = filteredItems.reduce((pool, item) => {
-            if (!item.product || item.isGift) return pool;
-            if (item.labourMode !== 'without') return pool;
+          const withoutLabourSubtotal = filteredItems.reduce((sum, item) => {
+            if (!item.product || item.isGift) return sum;
+            if (item.labourMode !== 'without') return sum;
             const cat = item.product.category?.toLowerCase();
-            if (cat === 'paint-tools' || item.product.category === 'Paint Tools') return pool;
+            if (cat === 'paint-tools' || item.product.category === 'Paint Tools') return sum;
             const units = item.product.units || [];
             const unit = units.find((u: any) => u.label === item.size) || units[0];
             const basePrice = unit?.price || 0;
             const discount = item.labourDiscount || 0;
             const effectivePrice = basePrice * (1 - discount / 100);
-            return pool + effectivePrice * item.quantity * 0.10;
+            return sum + effectivePrice * item.quantity;
           }, 0);
+
+          // Tiered Allowance Calculation
+          let allowance = 0;
+          if (withoutLabourSubtotal >= 200000) allowance = withoutLabourSubtotal * 0.12;
+          else if (withoutLabourSubtotal >= 100000) allowance = withoutLabourSubtotal * 0.10;
+          else if (withoutLabourSubtotal >= 40000) allowance = withoutLabourSubtotal * 0.08;
+          else if (withoutLabourSubtotal >= 20000) allowance = 1000;
+          else if (withoutLabourSubtotal >= 10000) allowance = 400;
+          else if (withoutLabourSubtotal >= 6000) allowance = 200;
 
           // 3. Re-validate gifts
           let usedSoFar = 0;
@@ -218,17 +227,25 @@ export const useCartStore = create<CartStore>()(
           );
 
           // Re-calculate allowance to see if gifts need to be dropped
-          const newAllowance = newItems.reduce((pool, item) => {
-            if (!item.product || item.isGift) return pool;
-            if (item.labourMode !== 'without') return pool;
-            if (item.product.category === 'paint-tools' || item.product.category === 'Paint Tools') return pool;
+          const withoutLabourSubtotal = newItems.reduce((sum, item) => {
+            if (!item.product || item.isGift) return sum;
+            if (item.labourMode !== 'without') return sum;
+            if (item.product.category === 'paint-tools' || item.product.category === 'Paint Tools') return sum;
             const units = item.product.units || [];
             const unit = units.find((u: any) => u.label === item.size) || units[0];
             const basePrice = unit?.price || 0;
             const discount = item.labourDiscount || 0;
             const effectivePrice = basePrice * (1 - discount / 100);
-            return pool + effectivePrice * item.quantity * 0.10;
+            return sum + effectivePrice * item.quantity;
           }, 0);
+
+          let newAllowance = 0;
+          if (withoutLabourSubtotal >= 200000) newAllowance = withoutLabourSubtotal * 0.12;
+          else if (withoutLabourSubtotal >= 100000) newAllowance = withoutLabourSubtotal * 0.10;
+          else if (withoutLabourSubtotal >= 40000) newAllowance = withoutLabourSubtotal * 0.08;
+          else if (withoutLabourSubtotal >= 20000) newAllowance = 1000;
+          else if (withoutLabourSubtotal >= 10000) newAllowance = 400;
+          else if (withoutLabourSubtotal >= 6000) newAllowance = 200;
 
           let usedSoFar = 0;
           const revalidated = newItems.map(item => {
@@ -251,17 +268,25 @@ export const useCartStore = create<CartStore>()(
             item.id === itemId ? { ...item, size } : item
           );
 
-          const newAllowance = newItems.reduce((pool, item) => {
-            if (!item.product || item.isGift) return pool;
-            if (item.labourMode !== 'without') return pool;
-            if (item.product.category === 'paint-tools' || item.product.category === 'Paint Tools') return pool;
+          const withoutLabourSubtotal = newItems.reduce((sum, item) => {
+            if (!item.product || item.isGift) return sum;
+            if (item.labourMode !== 'without') return sum;
+            if (item.product.category === 'paint-tools' || item.product.category === 'Paint Tools') return sum;
             const units = item.product.units || [];
             const unit = units.find((u: any) => u.label === item.size) || units[0];
             const basePrice = unit?.price || 0;
             const discount = item.labourDiscount || 0;
             const effectivePrice = basePrice * (1 - discount / 100);
-            return pool + effectivePrice * item.quantity * 0.10;
+            return sum + effectivePrice * item.quantity;
           }, 0);
+
+          let newAllowance = 0;
+          if (withoutLabourSubtotal >= 200000) newAllowance = withoutLabourSubtotal * 0.12;
+          else if (withoutLabourSubtotal >= 100000) newAllowance = withoutLabourSubtotal * 0.10;
+          else if (withoutLabourSubtotal >= 40000) newAllowance = withoutLabourSubtotal * 0.08;
+          else if (withoutLabourSubtotal >= 20000) newAllowance = 1000;
+          else if (withoutLabourSubtotal >= 10000) newAllowance = 400;
+          else if (withoutLabourSubtotal >= 6000) newAllowance = 200;
 
           let usedSoFar = 0;
           const revalidated = newItems.map(item => {
@@ -280,19 +305,29 @@ export const useCartStore = create<CartStore>()(
       },
       clearCart: () => set({ items: [] }),
       getSavingAllowance: () => {
-        // 10% of all Without-Labour paint items (excluding gifts)
-        return get().items.reduce((pool, item) => {
-          if (!item.product || item.isGift) return pool;
-          if (item.labourMode !== 'without') return pool;
+        // Tiered Tool Credits calculated based on the total 90% Price (Paid Subtotal) of Without-Labour items
+        const withoutLabourSubtotal = get().items.reduce((sum, item) => {
+          if (!item.product || item.isGift) return sum;
+          if (item.labourMode !== 'without') return sum;
           const cat = item.product.category?.toLowerCase();
-          if (cat === 'paint-tools' || item.product.category === 'Paint Tools') return pool; // tools don't generate allowance
+          if (cat === 'paint-tools' || item.product.category === 'Paint Tools') return sum;
           const units = item.product.units || [];
           const unit = units.find((u: any) => u.label === item.size) || units[0];
           const basePrice = unit?.price || 0;
+          // Apply the 10% DIY discount
           const discount = item.labourDiscount || 0;
           const effectivePrice = basePrice * (1 - discount / 100);
-          return pool + effectivePrice * item.quantity * 0.10;
+          return sum + effectivePrice * item.quantity;
         }, 0);
+
+        // Apply Tiers
+        if (withoutLabourSubtotal >= 200000) return withoutLabourSubtotal * 0.12;
+        if (withoutLabourSubtotal >= 100000) return withoutLabourSubtotal * 0.10;
+        if (withoutLabourSubtotal >= 40000) return withoutLabourSubtotal * 0.08;
+        if (withoutLabourSubtotal >= 20000) return 1000;
+        if (withoutLabourSubtotal >= 10000) return 400;
+        if (withoutLabourSubtotal >= 6000) return 200;
+        return 0;
       },
       getUsedCredit: () => {
         return get().items.reduce((used, item) => {

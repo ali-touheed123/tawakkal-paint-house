@@ -9,7 +9,7 @@ import { useDiscountRules, useLabourSettings } from '@/lib/hooks/useSettings';
 
 export default function CartPage() {
   const { items, updateQuantity, removeItem, getTotal, getLabourSubtotals, refreshItems, getRemainingCredit } = useCartStore();
-  const { calculateLabourDiscount, getNextLabourTier } = useLabourSettings();
+  const { getNextToolTier } = useLabourSettings();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -25,9 +25,7 @@ export default function CartPage() {
   const hasAnyWithoutLabour = withoutLabourSubtotal > 0;
   const hasAnyWithLabour = withLabourSubtotal > 0;
 
-  const { discountAmount: serviceDiscount, tierLabel } = calculateLabourDiscount(subtotal, withLabourSubtotal);
-  const total = subtotal - serviceDiscount;
-  const nextTier = getNextLabourTier(subtotal);
+  const total = subtotal;
 
   const getItemBasePrice = (item: typeof items[0]) => {
     if (!item.product) return 0;
@@ -218,14 +216,6 @@ export default function CartPage() {
 
                 {/* Mixed cart info removed for cleaner UI */}
 
-                {/* Next tier nudge */}
-                {nextTier && (
-                  <div className="bg-gold/5 border border-gold/20 rounded-lg p-3 text-xs text-navy">
-                    <span className="font-bold">Almost there! </span>
-                    Add Rs. {nextTier.amountNeeded.toLocaleString()} more to your cart to unlock{' '}
-                    <span className="text-gold font-bold">{nextTier.discount}</span>
-                  </div>
-                )}
 
                 {/* Totals */}
                 <div className="space-y-3 border-t border-gray-100 pt-4">
@@ -234,12 +224,6 @@ export default function CartPage() {
                     <span>Rs. {subtotal.toLocaleString()}</span>
                   </div>
 
-                  {serviceDiscount > 0 && (
-                    <div className="flex justify-between text-green-600">
-                      <span className="text-sm">Service Discount</span>
-                      <span>- Rs. {serviceDiscount.toLocaleString()}</span>
-                    </div>
-                  )}
 
                   <div className="flex justify-between text-gray-600">
                     <span>Delivery</span>
@@ -251,15 +235,6 @@ export default function CartPage() {
                     <span>Rs. {total.toLocaleString()}</span>
                   </div>
 
-                  {serviceDiscount > 0 && (
-                    <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg animate-fade-in">
-                      <p className="text-green-700 text-sm font-medium flex items-center gap-2">
-                        <Check size={16} />
-                        Service Discount Applied: Rs. {serviceDiscount.toLocaleString()}
-                        {tierLabel && <span className="text-xs opacity-70">({tierLabel})</span>}
-                      </p>
-                    </div>
-                  )}
 
                   {/* Delivery info per labour mode */}
                   <div className="space-y-1.5 pt-2">
@@ -272,7 +247,7 @@ export default function CartPage() {
                     {hasAnyWithoutLabour && (
                       <div className="flex items-center gap-2 text-xs text-amber-600">
                         <Wrench size={12} />
-                        <span>Without-Labour items: Standard delivery charges</span>
+                        <span>Without-Labour: {subtotal >= 6000 && subtotal < 40000 ? 'Free delivery unlocked' : 'Rs. 300 delivery fee applies'}</span>
                       </div>
                     )}
                   </div>

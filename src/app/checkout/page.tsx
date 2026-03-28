@@ -18,7 +18,7 @@ export default function CheckoutPage() {
   const [loading, setLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [orderId, setOrderId] = useState<string | null>(null);
-  const { calculateLabourDiscount, getNextLabourTier } = useLabourSettings();
+  const { getNextToolTier } = useLabourSettings();
   const { getRateForArea, rates } = useShippingRates();
   const { methods: paymentMethods } = usePaymentMethods();
   const [formData, setFormData] = useState({
@@ -104,16 +104,12 @@ export default function CheckoutPage() {
   const hasWithoutLabour = withoutLabourSubtotal > 0;
   const hasWithLabour = withLabourSubtotal > 0;
 
-  // Service discount eligibility based on total cart value
-  const { discountAmount: serviceDiscount, tierLabel } = calculateLabourDiscount(subtotal, withLabourSubtotal);
+  // Shipping: Without Labour items → free ONLY between 6k and 40k; With Labour → always free
+  const shippingCharge = hasWithLabour 
+    ? 0 
+    : (hasWithoutLabour && subtotal >= 6000 && subtotal < 40000 ? 0 : 300);
 
-  // Shipping: Without Labour items → standard rate; With Labour → free
-  // If mixed cart, apply shipping only to without-labour portion (same rate for simplicity)
-  const shippingCharge = formData.deliveryArea && hasWithoutLabour
-    ? (getRateForArea(formData.deliveryArea, withoutLabourSubtotal) || 0)
-    : 0;
-
-  const total = subtotal - serviceDiscount + shippingCharge;
+  const total = subtotal + shippingCharge;
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
@@ -175,8 +171,8 @@ export default function CheckoutPage() {
           customer_name: formData.fullName,
           items: orderItems,
           subtotal,
-          discount_percent: withLabourSubtotal > 0 ? (serviceDiscount / withLabourSubtotal) * 100 : 0,
-          discount_amount: serviceDiscount,
+          discount_percent: 0,
+          discount_amount: 0,
           shipping_amount: shippingCharge,
           total,
           payment_method: selectedPaymentMethod,
@@ -416,12 +412,6 @@ export default function CheckoutPage() {
                   <span>Rs. {subtotal.toLocaleString()}</span>
                 </div>
 
-                {serviceDiscount > 0 && (
-                  <div className="flex justify-between text-green-600">
-                    <span className="text-sm">Service Discount</span>
-                    <span>- Rs. {serviceDiscount.toLocaleString()}</span>
-                  </div>
-                )}
 
                 <div className="flex justify-between text-gray-600">
                   <span>Delivery</span>
@@ -437,16 +427,6 @@ export default function CheckoutPage() {
                   <span>Rs. {total.toLocaleString()}</span>
                 </div>
 
-                {serviceDiscount > 0 && (
-                  <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg animate-fade-in">
-                    <p className="text-green-700 text-sm font-medium flex items-center gap-2">
-                      <Check size={16} />
-                      Service Discount Applied: Rs. {serviceDiscount.toLocaleString()}
-                      {tierLabel && <span className="text-xs opacity-70">({tierLabel})</span>}
-                    </p>
-                  </div>
-                )}
-
                 {/* Delivery info per labour mode */}
                 <div className="space-y-1.5 pt-2">
                   {hasWithLabour && (
@@ -458,7 +438,7 @@ export default function CheckoutPage() {
                   {hasWithoutLabour && (
                     <div className="flex items-center gap-2 text-xs text-amber-600">
                       <Wrench size={12} />
-                      <span>Without-Labour items: Standard delivery charges</span>
+                      <span>Without-Labour: {subtotal >= 6000 && subtotal < 40000 ? 'Free delivery unlocked' : 'Rs. 300 delivery fee applies'}</span>
                     </div>
                   )}
                 </div>

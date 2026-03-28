@@ -91,38 +91,38 @@ export function useLabourSettings() {
     }, []);
 
     /**
-     * Calculates the labour service discount.
-     * Threshold depends on overall cart subtotal. Percentage applies to With-Labour items only.
-     * Returns { discountAmount, tierLabel } based on the highest qualifying tier.
+     * Calculates the Tool Credit (Allowance) for Without-Labour items.
+     * Returns the amount of free tools the customer can claim.
      */
-    const calculateLabourDiscount = (cartSubtotal: number, withLabourSubtotal: number): { discountAmount: number; tierLabel: string } => {
-        if (tiers.length === 0 || cartSubtotal <= 0) return { discountAmount: 0, tierLabel: '' };
+    const calculateToolCredit = (withoutLabourSubtotal: number): { creditAmount: number; tierLabel: string } => {
+        if (tiers.length === 0 || withoutLabourSubtotal <= 0) return { creditAmount: 0, tierLabel: '' };
 
         // Find the highest qualifying tier
-        const qualifyingTiers = tiers.filter(t => cartSubtotal >= t.min_amount);
-        if (qualifyingTiers.length === 0) return { discountAmount: 0, tierLabel: '' };
+        const qualifyingTiers = tiers.filter(t => withoutLabourSubtotal >= t.min_amount);
+        if (qualifyingTiers.length === 0) return { creditAmount: 0, tierLabel: '' };
 
-        const tier = qualifyingTiers[qualifyingTiers.length - 1]; // highest
+        const tier = qualifyingTiers[qualifyingTiers.length - 1]; // highest qualifying tier
 
-        let discountAmount = 0;
+        let creditAmount = 0;
         if (tier.discount_type === 'flat') {
-            discountAmount = tier.discount_value;
+            creditAmount = tier.discount_value;
         } else {
-            discountAmount = withLabourSubtotal * (tier.discount_value / 100);
+            // Percentage of the paid subtotal (usually the 90% price)
+            creditAmount = withoutLabourSubtotal * (tier.discount_value / 100);
         }
 
-        return { discountAmount: Math.round(discountAmount), tierLabel: tier.label };
+        return { creditAmount: Math.round(creditAmount), tierLabel: tier.label };
     };
 
-    const getNextLabourTier = (cartSubtotal: number): { amountNeeded: number; tierLabel: string; discount: string } | null => {
-        const nextTier = tiers.find(t => t.min_amount > cartSubtotal);
+    const getNextToolTier = (withoutLabourSubtotal: number): { amountNeeded: number; tierLabel: string; benefit: string } | null => {
+        const nextTier = tiers.find(t => t.min_amount > withoutLabourSubtotal);
         if (!nextTier) return null;
         return {
-            amountNeeded: nextTier.min_amount - cartSubtotal,
+            amountNeeded: nextTier.min_amount - withoutLabourSubtotal,
             tierLabel: nextTier.label,
-            discount: nextTier.discount_type === 'flat'
-                ? `Rs. ${nextTier.discount_value} OFF`
-                : `${nextTier.discount_value}% OFF`
+            benefit: nextTier.discount_type === 'flat'
+                ? `Rs. ${nextTier.discount_value} in Free Tools`
+                : `${nextTier.discount_value}% in Free Tools`
         };
     };
 
@@ -131,8 +131,8 @@ export function useLabourSettings() {
         defaultWithoutDiscount,
         upsellItemIds,
         loading,
-        calculateLabourDiscount,
-        getNextLabourTier
+        calculateToolCredit,
+        getNextToolTier
     };
 }
 
