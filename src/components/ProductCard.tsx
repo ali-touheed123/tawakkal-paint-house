@@ -131,15 +131,25 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
                 </div>
                 <p className="text-[10px] text-gray-400 font-semibold tracking-tight">Included in your savings credit</p>
               </div>
-              <div className={`font-bold text-sm py-2 text-center rounded-xl border ${
-              claimStatus === 'claimed' ? 'bg-green-50 border-green-200 text-green-600' :
-              (claimStatus === 'rejected' || isLimitReached) ? 'bg-red-50 border-red-200 text-red-500' :
-              'bg-amber-50 border-amber-200 text-amber-600'
-            }`}>
-              {claimStatus === 'claimed' ? '✓ Claimed as Gift' :
-               (claimStatus === 'rejected' || isLimitReached) ? '✗ Not Eligible' :
-               '✦ Eligible for Credit'}
-            </div>
+              {claimStatus === 'claimed' ? (
+                <div className="font-bold text-sm py-2 text-center rounded-xl border bg-green-50 border-green-200 text-green-600">
+                  ✓ Claimed as Gift
+                </div>
+              ) : (claimStatus === 'rejected' || isLimitReached) ? (
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    alert("Your free tool credit for this order is finished. To get more free tools, add more 'Without Labour' paint products to your cart!");
+                  }}
+                  className="w-full font-bold text-sm py-2 text-center rounded-xl border bg-amber-50 border-amber-200 text-amber-600 hover:bg-amber-100 transition-colors"
+                >
+                  ✦ How to Claim?
+                </button>
+              ) : (
+                <div className="font-bold text-sm py-2 text-center rounded-xl border bg-amber-50 border-amber-200 text-amber-600">
+                  ✦ Eligible for Credit
+                </div>
+              )}
             
             <div className={`flex items-center gap-3 mt-3 bg-gray-50 p-2 rounded-xl justify-between border border-gray-100 ${
               (claimStatus === 'rejected' || isLimitReached) ? 'opacity-50 pointer-events-none' : ''
