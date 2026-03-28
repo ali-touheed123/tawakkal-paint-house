@@ -156,13 +156,22 @@ export default function CheckoutPage() {
           unit_label: item.size,
           quantity: item.quantity,
           price: basePrice,
-          discounted_price: discountedPrice,
+          discounted_price: item.isGift ? 0 : discountedPrice,
           labourMode: item.labourMode || 'with',
-          labourDiscount: discount,
+          labourDiscount: item.isGift ? 0 : discount,
+          isGift: item.isGift || false,
           image_url: item.product?.image_url || null,
           selectedShade: item.selectedShade
         };
       });
+
+      // Calculate total value of free tools for reporting
+      const totalGiftValue = items
+        .filter(item => item.isGift)
+        .reduce((acc, item) => {
+          const unit = item.product?.units?.find((u: any) => u.label === item.size) || item.product?.units?.[0];
+          return acc + (unit?.price || 0) * item.quantity;
+        }, 0);
 
       const { data, error } = await supabase
         .from('orders')
@@ -173,6 +182,7 @@ export default function CheckoutPage() {
           subtotal,
           discount_percent: 0,
           discount_amount: 0,
+          total_gift_value: totalGiftValue,
           shipping_amount: shippingCharge,
           total,
           payment_method: selectedPaymentMethod,
