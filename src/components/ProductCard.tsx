@@ -38,9 +38,10 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
   // Activate saving mode for paint tools if global session is active OR if they already have saving allowance in cart
   const isSavingActive = isPaintTool && (savingSessionActive || hasAllowance);
 
-  // Get price from either legacy column or units array
-  const unitPrice = product.price_quarter || (product.units && product.units.length > 0 ? product.units[0].price : 0);
-
+  // Get price from units array (priority) or legacy column
+  const unitPrice = (product.units && product.units.length > 0) 
+    ? product.units[0].price 
+    : (product.price_quarter || 0);
   const isLimitReached = isSavingActive && unitPrice > remainingCredit;
 
   const handleAddToCart = (e: React.MouseEvent) => {
