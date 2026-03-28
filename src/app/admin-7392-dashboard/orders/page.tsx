@@ -294,9 +294,11 @@ export default function OrdersPage() {
                         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-gray-500 mt-1 uppercase">
                           <span>Size: <b className="text-navy">{item.unit_label || item.size}</b></span>
                           <span>Qty: <b className="text-navy">{item.quantity}</b></span>
-                          <span className={`px-1.5 py-0.5 rounded-sm font-bold tracking-wider text-[8px] ${item.labourMode === 'without' ? 'bg-amber-100 text-amber-700' : 'bg-green-100 text-green-700'}`}>
-                            {item.labourMode === 'without' ? '⚙ Without Service' : '✓ With Service'}
-                          </span>
+                          {!item.isGift && (
+                            <span className={`px-1.5 py-0.5 rounded-sm font-bold tracking-wider text-[8px] ${item.labourMode === 'without' ? 'bg-amber-100 text-amber-700' : 'bg-green-100 text-green-700'}`}>
+                              {item.labourMode === 'without' ? '⚙ Without Service' : '✓ With Service'}
+                            </span>
+                          )}
                           {item.isGift && (
                             <span className="bg-gold text-navy px-1.5 py-0.5 rounded-sm font-black text-[8px] tracking-widest flex items-center gap-1">
                               🎁 FREE GIFT
