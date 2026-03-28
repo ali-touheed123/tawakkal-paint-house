@@ -7,6 +7,7 @@ import { useParams, useSearchParams, useRouter } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { BulkInquiry } from '@/components/BulkInquiry';
+import { useCartStore } from '@/lib/store';
 
 // Removed hardcoded constraints and constants
 
@@ -181,6 +182,37 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
     // Curated title ALWAYS takes precedence to prevent "Auto" vs "Automotive Paints" flash
     title: categoryInfo[category]?.title || categoryDetails?.title || staticInfo.title
   };
+
+  const { items, getRemainingCredit, getSavingAllowance } = useCartStore();
+  const remainingCredit = getRemainingCredit();
+  const allowance = getSavingAllowance();
+
+  // Smart Sorting for Paint Tools: Eligible/Claimed items first
+  const displayProducts = (() => {
+    if (category !== 'paint-tools' || allowance <= 0) return products;
+
+    return [...products].sort((a, b) => {
+      const priceA = a.units?.[0]?.price || 0;
+      const priceB = b.units?.[0]?.price || 0;
+
+      const isGiftA = items.some(i => i.product_id === a.id && i.isGift);
+      const isGiftB = items.some(i => i.product_id === b.id && i.isGift);
+
+      // Priority 1: Already claimed gifts (show at the very top)
+      if (isGiftA && !isGiftB) return -1;
+      if (!isGiftA && isGiftB) return 1;
+
+      // Priority 2: Eligible items (Can afford with remaining credit)
+      const canAffordA = priceA <= remainingCredit;
+      const canAffordB = priceB <= remainingCredit;
+
+      if (canAffordA && !canAffordB) return -1;
+      if (!canAffordA && canAffordB) return 1;
+
+      // Maintain original order for others
+      return 0;
+    });
+  })();
 
   return (
     <div className="min-h-screen overflow-x-hidden">
@@ -373,7 +405,7 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
                 exit={{ opacity: 0 }}
                 className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-3 sm:gap-4 relative"
               >
-                {products.map((product, k) => (
+                {displayProducts.map((product, k) => (
                   <ProductCard key={product.id} product={product} index={k} />
                 ))}
               </motion.div>
