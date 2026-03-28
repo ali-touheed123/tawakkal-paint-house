@@ -120,64 +120,56 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
       </h3>
 
       {isPaintTool ? (
-        <div className="mb-4">
-          {/* If saving session is active, show eligibility. Otherwise, show general complimentary message */}
+        <div className="mb-3">
           {isSavingActive ? (
-            <>
-              <div className="flex flex-col gap-1.5 mb-3">
-                <div className="flex items-center gap-1.5 text-amber-600 font-bold bg-amber-50 px-2.5 py-1.5 rounded-lg w-fit border border-amber-200">
-                  <Gift size={15} />
-                  <span className="text-[10px] uppercase tracking-wider">Compiment Pack Item</span>
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1 text-amber-600 font-bold bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200 text-[9px] uppercase tracking-wider">
+                  <Gift size={11} />
+                  <span>Free Gift</span>
                 </div>
-                <p className="text-[10px] text-gray-400 font-semibold tracking-tight">Included in your savings credit</p>
-              </div>
-              {claimStatus === 'claimed' ? (
-                <div className="font-bold text-sm py-2 text-center rounded-xl border bg-green-50 border-green-200 text-green-600">
-                  ✓ Claimed as Gift
-                </div>
-              ) : (claimStatus === 'rejected' || isLimitReached) ? (
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    alert("Your free tool credit for this order is finished. To get more free tools, add more 'Without Labour' paint products to your cart!");
-                  }}
-                  className="w-full font-bold text-sm py-2 text-center rounded-xl border bg-amber-50 border-amber-200 text-amber-600 hover:bg-amber-100 transition-colors"
+                <div className={`text-[10px] font-black ${
+                  claimStatus === 'claimed' ? 'text-green-600' :
+                  (claimStatus === 'rejected' || isLimitReached) ? 'text-red-500 underline decoration-dotted cursor-help' :
+                  'text-amber-600'
+                }`}
+                title={isLimitReached ? "Click 'How to Claim' below for details" : ""}
                 >
-                  ✦ How to Claim?
-                </button>
-              ) : (
-                <div className="font-bold text-sm py-2 text-center rounded-xl border bg-amber-50 border-amber-200 text-amber-600">
-                  ✦ Eligible for Credit
+                  {claimStatus === 'claimed' ? '✓ Claimed' :
+                   (claimStatus === 'rejected' || isLimitReached) ? '✗ Not Eligible' :
+                   '✦ Eligible'}
                 </div>
-              )}
-            
-            <div className={`flex items-center gap-3 mt-3 bg-gray-50 p-2 rounded-xl justify-between border border-gray-100 ${
-              (claimStatus === 'rejected' || isLimitReached) ? 'opacity-50 pointer-events-none' : ''
-            }`}>
-              <button
-                onClick={(e) => { e.preventDefault(); setQuantity(q => Math.max(1, q - 1)); }}
-                className="w-7 h-7 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-navy hover:bg-amber-400 hover:border-amber-400 hover:text-white transition-all active:scale-90"
-              >
-                <Minus size={14} />
-              </button>
-              <span className="font-bold text-navy text-sm">{quantity}</span>
-              <button
-                onClick={(e) => { e.preventDefault(); setQuantity(q => q + 1); }}
-                className="w-7 h-7 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-navy hover:bg-amber-400 hover:border-amber-400 hover:text-white transition-all active:scale-90"
-              >
-                <Plus size={14} />
-              </button>
+              </div>
+
+              {/* Compact Quantity Selector — integrated above main action */}
+              <div className={`flex items-center gap-2 bg-gray-50/80 p-1.5 rounded-lg justify-between border border-gray-100 ${
+                (claimStatus === 'rejected' || isLimitReached) ? 'opacity-50 pointer-events-none' : ''
+              }`}>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={(e) => { e.preventDefault(); setQuantity(q => Math.max(1, q - 1)); }}
+                    className="w-6 h-6 rounded bg-white border border-gray-200 flex items-center justify-center text-navy hover:bg-gold hover:text-white transition-all active:scale-95"
+                  >
+                    <Minus size={12} />
+                  </button>
+                  <span className="font-bold text-navy text-xs w-4 text-center">{quantity}</span>
+                  <button
+                    onClick={(e) => { e.preventDefault(); setQuantity(q => q + 1); }}
+                    className="w-6 h-6 rounded bg-white border border-gray-200 flex items-center justify-center text-navy hover:bg-gold hover:text-white transition-all active:scale-95"
+                  >
+                    <Plus size={12} />
+                  </button>
+                </div>
+                <span className="text-[9px] text-gray-400 font-bold uppercase">Qty</span>
+              </div>
             </div>
-          </>
           ) : (
-            <div className="bg-amber-50 border border-amber-200 p-2 rounded-xl text-center">
-              <Gift size={16} className="text-amber-500 mx-auto mb-1" />
-              <p className="text-xs font-bold text-amber-700 leading-tight">
-                Complimentary Gift
-              </p>
-              <p className="text-[9px] text-amber-600 mt-0.5">
-                Available with "Without Labour" paint orders
-              </p>
+            <div className="bg-amber-50/50 border border-amber-200 p-2 rounded-lg flex items-center gap-2">
+              <Gift size={15} className="text-amber-500 shrink-0" />
+              <div className="text-left">
+                <p className="text-[10px] font-black text-amber-700 leading-none">Complimentary Gift</p>
+                <p className="text-[8px] text-amber-600 mt-1">Available with "Without Labour" orders</p>
+              </div>
             </div>
           )}
         </div>
@@ -192,54 +184,82 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
 
       {/* Actions */}
       <div className="flex flex-col xs:flex-row gap-1.5 mt-auto">
-        <Link
-          href={`https://wa.me/923475658761?text=Hi! I'm interested in ${product.name}. Please share availability and price.`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 rounded-lg text-[10px] xs:text-xs font-bold border-2 border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-colors cursor-pointer whitespace-nowrap"
-        >
-          <MessageCircle size={14} className="shrink-0" />
-          <span>Inquiry</span>
-        </Link>
-
         {isPaintTool ? (
-          isSavingActive ? (
-            <button
-              onClick={handleAddToCart}
-              disabled={!product.in_stock || claimStatus === 'rejected' || isLimitReached}
-              className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-1 rounded-lg text-[10px] xs:text-xs font-bold transition-colors cursor-pointer whitespace-nowrap disabled:cursor-not-allowed group/btn ${
-                claimStatus === 'claimed' ? 'bg-green-500 text-white' :
-                (claimStatus === 'rejected' || isLimitReached) ? 'bg-gray-300 text-gray-500' :
-                'bg-amber-400 text-white hover:bg-amber-500'
-              }`}
-            >
-              <Gift size={14} className="shrink-0" />
-              <span>
-                {claimStatus === 'claimed' ? 'Claimed!' :
-                 (claimStatus === 'rejected' || isLimitReached) ? 'Not Eligible' :
-                 'Claim Gift'}
-              </span>
-            </button>
-          ) : (
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                alert("These tools are exclusively available as free gifts. Select 'Without Labour' on any paint product to claim them!");
-              }}
-              className="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 rounded-lg text-[10px] xs:text-xs font-bold bg-amber-400 text-white hover:bg-amber-500 transition-colors cursor-pointer whitespace-nowrap"
-            >
-              <Gift size={14} className="shrink-0" />
-              <span>How to Claim</span>
-            </button>
-          )
+          <div className="flex gap-1.5 flex-1 relative">
+            {isSavingActive ? (
+              <>
+                <button
+                  onClick={handleAddToCart}
+                  disabled={!product.in_stock || claimStatus === 'rejected' || isLimitReached}
+                  className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-2 rounded-lg text-[11px] font-black transition-all cursor-pointer whitespace-nowrap disabled:cursor-not-allowed group/btn ${
+                    claimStatus === 'claimed' ? 'bg-green-600 text-white' :
+                    (claimStatus === 'rejected' || isLimitReached) ? 'bg-gray-100 text-gray-400' :
+                    'bg-amber-400 text-white hover:bg-amber-500 shadow-md hover:shadow-lg active:scale-95'
+                  }`}
+                >
+                  <Gift size={14} className={cn("shrink-0", claimStatus === 'claimed' ? "animate-bounce" : "")} />
+                  <span>
+                    {claimStatus === 'claimed' ? 'Claimed!' :
+                     (claimStatus === 'rejected' || isLimitReached) ? 'Not Eligible' :
+                     'Claim Gift'}
+                  </span>
+                </button>
+                
+                {/* Slim Inquiry Button */}
+                <Link
+                  href={`https://wa.me/923475658761?text=Hi! I interested in ${product.name}`}
+                  target="_blank"
+                  className="w-10 flex items-center justify-center rounded-lg border-2 border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-all shadow-sm"
+                  title="Inquiry"
+                >
+                  <MessageCircle size={16} />
+                </Link>
+              </>
+            ) : (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  alert("Select 'Without Labour' on any paint product to claim these tools!");
+                }}
+                className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-black bg-amber-400 text-white hover:bg-amber-500 shadow-md transition-all active:scale-95"
+              >
+                <Gift size={15} className="shrink-0" />
+                <span>How to Claim</span>
+              </button>
+            )}
+            
+            {/* If limit is reached, show a small "?" badge */}
+            {isSavingActive && (claimStatus === 'rejected' || isLimitReached) && (
+              <button 
+                onClick={(e) => {
+                  e.preventDefault();
+                  alert("Your free tool credit is finished. Add more 'Without Labour' paint products to get more credit!");
+                }}
+                className="absolute -top-12 right-0 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-[10px] font-bold shadow-lg animate-pulse border-2 border-white"
+                title="How to get more credit?"
+              >
+                ?
+              </button>
+            )}
+          </div>
         ) : (
-          <Link
-            href={`/product/${product.slug}`}
-            className="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 rounded-lg text-[10px] xs:text-xs font-bold bg-navy text-white hover:bg-gold transition-colors cursor-pointer whitespace-nowrap"
-          >
-            <FileText size={14} className="shrink-0" />
-            <span>Details</span>
-          </Link>
+          <>
+            <Link
+              href={`https://wa.me/923475658761?text=Hi! I interested in ${product.name}`}
+              target="_blank"
+              className="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 rounded-lg text-xs font-bold border-2 border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-colors"
+            >
+              <MessageCircle size={14} />
+              <span>Inquiry</span>
+            </Link>
+            <Link
+              href={`/product/${product.slug}`}
+              className="flex-1 flex items-center justify-center gap-1.5 py-2 px-1 rounded-lg text-xs font-bold bg-navy text-white hover:bg-gold transition-colors"
+            >
+              <FileText size={14} />
+              <span>Details</span>
+            </Link>
+          </>
         )}
       </div>
     </div>
