@@ -174,14 +174,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
             </div>
           )}
         </div>
-      ) : unitPrice > 0 && (
-        <div className="mb-4">
-          <div className="text-gold font-bold text-lg">
-            Rs. {unitPrice.toLocaleString()}
-          </div>
-          <p className="text-[10px] text-gray-500 font-medium">{product.units?.[0]?.label || 'Unit Price'}</p>
-        </div>
-      )}
+      ) : null}
 
       {/* Actions */}
       <div className="flex flex-col xs:flex-row gap-1.5 mt-auto">
