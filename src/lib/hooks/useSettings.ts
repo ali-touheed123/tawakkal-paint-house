@@ -68,6 +68,8 @@ export function useLabourSettings() {
     const [tiers, setTiers] = useState<LabourCheckoutTier[]>([]);
     const [defaultWithoutDiscount, setDefaultWithoutDiscount] = useState(10);
     const [upsellItemIds, setUpsellItemIds] = useState<string[]>([]);
+    const [labourFreeMin, setLabourFreeMin] = useState(6000);
+    const [labourFreeMax, setLabourFreeMax] = useState(39999);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -76,13 +78,15 @@ export function useLabourSettings() {
             const { data } = await supabase
                 .from('site_settings')
                 .select('key, value')
-                .in('key', ['labour_checkout_tiers', 'labour_without_default_discount', 'labour_upsell_items']);
+                .in('key', ['labour_checkout_tiers', 'labour_without_default_discount', 'labour_upsell_items', 'labour_free_shipping_min', 'labour_free_shipping_max']);
 
             if (data) {
                 data.forEach((row: any) => {
                     if (row.key === 'labour_checkout_tiers') setTiers(row.value || []);
                     if (row.key === 'labour_without_default_discount') setDefaultWithoutDiscount(Number(row.value) || 10);
                     if (row.key === 'labour_upsell_items') setUpsellItemIds(row.value || []);
+                    if (row.key === 'labour_free_shipping_min') setLabourFreeMin(Number(row.value) || 6000);
+                    if (row.key === 'labour_free_shipping_max') setLabourFreeMax(Number(row.value) || 39999);
                 });
             }
             setLoading(false);
@@ -130,6 +134,8 @@ export function useLabourSettings() {
         tiers,
         defaultWithoutDiscount,
         upsellItemIds,
+        labourFreeMin,
+        labourFreeMax,
         loading,
         calculateToolCredit,
         getNextToolTier

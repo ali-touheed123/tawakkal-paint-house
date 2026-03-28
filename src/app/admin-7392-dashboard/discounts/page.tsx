@@ -28,6 +28,8 @@ export default function DiscountsPage() {
   const [labourTiers, setLabourTiers] = useState<LabourCheckoutTier[]>([]);
   const [defaultWithoutDiscount, setDefaultWithoutDiscount] = useState<number>(10);
   const [upsellItems, setUpsellItems] = useState<string>(''); // comma-separated IDs
+  const [labourFreeMin, setLabourFreeMin] = useState<number>(6000);
+  const [labourFreeMax, setLabourFreeMax] = useState<number>(39999);
   const [savingSettings, setSavingSettings] = useState(false);
 
   useEffect(() => {
@@ -40,13 +42,15 @@ export default function DiscountsPage() {
     const { data } = await supabase
         .from('site_settings')
         .select('key, value')
-        .in('key', ['labour_checkout_tiers', 'labour_without_default_discount', 'labour_upsell_items']);
+        .in('key', ['labour_checkout_tiers', 'labour_without_default_discount', 'labour_upsell_items', 'labour_free_shipping_min', 'labour_free_shipping_max']);
 
     if (data) {
         data.forEach((row: any) => {
             if (row.key === 'labour_checkout_tiers') setLabourTiers(row.value || []);
             if (row.key === 'labour_without_default_discount') setDefaultWithoutDiscount(Number(row.value) || 10);
             if (row.key === 'labour_upsell_items') setUpsellItems((row.value || []).join(',\n'));
+            if (row.key === 'labour_free_shipping_min') setLabourFreeMin(Number(row.value) || 6000);
+            if (row.key === 'labour_free_shipping_max') setLabourFreeMax(Number(row.value) || 39999);
         });
     }
   }
@@ -66,7 +70,9 @@ export default function DiscountsPage() {
     await Promise.all([
       supabase.from('site_settings').upsert({ key: 'labour_checkout_tiers', value: sortedTiers }),
       supabase.from('site_settings').upsert({ key: 'labour_without_default_discount', value: defaultWithoutDiscount }),
-      supabase.from('site_settings').upsert({ key: 'labour_upsell_items', value: parsedUpsell })
+      supabase.from('site_settings').upsert({ key: 'labour_upsell_items', value: parsedUpsell }),
+      supabase.from('site_settings').upsert({ key: 'labour_free_shipping_min', value: labourFreeMin }),
+      supabase.from('site_settings').upsert({ key: 'labour_free_shipping_max', value: labourFreeMax })
     ]);
 
     setSavingSettings(false);
@@ -310,6 +316,28 @@ export default function DiscountsPage() {
                   Applied to items selected "Without Labour" if the product doesn't have a specific override.
                 </p>
               </div>
+              <div>
+                <label className="block text-xs font-bold text-gray-400 uppercase mb-2 tracking-widest">
+                  Free DIY Delivery - From (Rs)
+                </label>
+                <input 
+                  type="number" 
+                  value={labourFreeMin}
+                  onChange={(e) => setLabourFreeMin(Number(e.target.value))}
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none focus:ring-4 focus:ring-gold/5 transition-all font-bold text-navy" 
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-gray-400 uppercase mb-2 tracking-widest">
+                  Free DIY Delivery - Up To (Rs)
+                </label>
+                <input 
+                  type="number" 
+                  value={labourFreeMax}
+                  onChange={(e) => setLabourFreeMax(Number(e.target.value))}
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none focus:ring-4 focus:ring-gold/5 transition-all font-bold text-navy" 
+                />
+              </div>
             </div>
           </div>
 
@@ -319,9 +347,9 @@ export default function DiscountsPage() {
               <div>
                 <h2 className="text-lg font-bold text-navy flex items-center gap-2">
                   <Percent size={20} className="text-green-500" />
-                  Service Discount Tiers (Checkout)
+                  DIY Tool Credit Tiers (Checkout)
                 </h2>
-                <p className="text-xs text-gray-500 mt-1">Applied ONLY to the "With-Labour" subtotal sub-portion of the cart.</p>
+                <p className="text-xs text-gray-500 mt-1">Free tool credit amount unlocked for "Without-Labour" customers.</p>
               </div>
               <button 
                 onClick={() => setLabourTiers([...labourTiers, { min_amount: 0, discount_type: 'percent', discount_value: 0, label: 'New Tier' }])}

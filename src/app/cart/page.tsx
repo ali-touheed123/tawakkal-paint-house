@@ -9,7 +9,7 @@ import { useDiscountRules, useLabourSettings } from '@/lib/hooks/useSettings';
 
 export default function CartPage() {
   const { items, updateQuantity, removeItem, getTotal, getLabourSubtotals, refreshItems, getRemainingCredit } = useCartStore();
-  const { getNextToolTier } = useLabourSettings();
+  const { getNextToolTier, labourFreeMin, labourFreeMax } = useLabourSettings();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -247,7 +247,7 @@ export default function CartPage() {
                     {hasAnyWithoutLabour && (
                       <div className="flex items-center gap-2 text-xs text-amber-600">
                         <Wrench size={12} />
-                        <span>Without-Labour: {subtotal >= 6000 && subtotal < 40000 ? 'Free delivery unlocked' : 'Rs. 300 delivery fee applies'}</span>
+                        <span>Without-Labour: {subtotal >= (labourFreeMin || 6000) && subtotal < ((labourFreeMax || 39999) + 1) ? 'Free delivery unlocked' : 'Rs. 300 delivery fee applies'}</span>
                       </div>
                     )}
                   </div>

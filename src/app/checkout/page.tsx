@@ -18,7 +18,7 @@ export default function CheckoutPage() {
   const [loading, setLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [orderId, setOrderId] = useState<string | null>(null);
-  const { getNextToolTier } = useLabourSettings();
+  const { getNextToolTier, labourFreeMin, labourFreeMax } = useLabourSettings();
   const { getRateForArea, rates } = useShippingRates();
   const { methods: paymentMethods } = usePaymentMethods();
   const [formData, setFormData] = useState({
@@ -104,10 +104,10 @@ export default function CheckoutPage() {
   const hasWithoutLabour = withoutLabourSubtotal > 0;
   const hasWithLabour = withLabourSubtotal > 0;
 
-  // Shipping: Without Labour items → free ONLY between 6k and 40k; With Labour → always free
+  // Shipping: Without Labour items → free ONLY between min/max thresholds; With Labour → always free
   const shippingCharge = hasWithLabour 
     ? 0 
-    : (hasWithoutLabour && subtotal >= 6000 && subtotal < 40000 ? 0 : 300);
+    : (hasWithoutLabour && subtotal >= labourFreeMin && subtotal < (labourFreeMax + 1) ? 0 : 300);
 
   const total = subtotal + shippingCharge;
 
@@ -438,9 +438,10 @@ export default function CheckoutPage() {
                   {hasWithoutLabour && (
                     <div className="flex items-center gap-2 text-xs text-amber-600">
                       <Wrench size={12} />
-                      <span>Without-Labour: {subtotal >= 6000 && subtotal < 40000 ? 'Free delivery unlocked' : 'Rs. 300 delivery fee applies'}</span>
+                      <span>Without-Labour: {subtotal >= labourFreeMin && subtotal < (labourFreeMax + 1) ? 'Free delivery unlocked' : 'Rs. 300 delivery fee applies'}</span>
                     </div>
                   )}
+ Broadway
                 </div>
               </div>
 
