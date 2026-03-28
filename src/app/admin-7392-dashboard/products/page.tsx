@@ -102,9 +102,17 @@ export default function ProductsPage() {
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget as HTMLFormElement);
+    const name = formData.get('name') as string;
+    const brand = formData.get('brand') as string;
+    const generatedSlug = (brand + '-' + name)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+
     const productData = {
-      name: formData.get('name'),
-      brand: formData.get('brand'),
+      name,
+      brand,
+      slug: editingProduct?.slug || generatedSlug,
       category: formData.get('category'),
       sub_category: formData.get('sub_category'),
       description: formData.get('description'),
