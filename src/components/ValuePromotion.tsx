@@ -33,7 +33,7 @@ export function ValuePromotion() {
                             Direct wholesale rates. Get a flat <span className="text-gold font-bold">10% OFF</span> on products + <span className="text-gold font-bold">Free Paint Tools</span> with your credits.
                         </p>
                         <div className="flex flex-wrap gap-2">
-                            {['10% Discount', 'Free Tools', 'No Service Pack'].map((val, i) => (
+                            {['Free Tools', 'No Service Pack'].map((val, i) => (
                                 <span key={i} className="text-[9px] font-bold bg-white/5 text-gold border border-gold/20 px-2 py-0.5 rounded-md">
                                     {val}
                                 </span>
