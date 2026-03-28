@@ -16,7 +16,6 @@ export function PaintCalculator({ compact = false }: PaintCalculatorProps) {
   const [width, setWidth] = useState(12);
   const [height, setHeight] = useState(10);
   const [directArea, setDirectArea] = useState(500);
-  const [coats, setCoats] = useState(2);
   const [rooms, setRooms] = useState(1);
   const [numDoors, setNumDoors] = useState(0);
   const [numWindows, setNumWindows] = useState(0);
@@ -34,7 +33,8 @@ export function PaintCalculator({ compact = false }: PaintCalculatorProps) {
     const netArea = wallArea + adjustmentArea;
 
     const totalArea = netArea * rooms;
-    const adjustedArea = totalArea * coats;
+    // Always calculate for 1 coat as per user request
+    const adjustedArea = totalArea * 1;
 
     const litres = Math.ceil(adjustedArea / 54);
 
@@ -60,7 +60,7 @@ export function PaintCalculator({ compact = false }: PaintCalculatorProps) {
       totalArea,
       breakdown: breakdown.trim()
     };
-  }, [dimensionsMode, length, width, height, directArea, coats, rooms, numDoors, numWindows]);
+  }, [dimensionsMode, length, width, height, directArea, rooms, numDoors, numWindows]);
 
   const whatsappMessage = `Hi! The calculator says I need ${calculation.litres} litres of ${paintType.label} for ${calculation.totalArea} sq/ft. Please help me choose the right product.`;
 
@@ -181,25 +181,6 @@ export function PaintCalculator({ compact = false }: PaintCalculatorProps) {
                 />
               </div>
             )}
-          </div>
-
-          {/* Coats */}
-          <div className="mb-8">
-            <label className="block text-sm font-semibold text-navy mb-3">Number of Coats</label>
-            <div className="flex gap-2">
-              {[1, 2, 3].map((num) => (
-                <button
-                  key={num}
-                  onClick={() => setCoats(num)}
-                  className={`flex-1 py-3 rounded-lg text-sm font-medium transition-all ${coats === num
-                    ? 'bg-gold text-navy'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gold-pale'
-                    }`}
-                >
-                  {num} {num === 1 ? 'Coat' : 'Coats'}
-                </button>
-              ))}
-            </div>
           </div>
 
           {/* Rooms */}
