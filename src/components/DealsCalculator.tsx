@@ -137,34 +137,34 @@ export function DealsCalculator() {
                     </div>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-6 pt-6 border-t border-gray-100">
+                <div className="grid md:grid-cols-2 gap-4 sm:gap-6 pt-6 border-t border-gray-100">
                     {/* Property Details Summary */}
-                    <div className="bg-gray-50 rounded-2xl p-6 flex flex-col justify-center space-y-4">
-                        <h3 className="font-bold text-gray-400 uppercase tracking-wider text-sm">Property Details</h3>
-                        <div className="flex gap-4 items-center">
-                            <Building2 className="text-gold" size={32} />
-                            <div>
-                                <p className="text-2xl font-bold text-navy">{selectedSize.gaz} Gaz House</p>
-                                <p className="text-sm text-gray-500">{selectedSize.sqft} Square Feet • 2 Floors • Inside + Outside</p>
+                    <div className="bg-gray-50 rounded-2xl p-4 sm:p-6 flex flex-col justify-center space-y-4 w-full overflow-hidden">
+                        <h3 className="font-bold text-gray-400 uppercase tracking-wider text-xs sm:text-sm">Property Details</h3>
+                        <div className="flex gap-3 sm:gap-4 items-center">
+                            <Building2 className="text-gold flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10" />
+                            <div className="min-w-0">
+                                <p className="text-xl sm:text-2xl font-bold text-navy truncate">{selectedSize.gaz} Gaz House</p>
+                                <p className="text-xs sm:text-sm text-gray-500 break-words leading-relaxed">{selectedSize.sqft} Square Feet • 2 Floors • Inside + Outside</p>
                             </div>
                         </div>
                     </div>
 
                     {/* Labour Toggle */}
-                    <div className="bg-gray-50 rounded-2xl p-6 flex flex-col justify-center items-start lg:items-end">
-                        <div className="space-y-4 w-full lg:w-fit">
-                            <h3 className="font-bold text-gray-400 uppercase tracking-wider text-sm lg:text-right">Service Type</h3>
-                            <label className="flex items-center gap-4 cursor-pointer p-4 bg-white rounded-xl border border-gray-200 hover:border-gold transition-colors w-full">
-                                <div className={`p-3 rounded-full ${withLabour ? 'bg-gold/10 text-gold' : 'bg-gray-100 text-gray-400'}`}>
-                                    <HardHat size={24} />
+                    <div className="bg-gray-50 rounded-2xl p-4 sm:p-6 flex flex-col justify-center items-start lg:items-end w-full overflow-hidden">
+                        <div className="space-y-4 w-full">
+                            <h3 className="font-bold text-gray-400 uppercase tracking-wider text-xs sm:text-sm lg:text-right">Service Type</h3>
+                            <label className="flex items-center gap-3 sm:gap-4 cursor-pointer p-3 sm:p-4 bg-white rounded-xl border border-gray-200 hover:border-gold transition-colors w-full">
+                                <div className={`p-2 sm:p-3 rounded-full flex-shrink-0 ${withLabour ? 'bg-gold/10 text-gold' : 'bg-gray-100 text-gray-400'}`}>
+                                    <HardHat className="w-5 h-5 sm:w-6 sm:h-6" />
                                 </div>
-                                <div className="flex-1">
-                                    <div className="font-bold text-navy">With Labour & Material</div>
-                                    <div className="text-xs text-gray-500">Uncheck for material only (-{labourDiscount}%)</div>
+                                <div className="flex-1 min-w-0">
+                                    <div className="font-bold text-navy text-sm sm:text-base leading-tight mb-0.5">With Labour & Material</div>
+                                    <div className="text-[10px] sm:text-xs text-gray-500 leading-tight">Uncheck for material only (-{labourDiscount}%)</div>
                                 </div>
-                                <div className="relative">
-                                    <div className={`w-12 h-6 rounded-full transition-colors ${withLabour ? 'bg-gold' : 'bg-gray-300'}`}>
-                                        <div className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-all ${withLabour ? 'left-7' : 'left-1'}`} />
+                                <div className="relative flex-shrink-0 ml-1">
+                                    <div className={`w-10 h-5 sm:w-12 sm:h-6 rounded-full transition-colors ${withLabour ? 'bg-gold' : 'bg-gray-300'}`}>
+                                        <div className={`absolute top-0.5 sm:top-1 w-4 h-4 rounded-full bg-white transition-all ${withLabour ? 'left-[22px] sm:left-7' : 'left-0.5 sm:left-1'}`} />
                                     </div>
                                     <input
                                         type="checkbox"
@@ -175,17 +175,17 @@ export function DealsCalculator() {
                                 </div>
                             </label>
 
-                            <label className="flex items-center gap-4 cursor-pointer p-4 bg-white rounded-xl border border-gray-200 hover:border-gold transition-colors w-full">
-                                <div className={`p-3 rounded-full ${withVisit ? 'bg-gold/10 text-gold' : 'bg-gray-100 text-gray-400'}`}>
-                                    <MapPin size={24} />
+                            <label className="flex items-center gap-3 sm:gap-4 cursor-pointer p-3 sm:p-4 bg-white rounded-xl border border-gray-200 hover:border-gold transition-colors w-full">
+                                <div className={`p-2 sm:p-3 rounded-full flex-shrink-0 ${withVisit ? 'bg-gold/10 text-gold' : 'bg-gray-100 text-gray-400'}`}>
+                                    <MapPin className="w-5 h-5 sm:w-6 sm:h-6" />
                                 </div>
-                                <div className="flex-1">
-                                    <div className="font-bold text-navy">Site Visit & Measurement</div>
-                                    <div className="text-xs text-gray-500">Professional inspection (+Rs. {visitFee.toLocaleString()})</div>
+                                <div className="flex-1 min-w-0">
+                                    <div className="font-bold text-navy text-sm sm:text-base leading-tight mb-0.5">Site Visit & Measurement</div>
+                                    <div className="text-[10px] sm:text-xs text-gray-500 leading-tight">Professional inspection (+Rs. {visitFee.toLocaleString()})</div>
                                 </div>
-                                <div className="relative">
-                                    <div className={`w-12 h-6 rounded-full transition-colors ${withVisit ? 'bg-gold' : 'bg-gray-300'}`}>
-                                        <div className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-all ${withVisit ? 'left-7' : 'left-1'}`} />
+                                <div className="relative flex-shrink-0 ml-1">
+                                    <div className={`w-10 h-5 sm:w-12 sm:h-6 rounded-full transition-colors ${withVisit ? 'bg-gold' : 'bg-gray-300'}`}>
+                                        <div className={`absolute top-0.5 sm:top-1 w-4 h-4 rounded-full bg-white transition-all ${withVisit ? 'left-[22px] sm:left-7' : 'left-0.5 sm:left-1'}`} />
                                     </div>
                                     <input
                                         type="checkbox"
