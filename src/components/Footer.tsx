@@ -200,7 +200,7 @@ export function Footer() {
           </button>
 
           <p className="text-xs text-gray-500 tracking-wide flex items-center gap-1.5">
-            Designed with <span className="text-red-500 text-sm animate-pulse">❤</span> in Karachi
+            Made by <span className="text-gold font-semibold">Zenwebai</span>
           </p>
         </div>
       </div>
