@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { ProductView } from './ProductView';
-import { createClient } from '@/lib/supabase/client';
+import { createClient } from '@/lib/supabase/server';
 
 type Props = {
   params: { slug: string };
@@ -8,7 +8,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const slug = params.slug;
-  const supabase = createClient();
+  const supabase = await createClient();
   
   const { data: product } = await supabase
     .from('products')
