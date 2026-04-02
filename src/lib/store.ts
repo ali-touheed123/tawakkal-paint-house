@@ -164,7 +164,7 @@ export const useCartStore = create<CartStore>()(
             const unit = units.find((u: any) => u.label === item.size) || units[0];
             const basePrice = unit?.price || 0;
             const discount = item.labourDiscount || 0;
-            const effectivePrice = basePrice * (1 - discount / 100);
+            const effectivePrice = Math.round(basePrice * (1 - discount / 100));
             return sum + effectivePrice * item.quantity;
           }, 0);
 
@@ -235,7 +235,7 @@ export const useCartStore = create<CartStore>()(
             const unit = units.find((u: any) => u.label === item.size) || units[0];
             const basePrice = unit?.price || 0;
             const discount = item.labourDiscount || 0;
-            const effectivePrice = basePrice * (1 - discount / 100);
+            const effectivePrice = Math.round(basePrice * (1 - discount / 100));
             return sum + effectivePrice * item.quantity;
           }, 0);
 
@@ -276,7 +276,7 @@ export const useCartStore = create<CartStore>()(
             const unit = units.find((u: any) => u.label === item.size) || units[0];
             const basePrice = unit?.price || 0;
             const discount = item.labourDiscount || 0;
-            const effectivePrice = basePrice * (1 - discount / 100);
+            const effectivePrice = Math.round(basePrice * (1 - discount / 100));
             return sum + effectivePrice * item.quantity;
           }, 0);
 
@@ -316,7 +316,7 @@ export const useCartStore = create<CartStore>()(
           const basePrice = unit?.price || 0;
           // Apply the 10% DIY discount
           const discount = item.labourDiscount || 0;
-          const effectivePrice = basePrice * (1 - discount / 100);
+          const effectivePrice = Math.round(basePrice * (1 - discount / 100));
           return sum + effectivePrice * item.quantity;
         }, 0);
 
@@ -351,7 +351,7 @@ export const useCartStore = create<CartStore>()(
 
           // Apply without-labour discount if applicable
           const discount = item.labourMode === 'without' ? (item.labourDiscount || 0) : 0;
-          const effectivePrice = basePrice * (1 - discount / 100);
+          const effectivePrice = Math.round(basePrice * (1 - discount / 100));
 
           return total + effectivePrice * item.quantity;
         }, 0);
@@ -369,7 +369,7 @@ export const useCartStore = create<CartStore>()(
 
           if (item.labourMode === 'without') {
             const discount = item.labourDiscount || 0;
-            const effectivePrice = basePrice * (1 - discount / 100);
+            const effectivePrice = Math.round(basePrice * (1 - discount / 100));
             withoutLabourSubtotal += effectivePrice * item.quantity;
           } else {
             withLabourSubtotal += basePrice * item.quantity;
