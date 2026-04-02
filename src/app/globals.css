@@ -46,6 +46,7 @@ body {
   color: var(--foreground);
   font-family: 'DM Sans', sans-serif;
   position: relative;
+  cursor: url('/brush.png'), auto;
 }
 
 main {
@@ -247,5 +248,5 @@ input[type="number"] {
 }
 
 a, button, [role="button"], input[type="button"], input[type="submit"], input[type="reset"], select, summary, label, .cursor-pointer {
-  cursor: pointer !important;
+  cursor: url('/roller.png'), pointer !important;
 }
