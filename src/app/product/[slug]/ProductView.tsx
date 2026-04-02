@@ -329,12 +329,14 @@ export function ProductView({ initialSlug }: { initialSlug: string }) {
         return product?.units?.find(u => u.label === selectedSize) || product?.units?.[0];
     }, [product, selectedSize]);
 
+    const isQuarterSize = selectedSize?.toLowerCase().includes('quarter');
+
     const basePrice = selectedUnit?.price || 0;
 
     // Determine the without-labour discount: unit-specific, product-specific override, or global default
     const withoutDiscount = useMemo(() => {
         if (product?.labour_config?.enabled === false) return 0;
-        
+
         // 1. Check if the currently selected unit has a specific discount
         if (selectedUnit?.discount !== undefined) return selectedUnit.discount;
 
@@ -351,18 +353,20 @@ export function ProductView({ initialSlug }: { initialSlug: string }) {
         ? Math.round(basePrice * (1 - withoutDiscount / 100))
         : basePrice;
 
-    const labourEnabled = product?.labour_config?.enabled !== false && 
-                         (selectedUnit?.labour_mode === 'both' || !selectedUnit?.labour_mode);
+    const labourEnabled = !isQuarterSize && product?.labour_config?.enabled !== false &&
+        (selectedUnit?.labour_mode === 'both' || !selectedUnit?.labour_mode);
 
-    // Force labour mode if unit only supports one
+    // Force labour mode if unit only supports one, or auto-apply 'without' for quarters
     useEffect(() => {
-        if (selectedUnit?.labour_mode === 'with_only') {
+        if (isQuarterSize) {
+            setLabourMode('without');
+        } else if (selectedUnit?.labour_mode === 'with_only') {
             setLabourMode('with');
         } else if (selectedUnit?.labour_mode === 'without_only') {
             setLabourMode('without');
             setSavingSessionActive(true);
         }
-    }, [selectedUnit]);
+    }, [selectedUnit, isQuarterSize]);
 
     const handleAddToCart = () => {
         if (!product) return;
@@ -443,9 +447,9 @@ export function ProductView({ initialSlug }: { initialSlug: string }) {
                         <div className="relative group rounded-3xl overflow-hidden bg-white shadow-2xl border border-gray-100 min-h-[400px]">
                             {isDiamondAceTimberlacWoodStains ? (
                                 <div className="aspect-square xs:aspect-[16/9] flex items-center justify-center p-4 xs:p-8">
-                                    <img 
-                                        src={product.image_url || ''} 
-                                        className="max-h-[85%] xs:max-h-full object-contain transform scale-125 xs:scale-100 transition-transform duration-500" 
+                                    <img
+                                        src={product.image_url || ''}
+                                        className="max-h-[85%] xs:max-h-full object-contain transform scale-125 xs:scale-100 transition-transform duration-500"
                                         alt={product.name}
                                     />
                                 </div>
@@ -468,10 +472,10 @@ export function ProductView({ initialSlug }: { initialSlug: string }) {
                                                 />
                                             ) : (
                                                 <div className="aspect-square xs:aspect-[16/9] flex items-center justify-center p-4 xs:p-8 h-full w-full">
-                                                    <img 
-                                                        src={product.image_url || ''} 
-                                                        alt={`${product.brand} ${product.name} product image`} 
-                                                        className="max-h-[85%] xs:max-h-full object-contain transform scale-125 xs:scale-100 transition-transform duration-500" 
+                                                    <img
+                                                        src={product.image_url || ''}
+                                                        alt={`${product.brand} ${product.name} product image`}
+                                                        className="max-h-[85%] xs:max-h-full object-contain transform scale-125 xs:scale-100 transition-transform duration-500"
                                                     />
                                                 </div>
                                             )}
@@ -522,8 +526,8 @@ export function ProductView({ initialSlug }: { initialSlug: string }) {
                                 </span>
                                 <div className={cn(
                                     "flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border",
-                                    product.in_stock 
-                                        ? "bg-green-50 text-green-600 border-green-100" 
+                                    product.in_stock
+                                        ? "bg-green-50 text-green-600 border-green-100"
                                         : "bg-red-50 text-red-600 border-red-100"
                                 )}>
                                     <div className={cn(
