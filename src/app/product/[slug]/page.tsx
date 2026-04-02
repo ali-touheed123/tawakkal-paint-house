@@ -3,11 +3,11 @@ import { ProductView } from './ProductView';
 import { createClient } from '@/lib/supabase/server';
 
 type Props = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const slug = params.slug;
+  const { slug } = await params;
   const supabase = await createClient();
   
   const { data: product } = await supabase
@@ -43,6 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function ProductPage({ params }: Props) {
-  return <ProductView initialSlug={params.slug} />;
+export default async function ProductPage({ params }: Props) {
+  const { slug } = await params;
+  return <ProductView initialSlug={slug} />;
 }
