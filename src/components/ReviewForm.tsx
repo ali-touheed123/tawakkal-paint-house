@@ -169,6 +169,7 @@ export function ReviewForm() {
                                     onChange={(e) => setContent(e.target.value)}
                                     placeholder="Tell us about the project you painted..."
                                     className="w-full h-40 bg-gray-50 rounded-2xl p-6 text-navy placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gold/50 border-none resize-none transition-all"
+                                    aria-label="Review content"
                                 />
                                 <div className="absolute top-6 left-6 -translate-x-full -translate-y-1/2 opacity-0 group-focus-within:opacity-10 shadow-xl pointer-events-none">
                                     <MessageSquare size={100} className="text-navy" />
@@ -181,6 +182,7 @@ export function ReviewForm() {
                                     onChange={(e) => setName(e.target.value)}
                                     placeholder="Your Full Name"
                                     className="w-full bg-gray-50 h-14 rounded-2xl px-6 text-navy placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gold/50 border-none transition-all"
+                                    aria-label="Your Full Name"
                                 />
                             </div>
 

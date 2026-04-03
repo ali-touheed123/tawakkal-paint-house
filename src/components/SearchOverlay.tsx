@@ -79,6 +79,7 @@ export function SearchOverlay() {
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search for paints, brands, colors..."
                 className="w-full pl-16 pr-16 py-6 bg-white/10 border-2 border-gold/30 rounded-2xl text-white text-xl placeholder-gray-400 focus:border-gold focus:outline-none"
+                aria-label="Search for products"
               />
               <button
                 onClick={() => {
@@ -86,6 +87,7 @@ export function SearchOverlay() {
                   setQuery('');
                 }}
                 className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                aria-label="Close search"
               >
                 <X size={24} />
               </button>

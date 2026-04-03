@@ -171,6 +171,7 @@ export function DealsCalculator() {
                                         className="hidden"
                                         checked={withLabour}
                                         onChange={(e) => setWithLabour(e.target.checked)}
+                                        aria-label="Include Labour & Material"
                                     />
                                 </div>
                             </label>
@@ -192,6 +193,7 @@ export function DealsCalculator() {
                                         className="hidden"
                                         checked={withVisit}
                                         onChange={(e) => setWithVisit(e.target.checked)}
+                                        aria-label="Include Site Visit & Measurement"
                                     />
                                 </div>
                             </label>

@@ -279,6 +279,8 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
             alt={`${product.brand} ${product.name}`}
             onError={() => setImgError(true)}
             className="w-full h-full object-contain p-2"
+            width={400}
+            height={400}
           />
           {!product.in_stock && (
             <div className="absolute inset-0 bg-navy/60 flex items-center justify-center">
@@ -294,6 +296,8 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
             onError={() => setImgError(true)}
             className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 p-2"
             title={`${product.brand} ${product.name}`}
+            width={400}
+            height={400}
           />
           {!product.in_stock && (
             <div className="absolute inset-0 bg-navy/60 flex items-center justify-center">

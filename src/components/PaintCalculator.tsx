@@ -143,6 +143,7 @@ export function PaintCalculator({ compact = false }: PaintCalculatorProps) {
                     onChange={(e) => setLength(Number(e.target.value))}
                     className="w-full p-3 border border-gray-200 rounded-lg focus:border-gold focus:outline-none"
                     min="1"
+                    aria-label="Length in feet"
                   />
                 </div>
                 <div>
@@ -154,6 +155,7 @@ export function PaintCalculator({ compact = false }: PaintCalculatorProps) {
                     onChange={(e) => setWidth(Number(e.target.value))}
                     className="w-full p-3 border border-gray-200 rounded-lg focus:border-gold focus:outline-none"
                     min="1"
+                    aria-label="Width in feet"
                   />
                 </div>
                 <div>
@@ -165,6 +167,7 @@ export function PaintCalculator({ compact = false }: PaintCalculatorProps) {
                     onChange={(e) => setHeight(Number(e.target.value))}
                     className="w-full p-3 border border-gray-200 rounded-lg focus:border-gold focus:outline-none"
                     min="1"
+                    aria-label="Height in feet"
                   />
                 </div>
               </div>
@@ -178,6 +181,7 @@ export function PaintCalculator({ compact = false }: PaintCalculatorProps) {
                   onChange={(e) => setDirectArea(Number(e.target.value))}
                   className="w-full p-3 border border-gray-200 rounded-lg focus:border-gold focus:outline-none"
                   min="1"
+                  aria-label="Total Wall Area in squared feet"
                 />
               </div>
             )}

@@ -387,7 +387,7 @@ export default function HomePage() {
 
                 <div className="absolute bottom-8 left-8 right-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
                   <p className="text-gold text-sm font-medium mb-1">{project.location}</p>
-                  <h4 className="text-2xl font-bold text-white mb-4">{project.title}</h4>
+                  <h3 className="text-2xl font-bold text-white mb-4">{project.title}</h3>
                   <div className="h-1 w-0 group-hover:w-24 bg-gold transition-all duration-500" />
                 </div>
               </motion.div>

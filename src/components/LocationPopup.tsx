@@ -93,6 +93,7 @@ export function LocationPopup() {
               <button
                 onClick={handleClose}
                 className="absolute top-4 right-4 text-white hover:text-gold transition-colors"
+                aria-label="Close Location Popup"
               >
                 <X size={24} />
               </button>

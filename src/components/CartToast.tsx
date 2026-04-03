@@ -52,6 +52,7 @@ export function CartToast() {
               <button 
                 onClick={() => setCartToastOpen(false)}
                 className="text-gray-500 hover:text-white transition-colors"
+                aria-label="Dismiss notification"
               >
                 <X size={18} />
               </button>
