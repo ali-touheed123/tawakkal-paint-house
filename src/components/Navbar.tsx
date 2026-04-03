@@ -108,7 +108,7 @@ export function Navbar() {
             {/* Mobile Menu Button - Left on mobile */}
             <button
               onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden text-white p-1"
+              className="lg:hidden text-white p-2 min-w-[44px] min-h-[44px] flex items-center justify-center"
               aria-label="Menu"
             >
               {isMobileMenuOpen ? <X size={22} className="xs:w-6 xs:h-6" /> : <Menu size={22} className="xs:w-6 xs:h-6" />}
@@ -266,7 +266,7 @@ export function Navbar() {
             <div className="flex items-center gap-2 xs:gap-4 relative z-50">
               <button
                 onClick={() => setSearchOpen(true)}
-                className="text-white/80 hover:text-gold transition-colors p-1"
+                className="text-white/80 hover:text-gold transition-colors p-2 min-w-[44px] min-h-[44px] flex items-center justify-center"
                 aria-label="Search"
               >
                 <Search size={20} className="w-4.5 h-4.5 xs:w-5 xs:h-5" />
@@ -276,7 +276,7 @@ export function Navbar() {
                 href={`https://wa.me/${settings?.contact?.whatsapp || '923475658761'}?text=Hi! I need help with paint.`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden lg:flex text-green-400 hover:text-green-300 transition-colors"
+                className="hidden lg:flex text-green-400 hover:text-green-300 transition-colors p-2 min-w-[44px] min-h-[44px] items-center justify-center"
                 aria-label="WhatsApp"
               >
                 <MessageCircle size={20} />
@@ -284,12 +284,12 @@ export function Navbar() {
 
               <Link
                 href="/cart"
-                className="relative text-white/80 hover:text-gold transition-colors p-1"
+                className="relative text-white/80 hover:text-gold transition-colors p-2 min-w-[44px] min-h-[44px] flex items-center justify-center"
                 aria-label="Cart"
               >
                 <ShoppingCart size={20} className="w-4.5 h-4.5 xs:w-5 xs:h-5" />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 xs:-top-2 xs:-right-2 bg-gold text-navy text-[9px] xs:text-xs font-bold w-4 h-4 xs:w-5 xs:h-5 rounded-full flex items-center justify-center border border-navy">
+                  <span className="absolute top-1 right-1 xs:top-0 xs:right-0 bg-gold text-navy text-[9px] xs:text-xs font-bold w-4 h-4 xs:w-5 xs:h-5 rounded-full flex items-center justify-center border border-navy">
                     {cartCount}
                   </span>
                 )}

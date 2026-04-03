@@ -224,7 +224,7 @@ export function PaintCalculator({ compact = false }: PaintCalculatorProps) {
                   >
                     <Minus size={14} />
                   </button>
-                  <span className={`text-sm font-bold w-4 text-center ${numDoors > 0 ? 'text-navy' : 'text-gray-400'}`}>
+                  <span className={`text-sm font-bold w-4 text-center ${numDoors > 0 ? 'text-navy' : 'text-gray-600'}`}>
                     {numDoors}
                   </span>
                   <button
@@ -259,7 +259,7 @@ export function PaintCalculator({ compact = false }: PaintCalculatorProps) {
                   >
                     <Minus size={14} />
                   </button>
-                  <span className={`text-sm font-bold w-4 text-center ${numWindows > 0 ? 'text-navy' : 'text-gray-400'}`}>
+                  <span className={`text-sm font-bold w-4 text-center ${numWindows > 0 ? 'text-navy' : 'text-gray-600'}`}>
                     {numWindows}
                   </span>
                   <button
@@ -293,7 +293,7 @@ export function PaintCalculator({ compact = false }: PaintCalculatorProps) {
           </h3>
 
           <div className={`text-center ${compact ? 'mb-4' : 'mb-8'}`}>
-            <p className="text-gray-400 text-[10px] uppercase font-bold tracking-widest mb-1">Total Area</p>
+            <p className="text-gray-600 text-[10px] uppercase font-bold tracking-widest mb-1">Total Area</p>
             <p className={`${compact ? 'text-xl' : 'text-3xl'} font-bold`}>{calculation.totalArea.toLocaleString()} sq/ft</p>
           </div>
 

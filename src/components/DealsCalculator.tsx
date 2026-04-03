@@ -140,7 +140,7 @@ export function DealsCalculator() {
                 <div className="grid md:grid-cols-2 gap-4 sm:gap-6 pt-6 border-t border-gray-100">
                     {/* Property Details Summary */}
                     <div className="bg-gray-50 rounded-2xl p-4 sm:p-6 flex flex-col justify-center space-y-4 w-full overflow-hidden">
-                        <h3 className="font-bold text-gray-400 uppercase tracking-wider text-xs sm:text-sm">Property Details</h3>
+                        <h3 className="font-bold text-gray-600 uppercase tracking-wider text-xs sm:text-sm">Property Details</h3>
                         <div className="flex gap-3 sm:gap-4 items-center">
                             <Building2 className="text-gold flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10" />
                             <div className="min-w-0">
@@ -153,9 +153,9 @@ export function DealsCalculator() {
                     {/* Labour Toggle */}
                     <div className="bg-gray-50 rounded-2xl p-4 sm:p-6 flex flex-col justify-center items-start lg:items-end w-full overflow-hidden">
                         <div className="space-y-4 w-full">
-                            <h3 className="font-bold text-gray-400 uppercase tracking-wider text-xs sm:text-sm lg:text-right">Service Type</h3>
+                            <h3 className="font-bold text-gray-600 uppercase tracking-wider text-xs sm:text-sm lg:text-right">Service Type</h3>
                             <label className="flex items-center gap-3 sm:gap-4 cursor-pointer p-3 sm:p-4 bg-white rounded-xl border border-gray-200 hover:border-gold transition-colors w-full">
-                                <div className={`p-2 sm:p-3 rounded-full flex-shrink-0 ${withLabour ? 'bg-gold/10 text-gold' : 'bg-gray-100 text-gray-400'}`}>
+                                <div className={`p-2 sm:p-3 rounded-full flex-shrink-0 ${withLabour ? 'bg-gold/10 text-gold' : 'bg-gray-100 text-gray-600'}`}>
                                     <HardHat className="w-5 h-5 sm:w-6 sm:h-6" />
                                 </div>
                                 <div className="flex-1 min-w-0">
@@ -177,7 +177,7 @@ export function DealsCalculator() {
                             </label>
 
                             <label className="flex items-center gap-3 sm:gap-4 cursor-pointer p-3 sm:p-4 bg-white rounded-xl border border-gray-200 hover:border-gold transition-colors w-full">
-                                <div className={`p-2 sm:p-3 rounded-full flex-shrink-0 ${withVisit ? 'bg-gold/10 text-gold' : 'bg-gray-100 text-gray-400'}`}>
+                                <div className={`p-2 sm:p-3 rounded-full flex-shrink-0 ${withVisit ? 'bg-gold/10 text-gold' : 'bg-gray-100 text-gray-600'}`}>
                                     <MapPin className="w-5 h-5 sm:w-6 sm:h-6" />
                                 </div>
                                 <div className="flex-1 min-w-0">
@@ -230,7 +230,7 @@ export function DealsCalculator() {
                                 </div>
 
                                 <div className="pt-4 border-t border-gray-100">
-                                    <div className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">Estimated Cost</div>
+                                    <div className="text-sm font-bold text-gray-600 uppercase tracking-wider mb-1">Estimated Cost</div>
                                     <div className="text-3xl font-black text-navy flex items-baseline gap-1">
                                         <span className="text-lg">Rs.</span>
                                         {price.toLocaleString()}
@@ -266,7 +266,7 @@ export function DealsCalculator() {
                 })}
             </div>
 
-            <div className="text-center text-sm text-gray-400 mt-8">
+            <div className="text-center text-sm text-gray-600 mt-8">
                 * Please note that this is an estimated cost based on standard home structures. Actual costs may vary slightly based on property condition and specific requirements.
             </div>
         </div>

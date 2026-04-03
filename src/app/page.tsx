@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowRight, MessageCircle, Calculator, Palette, CheckCircle, Award, Star, Truck, Users, Clock, Sparkles, Gift, Wrench, ShoppingCart } from 'lucide-react';
 import { PaintCalculator } from '@/components/PaintCalculator';
@@ -80,12 +81,17 @@ export default function HomePage() {
         {/* Background Image */}
         <div className="absolute inset-0">
           <div
-            className="absolute inset-0 bg-cover bg-center parallax"
-            style={{
-              backgroundImage: `url(${settings?.banners?.[0] || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920'})`,
-              transform: 'translateY(0)'
-            }}
-          />
+            className="absolute inset-0 parallax"
+            style={{ transform: 'translateY(0)' }}
+          >
+            <Image
+              src={settings?.banners?.[0] || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920'}
+              alt="Hero Background"
+              fill
+              priority
+              className="object-cover object-center"
+            />
+          </div>
           <div className="absolute inset-0 bg-gradient-to-r from-navy/90 via-navy/70 to-transparent" />
         </div>
 
@@ -238,10 +244,12 @@ export default function HomePage() {
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 className="group relative overflow-hidden rounded-2xl aspect-[16/9] md:aspect-[2/1]"
               >
-                <img
+                <Image
                   src={cat.image_url || cat.image || '/images/placeholder.jpg'}
                   alt={cat.name}
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover group-hover:scale-110 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/50 to-transparent" />
                 <div className="absolute inset-0 flex flex-col justify-end p-8">
@@ -370,10 +378,12 @@ export default function HomePage() {
                 transition={{ delay: idx * 0.2 }}
                 className="group relative h-[400px] md:h-[500px] rounded-3xl overflow-hidden cursor-pointer"
               >
-                <img 
+                <Image
                   src={project.image} 
                   alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover transition-transform duration-1000 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
                 

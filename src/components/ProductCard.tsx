@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { MessageCircle, FileText, ShoppingCart, Plus, Minus, Gift } from 'lucide-react';
 import { Product } from '@/types';
@@ -274,13 +275,14 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
       {/* Image */}
       {isPaintTool ? (
         <div className="relative aspect-square overflow-hidden bg-white border-b border-gray-100 block">
-          <img
+          <Image
             src={getImageUrl()}
             alt={`${product.brand} ${product.name}`}
             onError={() => setImgError(true)}
             className="w-full h-full object-contain p-2"
             width={400}
             height={400}
+            priority={index < 4}
           />
           {!product.in_stock && (
             <div className="absolute inset-0 bg-navy/60 flex items-center justify-center">
@@ -290,7 +292,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
         </div>
       ) : (
         <Link href={`/product/${product.slug}`} className="relative aspect-square overflow-hidden bg-white border-b border-gray-100 block">
-          <img
+          <Image
             src={getImageUrl()}
             alt={`${product.brand} ${product.name} - ${product.category} Paint`}
             onError={() => setImgError(true)}
@@ -298,6 +300,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
             title={`${product.brand} ${product.name}`}
             width={400}
             height={400}
+            priority={index < 4}
           />
           {!product.in_stock && (
             <div className="absolute inset-0 bg-navy/60 flex items-center justify-center">
