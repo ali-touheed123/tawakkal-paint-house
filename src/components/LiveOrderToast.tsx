@@ -6,6 +6,7 @@ import { ShoppingBag, CheckCircle, MapPin, Clock } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { Order } from '@/types';
 import { formatDistanceToNow } from 'date-fns';
+import Image from 'next/image';
 
 export function LiveOrderToast() {
     const [orders, setOrders] = useState<Order[]>([]);
@@ -85,9 +86,10 @@ export function LiveOrderToast() {
                             <div className="relative shrink-0">
                                 <div className="w-14 h-14 bg-gold-pale rounded-xl flex items-center justify-center overflow-hidden border border-gold/10">
                                     {firstItem?.image_url ? (
-                                        <img 
+                                        <Image 
                                             src={firstItem.image_url} 
                                             alt="" 
+                                            fill
                                             className="w-full h-full object-contain p-1 group-hover:scale-110 transition-transform duration-500" 
                                         />
                                     ) : (

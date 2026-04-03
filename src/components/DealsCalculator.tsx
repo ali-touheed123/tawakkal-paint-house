@@ -25,9 +25,9 @@ const DEFAULT_PACKAGES: DealPackage[] = [
         icon: Construction,
         description: 'Budget-friendly standard painting',
         includes: ['Emulsion', 'Oil Paint'],
-        color: 'text-gray-500',
+        color: 'text-gray-700',
         bg: 'bg-gray-100',
-        border: 'border-gray-200'
+        border: 'border-gray-300'
     },
     {
         id: 'normal',
@@ -35,7 +35,7 @@ const DEFAULT_PACKAGES: DealPackage[] = [
         icon: Shield,
         description: 'Durable quality for everyday living',
         includes: ['Emulsion', 'Oil Paint'],
-        color: 'text-blue-500',
+        color: 'text-blue-700',
         bg: 'bg-blue-50',
         border: 'border-blue-200'
     },
@@ -45,9 +45,9 @@ const DEFAULT_PACKAGES: DealPackage[] = [
         icon: Star,
         description: 'Premium protection and finish',
         includes: ['Weather', 'Emulsion', 'Oil Paint'],
-        color: 'text-gold',
-        bg: 'bg-yellow-50',
-        border: 'border-gold/30'
+        color: 'text-amber-700',
+        bg: 'bg-amber-50',
+        border: 'border-amber-200'
     },
     {
         id: 'premium',
@@ -55,7 +55,7 @@ const DEFAULT_PACKAGES: DealPackage[] = [
         icon: Crown,
         description: 'The ultimate luxury paint experience',
         includes: ['Filling', 'Matt', 'Weather', 'Emulsion', 'Oil Paint'],
-        color: 'text-purple-500',
+        color: 'text-purple-700',
         bg: 'bg-purple-50',
         border: 'border-purple-200'
     }
@@ -163,8 +163,8 @@ export function DealsCalculator() {
                                     <div className="text-[10px] sm:text-xs text-gray-500 leading-tight">Uncheck for material only (-{labourDiscount}%)</div>
                                 </div>
                                 <div className="relative flex-shrink-0 ml-1">
-                                    <div className={`w-10 h-5 sm:w-12 sm:h-6 rounded-full transition-colors ${withLabour ? 'bg-gold' : 'bg-gray-300'}`}>
-                                        <div className={`absolute top-0.5 sm:top-1 w-4 h-4 rounded-full bg-white transition-all ${withLabour ? 'left-[22px] sm:left-7' : 'left-0.5 sm:left-1'}`} />
+                                    <div className={`w-12 h-6 sm:w-14 sm:h-7 rounded-full transition-colors ${withLabour ? 'bg-gold' : 'bg-gray-400'}`}>
+                                        <div className={`absolute top-1 sm:top-1 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-white transition-all ${withLabour ? 'left-[24px] sm:left-8' : 'left-1'}`} />
                                     </div>
                                     <input
                                         type="checkbox"
@@ -185,8 +185,8 @@ export function DealsCalculator() {
                                     <div className="text-[10px] sm:text-xs text-gray-500 leading-tight">Professional inspection (+Rs. {visitFee.toLocaleString()})</div>
                                 </div>
                                 <div className="relative flex-shrink-0 ml-1">
-                                    <div className={`w-10 h-5 sm:w-12 sm:h-6 rounded-full transition-colors ${withVisit ? 'bg-gold' : 'bg-gray-300'}`}>
-                                        <div className={`absolute top-0.5 sm:top-1 w-4 h-4 rounded-full bg-white transition-all ${withVisit ? 'left-[22px] sm:left-7' : 'left-0.5 sm:left-1'}`} />
+                                    <div className={`w-12 h-6 sm:w-14 sm:h-7 rounded-full transition-colors ${withVisit ? 'bg-gold' : 'bg-gray-400'}`}>
+                                        <div className={`absolute top-1 sm:top-1 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-white transition-all ${withVisit ? 'left-[24px] sm:left-8' : 'left-1'}`} />
                                     </div>
                                     <input
                                         type="checkbox"

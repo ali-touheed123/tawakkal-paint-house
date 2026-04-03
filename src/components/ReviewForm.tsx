@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
 
 export function ReviewForm() {
     const [step, setStep] = useState(1);
@@ -220,7 +221,7 @@ export function ReviewForm() {
                                     {fileType === 'video' ? (
                                         <video src={preview} className="w-full h-full object-cover" controls />
                                     ) : (
-                                        <img src={preview} className="w-full h-full object-cover" />
+                                        <Image src={preview} alt="Review preview" fill className="w-full h-full object-cover" />
                                     )}
                                 </motion.div>
                             )}

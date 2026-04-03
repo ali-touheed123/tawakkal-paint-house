@@ -8,6 +8,7 @@ import { useState, useEffect, useRef } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { BulkInquiry } from '@/components/BulkInquiry';
 import { useCartStore } from '@/lib/store';
+import Image from 'next/image';
 
 // Removed hardcoded constraints and constants
 
@@ -222,9 +223,11 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
           style={{ y: heroY, scale: heroScale }}
           className="absolute inset-0"
         >
-          <img
+          <Image
             src={info.hero}
             alt={`${info.title} - Tawakkal Paint House Karachi`}
+            fill
+            priority
             className="w-full h-full object-cover"
           />
           <motion.div
@@ -304,11 +307,14 @@ export function CategoryView({ initialCategory }: { initialCategory: string }) {
                       title={brand.name}
                     >
                       {brand.logo_url ? (
-                        <img
-                          src={brand.logo_url}
-                          alt={brand.name}
-                          className={`h-full w-auto object-contain pointer-events-none p-1.5 xs:p-2`}
-                        />
+                        <div className="relative h-full w-full p-1.5 xs:p-2">
+                          <Image
+                            src={brand.logo_url}
+                            alt={brand.name}
+                            fill
+                            className="object-contain pointer-events-none"
+                          />
+                        </div>
                       ) : (
                         <span className="text-[10px] xs:text-xs font-black text-navy uppercase text-center px-1 whitespace-nowrap">
                           {brand.name}

@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { Award, ShieldCheck, Clock, Users, Building2, PaintBucket, Star, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -10,9 +11,11 @@ export default function AboutPage() {
             {/* Hero Section */}
             <section className="relative h-[60vh] flex items-center justify-center overflow-hidden bg-navy">
                 <div className="absolute inset-0 opacity-40">
-                    <img 
+                    <Image 
                         src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=1600&h=900&fit=crop" 
                         alt="Paint detail" 
+                        fill
+                        priority
                         className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-b from-navy/80 via-navy/50 to-white" />
@@ -80,9 +83,10 @@ export default function AboutPage() {
                             className="relative"
                         >
                             <div className="aspect-square rounded-[40px] overflow-hidden shadow-2xl">
-                                <img 
+                                <Image 
                                     src="https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=800&h=800&fit=crop" 
                                     alt="Modern interior" 
+                                    fill
                                     className="w-full h-full object-cover"
                                 />
                             </div>

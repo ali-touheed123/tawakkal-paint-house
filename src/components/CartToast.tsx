@@ -5,6 +5,7 @@ import { Check, ShoppingBag, X } from 'lucide-react';
 import { useUIStore } from '@/lib/store';
 import { useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export function CartToast() {
   const { isCartToastOpen, setCartToastOpen, lastAddedItem } = useUIStore();
@@ -28,9 +29,9 @@ export function CartToast() {
           className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[9999] w-[90%] max-w-sm"
         >
           <div className="bg-navy border border-gold/30 rounded-2xl shadow-2xl p-4 flex items-center gap-4">
-            <div className="w-12 h-12 bg-gold/20 rounded-xl flex-shrink-0 flex items-center justify-center text-gold overflow-hidden">
+            <div className="relative w-12 h-12 bg-gold/20 rounded-xl flex-shrink-0 flex items-center justify-center text-gold overflow-hidden">
               {lastAddedItem?.image ? (
-                <img src={lastAddedItem.image} alt="" className="w-full h-full object-cover" />
+                <Image src={lastAddedItem.image} alt="" fill className="w-full h-full object-cover" />
               ) : (
                 <ShoppingBag size={24} />
               )}

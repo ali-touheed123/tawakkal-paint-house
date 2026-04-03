@@ -89,6 +89,7 @@ export default function HomePage() {
               alt="Hero Background"
               fill
               priority
+              fetchPriority="high"
               className="object-cover object-center"
             />
           </div>

@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const BRANDS = [
     { name: 'Berger', url: '/images/brands/berger.png' },
@@ -54,9 +55,11 @@ export function BrandSection() {
                                     className="shrink-0 grayscale hover:grayscale-0 transition-all duration-500 opacity-50 hover:opacity-100 cursor-pointer"
                                 >
                                     {logo.url ? (
-                                        <img
+                                        <Image
                                             src={logo.url}
                                             alt={logo.name}
+                                            width={150}
+                                            height={60}
                                             className={`h-10 md:h-14 w-auto object-contain pointer-events-none drop-shadow-sm ${logo.name === 'Dior' ? 'scale-125 p-1' : ''}`}
                                         />
                                     ) : (

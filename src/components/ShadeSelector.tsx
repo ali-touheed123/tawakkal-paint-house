@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check } from 'lucide-react';
+import Image from 'next/image';
 
 import { Shade, ItemSize } from '@/types';
 
@@ -82,11 +83,14 @@ export function ShadeSelector({ shades, selectedSize, onSelect }: ShadeSelectorP
                                     }`}
                                 title={`${shade.name} (${shade.code})`}
                             >
-                                <img
-                                    src={shade.image_url}
-                                    alt={shade.name}
-                                    className="w-full aspect-square object-cover"
-                                />
+                                <div className="w-full aspect-square relative">
+                                    <Image
+                                        src={shade.image_url!}
+                                        alt={shade.name}
+                                        fill
+                                        className="object-cover"
+                                    />
+                                </div>
                                 {selectedShadeId === shade.id && (
                                     <div className="absolute inset-0 bg-navy/20 flex items-center justify-center">
                                         <div className="bg-white rounded-full p-1 shadow-md">

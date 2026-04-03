@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Trash2, Minus, Plus, MessageCircle, ArrowRight, Truck, Wrench, Check, Gift } from 'lucide-react';
+import Image from 'next/image';
 import { useCartStore } from '@/lib/store';
 import { useDiscountRules, useLabourSettings } from '@/lib/hooks/useSettings';
 
@@ -83,11 +84,12 @@ export default function CartPage() {
                     }`}
                   >
                     {/* Image */}
-                    <div className="w-24 h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
-                      <img
+                    <div className="relative w-24 h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                      <Image
                         src={item.product?.image_url || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200'}
-                        alt={item.product?.name}
-                        className="w-full h-full object-cover"
+                        alt={item.product?.name || 'Product'}
+                        fill
+                        className="object-cover"
                       />
                     </div>
 

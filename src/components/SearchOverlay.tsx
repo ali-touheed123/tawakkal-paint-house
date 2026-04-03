@@ -8,6 +8,7 @@ import { usePathname } from 'next/navigation';
 import { useUIStore } from '@/lib/store';
 import { createClient } from '@/lib/supabase/client';
 import { Product } from '@/types';
+import Image from 'next/image';
 
 export function SearchOverlay() {
   const pathname = usePathname();
@@ -113,10 +114,12 @@ export function SearchOverlay() {
                       }}
                       className="flex items-center gap-4 p-4 bg-white/10 rounded-xl hover:bg-white/20 transition-colors"
                     >
-                      <img
+                      <Image
                         src={product.image_url || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=100'}
                         alt={product.name}
-                        className="w-12 h-12 rounded-lg object-cover"
+                        width={48}
+                        height={48}
+                        className="rounded-lg object-cover"
                       />
                       <div className="flex-1 min-w-0">
                         <p className="text-gold text-xs uppercase">{product.brand}</p>

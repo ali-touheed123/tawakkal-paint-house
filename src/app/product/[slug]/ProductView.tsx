@@ -26,6 +26,7 @@ import { SimpleVisualizer } from '@/components/SimpleVisualizer';
 import { PaintCalculator } from '@/components/PaintCalculator';
 import { UpsellSection } from '@/components/UpsellSection';
 import Link from 'next/link';
+import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { BRIGHTO_SHADES, BRIGHTO_ENAMEL_SHADES, BRIGHTO_PLASTIC_EMULSION_SHADES, BRIGHTO_ALL_WEATHER_SHADES, SAASI_HYDROUS_SHADES, SAASI_MATT_ENAMEL_SHADES, SAASI_PLASTIC_EMULSION_SHADES, SAASI_SUPER_GLOSS_ENAMEL_SHADES, SAASI_WEATHER_SAFE_SHADES, GOBIS_INDUSTRIAL_ENAMEL_SHADES, GOBIS_STOVING_PAINT_SHADES, GOBIS_CARMAN_SERIES_SHADES, GOBIS_SILVERLINE_ENAMEL_SHADES, GOBIS_SILVERLINE_EMULSION_SHADES, GOBIS_GOLD_LUXURIOUS_WALL_EMULSION_SHADES, GOBIS_SILKSHEEN_EMULSION_SHADES, GOBIS_GOLD_ENAMEL_SHADES, GOBIS_AQUEOUS_MATT_FINISH_SHADES, GOBIS_GOLD_AQUEOUS_MATT_FINISH_SHADES, GOBIS_GOLD_EGGSHELL_MATT_FINISH_SHADES, GOBIS_GLOSS_ENAMEL_SHADES, GOBIS_EGGSHELL_MATT_ENAMEL_SHADES, RELIABLE_WEATHER_PROTECTOR_SHADES, RELIABLE_MATT_ENAMEL_SHADES, RELIABLE_EMULSION_SHADES, RELIABLE_ENAMEL_SHADES, RELIABLE_WATER_MATT_SHADES, CHOICE_SYNTHETIC_ENAMEL_SHADES, CHOICE_WEATHER_SEALER_SHADES, RELIANCE_STAINLESS_MATT_SHADES, RELIANCE_SEMI_PLASTIC_EMULSION_SHADES, RELIANCE_MATT_ENAMEL_SHADES, RELIANCE_WEATHER_GUARD_SHADES, RELIANCE_SYNTHETIC_ENAMEL_SHADES, BERGER_WEATHER_PRO_SHADES, BERGER_NU_ENAMEL_SHADES, BERGER_NU_EMULSION_SHADES, BERGER_ELEGANCE_SILK_EMULSION_SHADES, BERGER_SUPERIOR_MATT_FINISH_SHADES, DIAMOND_ACE_WEATHER_DEFENDER_SHADES, DIAMOND_OVERALL_PLASTICCOAT_EMULSION_SHADES, DIAMOND_ACE_ACRYLIC_PLASTIC_EMULSION_SHADES, DIAMOND_ACE_MATT_ENAMEL_SHADES, DIAMOND_ACE_SUPER_GLOSS_ENAMEL_SHADES, DIAMOND_OVERALL_SUPER_EMULSION_SHADES, DIAMOND_OVERALL_HIGH_GLOSS_ENAMEL_SHADES, DIAMOND_OVERALL_WEATHER_MAX_SHADES, DIAMOND_EVERLAST_HIGH_GLOSS_ENAMEL_SHADES, DIAMOND_ACE_DURASILK_EMULSION_SHADES, DIAMOND_VALUE_EMULSION_SHADES, DIAMOND_OVERALL_MATT_ENAMEL_SHADES, DIAMOND_OVERALL_AQUAMAX_WATER_MATT_SHADES, DIAMOND_ACE_TIMBERLAC_WOOD_STAINS_SHADES, BERGER_WEATHER_COAT_GLOW_365_SHADES, BERGER_VIP_WEATHER_COAT_SHADES, BERGER_ALLROUNDER_MATT_ENAMEL_SHADES, BERGER_TOP_SUPER_EMULSION_SHADES, BERGER_SUPER_GLOSS_ENAMEL_SHADES, BERGER_SEMI_PLASTIC_EMULSION_SHADES, BERGER_ELEGANCE_MATT_EMULSION_SHADES } from '@/constants/shades';
 
@@ -446,11 +447,13 @@ export function ProductView({ initialSlug }: { initialSlug: string }) {
 
                         <div className="relative group rounded-3xl overflow-hidden bg-white shadow-2xl border border-gray-100 min-h-[400px]">
                             {isDiamondAceTimberlacWoodStains ? (
-                                <div className="aspect-square xs:aspect-[16/9] flex items-center justify-center p-4 xs:p-8">
-                                    <img
+                                <div className="aspect-square xs:aspect-[16/9] relative p-4 xs:p-8">
+                                    <Image
                                         src={product.image_url || ''}
-                                        className="max-h-[85%] xs:max-h-full object-contain transform scale-125 xs:scale-100 transition-transform duration-500"
                                         alt={product.name}
+                                        fill
+                                        priority
+                                        className="object-contain p-4 transition-transform duration-500 hover:scale-105"
                                     />
                                 </div>
                             ) : (
@@ -471,11 +474,13 @@ export function ProductView({ initialSlug }: { initialSlug: string }) {
                                                     onSelect={(s) => setSelectedShade(s)}
                                                 />
                                             ) : (
-                                                <div className="aspect-square xs:aspect-[16/9] flex items-center justify-center p-4 xs:p-8 h-full w-full">
-                                                    <img
+                                                <div className="aspect-square xs:aspect-[16/9] relative p-4 xs:p-8 h-full w-full">
+                                                    <Image
                                                         src={product.image_url || ''}
                                                         alt={`${product.brand} ${product.name} product image`}
-                                                        className="max-h-[85%] xs:max-h-full object-contain transform scale-125 xs:scale-100 transition-transform duration-500"
+                                                        fill
+                                                        priority
+                                                        className="object-contain p-4 transition-transform duration-500 hover:scale-105"
                                                     />
                                                 </div>
                                             )}
@@ -498,8 +503,13 @@ export function ProductView({ initialSlug }: { initialSlug: string }) {
                         {/* Thumbnails */}
                         {!isDiamondAceTimberlacWoodStains && (
                             <div className="flex gap-4">
-                                <div className="w-24 h-24 rounded-2xl border-2 border-gold p-2 bg-white flex items-center justify-center shadow-md">
-                                    <img src={product.image_url || ''} alt={`${product.brand} logo or product icon`} className="w-full h-full object-contain" />
+                                <div className="w-24 h-24 relative rounded-2xl border-2 border-gold p-2 bg-white flex items-center justify-center shadow-md">
+                                    <Image 
+                                        src={product.image_url || ''} 
+                                        alt={`${product.brand} product thumbnail`} 
+                                        fill
+                                        className="object-contain p-1" 
+                                    />
                                 </div>
                                 {selectedShade && (
                                     <motion.div

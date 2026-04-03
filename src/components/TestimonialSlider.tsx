@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { Star, ChevronLeft, ChevronRight, Quote, Play } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
+import Image from 'next/image';
 
 interface Review {
     id: string;
@@ -108,10 +109,11 @@ export function TestimonialSlider() {
                                                 </div>
                                             </div>
                                         ) : (
-                                            <img 
+                                            <Image 
                                                 src={current.media_url || "/images/placeholder.jpg"} 
                                                 alt={current.user_name}
-                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                                fill
+                                                className="object-cover transition-transform duration-700 group-hover:scale-110"
                                             />
                                         )}
                                         <div className="absolute inset-0 bg-gradient-to-t from-navy/40 to-transparent" />

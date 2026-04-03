@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, MessageCircle, ShoppingCart, Menu, X, MapPin, ChevronRight,
@@ -116,9 +117,12 @@ export function Navbar() {
 
             {/* Logo */}
             <Link href="/" className="flex items-center gap-1 xs:gap-2 absolute left-1/2 -translate-x-1/2 lg:static lg:translate-x-0 lg:left-0 max-w-[140px] xs:max-w-none">
-              <img
+              <Image
                 src={settings?.logo || "/logo.png"}
                 alt="Tawakkal Paint House"
+                width={160}
+                height={48}
+                priority
                 className="h-8 xs:h-10 md:h-12 w-auto object-contain"
               />
             </Link>

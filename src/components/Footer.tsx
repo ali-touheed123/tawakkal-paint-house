@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { MessageCircle, Instagram, Facebook, Phone, MapPin, Music2, ArrowRight, ChevronUp } from 'lucide-react';
 import { useLocationStore, useUIStore } from '@/lib/store';
@@ -65,9 +66,11 @@ export function Footer() {
           {/* Column 1: Brand & Desc */}
           <div className="lg:pr-8 space-y-6 col-span-1 xs:col-span-2 lg:col-span-1">
             <Link href="/" className="inline-block">
-              <img
+              <Image
                 src={settings?.logo || "/logo.png"}
                 alt="Tawakkal Paint House"
+                width={120}
+                height={48}
                 className="h-10 xs:h-12 w-auto drop-shadow-lg"
               />
             </Link>

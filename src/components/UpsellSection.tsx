@@ -7,6 +7,7 @@ import { createClient } from '@/lib/supabase/client';
 import { useCartStore } from '@/lib/store';
 import type { Product } from '@/types';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface UpsellSectionProps {
     labourMode: 'with' | 'without';
@@ -75,11 +76,12 @@ function UpsellCard({ product, idx, isSavingMode, remaining, addItem, addGiftIte
 
             {/* Image */}
             <div className="w-full">
-                <div className="w-full aspect-square bg-gray-50 rounded-lg overflow-hidden flex items-center justify-center">
-                    <img
+                <div className="w-full aspect-square bg-gray-50 rounded-lg overflow-hidden relative">
+                    <Image
                         src={product.image_url || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200'}
                         alt={product.name}
-                        className={`w-full h-full object-contain p-1 group-hover:scale-105 transition-transform duration-300 ${limitReached ? 'opacity-50' : ''}`}
+                        fill
+                        className={`object-contain p-1 group-hover:scale-105 transition-transform duration-300 ${limitReached ? 'opacity-50' : ''}`}
                     />
                 </div>
             </div>

@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
+import Image from 'next/image';
 import { DealsCalculator } from '@/components/DealsCalculator';
 
 export default function DealsPage() {
@@ -24,9 +25,11 @@ export default function DealsPage() {
                     className="absolute inset-0 z-0"
                 >
                     <div className="absolute inset-0 bg-navy/40 z-10" />
-                    <img
+                    <Image
                         src="/deals_hero_bg.png"
                         alt="Premium Project Showcase"
+                        fill
+                        priority
                         className="w-full h-full object-cover"
                     />
                 </motion.div>
@@ -123,9 +126,10 @@ export default function DealsPage() {
                             transition={{ duration: 1 }}
                             className="relative aspect-square rounded-2xl overflow-hidden shadow-2xl"
                         >
-                            <img 
+                            <Image 
                                 src="https://images.unsplash.com/photo-1562664377-709f2c337eb2?q=80&w=1000&auto=format&fit=crop" 
                                 alt="Professional Painting"
+                                fill
                                 className="w-full h-full object-cover"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-navy/60 to-transparent" />

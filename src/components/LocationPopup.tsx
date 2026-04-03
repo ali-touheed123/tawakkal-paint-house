@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useLocationStore, useUIStore } from '@/lib/store';
 import { KARACHI_AREAS } from '@/types';
@@ -78,10 +79,12 @@ export function LocationPopup() {
           >
             <div className="bg-navy p-6 rounded-t-lg flex items-center justify-between">
               <div className="text-center flex-1">
-                <img 
+                <Image 
                   src="/logo.png" 
                   alt="Tawakkal Paint House" 
-                  className="h-16 w-auto mx-auto mb-3"
+                  width={250}
+                  height={80}
+                  className="h-16 w-auto mx-auto mb-3 object-contain"
                 />
                 <h2 className="font-heading text-2xl md:text-3xl text-white font-bold">
                   Welcome to Tawakkal Paint House
