@@ -113,6 +113,8 @@ export function LocationPopup() {
                         ? 'border-gold bg-gold-pale text-navy'
                         : 'border-gray-200 hover:border-gold text-gray-700 hover:bg-gold-pale/50'
                     }`}
+                    aria-label={`Select area ${karachiArea}`}
+                    aria-pressed={selectedArea === karachiArea}
                   >
                     {karachiArea}
                   </button>
@@ -127,6 +129,7 @@ export function LocationPopup() {
                     ? 'bg-gold text-navy hover:bg-gold-light'
                     : 'bg-gray-200 text-gray-400 cursor-not-allowed'
                 }`}
+                aria-label="Confirm selected location"
               >
                 Confirm Location
               </button>

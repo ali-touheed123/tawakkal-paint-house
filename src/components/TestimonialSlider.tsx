@@ -136,13 +136,13 @@ export function TestimonialSlider() {
                                     <div>
                                         <div className="flex items-center gap-2">
                                             <h4 className="text-xl font-bold text-navy">{current.user_name}</h4>
-                                            {current.is_shop_review && (
-                                                <span className="text-[10px] font-bold text-gold bg-gold/10 px-2 py-0.5 rounded-full uppercase tracking-widest border border-gold/10">
+                                             {current.is_shop_review && (
+                                                <span className="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full uppercase tracking-widest border border-amber-100">
                                                     Shop Visit
                                                 </span>
                                             )}
                                         </div>
-                                        <p className="text-gold font-medium">{current.role || 'Verified Customer'}</p>
+                                        <p className="text-amber-700 font-medium">{current.role || 'Verified Customer'}</p>
                                     </div>
                                 </div>
                             </div>
@@ -154,12 +154,14 @@ export function TestimonialSlider() {
                         <button 
                             onClick={prev}
                             className="w-14 h-14 rounded-full border-2 border-navy/10 flex items-center justify-center text-navy hover:bg-gold hover:border-gold hover:text-white transition-all duration-300"
+                            aria-label="Previous testimonial"
                         >
                             <ChevronLeft size={24} />
                         </button>
                         <button 
                             onClick={next}
                             className="w-14 h-14 rounded-full border-2 border-navy/10 flex items-center justify-center text-navy hover:bg-gold hover:border-gold hover:text-white transition-all duration-300"
+                            aria-label="Next testimonial"
                         >
                             <ChevronRight size={24} />
                         </button>

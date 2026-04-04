@@ -28,8 +28,8 @@ export function ValuePromotion() {
                         <Gift className="text-gold" size={20} />
                     </div>
                     <div>
-                        <h3 className="text-white font-bold text-sm mb-1 uppercase tracking-wide">Without Labour (DIY)</h3>
-                        <p className="text-gray-300 text-[11px] leading-relaxed mb-3">
+                        <h2 className="text-white font-bold text-sm mb-1 uppercase tracking-wide">Without Labour (DIY)</h2>
+                        <p className="text-gray-200 text-[11px] leading-relaxed mb-3">
                             Direct wholesale rates. Get a flat <span className="text-gold font-bold">10% OFF</span> on products + <span className="text-gold font-bold">Free Paint Tools</span> with your credits.
                         </p>
                         <div className="flex flex-wrap gap-2">
@@ -53,8 +53,8 @@ export function ValuePromotion() {
                         <ShieldCheck className="text-green-400" size={20} />
                     </div>
                     <div>
-                        <h3 className="text-white font-bold text-sm mb-1 uppercase tracking-wide">Service Mode</h3>
-                        <p className="text-gray-300 text-[11px] leading-relaxed mb-3">
+                        <h2 className="text-white font-bold text-sm mb-1 uppercase tracking-wide">Service Mode</h2>
+                        <p className="text-gray-200 text-[11px] leading-relaxed mb-3">
                             Purchase at standard price to unlock <br />
                             <span className="text-green-400 font-bold italic">Free Professional Labour & Delivery!</span>
                         </p>

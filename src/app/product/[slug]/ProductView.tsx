@@ -403,7 +403,11 @@ export function ProductView({ initialSlug }: { initialSlug: string }) {
             {/* Breadcrumbs */}
             <div className="bg-gray-50 border-b border-gray-100 py-3">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-4">
-                    <button onClick={() => router.back()} className="p-2 hover:bg-gray-200 rounded-lg transition-colors text-navy">
+                    <button 
+                        onClick={() => router.back()} 
+                        className="p-2 hover:bg-gray-200 rounded-lg transition-colors text-navy"
+                        aria-label="Go back"
+                    >
                         <ChevronLeft size={20} />
                     </button>
                     <div className="flex items-center gap-2 text-xs font-medium text-gray-400 overflow-hidden">
@@ -593,6 +597,8 @@ export function ProductView({ initialSlug }: { initialSlug: string }) {
                                             ? 'bg-navy border-navy text-white shadow-xl shadow-navy/20'
                                             : 'bg-white border-gray-100 text-gray-500 hover:border-gray-200'
                                             }`}
+                                        aria-label={`Select size ${unit.label}`}
+                                        aria-pressed={selectedSize === unit.label}
                                     >
                                         {unit.label}
                                     </button>
@@ -617,6 +623,8 @@ export function ProductView({ initialSlug }: { initialSlug: string }) {
                                                     ? 'border-navy bg-navy/5 shadow-md'
                                                     : 'border-gray-100 bg-white hover:border-gray-200'
                                             )}
+                                            aria-label="Select With Labour service"
+                                            aria-pressed={labourMode === 'with'}
                                         >
                                             <div className="flex items-center gap-2">
                                                 <div className={cn(
@@ -647,6 +655,8 @@ export function ProductView({ initialSlug }: { initialSlug: string }) {
                                                     ? 'border-amber-400 bg-amber-50 shadow-md'
                                                     : 'border-gray-100 bg-white hover:border-amber-200'
                                             )}
+                                            aria-label="Select Without Labour service"
+                                            aria-pressed={labourMode === 'without'}
                                         >
                                             <div className="flex items-center gap-2">
                                                 <div className={cn(
@@ -706,9 +716,21 @@ export function ProductView({ initialSlug }: { initialSlug: string }) {
 
                             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6">
                                 <div className="flex items-center justify-between sm:justify-start border-2 border-gray-100 rounded-xl bg-gray-50 p-1 w-full sm:w-auto h-14">
-                                    <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="w-12 h-full flex items-center justify-center text-navy font-bold hover:bg-white rounded-lg transition-colors">-</button>
+                                    <button 
+                                        onClick={() => setQuantity(Math.max(1, quantity - 1))} 
+                                        className="w-12 h-full flex items-center justify-center text-navy font-bold hover:bg-white rounded-lg transition-colors"
+                                        aria-label="Decrease quantity"
+                                    >
+                                        -
+                                    </button>
                                     <span className="w-10 text-center font-bold text-navy">{quantity}</span>
-                                    <button onClick={() => setQuantity(quantity + 1)} className="w-12 h-full flex items-center justify-center text-navy font-bold hover:bg-white rounded-lg transition-colors">+</button>
+                                    <button 
+                                        onClick={() => setQuantity(quantity + 1)} 
+                                        className="w-12 h-full flex items-center justify-center text-navy font-bold hover:bg-white rounded-lg transition-colors"
+                                        aria-label="Increase quantity"
+                                    >
+                                        +
+                                    </button>
                                 </div>
                                 <button
                                     onClick={handleAddToCart}

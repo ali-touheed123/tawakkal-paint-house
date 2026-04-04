@@ -82,6 +82,8 @@ export function ShadeSelector({ shades, selectedSize, onSelect }: ShadeSelectorP
                                     : 'border-transparent hover:border-navy/30'
                                     }`}
                                 title={`${shade.name} (${shade.code})`}
+                                aria-label={`Select shade: ${shade.name} (${shade.code})`}
+                                aria-pressed={selectedShadeId === shade.id}
                             >
                                 <div className="w-full aspect-square relative">
                                     <Image
@@ -124,6 +126,8 @@ export function ShadeSelector({ shades, selectedSize, onSelect }: ShadeSelectorP
                                         : 'border-transparent hover:border-navy/20'
                                         }`}
                                     title={`${shade.name} (${shade.code})`}
+                                    aria-label={`Select color: ${shade.name} (${shade.code})`}
+                                    aria-pressed={selectedShadeId === shade.id}
                                 >
                                     <div
                                         className="w-full h-full rounded-full flex items-center justify-center"

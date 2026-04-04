@@ -52,7 +52,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="bg-navy relative overflow-hidden pt-20 pb-8 text-gray-300 selection:bg-gold selection:text-navy">
+    <footer className="bg-navy relative overflow-hidden pt-20 pb-8 text-gray-200 selection:bg-gold selection:text-navy">
       {/* Subtle top border accent */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-navy via-gold/50 to-navy opacity-50"></div>
       
@@ -74,45 +74,45 @@ export function Footer() {
                 className="h-10 xs:h-12 w-auto drop-shadow-lg"
               />
             </Link>
-            <p className="text-gray-400 text-sm leading-relaxed pr-4 max-w-sm">
+            <p className="text-gray-300 text-sm leading-relaxed pr-4 max-w-sm">
               Providing premium quality paints, industrial coatings, and painting solutions since 2004. Your trusted partner in color across the whole of Karachi.
             </p>
-            <div className="flex flex-wrap items-center gap-2 xs:gap-3 pt-2">
+            <div className="flex flex-wrap items-center gap-3 pt-2">
               <a
                 href={`https://wa.me/${settings?.contact?.whatsapp || '923475658761'}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 xs:w-10 xs:h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-[#25D366] hover:text-white hover:border-[#25D366] hover:scale-110 active:scale-95 transition-all duration-300"
+                className="w-11 h-11 xs:w-12 xs:h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-300 hover:bg-[#25D366] hover:text-white hover:border-[#25D366] hover:scale-110 active:scale-95 transition-all duration-300"
                 aria-label="WhatsApp"
               >
-                <MessageCircle size={16} className="xs:w-4.5 xs:h-4.5" />
+                <MessageCircle size={18} className="xs:w-5 xs:h-5" />
               </a>
               <a
                 href={settings?.socials?.facebook || "#"}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 xs:w-10 xs:h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2] hover:scale-110 active:scale-95 transition-all duration-300"
+                className="w-11 h-11 xs:w-12 xs:h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-300 hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2] hover:scale-110 active:scale-95 transition-all duration-300"
                 aria-label="Facebook"
               >
-                <Facebook size={16} className="xs:w-4.5 xs:h-4.5" />
+                <Facebook size={18} className="xs:w-5 xs:h-5" />
               </a>
               <a
                 href={settings?.socials?.instagram || "#"}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 xs:w-10 xs:h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-gradient-to-tr hover:from-[#f09433] hover:via-[#dc2743] hover:to-[#bc1888] hover:text-white hover:border-transparent hover:scale-110 active:scale-95 transition-all duration-300"
+                className="w-11 h-11 xs:w-12 xs:h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-300 hover:bg-gradient-to-tr hover:from-[#f09433] hover:via-[#dc2743] hover:to-[#bc1888] hover:text-white hover:border-transparent hover:scale-110 active:scale-95 transition-all duration-300"
                 aria-label="Instagram"
               >
-                <Instagram size={16} className="xs:w-4.5 xs:h-4.5" />
+                <Instagram size={18} className="xs:w-5 xs:h-5" />
               </a>
               <a
                 href={settings?.socials?.tiktok || "#"}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 xs:w-10 xs:h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-black hover:text-white hover:border-white/20 hover:scale-110 active:scale-95 transition-all duration-300"
+                className="w-11 h-11 xs:w-12 xs:h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-300 hover:bg-black hover:text-white hover:border-white/20 hover:scale-110 active:scale-95 transition-all duration-300"
                 aria-label="TikTok"
               >
-                <Music2 size={16} className="xs:w-4.5 xs:h-4.5" />
+                <Music2 size={18} className="xs:w-5 xs:h-5" />
               </a>
             </div>
           </div>
@@ -130,7 +130,7 @@ export function Footer() {
                 { name: 'Contact Us', path: '/contact' },
               ].map((link) => (
                 <li key={link.name}>
-                  <Link href={link.path} className="group flex items-center text-xs xs:text-sm text-gray-400 hover:text-gold transition-colors">
+                  <Link href={link.path} className="group flex items-center py-1 text-xs xs:text-sm text-gray-300 hover:text-gold transition-colors">
                     <ArrowRight size={14} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-gold mr-2 hidden xs:block" />
                     <span className="group-hover:translate-x-1 transition-transform duration-300">{link.name}</span>
                   </Link>
@@ -148,7 +148,7 @@ export function Footer() {
                 const href = isSpecial ? '/deals' : `/category/${cat.slug}`;
                 return (
                   <li key={cat.slug}>
-                    <Link href={href} className={`group flex items-center text-xs xs:text-sm transition-colors ${isSpecial ? 'text-gold font-semibold' : 'text-gray-400 hover:text-gold'}`}>
+                    <Link href={href} className={`group flex items-center py-1 text-xs xs:text-sm transition-colors ${isSpecial ? 'text-gold font-semibold' : 'text-gray-300 hover:text-gold'}`}>
                       <ArrowRight size={14} className={`opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 mr-2 hidden xs:block ${isSpecial ? 'text-gold opacity-100 translate-x-0' : 'text-gold'}`} />
                       <span className="group-hover:translate-x-1 transition-transform duration-300">{cat.name}</span>
                     </Link>
@@ -168,7 +168,7 @@ export function Footer() {
                 </div>
                 <div className="min-w-0">
                   <p className="text-xs xs:text-sm text-white font-medium mb-1">Location</p>
-                  <p className="text-xs xs:text-sm text-gray-400 leading-relaxed mb-2 break-words">Karachi, Pakistan</p>
+                  <p className="text-xs xs:text-sm text-gray-300 leading-relaxed mb-2 break-words">Karachi, Pakistan</p>
                   <button onClick={handleChangeArea} className="text-[10px] xs:text-xs font-bold text-gold hover:text-white uppercase tracking-wider transition-colors border-b border-gold/30 hover:border-white pb-0.5">
                     Change Area
                   </button>
@@ -180,8 +180,8 @@ export function Footer() {
                 </div>
                 <div className="min-w-0">
                   <p className="text-xs xs:text-sm text-white font-medium mb-1">Phone</p>
-                  <a href={`tel:${settings?.contact?.phone || '0347-5658761'}`} className="block text-xs xs:text-sm text-gray-400 hover:text-gold transition-colors mb-0.5 break-words">{settings?.contact?.phone || '0347-5658761'}</a>
-                  <a href={`https://wa.me/${settings?.contact?.whatsapp || '923475658761'}`} className="block text-xs xs:text-sm text-[#25D366] hover:text-white transition-colors">WhatsApp Us</a>
+                  <a href={`tel:${settings?.contact?.phone || '0347-5658761'}`} className="block py-1 text-xs xs:text-sm text-gray-300 hover:text-gold transition-colors mb-0.5 break-words">{settings?.contact?.phone || '0347-5658761'}</a>
+                  <a href={`https://wa.me/${settings?.contact?.whatsapp || '923475658761'}`} className="block py-1 text-xs xs:text-sm text-[#25D366] hover:text-white transition-colors">WhatsApp Us</a>
                 </div>
               </li>
             </ul>
@@ -190,8 +190,8 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div className="relative border-t border-white/10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-gray-500 tracking-wide">
-            &copy; {new Date().getFullYear()} <span className="text-gray-300 font-medium tracking-normal">Tawakkal Paint House</span>. All Rights Reserved.
+          <p className="text-xs text-gray-400 tracking-wide">
+            &copy; {new Date().getFullYear()} <span className="text-gray-200 font-medium tracking-normal">Tawakkal Paint House</span>. All Rights Reserved.
           </p>
           
           <button 
@@ -202,7 +202,7 @@ export function Footer() {
             <ChevronUp size={20} className="group-hover:-translate-y-0.5 transition-transform duration-300" />
           </button>
 
-          <p className="text-xs text-gray-500 tracking-wide flex items-center gap-1.5">
+          <p className="text-xs text-gray-400 tracking-wide flex items-center gap-1.5">
             Made by <span className="text-gold font-semibold">Zenwebai</span>
           </p>
         </div>

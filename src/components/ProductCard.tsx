@@ -151,6 +151,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
                   <button
                     onClick={(e) => { e.preventDefault(); setQuantity(q => Math.max(1, q - 1)); }}
                     className="w-6 h-6 rounded bg-white border border-gray-200 flex items-center justify-center text-navy hover:bg-gold hover:text-white transition-all active:scale-95"
+                    aria-label="Decrease quantity"
                   >
                     <Minus size={12} />
                   </button>
@@ -158,6 +159,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
                   <button
                     onClick={(e) => { e.preventDefault(); setQuantity(q => q + 1); }}
                     className="w-6 h-6 rounded bg-white border border-gray-200 flex items-center justify-center text-navy hover:bg-gold hover:text-white transition-all active:scale-95"
+                    aria-label="Increase quantity"
                   >
                     <Plus size={12} />
                   </button>
@@ -206,6 +208,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
                   target="_blank"
                   className="w-10 flex items-center justify-center rounded-lg border-2 border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-all shadow-sm"
                   title="Inquiry"
+                  aria-label="Inquiry on WhatsApp"
                 >
                   <MessageCircle size={16} />
                 </Link>
@@ -232,6 +235,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
                 }}
                 className="absolute -top-12 right-0 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-[10px] font-bold shadow-lg animate-pulse border-2 border-white"
                 title="How to get more credit?"
+                aria-label="How to get more credit?"
               >
                 ?
               </button>

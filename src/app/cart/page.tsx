@@ -159,6 +159,7 @@ export default function CartPage() {
                           <button
                             onClick={() => updateQuantity(item.id, item.quantity - 1)}
                             className="w-7 h-7 xs:w-8 xs:h-8 rounded-lg bg-gray-100 flex items-center justify-center hover:bg-gold-pale transition-colors"
+                            aria-label="Decrease quantity"
                           >
                             <Minus size={14} className="xs:w-4 xs:h-4" />
                           </button>
@@ -171,6 +172,7 @@ export default function CartPage() {
                                 ? 'bg-gray-100 hover:bg-gold-pale'
                                 : 'bg-gray-100 opacity-40 cursor-not-allowed'
                             }`}
+                            aria-label="Increase quantity"
                           >
                             <Plus size={14} className="xs:w-4 xs:h-4" />
                           </button>

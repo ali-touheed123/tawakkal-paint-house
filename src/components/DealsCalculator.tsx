@@ -155,7 +155,7 @@ export function DealsCalculator() {
                         <div className="space-y-4 w-full">
                             <h3 className="font-bold text-gray-600 uppercase tracking-wider text-xs sm:text-sm lg:text-right">Service Type</h3>
                             <label className="flex items-center gap-3 sm:gap-4 cursor-pointer p-3 sm:p-4 bg-white rounded-xl border border-gray-200 hover:border-gold transition-colors w-full">
-                                <div className={`p-2 sm:p-3 rounded-full flex-shrink-0 ${withLabour ? 'bg-gold/10 text-gold' : 'bg-gray-100 text-gray-600'}`}>
+                                <div className={`p-2 sm:p-3 rounded-full flex-shrink-0 ${withLabour ? 'bg-amber-50 text-amber-700' : 'bg-gray-100 text-gray-600'}`}>
                                     <HardHat className="w-5 h-5 sm:w-6 sm:h-6" />
                                 </div>
                                 <div className="flex-1 min-w-0">
@@ -177,7 +177,7 @@ export function DealsCalculator() {
                             </label>
 
                             <label className="flex items-center gap-3 sm:gap-4 cursor-pointer p-3 sm:p-4 bg-white rounded-xl border border-gray-200 hover:border-gold transition-colors w-full">
-                                <div className={`p-2 sm:p-3 rounded-full flex-shrink-0 ${withVisit ? 'bg-gold/10 text-gold' : 'bg-gray-100 text-gray-600'}`}>
+                                <div className={`p-2 sm:p-3 rounded-full flex-shrink-0 ${withVisit ? 'bg-amber-50 text-amber-700' : 'bg-gray-100 text-gray-600'}`}>
                                     <MapPin className="w-5 h-5 sm:w-6 sm:h-6" />
                                 </div>
                                 <div className="flex-1 min-w-0">

@@ -378,7 +378,7 @@ export function Navbar() {
                                                   <Link
                                                     key={brand.slug}
                                                     href={`/category/${cat.slug}?brand=${brand.name}`}
-                                                    className="block py-2 text-xs text-white/40 hover:text-gold"
+                                                    className="block py-2 text-xs text-white/70 hover:text-gold"
                                                     onClick={() => setMobileMenuOpen(false)}
                                                   >
                                                     {brand.name}
@@ -389,7 +389,7 @@ export function Navbar() {
                                                   <Link
                                                     key={sub.slug}
                                                     href={`/category/${cat.slug}?sub=${sub.slug}`}
-                                                    className="block py-2 text-xs text-white/40 hover:text-gold"
+                                                    className="block py-2 text-xs text-white/70 hover:text-gold"
                                                     onClick={() => setMobileMenuOpen(false)}
                                                   >
                                                     {sub.name}
