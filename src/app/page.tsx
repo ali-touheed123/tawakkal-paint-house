@@ -89,6 +89,8 @@ export default function HomePage() {
               alt="Hero Background"
               fill
               priority
+              loading="eager"
+              decoding="sync"
               fetchPriority="high"
               sizes="100vw"
               quality={70}
