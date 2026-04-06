@@ -85,7 +85,7 @@ export default function HomePage() {
             style={{ transform: 'translateY(0)' }}
           >
             <Image
-              src={settings?.banners?.[0] || '/home-hero.png'}
+              src={settings?.banners?.[0] || '/home-hero.jpeg'}
               alt="Hero Background"
               fill
               priority
