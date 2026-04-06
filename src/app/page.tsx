@@ -5,15 +5,18 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowRight, MessageCircle, Calculator, Palette, CheckCircle, Award, Star, Truck, Users, Clock, Sparkles, Gift, Wrench, ShoppingCart } from 'lucide-react';
-import { PaintCalculator } from '@/components/PaintCalculator';
-import { FAQ } from '@/components/FAQ';
-import { TestimonialSlider } from '@/components/TestimonialSlider';
-import { ReviewForm } from '@/components/ReviewForm';
-import { ProductCard } from '@/components/ProductCard';
-import { BrandSection } from '@/components/BrandSection';
 import { createClient } from '@/lib/supabase/client';
 import { useSettings } from '@/lib/hooks/useSettings';
-import { ValuePromotion } from '@/components/ValuePromotion';
+import dynamic from 'next/dynamic';
+
+const PaintCalculator = dynamic(() => import('@/components/PaintCalculator').then(mod => mod.PaintCalculator), { ssr: true });
+const FAQ = dynamic(() => import('@/components/FAQ').then(mod => mod.FAQ), { ssr: true });
+const TestimonialSlider = dynamic(() => import('@/components/TestimonialSlider').then(mod => mod.TestimonialSlider), { ssr: true });
+const ReviewForm = dynamic(() => import('@/components/ReviewForm').then(mod => mod.ReviewForm), { ssr: true });
+const BrandSection = dynamic(() => import('@/components/BrandSection').then(mod => mod.BrandSection), { ssr: true });
+const ValuePromotion = dynamic(() => import('@/components/ValuePromotion').then(mod => mod.ValuePromotion), { ssr: true });
+
+import { ProductCard } from '@/components/ProductCard';
 import { Product, Category } from '@/types';
 
 const staticDealsCategory = {
@@ -93,7 +96,7 @@ export default function HomePage() {
               decoding="sync"
               fetchPriority="high"
               sizes="100vw"
-              quality={65}
+              quality={50}
               className="object-cover object-center"
             />
           </div>
