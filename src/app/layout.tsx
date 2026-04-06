@@ -7,6 +7,19 @@ import { SearchOverlay } from "@/components/SearchOverlay";
 import { CartToast } from "@/components/CartToast";
 import { CartSyncListener } from "@/components/CartSyncListener";
 import { LiveOrderToast } from "@/components/LiveOrderToast";
+import { Playfair_Display, DM_Sans } from 'next/font/google';
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-playfair',
+});
+
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-dm-sans',
+});
 
 export const metadata: Metadata = {
   title: "Tawakkal Paint House | Premium Paints in Karachi",
@@ -78,11 +91,8 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en">
+    <html lang="en" className={`${playfair.variable} ${dmSans.variable}`}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

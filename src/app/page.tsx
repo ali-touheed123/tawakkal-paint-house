@@ -93,7 +93,7 @@ export default function HomePage() {
               decoding="sync"
               fetchPriority="high"
               sizes="100vw"
-              quality={70}
+              quality={65}
               className="object-cover object-center"
             />
           </div>

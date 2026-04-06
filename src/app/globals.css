@@ -25,8 +25,8 @@
   --color-off-white: var(--off-white);
   --color-gray: var(--gray);
   
-  --font-heading: 'Playfair Display', serif;
-  --font-body: 'DM Sans', sans-serif;
+  --font-heading: var(--font-playfair), serif;
+  --font-body: var(--font-dm-sans), sans-serif;
 }
 
 * {
