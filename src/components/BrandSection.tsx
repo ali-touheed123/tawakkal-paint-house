@@ -58,9 +58,9 @@ export function BrandSection() {
                                         <Image
                                             src={logo.url}
                                             alt={logo.name}
-                                            width={120}
-                                            height={50}
-                                            sizes="120px"
+                                            width={100}
+                                            height={40}
+                                            sizes="(max-width: 768px) 60px, 100px"
                                             className={`h-10 md:h-14 w-auto object-contain pointer-events-none drop-shadow-sm ${logo.name === 'Dior' ? 'scale-125 p-1' : ''}`}
                                         />
                                     ) : (
