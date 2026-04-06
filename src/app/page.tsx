@@ -90,6 +90,7 @@ export default function HomePage() {
               fill
               priority
               fetchPriority="high"
+              sizes="100vw"
               className="object-cover object-center"
             />
           </div>

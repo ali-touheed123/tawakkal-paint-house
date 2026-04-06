@@ -71,6 +71,7 @@ export function Footer() {
                 alt="Tawakkal Paint House"
                 width={120}
                 height={48}
+                sizes="(max-width: 768px) 100px, 120px"
                 className="h-10 xs:h-12 w-auto drop-shadow-lg"
               />
             </Link>

@@ -7,6 +7,7 @@ import { SearchOverlay } from "@/components/SearchOverlay";
 import { CartToast } from "@/components/CartToast";
 import { CartSyncListener } from "@/components/CartSyncListener";
 import { LiveOrderToast } from "@/components/LiveOrderToast";
+import { LazyMotion, domAnimation } from "framer-motion";
 
 export const metadata: Metadata = {
   title: "Tawakkal Paint House | Premium Paints in Karachi",
@@ -89,16 +90,18 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
-        <LocationPopup />
-        <Navbar />
-        <SearchOverlay />
-        <main className="min-h-screen">
-          {children}
-        </main>
-        <Footer />
-        <CartToast />
-        <CartSyncListener />
-        <LiveOrderToast />
+        <LazyMotion features={domAnimation}>
+          <LocationPopup />
+          <Navbar />
+          <SearchOverlay />
+          <main className="min-h-screen">
+            {children}
+          </main>
+          <Footer />
+          <CartToast />
+          <CartSyncListener />
+          <LiveOrderToast />
+        </LazyMotion>
       </body>
     </html>
   );

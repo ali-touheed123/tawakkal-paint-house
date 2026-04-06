@@ -84,6 +84,7 @@ export function LocationPopup() {
                   alt="Tawakkal Paint House" 
                   width={250}
                   height={80}
+                  sizes="(max-width: 768px) 200px, 250px"
                   className="h-16 w-auto mx-auto mb-3 object-contain"
                 />
                 <h2 className="font-heading text-2xl md:text-3xl text-white font-bold">
