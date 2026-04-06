@@ -134,6 +134,7 @@ export function ReviewForm() {
                                     onMouseLeave={() => setHoverRating(0)}
                                     onClick={() => setRating(star)}
                                     className="p-1 transition-transform active:scale-90 hover:scale-110"
+                                    aria-label={`Rate ${star} stars`}
                                 >
                                     <Star 
                                         size={48} 

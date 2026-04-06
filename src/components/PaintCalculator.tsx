@@ -194,6 +194,7 @@ export function PaintCalculator({ compact = false }: PaintCalculatorProps) {
               <button
                 onClick={() => setRooms(Math.max(1, rooms - 1))}
                 className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center hover:bg-gold-pale transition-colors"
+                aria-label="Decrease rooms"
               >
                 <Minus size={18} />
               </button>
@@ -201,6 +202,7 @@ export function PaintCalculator({ compact = false }: PaintCalculatorProps) {
               <button
                 onClick={() => setRooms(rooms + 1)}
                 className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center hover:bg-gold-pale transition-colors"
+                aria-label="Increase rooms"
               >
                 <Plus size={18} />
               </button>
@@ -221,6 +223,7 @@ export function PaintCalculator({ compact = false }: PaintCalculatorProps) {
                     onClick={() => setNumDoors(Math.max(0, numDoors - 1))}
                     className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${numDoors > 0 ? 'bg-white text-navy shadow-sm hover:bg-gold-pale hover:text-gold' : 'text-gray-300 cursor-not-allowed'
                       }`}
+                    aria-label="Decrease doors"
                   >
                     <Minus size={14} />
                   </button>
@@ -232,6 +235,7 @@ export function PaintCalculator({ compact = false }: PaintCalculatorProps) {
                       setNumDoors(numDoors + 1);
                     }}
                     className="w-8 h-8 rounded-lg bg-white shadow-sm flex items-center justify-center hover:bg-gold-pale hover:text-gold transition-colors text-navy"
+                    aria-label="Increase doors"
                   >
                     <Plus size={14} />
                   </button>
@@ -256,6 +260,7 @@ export function PaintCalculator({ compact = false }: PaintCalculatorProps) {
                     onClick={() => setNumWindows(Math.max(0, numWindows - 1))}
                     className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${numWindows > 0 ? 'bg-white text-navy shadow-sm hover:bg-gold-pale hover:text-gold' : 'text-gray-300 cursor-not-allowed'
                       }`}
+                    aria-label="Decrease windows"
                   >
                     <Minus size={14} />
                   </button>
@@ -267,6 +272,7 @@ export function PaintCalculator({ compact = false }: PaintCalculatorProps) {
                       setNumWindows(numWindows + 1);
                     }}
                     className="w-8 h-8 rounded-lg bg-white shadow-sm flex items-center justify-center hover:bg-gold-pale hover:text-gold transition-colors text-navy"
+                    aria-label="Increase windows"
                   >
                     <Plus size={14} />
                   </button>

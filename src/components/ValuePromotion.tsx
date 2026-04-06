@@ -45,7 +45,7 @@ export function ValuePromotion() {
 
             {/* Service Mode Card */}
             <div className="relative group bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition-all duration-300">
-                <div className="absolute top-3 right-3 bg-green-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full shadow-lg uppercase tracking-tighter">
+                <div className="absolute top-3 right-3 bg-green-700 text-white text-[10px] font-black px-2 py-0.5 rounded-full shadow-lg uppercase tracking-tighter">
                     Recommended
                 </div>
                 <div className="flex items-start gap-4">

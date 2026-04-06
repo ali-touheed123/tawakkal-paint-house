@@ -135,7 +135,7 @@ export function TestimonialSlider() {
                                     </p>
                                     <div>
                                         <div className="flex items-center gap-2">
-                                            <h4 className="text-xl font-bold text-navy">{current.user_name}</h4>
+                                            <h3 className="text-xl font-bold text-navy">{current.user_name}</h3>
                                              {current.is_shop_review && (
                                                 <span className="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full uppercase tracking-widest border border-amber-100">
                                                     Shop Visit
