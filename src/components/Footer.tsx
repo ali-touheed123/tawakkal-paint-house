@@ -69,10 +69,11 @@ export function Footer() {
               <Image
                 src={settings?.logo || "/logo.png"}
                 alt="Tawakkal Paint House"
-                width={120}
-                height={48}
-                sizes="(max-width: 768px) 100px, 120px"
-                className="h-10 xs:h-12 w-auto drop-shadow-lg"
+                width={250}
+                height={80}
+                sizes="(max-width: 768px) 200px, 250px"
+                loading="lazy"
+                className="h-16 w-auto mx-auto mb-3 object-contain"
               />
             </Link>
             <p className="text-gray-300 text-sm leading-relaxed pr-4 max-w-sm">

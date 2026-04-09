@@ -13,8 +13,9 @@ const PaintCalculator = dynamic(() => import('@/components/PaintCalculator').the
 const FAQ = dynamic(() => import('@/components/FAQ').then(mod => mod.FAQ), { ssr: false });
 const TestimonialSlider = dynamic(() => import('@/components/TestimonialSlider').then(mod => mod.TestimonialSlider), { ssr: false });
 const ReviewForm = dynamic(() => import('@/components/ReviewForm').then(mod => mod.ReviewForm), { ssr: false });
-const BrandSection = dynamic(() => import('@/components/BrandSection').then(mod => mod.BrandSection), { ssr: false });
-const ValuePromotion = dynamic(() => import('@/components/ValuePromotion').then(mod => mod.ValuePromotion), { ssr: false });
+// BrandSection & ValuePromotion are above-fold — ssr:true prevents layout shift
+const BrandSection = dynamic(() => import('@/components/BrandSection').then(mod => mod.BrandSection), { ssr: true });
+const ValuePromotion = dynamic(() => import('@/components/ValuePromotion').then(mod => mod.ValuePromotion), { ssr: true });
 
 import { ProductCard } from '@/components/ProductCard';
 import { Product, Category } from '@/types';
