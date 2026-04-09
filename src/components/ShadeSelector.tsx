@@ -2,10 +2,10 @@
 
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check } from 'lucide-react';
+import { Check, Search, Info } from 'lucide-react';
 import Image from 'next/image';
 
-import { Shade, ItemSize } from '@/types';
+import { Shade } from '@/types';
 
 interface ShadeSelectorProps {
     shades: Shade[];
@@ -13,24 +13,27 @@ interface ShadeSelectorProps {
     onSelect: (shade: Shade) => void;
 }
 
-// Helper to determine if a color is light or dark
-function isLightColor(hex: string) {
-    const r = parseInt(hex.slice(1, 3), 16);
-    const g = parseInt(hex.slice(3, 5), 16);
-    const b = parseInt(hex.slice(5, 7), 16);
-    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-    return brightness > 155;
-}
-
 export function ShadeSelector({ shades, selectedSize, onSelect }: ShadeSelectorProps) {
     const [selectedShadeId, setSelectedShadeId] = useState<string | null>(null);
+    const [searchQuery, setSearchQuery] = useState('');
 
     const filteredShades = useMemo(() => {
+        let result = shades;
+        
         if (selectedSize === 'drum') {
-            return shades.filter(s => s.is_drum_available);
+            result = result.filter(s => s.is_drum_available);
         }
-        return shades;
-    }, [shades, selectedSize]);
+        
+        if (searchQuery.trim()) {
+            const query = searchQuery.toLowerCase();
+            result = result.filter(s => 
+                s.name.toLowerCase().includes(query) || 
+                s.code.toLowerCase().includes(query)
+            );
+        }
+        
+        return result;
+    }, [shades, selectedSize, searchQuery]);
 
     // Ensure selected shade stays valid after filtering
     useMemo(() => {
@@ -49,24 +52,49 @@ export function ShadeSelector({ shades, selectedSize, onSelect }: ShadeSelectorP
 
     return (
         <div className="space-y-6">
-            <div className="flex items-center justify-between mb-4">
-                <div className="flex items-baseline gap-2">
-                    <h3 className="text-sm font-bold text-navy uppercase tracking-widest">
-                        {isImageBased ? 'Choose Shade' : 'Choose Color'}
-                    </h3>
-                    {selectedShade && (
-                        <span className="text-sm font-medium text-gray-500">: {selectedShade.name}</span>
+            <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 flex items-start gap-3">
+                <Info className="text-blue-500 shrink-0 mt-0.5" size={20} />
+                <div className="text-sm text-blue-900 leading-relaxed font-medium">
+                    <p className="font-bold mb-1">How to choose your color:</p>
+                    <ol className="list-decimal pl-4 space-y-1">
+                        <li>Choose your favorite color from the official printed shade card.</li>
+                        <li>Search and select that shade's name or code from the list below.</li>
+                        <li>Add it to your cart!</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div className="space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div className="flex items-baseline gap-2">
+                        <h3 className="text-sm font-bold text-navy uppercase tracking-widest">
+                            {isImageBased ? 'Choose Shade' : 'Select Shade Name'}
+                        </h3>
+                        {selectedShade && (
+                            <span className="text-sm font-bold text-blue-600">: {selectedShade.name} ({selectedShade.code})</span>
+                        )}
+                    </div>
+                    {selectedSize === 'drum' && (
+                        <span className="text-[10px] font-bold text-gold uppercase bg-gold/10 px-2 flex-shrink-0 py-1 rounded">
+                            Only 3 Shades for Drum
+                        </span>
                     )}
                 </div>
-                {selectedSize === 'drum' && (
-                    <span className="text-[10px] font-bold text-gold uppercase bg-gold/10 px-2 py-1 rounded">
-                        Only 3 Shades for Drum
-                    </span>
-                )}
+
+                <div className="relative">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                    <input
+                        type="text"
+                        placeholder="Search shade name or code..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy text-sm font-medium transition-all"
+                    />
+                </div>
             </div>
 
             {isImageBased ? (
-                /* Image-based swatches — larger rectangular tiles */
+                /* Image-based swatches — keep as is for actual textures */
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-h-[400px] overflow-y-auto pr-2 scrollbar-hide py-2">
                     <AnimatePresence mode="popLayout">
                         {filteredShades.map((shade) => (
@@ -82,7 +110,6 @@ export function ShadeSelector({ shades, selectedSize, onSelect }: ShadeSelectorP
                                     : 'border-transparent hover:border-navy/30'
                                     }`}
                                 title={`${shade.name} (${shade.code})`}
-                                aria-label={`Select shade: ${shade.name} (${shade.code})`}
                                 aria-pressed={selectedShadeId === shade.id}
                             >
                                 <div className="w-full aspect-square relative">
@@ -109,64 +136,40 @@ export function ShadeSelector({ shades, selectedSize, onSelect }: ShadeSelectorP
                     </AnimatePresence>
                 </div>
             ) : (
-                /* Hex color swatches — original round circles */
-                <>
-                    <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 gap-2.5 max-h-[400px] overflow-y-auto pr-2 scrollbar-hide py-2 aspect-square sm:aspect-auto">
-                        <AnimatePresence mode="popLayout">
-                            {filteredShades.map((shade) => (
+                /* Text Pills — replacing hex color circles */
+                <div className="flex flex-wrap gap-2.5 max-h-[400px] overflow-y-auto pr-2 scrollbar-hide py-2">
+                    <AnimatePresence mode="popLayout">
+                        {filteredShades.length > 0 ? (
+                            filteredShades.map((shade) => (
                                 <motion.button
                                     key={shade.id}
                                     layout
-                                    initial={{ opacity: 0, scale: 0.8 }}
+                                    initial={{ opacity: 0, scale: 0.95 }}
                                     animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.8 }}
+                                    exit={{ opacity: 0, scale: 0.95 }}
                                     onClick={() => handleSelect(shade)}
-                                    className={`relative aspect-square rounded-full border-2 transition-all p-0.5 ${selectedShadeId === shade.id
-                                        ? 'border-navy shadow-lg scale-110 z-10'
-                                        : 'border-transparent hover:border-navy/20'
-                                        }`}
-                                    title={`${shade.name} (${shade.code})`}
-                                    aria-label={`Select color: ${shade.name} (${shade.code})`}
-                                    aria-pressed={selectedShadeId === shade.id}
+                                    className={`relative flex items-center gap-2 px-4 py-2.5 rounded-full border transition-all text-sm font-bold ${
+                                        selectedShadeId === shade.id
+                                            ? 'bg-navy border-navy text-white shadow-md'
+                                            : 'bg-white border-gray-200 text-gray-700 hover:border-navy hover:text-navy hover:bg-gray-50'
+                                    }`}
                                 >
-                                    <div
-                                        className="w-full h-full rounded-full flex items-center justify-center"
-                                        style={{ backgroundColor: shade.hex }}
-                                    >
-                                        {selectedShadeId === shade.id && (
-                                            <Check
-                                                size={12}
-                                                className={`drop-shadow-md ${isLightColor(shade.hex) ? 'text-navy' : 'text-white'}`}
-                                            />
-                                        )}
-                                    </div>
+                                    <span>{shade.name}</span>
+                                    <span className={`px-2 py-0.5 rounded text-[10px] font-bold tracking-wider ${
+                                        selectedShadeId === shade.id 
+                                            ? 'bg-white/20 text-white' 
+                                            : 'bg-gray-100 text-gray-500'
+                                    }`}>
+                                        {shade.code}
+                                    </span>
+                                    {selectedShadeId === shade.id && <Check size={14} className="text-white ml-1" />}
                                 </motion.button>
-                            ))}
-                        </AnimatePresence>
-                    </div>
-
-                    <AnimatePresence>
-                        {selectedShade && (
-                            <motion.div
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: 10 }}
-                                className="bg-gray-50 rounded-xl p-4 border border-gray-100 shadow-sm"
-                            >
-                                <div className="flex items-center gap-4">
-                                    <div
-                                        className="w-12 h-12 rounded-lg border border-gray-200 shadow-inner"
-                                        style={{ backgroundColor: selectedShade.hex }}
-                                    />
-                                    <div>
-                                        <p className="text-sm font-bold text-navy">{selectedShade.name}</p>
-                                        <p className="text-xs text-gray-500 font-medium">{selectedShade.code}</p>
-                                    </div>
-                                </div>
-                            </motion.div>
+                            ))
+                        ) : (
+                            <p className="text-sm text-gray-500 py-4 font-medium w-full text-center">No shades found matching your search.</p>
                         )}
                     </AnimatePresence>
-                </>
+                </div>
             )}
         </div>
     );
