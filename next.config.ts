@@ -7,7 +7,6 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react'],
   },
-  transpilePackages: ['lucide-react', 'framer-motion'],
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
