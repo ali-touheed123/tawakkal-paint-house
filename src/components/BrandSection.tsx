@@ -55,18 +55,15 @@ export function BrandSection() {
                                     className="shrink-0 grayscale hover:grayscale-0 transition-all duration-500 opacity-50 hover:opacity-100 cursor-pointer"
                                 >
                                     {logo.url ? (
-                                        <div
-                                            className={`relative h-10 md:h-14 shrink-0 ${logo.name === 'Dior' ? 'w-14 md:w-20' : 'w-16 md:w-24'}`}
-                                        >
-                                            <Image
-                                                src={logo.url}
-                                                alt={logo.name}
-                                                fill
-                                                sizes="(max-width: 768px) 60px, 100px"
-                                                quality={60}
-                                                className="object-contain pointer-events-none drop-shadow-sm"
-                                            />
-                                        </div>
+                                        <Image
+                                            src={logo.url}
+                                            alt={logo.name}
+                                            width={100}
+                                            height={40}
+                                            sizes="(max-width: 768px) 60px, 100px"
+                                            quality={60}
+                                            className={`h-10 md:h-14 w-auto object-contain pointer-events-none drop-shadow-sm ${logo.name === 'Dior' ? 'scale-125 p-1' : ''}`}
+                                        />
                                     ) : (
                                         <span className="text-xl md:text-2xl font-black text-navy uppercase tracking-tighter whitespace-nowrap">
                                             {logo.name}

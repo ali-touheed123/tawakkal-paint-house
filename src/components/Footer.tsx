@@ -27,11 +27,11 @@ export function Footer() {
         .select('*')
         .eq('is_active', true)
         .order('name');
-      
+
       if (data) {
         const dbHasDeals = data.some((c: any) => c.slug === 'deals');
-        const finalCats = dbHasDeals 
-          ? data 
+        const finalCats = dbHasDeals
+          ? data
           : [...data, { name: 'Deals & Projects', slug: 'deals' }];
         setCategories(finalCats);
       }
@@ -55,25 +55,24 @@ export function Footer() {
     <footer className="bg-navy relative overflow-hidden pt-20 pb-8 text-gray-200 selection:bg-gold selection:text-navy">
       {/* Subtle top border accent */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-navy via-gold/50 to-navy opacity-50"></div>
-      
+
       {/* Decorative background blur */}
       <div className="absolute top-0 right-0 w-[250px] md:w-[500px] h-[250px] md:h-[500px] bg-gold/5 rounded-full blur-[80px] md:blur-[120px] pointer-events-none -translate-y-1/2" />
       <div className="absolute bottom-0 left-0 w-[250px] md:w-[500px] h-[250px] md:h-[500px] bg-blue-900/10 rounded-full blur-[80px] md:blur-[120px] pointer-events-none translate-y-1/2" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-10 xs:gap-8 lg:gap-8 mb-16">
-          
+
           {/* Column 1: Brand & Desc */}
           <div className="lg:pr-8 space-y-6 col-span-1 xs:col-span-2 lg:col-span-1">
             <Link href="/" className="inline-block">
               <Image
                 src={settings?.logo || "/logo.png"}
                 alt="Tawakkal Paint House"
-                width={250}
-                height={80}
-                sizes="(max-width: 768px) 200px, 250px"
-                loading="lazy"
-                className="h-16 w-auto mx-auto mb-3 object-contain"
+                width={120}
+                height={48}
+                sizes="(max-width: 768px) 100px, 120px"
+                className="h-10 xs:h-12 w-auto drop-shadow-lg"
               />
             </Link>
             <p className="text-gray-300 text-sm leading-relaxed pr-4 max-w-sm">
@@ -195,8 +194,8 @@ export function Footer() {
           <p className="text-xs text-gray-400 tracking-wide">
             &copy; {new Date().getFullYear()} <span className="text-gray-200 font-medium tracking-normal">Tawakkal Paint House</span>. All Rights Reserved.
           </p>
-          
-          <button 
+
+          <button
             onClick={scrollToTop}
             className="group absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-navy border border-white/10 hover:border-gold flex items-center justify-center transition-all duration-300 hover:-translate-y-1 shadow-xl text-gray-400 hover:text-gold"
             aria-label="Scroll to top"
