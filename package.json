@@ -28,13 +28,16 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
+    "sharp": "^0.34.5",
     "tailwindcss": "^4",
     "typescript": "^5"
   },
   "browserslist": [
-    "last 1 Chrome version",
-    "last 1 Safari version",
-    "last 1 Firefox version",
+    "chrome >= 100",
+    "safari >= 15.4",
+    "firefox >= 100",
+    "edge >= 100",
+    "> 0.5%",
     "not dead"
   ]
 }

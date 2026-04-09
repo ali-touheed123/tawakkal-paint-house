@@ -9,12 +9,12 @@ import { createClient } from '@/lib/supabase/client';
 import { useSettings } from '@/lib/hooks/useSettings';
 import dynamic from 'next/dynamic';
 
-const PaintCalculator = dynamic(() => import('@/components/PaintCalculator').then(mod => mod.PaintCalculator), { ssr: true });
-const FAQ = dynamic(() => import('@/components/FAQ').then(mod => mod.FAQ), { ssr: true });
-const TestimonialSlider = dynamic(() => import('@/components/TestimonialSlider').then(mod => mod.TestimonialSlider), { ssr: true });
-const ReviewForm = dynamic(() => import('@/components/ReviewForm').then(mod => mod.ReviewForm), { ssr: true });
-const BrandSection = dynamic(() => import('@/components/BrandSection').then(mod => mod.BrandSection), { ssr: true });
-const ValuePromotion = dynamic(() => import('@/components/ValuePromotion').then(mod => mod.ValuePromotion), { ssr: true });
+const PaintCalculator = dynamic(() => import('@/components/PaintCalculator').then(mod => mod.PaintCalculator), { ssr: false });
+const FAQ = dynamic(() => import('@/components/FAQ').then(mod => mod.FAQ), { ssr: false });
+const TestimonialSlider = dynamic(() => import('@/components/TestimonialSlider').then(mod => mod.TestimonialSlider), { ssr: false });
+const ReviewForm = dynamic(() => import('@/components/ReviewForm').then(mod => mod.ReviewForm), { ssr: false });
+const BrandSection = dynamic(() => import('@/components/BrandSection').then(mod => mod.BrandSection), { ssr: false });
+const ValuePromotion = dynamic(() => import('@/components/ValuePromotion').then(mod => mod.ValuePromotion), { ssr: false });
 
 import { ProductCard } from '@/components/ProductCard';
 import { Product, Category } from '@/types';
