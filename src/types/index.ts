@@ -248,7 +248,7 @@ export const KARACHI_AREAS = [
   'Super Highway',
   'Surjani Town',
   'Tariq Road',
-  'Teen Talwa'
+  'Teen Talwar'
 ] as const;
 
 export type KarachiArea = typeof KARACHI_AREAS[number];
