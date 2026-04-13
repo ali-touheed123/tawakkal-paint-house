@@ -110,7 +110,7 @@ export function TestimonialSlider() {
                                             </div>
                                         ) : (
                                             <Image 
-                                                src={current.media_url || "/images/placeholder.jpg"} 
+                                                src={current.media_url || "https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/images/visualizer/living-room-base.jpg"} 
                                                 alt={current.user_name}
                                                 fill
                                                 className="object-cover transition-transform duration-700 group-hover:scale-110"

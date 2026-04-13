@@ -253,7 +253,7 @@ export default function HomePage() {
                 className="group relative overflow-hidden rounded-2xl aspect-[16/9] md:aspect-[2/1]"
               >
                 <Image
-                  src={cat.image_url || cat.image || '/images/placeholder.jpg'}
+                  src={cat.image_url || cat.image || 'https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/images/categories/decorative.jpg'}
                   alt={cat.name}
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"

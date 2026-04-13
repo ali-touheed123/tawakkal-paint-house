@@ -117,72 +117,78 @@ export function ProductView({ initialSlug }: { initialSlug: string }) {
         const brand = product.brand;
 
         if (brand === 'Brighto') {
-            if (name === 'Brighto All Weather') return '/pdfs/brighto-all-weather.pdf';
-            if (name === 'Brighto Plastic Emulsion') return '/pdfs/brighto-plastic-emulsion.pdf';
-            if (name === 'Brighto Super Emulsion') return '/pdfs/brighto-super-emulsion.pdf';
-            if (name === 'Brighto Synthetic Enamel') return '/pdfs/brighto-synthetic-enamel.pdf';
-            if (name === 'Brighto Stain Free royal silky finish emulsion') return '/pdfs/brighto-stain-free.pdf';
+            const baseUrl = 'https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/pdfs/';
+            if (name === 'Brighto All Weather') return `${baseUrl}brighto-all-weather.pdf`;
+            if (name === 'Brighto Plastic Emulsion') return `${baseUrl}brighto-plastic-emulsion.pdf`;
+            if (name === 'Brighto Super Emulsion') return `${baseUrl}brighto-super-emulsion.pdf`;
+            if (name === 'Brighto Synthetic Enamel') return `${baseUrl}brighto-synthetic-enamel.pdf`;
+            if (name === 'Brighto Stain Free royal silky finish emulsion') return `${baseUrl}brighto-stain-free.pdf`;
         }
 
         if (brand === 'Diamond') {
-            if (name.toLowerCase().includes('ace weather defender')) return '/pdfs/diamond_ace_weather_defender.pdf';
-            if (name.toLowerCase().includes('overall plasticcoat emulsion')) return '/pdfs/diamond_overall_plasticcoat_emulsion.pdf';
-            if (name.toLowerCase().includes('ace acrylic plastic emulsion')) return '/pdfs/diamond_ace_acrylic_plastic_emulsion.pdf';
-            if (name.toLowerCase().includes('ace matt enamel')) return '/pdfs/diamond_ace_matt_enamel.pdf';
-            if (name.toLowerCase().includes('ace super gloss enamel')) return '/pdfs/diamond_ace_super_gloss_enamel.pdf';
-            if (name.toLowerCase().includes('overall super emulsion')) return '/pdfs/diamond_overall_super_emulsion.pdf';
-            if (name.toLowerCase().includes('overall high gloss enamel')) return '/pdfs/diamond_overall_high_gloss_enamel.pdf';
-            if (name.toLowerCase().includes('overall weather max')) return '/pdfs/diamond_overall_weather_max.pdf';
-            if (name.toLowerCase().includes('everlast high gloss enamel')) return '/pdfs/diamond_everlast_high_gloss_enamel.pdf';
-            if (name.toLowerCase().includes('ace durasilk emulsion')) return '/pdfs/diamond_ace_durasilk_emulsion.pdf';
-            if (name.toLowerCase().includes('value emulsion')) return '/pdfs/diamond_value_emulsion.pdf';
-            if (name.toLowerCase().includes('overall matt enamel')) return '/pdfs/diamond_overall_matt_enamel.pdf';
-            if (name.toLowerCase().includes('aquamax')) return '/pdfs/diamond_overall_aquamax_water_matt.pdf';
-            if (name.toLowerCase().includes('timberlac wood stain')) return '/pdfs/diamond_Ace_Timberlac_Wood_Stains.pdf';
+            const baseUrl = 'https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/pdfs/';
+            if (name.toLowerCase().includes('ace weather defender')) return `${baseUrl}diamond_ace_weather_defender.pdf`;
+            if (name.toLowerCase().includes('overall plasticcoat emulsion')) return `${baseUrl}diamond_overall_plasticcoat_emulsion.pdf`;
+            if (name.toLowerCase().includes('ace acrylic plastic emulsion')) return `${baseUrl}diamond_ace_acrylic_plastic_emulsion.pdf`;
+            if (name.toLowerCase().includes('ace matt enamel')) return `${baseUrl}diamond_ace_matt_enamel.pdf`;
+            if (name.toLowerCase().includes('ace super gloss enamel')) return `${baseUrl}diamond_ace_super_gloss_enamel.pdf`;
+            if (name.toLowerCase().includes('overall super emulsion')) return `${baseUrl}diamond_overall_super_emulsion.pdf`;
+            if (name.toLowerCase().includes('overall high gloss enamel')) return `${baseUrl}diamond_overall_high_gloss_enamel.pdf`;
+            if (name.toLowerCase().includes('overall weather max')) return `${baseUrl}diamond_overall_weather_max.pdf`;
+            if (name.toLowerCase().includes('everlast high gloss enamel')) return `${baseUrl}diamond_everlast_high_gloss_enamel.pdf`;
+            if (name.toLowerCase().includes('ace durasilk emulsion')) return `${baseUrl}diamond_ace_durasilk_emulsion.pdf`;
+            if (name.toLowerCase().includes('value emulsion')) return `${baseUrl}diamond_value_emulsion.pdf`;
+            if (name.toLowerCase().includes('overall matt enamel')) return `${baseUrl}diamond_overall_matt_enamel.pdf`;
+            if (name.toLowerCase().includes('aquamax')) return `${baseUrl}diamond_overall_aquamax_water_matt.pdf`;
+            if (name.toLowerCase().includes('timberlac wood stain')) return `${baseUrl}diamond_Ace_Timberlac_Wood_Stains.pdf`;
         }
 
         if (brand === 'Saasi') {
-            if (name.includes('Hydrous Matt Finish')) return '/pdfs/saasi-hydrous-matt-finish.pdf';
-            if (name === 'Matt Enamel') return '/pdfs/saasi-matt-enamel.pdf';
-            if (name === 'Plastic Emulsion') return '/pdfs/saasi-plastic-emulsion.pdf';
-            if (name === 'Super Gloss Enamel') return '/pdfs/saasi-super-gloss-enamel.pdf';
-            if (name === 'Weather Safe') return '/pdfs/saasi-weather-safe.pdf';
+            const baseUrl = 'https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/pdfs/';
+            if (name.includes('Hydrous Matt Finish')) return `${baseUrl}saasi-hydrous-matt-finish.pdf`;
+            if (name === 'Matt Enamel') return `${baseUrl}saasi-matt-enamel.pdf`;
+            if (name === 'Plastic Emulsion') return `${baseUrl}saasi-plastic-emulsion.pdf`;
+            if (name === 'Super Gloss Enamel') return `${baseUrl}saasi-super-gloss-enamel.pdf`;
+            if (name === 'Weather Safe') return `${baseUrl}saasi-weather-safe.pdf`;
         }
 
         if (brand === "Gobi's" || brand === 'Gobis') {
-            if (name === 'Gobis Industrial Enamel Gloss Finish' || name === 'Industrial Enamel Gloss Finish') return '/pdfs/gobis-industrial-enamel.pdf';
-            if (name?.toLowerCase().includes('stoving paint')) return '/pdfs/gobis-stoving-paint.pdf';
-            if (name?.toLowerCase().includes('carman series')) return '/pdfs/gobis-carman-series.pdf';
-            if (name?.toLowerCase().includes('silverline enamel')) return '/pdfs/gobis-silverline-enamel.pdf';
-            if (name?.toLowerCase().includes('silverline emulsion')) return '/pdfs/gobis-silverline-emulsion.pdf';
-            if (name?.toLowerCase().includes('gold') && name?.toLowerCase().includes('wall emulsion')) return '/pdfs/gobis-gold-luxurious-wall-emulsion.pdf';
-            if (name?.toLowerCase().includes('silksheen emulsion')) return '/pdfs/gobis-silksheen-emulsion.pdf';
-            if (name?.toLowerCase().includes('gold') && name?.toLowerCase().includes('enamel') && !name?.toLowerCase().includes('wall emulsion')) return '/pdfs/gobis-gold-enamel.pdf';
-            if (name?.toLowerCase().includes('aqueous matt finish') && !name?.toLowerCase().includes('gold')) return '/pdfs/gobis-aqueous-matt-finish.pdf';
-            if (name?.toLowerCase().includes('gold') && name?.toLowerCase().includes('aqueous matt finish')) return '/pdfs/gobis-gold-aqueous-matt-finish.pdf';
-            if (name?.toLowerCase().includes('gold') && name?.toLowerCase().includes('eggshell') && name?.toLowerCase().includes('matt finish')) return '/pdfs/gobis-gold-eggshell-matt-finish.pdf';
-            if (name?.toLowerCase().includes('gloss enamel') && !name?.toLowerCase().includes('gold')) return '/pdfs/gobis-gloss-enamel.pdf';
-            if (name?.toLowerCase().includes('eggshell') && name?.toLowerCase().includes('enamel') && !name?.toLowerCase().includes('gold')) return '/pdfs/gobis-eggshell-matt-enamel.pdf';
+            const baseUrl = 'https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/pdfs/';
+            if (name === 'Gobis Industrial Enamel Gloss Finish' || name === 'Industrial Enamel Gloss Finish') return `${baseUrl}gobis-industrial-enamel.pdf`;
+            if (name?.toLowerCase().includes('stoving paint')) return `${baseUrl}gobis-stoving-paint.pdf`;
+            if (name?.toLowerCase().includes('carman series')) return `${baseUrl}gobis-carman-series.pdf`;
+            if (name?.toLowerCase().includes('silverline enamel')) return `${baseUrl}gobis-silverline-enamel.pdf`;
+            if (name?.toLowerCase().includes('silverline emulsion')) return `${baseUrl}gobis-silverline-emulsion.pdf`;
+            if (name?.toLowerCase().includes('gold') && name?.toLowerCase().includes('wall emulsion')) return `${baseUrl}gobis-gold-luxurious-wall-emulsion.pdf`;
+            if (name?.toLowerCase().includes('silksheen emulsion')) return `${baseUrl}gobis-silksheen-emulsion.pdf`;
+            if (name?.toLowerCase().includes('gold') && name?.toLowerCase().includes('enamel') && !name?.toLowerCase().includes('wall emulsion')) return `${baseUrl}gobis-gold-enamel.pdf`;
+            if (name?.toLowerCase().includes('aqueous matt finish') && !name?.toLowerCase().includes('gold')) return `${baseUrl}gobis-aqueous-matt-finish.pdf`;
+            if (name?.toLowerCase().includes('gold') && name?.toLowerCase().includes('aqueous matt finish')) return `${baseUrl}gobis-gold-aqueous-matt-finish.pdf`;
+            if (name?.toLowerCase().includes('gold') && name?.toLowerCase().includes('eggshell') && name?.toLowerCase().includes('matt finish')) return `${baseUrl}gobis-gold-eggshell-matt-finish.pdf`;
+            if (name?.toLowerCase().includes('gloss enamel') && !name?.toLowerCase().includes('gold')) return `${baseUrl}gobis-gloss-enamel.pdf`;
+            if (name?.toLowerCase().includes('eggshell') && name?.toLowerCase().includes('enamel') && !name?.toLowerCase().includes('gold')) return `${baseUrl}gobis-eggshell-matt-enamel.pdf`;
         }
 
         if (brand === 'Reliable') {
-            if (name === 'Reliable Weather Protector' || name === 'Reliable Ace Weather Defender') return '/pdfs/reliable-weather-protector.pdf';
-            if (name === 'Reliable Matt Enamel' || name === 'Reliable Matt Finish Inner') return '/pdfs/reliable-matt-enamel.pdf';
-            if (name === 'Reliable Emulsion') return '/pdfs/reliable_emulsion.pdf';
-            if (name.toLowerCase().includes('water matt')) return '/pdfs/reliable_water_matt.pdf';
-            if (name.toLowerCase().includes('enamel') && !name.toLowerCase().includes('matt')) return '/pdfs/reliable_enamel.pdf';
-        }
-        if ((brand === 'Choice' && name.toLowerCase().includes('synthetic enamel')) || name.toLowerCase().includes('choice synthetic enamel')) return '/pdfs/choice_synthetic_enamel.pdf';
-        if (brand === 'Choice' && name.toLowerCase().includes('weather sealer')) return '/pdfs/choice_weather_sealer.pdf';
-
-        if (brand === 'Reliance' && name.toLowerCase().includes('stainless matt')) return '/pdfs/Reliance_stainless_matt.pdf';
-        if (brand === 'Reliance' && name.toLowerCase().includes('semi plastic emulsion')) return '/pdfs/Reliance-Semi-Plastic-Emulsion.pdf';
-        if (brand === 'Reliance' && name.toLowerCase().includes('matt enamel')) return '/pdfs/Reliance_Matt_Enamel.pdf';
-        if (brand === 'Reliance' && name.toLowerCase().includes('synthetic enamel')) return '/pdfs/reliance_synthetic_enamel.pdf';
-        if (brand === 'Berger' && name.toLowerCase().includes('weather pro')) return '/pdfs/berger_weather_pro.pdf';
-        if (brand === 'Berger') {
-            if (name.toLowerCase().includes('weather pro')) return '/pdfs/berger_weather_pro.pdf';
             const baseUrl = 'https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/pdfs/';
+            if (name === 'Reliable Weather Protector' || name === 'Reliable Ace Weather Defender') return `${baseUrl}reliable-weather-protector.pdf`;
+            if (name === 'Reliable Matt Enamel' || name === 'Reliable Matt Finish Inner') return `${baseUrl}reliable-matt-enamel.pdf`;
+            if (name === 'Reliable Emulsion') return `${baseUrl}reliable_emulsion.pdf`;
+            if (name.toLowerCase().includes('water matt')) return `${baseUrl}reliable_water_matt.pdf`;
+            if (name.toLowerCase().includes('enamel') && !name.toLowerCase().includes('matt')) return `${baseUrl}reliable_enamel.pdf`;
+        }
+        const baseUrl = 'https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/pdfs/';
+        if ((brand === 'Choice' && name.toLowerCase().includes('synthetic enamel')) || name.toLowerCase().includes('choice synthetic enamel')) return `${baseUrl}choice_synthetic_enamel.pdf`;
+        if (brand === 'Choice' && name.toLowerCase().includes('weather sealer')) return `${baseUrl}choice_weather_sealer.pdf`;
+
+        if (brand === 'Reliance' && name.toLowerCase().includes('stainless matt')) return `${baseUrl}Reliance_stainless_matt.pdf`;
+        if (brand === 'Reliance' && name.toLowerCase().includes('semi plastic emulsion')) return `${baseUrl}Reliance-Semi-Plastic-Emulsion.pdf`;
+        if (brand === 'Reliance' && name.toLowerCase().includes('matt enamel')) return `${baseUrl}Reliance_Matt_Enamel.pdf`;
+        if (brand === 'Reliance' && name.toLowerCase().includes('synthetic enamel')) return `${baseUrl}reliance_synthetic_enamel.pdf`;
+        if (brand === 'Berger' && name.toLowerCase().includes('weather pro')) return `${baseUrl}berger_weather_pro.pdf`;
+        if (brand === 'Berger') {
+            const baseUrl = 'https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/pdfs/';
+            if (name.toLowerCase().includes('weather pro')) return `${baseUrl}berger_weather_pro.pdf`;
             if (name.toLowerCase().includes('nu enamel')) return `${baseUrl}berger_nu_enamel.pdf`;
             if (name.toLowerCase().includes('nu emulsion')) return `${baseUrl}berger_nu_emulsion.pdf`;
             if (name.toLowerCase().includes('elegance silk emulsion')) return `${baseUrl}berger_elegance_silk_emulsion.pdf`;

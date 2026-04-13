@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BRIGHTO_SHADES } from '@/constants/shades';
 import { Shade } from '@/types';
 import { Check, Maximize2, Palette } from 'lucide-react';
 import Image from 'next/image';
@@ -33,7 +32,7 @@ export function SimpleVisualizer({ color: initialColor, name: initialName, onSel
         <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-gray-100 aspect-square group border-4 border-white">
             {/* LAYER 1: Base Image (Wall + Floor + Sofa) */}
             <Image
-                src="/images/visualizer/back.png"
+                src="https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/images/visualizer/back.png"
                 alt="Room Base"
                 fill
                 priority
@@ -57,7 +56,7 @@ export function SimpleVisualizer({ color: initialColor, name: initialName, onSel
 
             {/* LAYER 3: Foreground (Sofa Only) - Perfectly Aligned */}
             <Image
-                src="/images/visualizer/front.png"
+                src="https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/images/visualizer/front.png"
                 alt="Sofa Foreground"
                 fill
                 priority

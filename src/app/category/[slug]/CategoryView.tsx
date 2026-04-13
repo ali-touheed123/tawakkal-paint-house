@@ -17,27 +17,27 @@ const categoryInfo: Record<string, { title: string; description: string; hero: s
   decorative: {
     title: 'Decorative Paints',
     description: 'Premium interior & exterior wall paints for homes & offices',
-    hero: '/images/categories/decorative.jpg'
+    hero: 'https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/images/categories/decorative.jpg'
   },
   industrial: {
     title: 'Industrial Paints',
     description: 'Heavy-duty protective coatings for industrial applications',
-    hero: '/images/categories/industrial.jpg'
+    hero: 'https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/images/categories/industrial.jpg'
   },
   auto: {
     title: 'Automotive Paints',
     description: 'Professional automotive & vehicle refinishing paints',
-    hero: '/images/categories/auto.jpg'
+    hero: 'https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/images/categories/auto.jpg'
   },
   projects: {
     title: 'Bulk Projects',
     description: 'Bulk supply for construction projects at competitive prices',
-    hero: '/images/categories/projects.jpg'
+    hero: 'https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/images/categories/projects.jpg'
   },
   'paint-tools': {
     title: 'Paint Tools',
     description: 'Essential tools for perfect finishing and professional results',
-    hero: '/images/categories/tools.jpg'
+    hero: 'https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/images/categories/tools.jpg'
   }
 };
 
