@@ -28,7 +28,6 @@ import { UpsellSection } from '@/components/UpsellSection';
 import Link from 'next/link';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
-import { BRIGHTO_SHADES, BRIGHTO_ENAMEL_SHADES, BRIGHTO_PLASTIC_EMULSION_SHADES, BRIGHTO_ALL_WEATHER_SHADES, SAASI_HYDROUS_SHADES, SAASI_MATT_ENAMEL_SHADES, SAASI_PLASTIC_EMULSION_SHADES, SAASI_SUPER_GLOSS_ENAMEL_SHADES, SAASI_WEATHER_SAFE_SHADES, GOBIS_INDUSTRIAL_ENAMEL_SHADES, GOBIS_STOVING_PAINT_SHADES, GOBIS_CARMAN_SERIES_SHADES, GOBIS_SILVERLINE_ENAMEL_SHADES, GOBIS_SILVERLINE_EMULSION_SHADES, GOBIS_GOLD_LUXURIOUS_WALL_EMULSION_SHADES, GOBIS_SILKSHEEN_EMULSION_SHADES, GOBIS_GOLD_ENAMEL_SHADES, GOBIS_AQUEOUS_MATT_FINISH_SHADES, GOBIS_GOLD_AQUEOUS_MATT_FINISH_SHADES, GOBIS_GOLD_EGGSHELL_MATT_FINISH_SHADES, GOBIS_GLOSS_ENAMEL_SHADES, GOBIS_EGGSHELL_MATT_ENAMEL_SHADES, RELIABLE_WEATHER_PROTECTOR_SHADES, RELIABLE_MATT_ENAMEL_SHADES, RELIABLE_EMULSION_SHADES, RELIABLE_ENAMEL_SHADES, RELIABLE_WATER_MATT_SHADES, CHOICE_SYNTHETIC_ENAMEL_SHADES, CHOICE_WEATHER_SEALER_SHADES, RELIANCE_STAINLESS_MATT_SHADES, RELIANCE_SEMI_PLASTIC_EMULSION_SHADES, RELIANCE_MATT_ENAMEL_SHADES, RELIANCE_WEATHER_GUARD_SHADES, RELIANCE_SYNTHETIC_ENAMEL_SHADES, BERGER_WEATHER_PRO_SHADES, BERGER_NU_ENAMEL_SHADES, BERGER_NU_EMULSION_SHADES, BERGER_ELEGANCE_SILK_EMULSION_SHADES, BERGER_SUPERIOR_MATT_FINISH_SHADES, DIAMOND_ACE_WEATHER_DEFENDER_SHADES, DIAMOND_OVERALL_PLASTICCOAT_EMULSION_SHADES, DIAMOND_ACE_ACRYLIC_PLASTIC_EMULSION_SHADES, DIAMOND_ACE_MATT_ENAMEL_SHADES, DIAMOND_ACE_SUPER_GLOSS_ENAMEL_SHADES, DIAMOND_OVERALL_SUPER_EMULSION_SHADES, DIAMOND_OVERALL_HIGH_GLOSS_ENAMEL_SHADES, DIAMOND_OVERALL_WEATHER_MAX_SHADES, DIAMOND_EVERLAST_HIGH_GLOSS_ENAMEL_SHADES, DIAMOND_ACE_DURASILK_EMULSION_SHADES, DIAMOND_VALUE_EMULSION_SHADES, DIAMOND_OVERALL_MATT_ENAMEL_SHADES, DIAMOND_OVERALL_AQUAMAX_WATER_MATT_SHADES, DIAMOND_ACE_TIMBERLAC_WOOD_STAINS_SHADES, BERGER_WEATHER_COAT_GLOW_365_SHADES, BERGER_VIP_WEATHER_COAT_SHADES, BERGER_ALLROUNDER_MATT_ENAMEL_SHADES, BERGER_TOP_SUPER_EMULSION_SHADES, BERGER_SUPER_GLOSS_ENAMEL_SHADES, BERGER_SEMI_PLASTIC_EMULSION_SHADES, BERGER_ELEGANCE_MATT_EMULSION_SHADES } from '@/constants/shades';
 
 
 export function ProductView({ initialSlug }: { initialSlug: string }) {
@@ -109,7 +108,7 @@ export function ProductView({ initialSlug }: { initialSlug: string }) {
     const isDiamondOverallMattEnamel = product?.brand === 'Diamond' && product?.name?.toLowerCase().includes('overall matt enamel');
     const isDiamondOverallAquamaxWaterMatt = product?.brand === 'Diamond' && product?.name?.toLowerCase().includes('aquamax');
     const isDiamondAceTimberlacWoodStains = product?.brand === 'Diamond' && product?.name?.toLowerCase().includes('timberlac wood stain');
-    const hasShadeCard = shades.length > 0 || isBrightoSuperEmulsion || isBrightoSyntheticEnamel || isBrightoPlasticEmulsion || isBrightoAllWeather || isSaasiHydrous || isSaasiMattEnamel || isSaasiPlasticEmulsion || isSaasiSuperGlossEnamel || isSaasiWeatherSafe || isBrightoStainFree || isGobisIndustrialEnamel || isGobisStovingPaint || isGobisCarmanSeries || isGobisSilverlineEnamel || isGobisSilverlineEmulsion || isGobisGoldLuxuriousWallEmulsion || isGobisSilksheenEmulsion || isGobisGoldEnamel || isGobisAqueousMattFinish || isGobisGoldAqueousMattFinish || isGobisGoldEggshellMattFinish || isGobisGlossEnamel || isGobisEggshellMattEnamel || isReliableWeatherProtector || isReliableMattEnamel || isReliableEmulsion || isReliableEnamel || isReliableWaterMatt || isChoiceSyntheticEnamel || isChoiceWeatherSealer || isRelianceStainlessMatt || isRelianceSemiPlasticEmulsion || isRelianceMattEnamel || isRelianceWeatherGuard || isRelianceSyntheticEnamel || isBergerWeatherPro || isBergerNuEnamel || isBergerNuEmulsion || isBergerEleganceSilkEmulsion || isBergerEleganceMattEmulsion || isBergerSuperiorMattFinish || isBergerWeatherCoatGlow365 || isBergerVipWeatherCoat || isBergerAllrounderMattEnamel || isBergerTopSuperEmulsion || isBergerSuperGlossEnamel || isBergerSemiPlasticEmulsion || isDiamondAceWeatherDefender || isDiamondOverallPlasticcoatEmulsion || isDiamondAceAcrylicPlasticEmulsion || isDiamondAceMattEnamel || isDiamondAceSuperGlossEnamel || isDiamondOverallSuperEmulsion || isDiamondOverallHighGlossEnamel || isDiamondOverallWeatherMax || isDiamondEverlastHighGlossEnamel || isDiamondAceDurasilkEmulsion || isDiamondValueEmulsion || isDiamondOverallMattEnamel || isDiamondOverallAquamaxWaterMatt || isDiamondAceTimberlacWoodStains;
+    // hasShadeCard will be computed below after shadeCardPdf is defined
 
     const shadeCardPdf = useMemo(() => {
         if (!product) return null;
@@ -183,21 +182,24 @@ export function ProductView({ initialSlug }: { initialSlug: string }) {
         if (brand === 'Berger' && name.toLowerCase().includes('weather pro')) return '/pdfs/berger_weather_pro.pdf';
         if (brand === 'Berger') {
             if (name.toLowerCase().includes('weather pro')) return '/pdfs/berger_weather_pro.pdf';
-            if (name.toLowerCase().includes('nu enamel')) return '/pdfs/berger_nu_enamel.pdf';
-            if (name.toLowerCase().includes('nu emulsion')) return '/pdfs/berger_nu_emulsion.pdf';
-            if (name.toLowerCase().includes('elegance silk emulsion')) return '/pdfs/berger_elegance_silk_emulsion.pdf';
-            if (name.toLowerCase().includes('elegance matt emulsion')) return '/pdfs/berger_Elegance_Matt_Emulsion.pdf';
-            if (name.toLowerCase().includes('superior matt finish')) return '/pdfs/berger_superior_matt_finish.pdf';
-            if (name.toLowerCase().includes('weather coat glow 365')) return '/pdfs/berger_Weather_coat_Glow_365.pdf';
-            if (name.toLowerCase().includes('vip weather coat')) return '/pdfs/berger_vip_Weather_coat.pdf';
-            if (name.toLowerCase().includes('allrounder matt enamel')) return '/pdfs/berger_allrounder_matt_enamel.pdf';
-            if (name.toLowerCase().includes('top super emulsion')) return '/pdfs/berger_top_super_emulsion.pdf';
-            if (name.toLowerCase().includes('super gloss enamel')) return '/pdfs/berger_super_gloss_enamel.pdf';
-            if (name.toLowerCase().includes('semi plastic emulsion')) return '/pdfs/berger_Semi_Plastic_Emulsion.pdf';
+            const baseUrl = 'https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/pdfs/';
+            if (name.toLowerCase().includes('nu enamel')) return `${baseUrl}berger_nu_enamel.pdf`;
+            if (name.toLowerCase().includes('nu emulsion')) return `${baseUrl}berger_nu_emulsion.pdf`;
+            if (name.toLowerCase().includes('elegance silk emulsion')) return `${baseUrl}berger_elegance_silk_emulsion.pdf`;
+            if (name.toLowerCase().includes('elegance matt emulsion')) return `${baseUrl}berger_Elegance_Matt_Emulsion.pdf`;
+            if (name.toLowerCase().includes('superior matt finish')) return `${baseUrl}berger_superior_matt_finish.pdf`;
+            if (name.toLowerCase().includes('weather coat glow 365')) return `${baseUrl}berger_Weather_coat_Glow_365.pdf`;
+            if (name.toLowerCase().includes('vip weather coat')) return `${baseUrl}berger_vip_Weather_coat.pdf`;
+            if (name.toLowerCase().includes('allrounder matt enamel')) return `${baseUrl}berger_allrounder_matt_enamel.pdf`;
+            if (name.toLowerCase().includes('top super emulsion')) return `${baseUrl}berger_top_super_emulsion.pdf`;
+            if (name.toLowerCase().includes('super gloss enamel')) return `${baseUrl}berger_super_gloss_enamel.pdf`;
+            if (name.toLowerCase().includes('semi plastic emulsion')) return `${baseUrl}berger_Semi_Plastic_Emulsion.pdf`;
         }
 
         return null;
     }, [product]);
+
+    const hasShadeCard = shades.length > 0 || !!shadeCardPdf;
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -213,70 +215,7 @@ export function ProductView({ initialSlug }: { initialSlug: string }) {
             if (productData) {
                 setProduct(productData);
 
-                let defaultShades: Shade[] = [];
-                if (productData.name === 'Brighto Super Emulsion') defaultShades = BRIGHTO_SHADES;
-                else if (productData.name === 'Brighto Synthetic Enamel') defaultShades = BRIGHTO_ENAMEL_SHADES;
-                else if (productData.name === 'Brighto Plastic Emulsion') defaultShades = BRIGHTO_PLASTIC_EMULSION_SHADES;
-                else if (productData.name === 'Brighto All Weather') defaultShades = BRIGHTO_ALL_WEATHER_SHADES;
-                else if (productData.name.includes('Hydrous Matt Finish')) defaultShades = SAASI_HYDROUS_SHADES;
-                else if (productData.brand === 'Saasi' && productData.name === 'Matt Enamel') defaultShades = SAASI_MATT_ENAMEL_SHADES;
-                else if (productData.brand === 'Saasi' && productData.name === 'Plastic Emulsion') defaultShades = SAASI_PLASTIC_EMULSION_SHADES;
-                else if (productData.brand === 'Saasi' && productData.name === 'Super Gloss Enamel') defaultShades = SAASI_SUPER_GLOSS_ENAMEL_SHADES;
-                else if (productData.brand === 'Saasi' && productData.name === 'Weather Safe') defaultShades = SAASI_WEATHER_SAFE_SHADES;
-                else if (productData.name === 'Brighto Stain Free royal silky finish emulsion') defaultShades = BRIGHTO_PLASTIC_EMULSION_SHADES;
-                else if ((productData.brand === "Gobi's" || productData.brand === 'Gobis') && (productData.name === 'Gobis Industrial Enamel Gloss Finish' || productData.name === 'Industrial Enamel Gloss Finish')) defaultShades = GOBIS_INDUSTRIAL_ENAMEL_SHADES;
-                else if ((productData.brand === "Gobi's" || productData.brand === 'Gobis') && (productData.name?.toLowerCase().includes('stoving paint'))) defaultShades = GOBIS_STOVING_PAINT_SHADES;
-                else if ((productData.brand === "Gobi's" || productData.brand === 'Gobis') && productData.name?.toLowerCase().includes('carman series')) defaultShades = GOBIS_CARMAN_SERIES_SHADES;
-                else if ((productData.brand === "Gobi's" || productData.brand === 'Gobis') && productData.name?.toLowerCase().includes('silverline enamel')) defaultShades = GOBIS_SILVERLINE_ENAMEL_SHADES;
-                else if ((productData.brand === "Gobi's" || productData.brand === 'Gobis') && productData.name?.toLowerCase().includes('silverline emulsion')) defaultShades = GOBIS_SILVERLINE_EMULSION_SHADES;
-                else if ((productData.brand === "Gobi's" || productData.brand === 'Gobis') && productData.name?.toLowerCase().includes('gold') && productData.name?.toLowerCase().includes('wall emulsion')) defaultShades = GOBIS_GOLD_LUXURIOUS_WALL_EMULSION_SHADES;
-                else if ((productData.brand === "Gobi's" || productData.brand === 'Gobis') && productData.name?.toLowerCase().includes('silksheen emulsion')) defaultShades = GOBIS_SILKSHEEN_EMULSION_SHADES;
-                else if ((productData.brand === "Gobi's" || productData.brand === 'Gobis') && productData.name?.toLowerCase().includes('gold') && productData.name?.toLowerCase().includes('enamel') && !productData.name?.toLowerCase().includes('wall emulsion')) defaultShades = GOBIS_GOLD_ENAMEL_SHADES;
-                else if ((productData.brand === "Gobi's" || productData.brand === 'Gobis') && productData.name?.toLowerCase().includes('aqueous matt finish') && !productData.name?.toLowerCase().includes('gold')) defaultShades = GOBIS_AQUEOUS_MATT_FINISH_SHADES;
-                else if ((productData.brand === "Gobi's" || productData.brand === 'Gobis') && productData.name?.toLowerCase().includes('gold') && productData.name?.toLowerCase().includes('aqueous matt finish')) defaultShades = GOBIS_GOLD_AQUEOUS_MATT_FINISH_SHADES;
-                else if ((productData.brand === "Gobi's" || productData.brand === 'Gobis') && productData.name?.toLowerCase().includes('gold') && productData.name?.toLowerCase().includes('eggshell') && productData.name?.toLowerCase().includes('matt finish')) defaultShades = GOBIS_GOLD_EGGSHELL_MATT_FINISH_SHADES;
-                else if ((productData.brand === "Gobi's" || productData.brand === 'Gobis') && productData.name?.toLowerCase().includes('gloss enamel') && !productData.name?.toLowerCase().includes('gold')) defaultShades = GOBIS_GLOSS_ENAMEL_SHADES;
-                else if ((productData.brand === "Gobi's" || productData.brand === 'Gobis') && productData.name?.toLowerCase().includes('eggshell') && productData.name?.toLowerCase().includes('enamel') && !productData.name?.toLowerCase().includes('gold')) defaultShades = GOBIS_EGGSHELL_MATT_ENAMEL_SHADES;
-                else if (productData.brand === 'Reliable' && (productData.name === 'Reliable Weather Protector' || productData.name === 'Reliable Ace Weather Defender')) defaultShades = RELIABLE_WEATHER_PROTECTOR_SHADES;
-                else if (productData.brand === 'Reliable' && (productData.name === 'Reliable Matt Enamel' || productData.name === 'Reliable Matt Finish Inner')) defaultShades = RELIABLE_MATT_ENAMEL_SHADES;
-                else if (productData.brand === 'Reliable' && productData.name === 'Reliable Emulsion') defaultShades = RELIABLE_EMULSION_SHADES;
-                else if (productData.brand === 'Reliable' && productData.name?.toLowerCase().includes('water matt')) defaultShades = RELIABLE_WATER_MATT_SHADES;
-                else if (productData.brand === 'Reliable' && productData.name?.toLowerCase().includes('enamel') && !productData.name?.toLowerCase().includes('matt')) defaultShades = RELIABLE_ENAMEL_SHADES;
-                else if ((productData.brand === 'Choice' && productData.name?.toLowerCase().includes('synthetic enamel')) || productData.name?.toLowerCase().includes('choice synthetic enamel')) defaultShades = CHOICE_SYNTHETIC_ENAMEL_SHADES;
-                else if (productData.brand === 'Choice' && productData.name?.toLowerCase().includes('weather sealer')) defaultShades = CHOICE_WEATHER_SEALER_SHADES;
-                else if (productData.brand === 'Reliance' && productData.name?.toLowerCase().includes('stainless matt')) defaultShades = RELIANCE_STAINLESS_MATT_SHADES;
-                else if (productData.brand === 'Reliance' && productData.name?.toLowerCase().includes('semi plastic emulsion')) defaultShades = RELIANCE_SEMI_PLASTIC_EMULSION_SHADES;
-                else if (productData.brand === 'Reliance' && productData.name?.toLowerCase().includes('matt enamel')) defaultShades = RELIANCE_MATT_ENAMEL_SHADES;
-                else if (productData.brand === 'Reliance' && productData.name?.toLowerCase().includes('weather guard')) defaultShades = RELIANCE_WEATHER_GUARD_SHADES;
-                else if (productData.brand === 'Reliance' && productData.name?.toLowerCase().includes('synthetic enamel')) defaultShades = RELIANCE_SYNTHETIC_ENAMEL_SHADES;
-                else if (productData.brand === 'Berger' && productData.name?.toLowerCase().includes('weather pro')) defaultShades = BERGER_WEATHER_PRO_SHADES;
-                else if (productData.brand === 'Berger' && productData.name?.toLowerCase().includes('nu enamel')) defaultShades = BERGER_NU_ENAMEL_SHADES;
-                else if (productData.brand === 'Berger' && productData.name?.toLowerCase().includes('nu emulsion')) defaultShades = BERGER_NU_EMULSION_SHADES;
-                else if (productData.brand === 'Berger' && productData.name?.toLowerCase().includes('elegance silk emulsion')) defaultShades = BERGER_ELEGANCE_SILK_EMULSION_SHADES;
-                else if (productData.brand === 'Berger' && productData.name?.toLowerCase().includes('elegance matt emulsion')) defaultShades = BERGER_ELEGANCE_MATT_EMULSION_SHADES;
-                else if (productData.brand === 'Berger' && productData.name?.toLowerCase().includes('superior matt finish')) defaultShades = BERGER_SUPERIOR_MATT_FINISH_SHADES;
-                else if (productData.brand === 'Berger' && productData.name?.toLowerCase().includes('weather coat glow 365')) defaultShades = BERGER_WEATHER_COAT_GLOW_365_SHADES;
-                else if (productData.brand === 'Berger' && productData.name?.toLowerCase().includes('vip weather coat')) defaultShades = BERGER_VIP_WEATHER_COAT_SHADES;
-                else if (productData.brand === 'Berger' && productData.name?.toLowerCase().includes('allrounder matt enamel')) defaultShades = BERGER_ALLROUNDER_MATT_ENAMEL_SHADES;
-                else if (productData.brand === 'Berger' && productData.name?.toLowerCase().includes('top super emulsion')) defaultShades = BERGER_TOP_SUPER_EMULSION_SHADES;
-                else if (productData.brand === 'Berger' && productData.name?.toLowerCase().includes('super gloss enamel')) defaultShades = BERGER_SUPER_GLOSS_ENAMEL_SHADES;
-                else if (productData.brand === 'Berger' && productData.name?.toLowerCase().includes('semi plastic emulsion')) defaultShades = BERGER_SEMI_PLASTIC_EMULSION_SHADES;
-                else if (productData.brand === 'Diamond' && productData.name?.toLowerCase().includes('ace weather defender')) defaultShades = DIAMOND_ACE_WEATHER_DEFENDER_SHADES;
-                else if (productData.brand === 'Diamond' && productData.name?.toLowerCase().includes('overall plasticcoat emulsion')) defaultShades = DIAMOND_OVERALL_PLASTICCOAT_EMULSION_SHADES;
-                else if (productData.brand === 'Diamond' && productData.name?.toLowerCase().includes('ace acrylic plastic emulsion')) defaultShades = DIAMOND_ACE_ACRYLIC_PLASTIC_EMULSION_SHADES;
-                else if (productData.brand === 'Diamond' && productData.name?.toLowerCase().includes('ace matt enamel')) defaultShades = DIAMOND_ACE_MATT_ENAMEL_SHADES;
-                else if (productData.brand === 'Diamond' && productData.name?.toLowerCase().includes('ace super gloss enamel')) defaultShades = DIAMOND_ACE_SUPER_GLOSS_ENAMEL_SHADES;
-                else if (productData.brand === 'Diamond' && productData.name?.toLowerCase().includes('overall super emulsion')) defaultShades = DIAMOND_OVERALL_SUPER_EMULSION_SHADES;
-                else if (productData.brand === 'Diamond' && productData.name?.toLowerCase().includes('overall high gloss enamel')) defaultShades = DIAMOND_OVERALL_HIGH_GLOSS_ENAMEL_SHADES;
-                else if (productData.brand === 'Diamond' && productData.name?.toLowerCase().includes('overall weather max')) defaultShades = DIAMOND_OVERALL_WEATHER_MAX_SHADES;
-                else if (productData.brand === 'Diamond' && productData.name?.toLowerCase().includes('everlast high gloss enamel')) defaultShades = DIAMOND_EVERLAST_HIGH_GLOSS_ENAMEL_SHADES;
-                else if (productData.brand === 'Diamond' && productData.name?.toLowerCase().includes('ace durasilk emulsion')) defaultShades = DIAMOND_ACE_DURASILK_EMULSION_SHADES;
-                else if (productData.brand === 'Diamond' && productData.name?.toLowerCase().includes('value emulsion')) defaultShades = DIAMOND_VALUE_EMULSION_SHADES;
-                else if (productData.brand === 'Diamond' && productData.name?.toLowerCase().includes('overall matt enamel')) defaultShades = DIAMOND_OVERALL_MATT_ENAMEL_SHADES;
-                else if (productData.brand === 'Diamond' && productData.name?.toLowerCase().includes('aquamax')) defaultShades = DIAMOND_OVERALL_AQUAMAX_WATER_MATT_SHADES;
-                else if (productData.brand === 'Diamond' && productData.name?.toLowerCase().includes('timberlac wood stain')) defaultShades = DIAMOND_ACE_TIMBERLAC_WOOD_STAINS_SHADES;
-
-                // Fetch shades from DB, fallback to local constants
+                // Fetch shades from DB
                 const { data: shadeData } = await supabase
                     .from('product_shades')
                     .select('*')
@@ -286,7 +225,7 @@ export function ProductView({ initialSlug }: { initialSlug: string }) {
                 if (shadeData && shadeData.length > 0) {
                     setShades(shadeData);
                 } else {
-                    setShades(defaultShades);
+                    setShades([]);
                 }
 
                 // Set default selected size

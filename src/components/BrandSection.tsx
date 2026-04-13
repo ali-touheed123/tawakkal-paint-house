@@ -1,22 +1,32 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-
-const BRANDS = [
-    { name: 'Berger', url: '/images/brands/berger.png' },
-    { name: 'Brighto', url: '/images/brands/brighto.png' },
-    { name: 'Choice', url: '/images/brands/choice.png' },
-    { name: 'Diamond Paints', url: '/images/brands/diamond.png' },
-    { name: 'Dior', url: '/images/brands/dior.png' },
-    { name: "Gobi's Paints", url: '/images/brands/gobis.png' },
-    { name: 'Reliable', url: '/images/brands/reliable.png' },
-    { name: 'Reliance', url: '/images/brands/reliance.png' },
-    { name: 'Rozzi', url: '/images/brands/rozzi.png' },
-    { name: 'Saasi', url: '/images/brands/saasi.png' },
-];
+import { useEffect, useState } from 'react';
+import { createClient } from '@/lib/supabase/client';
 
 export function BrandSection() {
+    const [brands, setBrands] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchBrands = async () => {
+            const supabase = createClient();
+            const { data } = await supabase
+                .from('brands')
+                .select('name, logo_url')
+                .eq('is_active', true)
+                .neq('logo_url', '')
+                .order('name');
+            
+            if (data) setBrands(data);
+            setLoading(false);
+        };
+        fetchBrands();
+    }, []);
+
+    if (loading || brands.length === 0) return null;
+
     // Duplicate logos for a seamless marquee
-    const displayLogos = [...BRANDS, ...BRANDS, ...BRANDS];
+    const displayLogos = [...brands, ...brands, ...brands];
 
     return (
         <section className="py-12 bg-white border-b border-gray-100 overflow-hidden">
@@ -40,10 +50,10 @@ export function BrandSection() {
                         <motion.div
                             className="flex items-center gap-16 md:gap-24"
                             animate={{
-                                x: [0, -100 * BRANDS.length],
+                                x: [0, -100 * brands.length],
                             }}
                             transition={{
-                                duration: BRANDS.length * 2, // Faster marquee (was length * 3)
+                                duration: brands.length * 2, // Faster marquee (was length * 3)
                                 repeat: Infinity,
                                 ease: "linear",
                             }}
@@ -54,9 +64,9 @@ export function BrandSection() {
                                     whileHover={{ scale: 1.15, y: -5 }}
                                     className="shrink-0 grayscale hover:grayscale-0 transition-all duration-500 opacity-50 hover:opacity-100 cursor-pointer"
                                 >
-                                    {logo.url ? (
+                                    {logo.logo_url ? (
                                         <Image
-                                            src={logo.url}
+                                            src={logo.logo_url}
                                             alt={logo.name}
                                             width={100}
                                             height={40}

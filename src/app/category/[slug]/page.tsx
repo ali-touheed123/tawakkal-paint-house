@@ -2,8 +2,8 @@ import { Metadata } from 'next';
 import { CategoryView } from './CategoryView';
 
 type Props = {
-  params: { slug: string };
-  searchParams: { [key: string]: string | string[] | undefined };
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 const categoryTitles: Record<string, string> = {
@@ -14,7 +14,8 @@ const categoryTitles: Record<string, string> = {
   deals: 'Exclusive Paint Deals & Packages'
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
   const slug = params.slug;
   const title = categoryTitles[slug] || 'Premium Paints';
   
@@ -29,6 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function CategoryPage({ params }: Props) {
+export default async function CategoryPage(props: Props) {
+  const params = await props.params;
   return <CategoryView initialCategory={params.slug} />;
 }

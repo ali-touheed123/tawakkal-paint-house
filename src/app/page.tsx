@@ -88,7 +88,7 @@ export default function HomePage() {
             style={{ transform: 'translateY(0)' }}
           >
             <Image
-              src={settings?.banners?.[0] || '/home-hero.jpeg'}
+              src={settings?.banners?.[0] || 'https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/home-hero.webp'}
               alt="Hero Background"
               fill
               priority
@@ -368,13 +368,13 @@ export default function HomePage() {
               {
                 title: "DHA Luxury Villa",
                 location: "Phase 8, Karachi",
-                image: "/images/projects/villa_showcase.png",
+                image: "https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/images/projects/villa_showcase.png",
                 tags: ["Premium Finish", "Exterior"]
               },
               {
                 title: "Modern Office Lobby",
                 location: "I.I Chundrigar Rd",
-                image: "/images/projects/lobby_showcase.png",
+                image: "https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/images/projects/lobby_showcase.png",
                 tags: ["Matt Finish", "Interior"]
               }
             ].map((project, idx) => (

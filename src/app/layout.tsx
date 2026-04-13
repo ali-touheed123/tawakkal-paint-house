@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     locale: "en_PK",
     siteName: "Tawakkal Paint House",
     images: [{
-      url: 'https://tawakkalpainthouse.com/images/og-main.jpg',
+      url: 'https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/images/og-main.jpg',
       width: 1200,
       height: 630,
       alt: 'Tawakkal Paint House - Premium Paints Karachi'
@@ -52,9 +52,9 @@ export const metadata: Metadata = {
     canonical: "https://tawakkalpainthouse.com"
   },
   icons: {
-    icon: '/favicon-tph.png',
-    shortcut: '/favicon-tph.png',
-    apple: '/favicon-tph.png',
+    icon: 'https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/favicon-tph.png',
+    shortcut: 'https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/favicon-tph.png',
+    apple: 'https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/favicon-tph.png',
   },
 };
 
@@ -86,7 +86,7 @@ export default function RootLayout({
     },
     "priceRange": "$$",
     "openingHours": "Mo-Sat 09:00-20:00",
-    "image": "https://tawakkalpainthouse.com/logo.png",
+    "image": "https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/logo.png",
     "description": "Karachi's most trusted paint house since 2004. Authorized dealer for Gobi's, Berger, Diamond, Saasi, Brighto, Choice, and exclusive distributor for Rozzilac."
   };
 

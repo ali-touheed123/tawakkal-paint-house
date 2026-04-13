@@ -48,6 +48,7 @@ export default function AdminLayout({
         const adminOnlyPaths = [
           '/admin-7392-dashboard/categories',
           '/admin-7392-dashboard/products',
+          '/admin-7392-dashboard/shades',
           '/admin-7392-dashboard/brands',
           '/admin-7392-dashboard/discounts',
           '/admin-7392-dashboard/deals',
