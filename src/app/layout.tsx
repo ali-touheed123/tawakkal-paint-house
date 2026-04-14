@@ -29,6 +29,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Tawakkal Paint House | Premium Paints in Karachi",
     description: "Karachi's most trusted paint house since 2004. Authorized dealer for premium paint brands.",
+    url: "https://tawakkalpainthouse.com",
     type: "website",
     locale: "en_PK",
     siteName: "Tawakkal Paint House",
