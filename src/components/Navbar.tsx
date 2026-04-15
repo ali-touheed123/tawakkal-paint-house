@@ -118,7 +118,7 @@ export function Navbar() {
             {/* Logo */}
             <Link href="/" className="flex items-center gap-1 xs:gap-2 absolute left-1/2 -translate-x-1/2 lg:static lg:translate-x-0 lg:left-0 max-w-[140px] xs:max-w-none">
               <Image
-                src={settings?.logo || "/logo.png"}
+                src={settings?.logo || "https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/logo.png"}
                 alt="Tawakkal Paint House"
                 width={160}
                 height={48}

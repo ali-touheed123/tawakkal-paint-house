@@ -196,23 +196,23 @@ export function UpsellSection({ labourMode, upsellItemIds, currentProductId }: U
         fetchUpsell();
     }, [upsellItemIds, currentProductId]);
 
-    // Auto-scroll into view when Without Labour is selected
-    useEffect(() => {
-        if (isFirstRender.current) {
-            isFirstRender.current = false;
-            return;
-        }
-
-        if (labourMode === 'without' && !hasScrolled.current && sectionRef.current && upsellProducts.length > 0) {
-            hasScrolled.current = true;
-            setTimeout(() => {
-                sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 400);
-        }
-        if (labourMode === 'with') {
-            hasScrolled.current = false;
-        }
-    }, [labourMode, upsellProducts.length]);
+    // Auto-scroll disabled to prevent jarring jumps on page load when product defaults to "without" labour
+    // useEffect(() => {
+    //     if (isFirstRender.current) {
+    //         isFirstRender.current = false;
+    //         return;
+    //     }
+    //
+    //     if (labourMode === 'without' && !hasScrolled.current && sectionRef.current && upsellProducts.length > 0) {
+    //         hasScrolled.current = true;
+    //         setTimeout(() => {
+    //             sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    //         }, 400);
+    //     }
+    //     if (labourMode === 'with') {
+    //         hasScrolled.current = false;
+    //     }
+    // }, [labourMode, upsellProducts.length]);
 
     const getItemPrice = (product: Product) => {
         const unit = product.units?.[0];

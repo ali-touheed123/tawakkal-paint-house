@@ -26,7 +26,7 @@ export default function DealsPage() {
                 >
                     <div className="absolute inset-0 bg-navy/40 z-10" />
                     <Image
-                        src="/deals_hero_bg.png"
+                        src="https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/deals_hero_bg.png"
                         alt="Premium Project Showcase"
                         fill
                         priority
