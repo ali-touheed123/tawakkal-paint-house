@@ -593,7 +593,13 @@ export function ProductView({ initialSlug }: { initialSlug: string }) {
 
                                         {/* Without Labour */}
                                         <button
-                                            onClick={() => { setLabourMode('without'); setSavingSessionActive(true); }}
+                                            onClick={() => { 
+                                                setLabourMode('without'); 
+                                                setSavingSessionActive(true);
+                                                setTimeout(() => {
+                                                    document.getElementById('upsell-section-container')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                                }, 400);
+                                            }}
                                             className={cn(
                                                 'relative flex flex-col items-start gap-1 p-4 rounded-xl border-2 text-left transition-all duration-200',
                                                 labourMode === 'without'
@@ -715,7 +721,7 @@ export function ProductView({ initialSlug }: { initialSlug: string }) {
             </div>
 
             {/* Upsell Section – always visible */}
-            <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8 pb-12">
+            <div id="upsell-section-container" className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8 pb-12">
                 <UpsellSection
                     labourMode={labourMode}
                     upsellItemIds={upsellItemIds}
