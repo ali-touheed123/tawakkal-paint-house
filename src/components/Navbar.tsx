@@ -100,7 +100,7 @@ export function Navbar() {
           }`}
       >
         <motion.div
-          initial={{ opacity: 0, y: -10 }}
+          initial={{ opacity: 1, y: 0 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8"

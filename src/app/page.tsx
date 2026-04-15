@@ -80,7 +80,7 @@ export default function HomePage() {
   return (
     <div className="overflow-hidden">
       {/* Hero Section */}
-      <section ref={heroRef} className="relative min-h-screen flex items-center">
+      <section ref={heroRef} className="relative min-h-screen flex items-center bg-navy" style={{ minHeight: '100svh' }}>
         {/* Background Image */}
         <div className="absolute inset-0">
           <div
@@ -96,7 +96,7 @@ export default function HomePage() {
               decoding="sync"
               fetchPriority="high"
               sizes="100vw"
-              quality={50}
+              quality={40}
               className="object-cover object-center"
             />
           </div>

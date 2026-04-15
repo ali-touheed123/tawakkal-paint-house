@@ -12,6 +12,7 @@
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.97.0",
     "clsx": "^2.1.1",
+    "critters": "^0.0.23",
     "date-fns": "^4.1.0",
     "framer-motion": "^12.34.3",
     "lucide-react": "^0.575.0",
@@ -33,11 +34,9 @@
     "typescript": "^5"
   },
   "browserslist": [
-    "chrome >= 100",
-    "safari >= 15.4",
-    "firefox >= 100",
-    "edge >= 100",
-    "> 0.5%",
-    "not dead"
+    "chrome >= 109",
+    "safari >= 16",
+    "firefox >= 109",
+    "edge >= 109"
   ]
 }
