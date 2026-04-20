@@ -29,14 +29,22 @@ export default function ProductsPage() {
 
   const [categories, setCategories] = useState<any[]>([]);
   const [subCategories, setSubCategories] = useState<any[]>([]);
-   const [selectedSubCategory, setSelectedSubCategory] = useState('');
+  const [brands, setBrands] = useState<any[]>([]);
+  const [selectedSubCategory, setSelectedSubCategory] = useState('');
   const [selectedCategorySlug, setSelectedCategorySlug] = useState('');
 
   useEffect(() => {
     fetchProducts();
     fetchCategories();
     fetchSubCategories();
+    fetchBrands();
   }, []);
+
+  async function fetchBrands() {
+    const supabase = createClient();
+    const { data } = await supabase.from('brands').select('*').eq('is_active', true).order('name');
+    if (data) setBrands(data);
+  }
 
   async function fetchSubCategories() {
     const supabase = createClient();
@@ -369,7 +377,26 @@ export default function ProductsPage() {
               </div>
               <div>
                 <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Brand</label>
-                <input name="brand" defaultValue={editingProduct?.brand} required className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" />
+                <select 
+                  name="brand" 
+                  defaultValue={editingProduct?.brand} 
+                  required 
+                  onChange={(e) => {
+                    if (!editingProduct) {
+                      const selectedBrand = brands.find(b => b.name === e.target.value);
+                      if (selectedBrand?.default_discount) {
+                        const discountInput = (e.target.form as HTMLFormElement).elements.namedItem('labour_discount') as HTMLInputElement;
+                        if (discountInput) discountInput.value = selectedBrand.default_discount.toString();
+                      }
+                    }
+                  }}
+                  className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm"
+                >
+                  <option value="">Select Brand</option>
+                  {brands.map(b => (
+                    <option key={b.id} value={b.name}>{b.name}</option>
+                  ))}
+                </select>
               </div>
               <div>
                 <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Category</label>
