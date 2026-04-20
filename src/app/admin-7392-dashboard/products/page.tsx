@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import { 
-  Plus, 
-  Search, 
-  Edit2, 
-  Trash2, 
+import {
+  Plus,
+  Search,
+  Edit2,
+  Trash2,
   Package,
   AlertTriangle,
   X as CloseIcon,
@@ -29,7 +29,6 @@ export default function ProductsPage() {
 
   const [categories, setCategories] = useState<any[]>([]);
   const [subCategories, setSubCategories] = useState<any[]>([]);
-  const [brands, setBrands] = useState<any[]>([]);
   const [selectedSubCategory, setSelectedSubCategory] = useState('');
   const [selectedCategorySlug, setSelectedCategorySlug] = useState('');
 
@@ -37,14 +36,7 @@ export default function ProductsPage() {
     fetchProducts();
     fetchCategories();
     fetchSubCategories();
-    fetchBrands();
   }, []);
-
-  async function fetchBrands() {
-    const supabase = createClient();
-    const { data } = await supabase.from('brands').select('*').eq('is_active', true).order('name');
-    if (data) setBrands(data);
-  }
 
   async function fetchSubCategories() {
     const supabase = createClient();
@@ -65,7 +57,7 @@ export default function ProductsPage() {
       .from('products')
       .select('*')
       .order('name', { ascending: true });
-    
+
     if (data) setProducts(data);
     setLoading(false);
   }
@@ -73,10 +65,10 @@ export default function ProductsPage() {
 
   async function handleDelete(id: string) {
     if (!confirm('Are you sure you want to delete this product?')) return;
-    
+
     const supabase = createClient();
     const { error } = await supabase.from('products').delete().eq('id', id);
-    
+
     if (error) {
       console.error('Error deleting product:', error);
       alert('Failed to delete product: ' + error.message);
@@ -94,7 +86,7 @@ export default function ProductsPage() {
       setCurrentImageUrl(editingProduct?.image_url || '');
       setImgError(false);
       setSelectedCategorySlug(editingProduct?.category || categories[0]?.slug || '');
-      
+
       if (editingProduct?.units && Array.isArray(editingProduct.units) && editingProduct.units.length > 0) {
         setModalUnits(editingProduct.units);
       } else {
@@ -146,7 +138,7 @@ export default function ProductsPage() {
         .from('products')
         .update(productData)
         .eq('id', editingProduct.id);
-      
+
       if (error) {
         console.error('Error updating product:', error);
         alert('Failed to save product: ' + error.message);
@@ -157,7 +149,7 @@ export default function ProductsPage() {
       const { error } = await supabase
         .from('products')
         .insert([productData]);
-      
+
       if (error) {
         console.error('Error creating product:', error);
         alert('Failed to create product: ' + error.message);
@@ -165,7 +157,7 @@ export default function ProductsPage() {
       }
       fetchProducts();
     }
-    
+
     setIsModalOpen(false);
     setEditingProduct(null);
   }
@@ -181,7 +173,7 @@ export default function ProductsPage() {
     return () => window.removeEventListener('keydown', handleEsc);
   }, []);
 
-  const filteredProducts = products.filter(p => 
+  const filteredProducts = products.filter(p =>
     p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     p.brand.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -193,7 +185,7 @@ export default function ProductsPage() {
           <h1 className="text-3xl font-bold text-navy">Products</h1>
           <p className="text-gray-500">Manage your inventory, prices, and availability.</p>
         </div>
-        <button 
+        <button
           onClick={() => { setEditingProduct(null); setIsModalOpen(true); }}
           className="bg-gold hover:bg-gold-dark text-navy font-bold px-6 py-2.5 rounded-lg flex items-center gap-2 shadow-lg transition-all active:scale-95"
         >
@@ -204,9 +196,9 @@ export default function ProductsPage() {
       <div className="flex flex-col sm:flex-row gap-4 mb-6">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-          <input 
-            type="text" 
-            placeholder="Search by name or brand..." 
+          <input
+            type="text"
+            placeholder="Search by name or brand..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full pl-10 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold/50 text-sm shadow-sm"
@@ -250,24 +242,24 @@ export default function ProductsPage() {
                   </td>
                   <td className="px-6 py-4 text-sm font-mono">
                     <div className="flex flex-col gap-1">
-                       {product.units && Array.isArray(product.units) && product.units.length > 0 ? (
-                         product.units.map((unit: any, idx: number) => (
-                            <div key={idx} className="flex justify-between gap-4 border-b border-gray-50 last:border-0 pb-1 last:pb-0">
-                             <div className="flex flex-col">
-                               <span className="text-[10px] text-gray-400 hide-on-mobile uppercase font-bold">{unit.label}</span>
-                               <span className="text-navy font-bold">Rs. {unit.price}</span>
-                             </div>
-                             {unit.discount !== undefined && (
-                               <div className="flex flex-col items-end">
-                                 <span className="text-[9px] text-green-600 font-bold">W/O Disc</span>
-                                 <span className="text-[10px] bg-green-50 text-green-700 px-1 rounded font-bold">{unit.discount}%</span>
-                               </div>
-                             )}
-                           </div>
-                         ))
-                       ) : (
-                         <span className="text-gray-400 italic text-xs">No pricing</span>
-                       )}
+                      {product.units && Array.isArray(product.units) && product.units.length > 0 ? (
+                        product.units.map((unit: any, idx: number) => (
+                          <div key={idx} className="flex justify-between gap-4 border-b border-gray-50 last:border-0 pb-1 last:pb-0">
+                            <div className="flex flex-col">
+                              <span className="text-[10px] text-gray-400 hide-on-mobile uppercase font-bold">{unit.label}</span>
+                              <span className="text-navy font-bold">Rs. {unit.price}</span>
+                            </div>
+                            {unit.discount !== undefined && (
+                              <div className="flex flex-col items-end">
+                                <span className="text-[9px] text-green-600 font-bold">W/O Disc</span>
+                                <span className="text-[10px] bg-green-50 text-green-700 px-1 rounded font-bold">{unit.discount}%</span>
+                              </div>
+                            )}
+                          </div>
+                        ))
+                      ) : (
+                        <span className="text-gray-400 italic text-xs">No pricing</span>
+                      )}
                     </div>
                   </td>
                   <td className="px-6 py-4">
@@ -280,13 +272,13 @@ export default function ProductsPage() {
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex justify-end gap-2">
-                      <button 
+                      <button
                         onClick={() => { setEditingProduct(product); setIsModalOpen(true); }}
                         className="p-2 text-gray-400 hover:text-navy hover:bg-gray-100 rounded-lg transition-colors"
                       >
                         <Edit2 size={18} />
                       </button>
-                      <button 
+                      <button
                         onClick={() => handleDelete(product.id)}
                         className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                       >
@@ -305,52 +297,52 @@ export default function ProductsPage() {
           {filteredProducts.map((product) => (
             <div key={product.id} className="p-4 flex flex-col gap-4">
               <div className="flex items-center gap-4">
-                 <div className="w-16 h-16 bg-gray-50 rounded-xl flex items-center justify-center overflow-hidden border border-gray-100">
-                    {product.image_url ? (
-                      <img src={product.image_url} alt={product.name} className="w-full h-full object-cover" />
-                    ) : (
-                      <Package className="text-gray-300" size={24} />
-                    )}
-                 </div>
-                 <div className="flex-1 min-w-0">
-                    <div className="font-bold text-navy truncate">{product.name}</div>
-                    <div className="text-xs text-gray-400">{product.brand}</div>
-                    <div className="mt-1">
-                      <span className={cn(
-                        "px-2 py-0.5 rounded text-[9px] font-bold uppercase",
-                        product.in_stock ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
-                      )}>
-                        {product.in_stock ? 'In Stock' : 'Out of Stock'}
-                      </span>
-                    </div>
-                 </div>
-                 <div className="flex flex-col gap-1">
-                   <button 
-                      onClick={() => { setEditingProduct(product); setIsModalOpen(true); }}
-                      className="p-2.5 bg-gray-100 text-navy rounded-lg hover:bg-gold hover:text-navy transition-all"
-                   >
-                     <Edit2 size={18} />
-                   </button>
-                   <button 
-                      onClick={() => handleDelete(product.id)}
-                      className="p-2.5 bg-red-50 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition-all"
-                   >
-                     <Trash2 size={18} />
-                   </button>
-                 </div>
+                <div className="w-16 h-16 bg-gray-50 rounded-xl flex items-center justify-center overflow-hidden border border-gray-100">
+                  {product.image_url ? (
+                    <img src={product.image_url} alt={product.name} className="w-full h-full object-cover" />
+                  ) : (
+                    <Package className="text-gray-300" size={24} />
+                  )}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="font-bold text-navy truncate">{product.name}</div>
+                  <div className="text-xs text-gray-400">{product.brand}</div>
+                  <div className="mt-1">
+                    <span className={cn(
+                      "px-2 py-0.5 rounded text-[9px] font-bold uppercase",
+                      product.in_stock ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
+                    )}>
+                      {product.in_stock ? 'In Stock' : 'Out of Stock'}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <button
+                    onClick={() => { setEditingProduct(product); setIsModalOpen(true); }}
+                    className="p-2.5 bg-gray-100 text-navy rounded-lg hover:bg-gold hover:text-navy transition-all"
+                  >
+                    <Edit2 size={18} />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(product.id)}
+                    className="p-2.5 bg-red-50 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition-all"
+                  >
+                    <Trash2 size={18} />
+                  </button>
+                </div>
               </div>
               <div className="grid grid-cols-2 gap-2 bg-gray-50 p-3 rounded-xl border border-gray-200/50">
-                 {product.units && Array.isArray(product.units) && product.units.slice(0, 4).map((unit: any, idx: number) => (
-                   <div key={idx} className="text-center">
-                      <div className="text-[9px] text-gray-400 uppercase font-bold truncate px-1">{unit.label}</div>
-                      <div className="font-mono text-navy font-bold text-sm">Rs. {unit.price}</div>
-                   </div>
-                 ))}
-                 {product.units && product.units.length > 4 && (
-                   <div className="col-span-2 text-[9px] text-gray-400 text-center font-bold">
-                     + {product.units.length - 4} more units
-                   </div>
-                 )}
+                {product.units && Array.isArray(product.units) && product.units.slice(0, 4).map((unit: any, idx: number) => (
+                  <div key={idx} className="text-center">
+                    <div className="text-[9px] text-gray-400 uppercase font-bold truncate px-1">{unit.label}</div>
+                    <div className="font-mono text-navy font-bold text-sm">Rs. {unit.price}</div>
+                  </div>
+                ))}
+                {product.units && product.units.length > 4 && (
+                  <div className="col-span-2 text-[9px] text-gray-400 text-center font-bold">
+                    + {product.units.length - 4} more units
+                  </div>
+                )}
               </div>
             </div>
           ))}
@@ -377,32 +369,13 @@ export default function ProductsPage() {
               </div>
               <div>
                 <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Brand</label>
-                <select 
-                  name="brand" 
-                  defaultValue={editingProduct?.brand} 
-                  required 
-                  onChange={(e) => {
-                    if (!editingProduct) {
-                      const selectedBrand = brands.find(b => b.name === e.target.value);
-                      if (selectedBrand?.default_discount) {
-                        const discountInput = (e.target.form as HTMLFormElement).elements.namedItem('labour_discount') as HTMLInputElement;
-                        if (discountInput) discountInput.value = selectedBrand.default_discount.toString();
-                      }
-                    }
-                  }}
-                  className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm"
-                >
-                  <option value="">Select Brand</option>
-                  {brands.map(b => (
-                    <option key={b.id} value={b.name}>{b.name}</option>
-                  ))}
-                </select>
+                <input name="brand" defaultValue={editingProduct?.brand} required className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" />
               </div>
               <div>
                 <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Category</label>
-                <select 
-                  name="category" 
-                  defaultValue={editingProduct?.category || categories[0]?.slug} 
+                <select
+                  name="category"
+                  defaultValue={editingProduct?.category || categories[0]?.slug}
                   onChange={(e) => {
                     setSelectedCategorySlug(e.target.value);
                     // Reset sub-category select value when category changes
@@ -418,8 +391,8 @@ export default function ProductsPage() {
               </div>
               <div>
                 <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Sub-category</label>
-                <select 
-                  name="sub_category" 
+                <select
+                  name="sub_category"
                   defaultValue={editingProduct?.sub_category}
                   className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm"
                 >
@@ -439,15 +412,15 @@ export default function ProductsPage() {
                 <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Image URL</label>
                 <div className="flex gap-4 items-start">
                   <div className="flex-1">
-                    <input 
-                      name="image_url" 
+                    <input
+                      name="image_url"
                       value={currentImageUrl}
                       onChange={(e) => {
                         setCurrentImageUrl(e.target.value);
                         setImgError(false);
                       }}
-                      placeholder="/images/products/brand/name.png" 
-                      className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" 
+                      placeholder="/images/products/brand/name.png"
+                      className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm"
                     />
                     <p className="text-[9px] text-gray-400 mt-1 italic">
                       Filenames are case-sensitive. Path should start with /images/products/
@@ -455,11 +428,11 @@ export default function ProductsPage() {
                   </div>
                   <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden border border-gray-100 shrink-0">
                     {currentImageUrl && !imgError ? (
-                      <img 
-                        src={currentImageUrl} 
-                        alt="Preview" 
+                      <img
+                        src={currentImageUrl}
+                        alt="Preview"
                         onError={() => setImgError(true)}
-                        className="w-full h-full object-contain" 
+                        className="w-full h-full object-contain"
                       />
                     ) : (
                       <div className="flex flex-col items-center justify-center text-[8px] text-gray-300 gap-1">
@@ -476,18 +449,18 @@ export default function ProductsPage() {
               </div>
               <div className="col-span-2">
                 <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Shade Card PDF URL</label>
-                <input 
-                  name="shade_card_url" 
-                  defaultValue={editingProduct?.shade_card_url} 
-                  placeholder="https://example.com/shade-card.pdf" 
-                  className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm" 
+                <input
+                  name="shade_card_url"
+                  defaultValue={editingProduct?.shade_card_url}
+                  placeholder="https://example.com/shade-card.pdf"
+                  className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm"
                 />
               </div>
               <div className="col-span-2 border-t border-gray-100 pt-4">
                 <div className="flex items-center justify-between mb-2">
                   <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider">Units, Pricing & Unit-Specific Savings Disc %</label>
-                  <button 
-                    type="button" 
+                  <button
+                    type="button"
                     onClick={() => setModalUnits([...modalUnits, { label: '', price: 0 }])}
                     className="text-gold hover:text-gold-dark text-xs font-bold flex items-center gap-1"
                   >
@@ -499,36 +472,36 @@ export default function ProductsPage() {
                     <div key={idx} className="flex gap-2 items-end bg-gray-50/50 p-2 rounded-lg border border-gray-100">
                       <div className="flex-1">
                         <label className="block text-[8px] text-gray-400 mb-0.5 uppercase">Label</label>
-                        <input 
-                          value={unit.label} 
+                        <input
+                          value={unit.label}
                           onChange={(e) => {
                             const newUnits = [...modalUnits];
                             newUnits[idx].label = e.target.value;
                             setModalUnits(newUnits);
                           }}
-                          placeholder="e.g. 1 inch" 
-                          className="w-full p-1.5 bg-white border border-gray-100 rounded focus:border-gold focus:outline-none text-xs" 
+                          placeholder="e.g. 1 inch"
+                          className="w-full p-1.5 bg-white border border-gray-100 rounded focus:border-gold focus:outline-none text-xs"
                         />
                       </div>
                       <div className="w-20">
                         <label className="block text-[8px] text-gray-400 mb-0.5 uppercase">Price</label>
-                        <input 
-                          type="number" 
-                          value={unit.price} 
+                        <input
+                          type="number"
+                          value={unit.price}
                           onChange={(e) => {
                             const newUnits = [...modalUnits];
                             newUnits[idx].price = Number(e.target.value);
                             setModalUnits(newUnits);
                           }}
                           onFocus={(e) => e.target.select()}
-                          className="w-full p-1.5 bg-white border border-gray-100 rounded focus:border-gold focus:outline-none text-xs font-bold" 
+                          className="w-full p-1.5 bg-white border border-gray-100 rounded focus:border-gold focus:outline-none text-xs font-bold"
                         />
                       </div>
                       <div className="w-12">
                         <label className="block text-[8px] text-gray-400 mb-0.5 uppercase">Disc %</label>
-                        <input 
-                          type="number" 
-                          value={unit.discount || ''} 
+                        <input
+                          type="number"
+                          value={unit.discount || ''}
                           onChange={(e) => {
                             const newUnits = [...modalUnits];
                             newUnits[idx].discount = e.target.value === '' ? undefined : Number(e.target.value);
@@ -536,13 +509,13 @@ export default function ProductsPage() {
                           }}
                           placeholder="Opt"
                           onFocus={(e) => e.target.select()}
-                          className="w-full p-1.5 bg-white border border-gray-100 rounded focus:border-gold focus:outline-none text-xs text-green-600 font-bold" 
+                          className="w-full p-1.5 bg-white border border-gray-100 rounded focus:border-gold focus:outline-none text-xs text-green-600 font-bold"
                         />
                       </div>
                       <div className="w-24">
                         <label className="block text-[8px] text-gray-400 mb-0.5 uppercase">Labour Mode</label>
-                        <select 
-                          value={unit.labour_mode || 'both'} 
+                        <select
+                          value={unit.labour_mode || 'both'}
                           onChange={(e) => {
                             const newUnits = [...modalUnits];
                             newUnits[idx].labour_mode = e.target.value as any;
@@ -555,8 +528,8 @@ export default function ProductsPage() {
                           <option value="without_only">Without Only</option>
                         </select>
                       </div>
-                      <button 
-                        type="button" 
+                      <button
+                        type="button"
                         onClick={() => setModalUnits(modalUnits.filter((_, i) => i !== idx))}
                         className="p-1.5 text-gray-400 hover:text-red-500"
                         disabled={modalUnits.length === 1}
@@ -567,27 +540,27 @@ export default function ProductsPage() {
                   ))}
                 </div>
               </div>
-              
+
               {/* Labour Configuration */}
               <div className="col-span-2 border-t-2 border-dashed border-gray-100 pt-6 mt-4">
                 <div className="flex items-center gap-2 mb-4">
                   <div className="w-8 h-8 bg-gold/10 rounded-lg flex items-center justify-center text-gold">
-                   <ShieldCheck size={18} />
+                    <ShieldCheck size={18} />
                   </div>
                   <div>
                     <label className="block text-[11px] font-black text-navy uppercase tracking-[2px]">Labour & Service Controls</label>
                     <p className="text-[9px] text-gray-400 font-medium">Configure if this product qualifies for savings mode vs service mode.</p>
                   </div>
                 </div>
-                
+
                 <div className="bg-navy/[0.02] rounded-2xl p-5 border border-navy/5 space-y-5">
                   <label className="flex items-center gap-3 cursor-pointer group bg-white p-3 rounded-xl border border-gray-100 hover:border-gold/30 transition-all">
                     <div className="relative flex items-center">
-                      <input 
-                        type="checkbox" 
-                        name="labour_enabled" 
-                        defaultChecked={editingProduct?.labour_config?.enabled ?? true} 
-                        className="peer w-5 h-5 rounded border-gray-300 text-navy focus:ring-navy" 
+                      <input
+                        type="checkbox"
+                        name="labour_enabled"
+                        defaultChecked={editingProduct?.labour_config?.enabled ?? true}
+                        className="peer w-5 h-5 rounded border-gray-300 text-navy focus:ring-navy"
                       />
                     </div>
                     <div>
@@ -595,14 +568,14 @@ export default function ProductsPage() {
                       <span className="text-[10px] text-gray-500">Allow customers to choose between "With Labour" and "Without Labour"</span>
                     </div>
                   </label>
-                  
+
                   <div className={cn(
                     "grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 transition-opacity",
                     editingProduct?.labour_config?.enabled === false ? "opacity-50 pointer-events-none" : ""
                   )}>
                     <div>
                       <label className="block text-[10px] font-bold text-gray-500 uppercase mb-1.5 tracking-wider">Default Option</label>
-                      <select 
+                      <select
                         name="labour_default"
                         defaultValue={editingProduct?.labour_config?.default || 'with'}
                         className="w-full p-3 bg-white border border-gray-200 rounded-xl focus:border-gold focus:outline-none text-sm font-medium shadow-sm"
@@ -614,7 +587,7 @@ export default function ProductsPage() {
                     <div>
                       <label className="block text-[10px] font-bold text-gray-500 uppercase mb-1.5 tracking-wider">Savings Discount %</label>
                       <div className="relative">
-                        <input 
+                        <input
                           type="number"
                           name="labour_discount"
                           defaultValue={editingProduct?.labour_config?.without_discount_percent ?? 10}
@@ -636,15 +609,15 @@ export default function ProductsPage() {
               </div>
             </div>
             <div className="p-4 bg-gray-50 border-t border-gray-100 flex gap-3">
-              <button 
-                type="button" 
+              <button
+                type="button"
                 onClick={() => { setIsModalOpen(false); setEditingProduct(null); }}
                 className="flex-1 py-3 border border-gray-200 rounded-xl text-gray-500 font-bold text-sm hover:bg-gray-100 transition-colors"
               >
                 Cancel
               </button>
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 className="flex-[2] py-3 bg-navy text-white rounded-xl font-bold text-sm hover:bg-gold transition-all shadow-lg shadow-navy/20"
               >
                 {editingProduct ? 'Save Changes' : 'Add Product'}

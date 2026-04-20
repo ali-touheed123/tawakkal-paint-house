@@ -52,25 +52,23 @@ export default function BrandsPage() {
 
     const supabase = createClient();
     const { error } = await supabase.from('brands').delete().eq('id', id);
+
     if (error) {
       alert('Failed to delete: ' + error.message);
       return;
     }
+
     setBrands(brands.filter(b => b.id !== id));
   }
 
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget as HTMLFormElement);
-    const syncToProducts = formData.get('sync_to_products') === 'on';
-    const discountVal = Number(formData.get('default_discount') || 10);
-    
     const brandData = {
-      name: formData.get('name') as string,
-      slug: formData.get('slug') as string,
-      logo_url: formData.get('logo_url') as string,
-      is_active: formData.get('is_active') === 'on',
-      default_discount: discountVal
+      name: formData.get('name'),
+      slug: formData.get('slug'),
+      logo_url: formData.get('logo_url'),
+      is_active: formData.get('is_active') === 'on'
     };
 
     const supabase = createClient();
@@ -83,18 +81,6 @@ export default function BrandsPage() {
       if (error) {
         alert('Failed to save: ' + error.message);
         return;
-      }
-
-      if (syncToProducts) {
-        const { error: rpcError } = await supabase.rpc('sync_brand_products_discount', {
-          brand_name: brandData.name,
-          discount_val: discountVal
-        });
-        if (rpcError) {
-          alert('Note: Brand saved, but product sync failed: ' + rpcError.message);
-        } else {
-          alert(`Success! Brand saved and all products for ${brandData.name} updated to ${discountVal}% discount.`);
-        }
       }
     } else {
       const { error } = await supabase
@@ -169,14 +155,7 @@ export default function BrandsPage() {
               <div className="flex items-start justify-between">
                 <div>
                   <h3 className="font-bold text-navy">{brand.name}</h3>
-                  <div className="flex items-center gap-2 mt-0.5">
-                    <code className="text-[10px] bg-gray-50 px-1.5 py-0.5 rounded text-gray-400">{brand.slug}</code>
-                    {brand.default_discount && (
-                      <span className="text-[10px] bg-gold/10 text-amber-700 px-1.5 py-0.5 rounded font-bold">
-                        {brand.default_discount}% Disc
-                      </span>
-                    )}
-                  </div>
+                  <code className="text-[10px] bg-gray-50 px-1.5 py-0.5 rounded text-gray-400">{brand.slug}</code>
                 </div>
                 <div className="flex gap-1">
                   <button
@@ -262,41 +241,10 @@ export default function BrandsPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-wider">Default Discount %</label>
-                  <div className="relative">
-                    <input
-                      type="number"
-                      name="default_discount"
-                      defaultValue={editingBrand?.default_discount || 10}
-                      required
-                      className="w-full p-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:border-gold focus:outline-none text-sm font-bold shadow-sm pr-8"
-                    />
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 font-bold">%</span>
-                  </div>
-                </div>
-                <div className="flex items-end pb-1">
-                  <div className="flex items-center gap-2">
-                    <input type="checkbox" name="is_active" id="is_active" defaultChecked={editingBrand ? editingBrand.is_active : true} className="w-4 h-4 accent-gold" />
-                    <label htmlFor="is_active" className="text-xs font-bold text-navy">Brand is Active</label>
-                  </div>
-                </div>
+              <div className="flex items-center gap-2 pt-2">
+                <input type="checkbox" name="is_active" id="is_active" defaultChecked={editingBrand ? editingBrand.is_active : true} className="w-4 h-4 accent-gold" />
+                <label htmlFor="is_active" className="text-xs font-bold text-navy">Brand is Active & Visible</label>
               </div>
-
-              {editingBrand && (
-                 <div className="bg-amber-50 p-4 rounded-xl border border-amber-100">
-                   <label className="flex items-start gap-3 cursor-pointer">
-                     <input type="checkbox" name="sync_to_products" className="mt-1 w-4 h-4 accent-amber-600" />
-                     <div>
-                       <span className="text-xs font-bold text-amber-800 block">Apply to ALL Products?</span>
-                       <p className="text-[10px] text-amber-700/70 leading-relaxed mt-0.5">
-                         Update every product of this brand to use the new discount percentage. This cannot be undone.
-                       </p>
-                     </div>
-                   </label>
-                 </div>
-              )}
             </div>
 
             <div className="p-5 bg-gray-50 border-t border-gray-100 flex justify-end gap-3">

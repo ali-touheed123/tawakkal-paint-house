@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
+import { Star, ChevronLeft, ChevronRight, Quote, Play } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import Image from 'next/image';
 
@@ -40,12 +40,12 @@ export function TestimonialSlider() {
     }, []);
 
     useEffect(() => {
-        if (reviews.length === 0 || reviews[index]?.media_type === 'video') return;
+        if (reviews.length === 0) return;
         const timer = setInterval(() => {
             setIndex((prev) => (prev + 1) % reviews.length);
         }, 8000);
         return () => clearInterval(timer);
-    }, [reviews, index]);
+    }, [reviews]);
 
     const next = () => setIndex((prev) => (prev + 1) % reviews.length);
     const prev = () => setIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
@@ -62,14 +62,14 @@ export function TestimonialSlider() {
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="text-center mb-16">
-                    <motion.span 
+                    <motion.span
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         className="text-gold font-medium tracking-widest uppercase text-sm mb-4 block"
                     >
                         Customer Stories
                     </motion.span>
-                    <motion.h2 
+                    <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         className="text-4xl md:text-5xl font-heading font-bold text-navy"
@@ -94,18 +94,23 @@ export function TestimonialSlider() {
                                     <div className="relative aspect-square rounded-[30px] overflow-hidden shadow-2xl group bg-navy">
                                         {current.media_type === 'video' ? (
                                             <div className="w-full h-full relative">
-                                                <video 
-                                                    src={current.media_url} 
+                                                <video
+                                                    src={current.media_url}
                                                     className="w-full h-full object-cover"
                                                     autoPlay
                                                     muted
-                                                    onEnded={next}
+                                                    loop
                                                     playsInline
                                                 />
+                                                <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                                                    <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30">
+                                                        <Play size={20} className="text-white fill-current translate-x-0.5" />
+                                                    </div>
+                                                </div>
                                             </div>
                                         ) : (
-                                            <Image 
-                                                src={current.media_url || "https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/images/visualizer/living-room-base.jpg"} 
+                                            <Image
+                                                src={current.media_url || "https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/images/visualizer/living-room-base.jpg"}
                                                 alt={current.user_name}
                                                 fill
                                                 className="object-cover transition-transform duration-700 group-hover:scale-110"
@@ -131,7 +136,7 @@ export function TestimonialSlider() {
                                     <div>
                                         <div className="flex items-center gap-2">
                                             <h3 className="text-xl font-bold text-navy">{current.user_name}</h3>
-                                             {current.is_shop_review && (
+                                            {current.is_shop_review && (
                                                 <span className="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full uppercase tracking-widest border border-amber-100">
                                                     Shop Visit
                                                 </span>
@@ -146,14 +151,14 @@ export function TestimonialSlider() {
 
                     {/* Navigation */}
                     <div className="flex justify-center gap-6 mt-12">
-                        <button 
+                        <button
                             onClick={prev}
                             className="w-14 h-14 rounded-full border-2 border-navy/10 flex items-center justify-center text-navy hover:bg-gold hover:border-gold hover:text-white transition-all duration-300"
                             aria-label="Previous testimonial"
                         >
                             <ChevronLeft size={24} />
                         </button>
-                        <button 
+                        <button
                             onClick={next}
                             className="w-14 h-14 rounded-full border-2 border-navy/10 flex items-center justify-center text-navy hover:bg-gold hover:border-gold hover:text-white transition-all duration-300"
                             aria-label="Next testimonial"
