@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { Star, ChevronLeft, ChevronRight, Quote, Play } from 'lucide-react';
+import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import Image from 'next/image';
 
@@ -40,12 +40,12 @@ export function TestimonialSlider() {
     }, []);
 
     useEffect(() => {
-        if (reviews.length === 0) return;
+        if (reviews.length === 0 || reviews[index]?.media_type === 'video') return;
         const timer = setInterval(() => {
             setIndex((prev) => (prev + 1) % reviews.length);
         }, 8000);
         return () => clearInterval(timer);
-    }, [reviews]);
+    }, [reviews, index]);
 
     const next = () => setIndex((prev) => (prev + 1) % reviews.length);
     const prev = () => setIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
@@ -99,14 +99,9 @@ export function TestimonialSlider() {
                                                     className="w-full h-full object-cover"
                                                     autoPlay
                                                     muted
-                                                    loop
+                                                    onEnded={next}
                                                     playsInline
                                                 />
-                                                <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                                                    <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30">
-                                                        <Play size={20} className="text-white fill-current translate-x-0.5" />
-                                                    </div>
-                                                </div>
                                             </div>
                                         ) : (
                                             <Image 
