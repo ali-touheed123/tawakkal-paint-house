@@ -4,6 +4,9 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { Award, ShieldCheck, Clock, Users, Building2, PaintBucket, Star, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
+
+const TestimonialSlider = dynamic(() => import('@/components/TestimonialSlider').then(mod => mod.TestimonialSlider), { ssr: false });
 
 export default function AboutPage() {
     return (
@@ -209,6 +212,9 @@ export default function AboutPage() {
                     </div>
                 </div>
             </section>
+
+            {/* Testimonials */}
+            <TestimonialSlider />
 
             {/* CTA */}
             <section className="py-12 md:py-24 bg-white text-center">
