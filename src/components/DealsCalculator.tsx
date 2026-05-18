@@ -125,13 +125,12 @@ export function DealsCalculator() {
                             <button
                                 key={size.gaz}
                                 onClick={() => setSelectedSize(size)}
-                                className={`px-5 py-3 rounded-xl border transition-all font-medium flex flex-col items-center ${selectedSize.gaz === size.gaz
+                                className={`px-5 py-3 rounded-xl border transition-all font-medium flex items-center justify-center ${selectedSize.gaz === size.gaz
                                     ? 'border-gold bg-gold/5 text-navy shadow-sm ring-1 ring-gold'
                                     : 'border-gray-200 text-gray-500 hover:border-gold/50'
                                     }`}
                             >
-                                <span className="text-lg">{size.gaz} Gaz</span>
-                                <span className="text-xs opacity-70">{size.sqft} sq/ft</span>
+                                <span className="text-base sm:text-lg">{size.gaz} Gaz</span>
                             </button>
                         ))}
                     </div>
@@ -145,7 +144,7 @@ export function DealsCalculator() {
                             <Building2 className="text-gold flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10" />
                             <div className="min-w-0">
                                 <p className="text-xl sm:text-2xl font-bold text-navy truncate">{selectedSize.gaz} Gaz House</p>
-                                <p className="text-xs sm:text-sm text-gray-500 break-words leading-relaxed">{selectedSize.sqft} Square Feet • 2 Floors • Inside + Outside</p>
+                                <p className="text-xs sm:text-sm text-gray-500 break-words leading-relaxed">2 Floors • Inside + Outside</p>
                             </div>
                         </div>
                     </div>
