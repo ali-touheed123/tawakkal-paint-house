@@ -8,9 +8,9 @@ import {
 import { BRANCHES_DATA } from '@/data/branches';
 
 interface Props {
-    params: {
+    params: Promise<{
         slug: string;
-    };
+    }>;
 }
 
 // Generate Static Params for all branches (enables Next.js static generation)
@@ -22,7 +22,8 @@ export async function generateStaticParams() {
 
 // Generate dynamic metadata per branch for hyper-targeted local SEO
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const branch = BRANCHES_DATA.find((b) => b.slug === params.slug);
+    const resolvedParams = await params;
+    const branch = BRANCHES_DATA.find((b) => b.slug === resolvedParams.slug);
     
     if (!branch) {
         return {
@@ -41,8 +42,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
 }
 
-export default function BranchDetailPage({ params }: Props) {
-    const branch = BRANCHES_DATA.find((b) => b.slug === params.slug);
+export default async function BranchDetailPage({ params }: Props) {
+    const resolvedParams = await params;
+    const branch = BRANCHES_DATA.find((b) => b.slug === resolvedParams.slug);
 
     if (!branch) {
         notFound();

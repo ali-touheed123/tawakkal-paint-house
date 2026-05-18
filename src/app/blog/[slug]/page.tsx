@@ -9,9 +9,9 @@ import {
 import { BLOG_POSTS } from '@/data/blog';
 
 interface Props {
-    params: {
+    params: Promise<{
         slug: string;
-    };
+    }>;
 }
 
 // Generate static routes for build-time static generation
@@ -23,7 +23,8 @@ export async function generateStaticParams() {
 
 // Generate dynamic metadata for maximum search indexing authority
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const post = BLOG_POSTS.find((p) => p.slug === params.slug);
+    const resolvedParams = await params;
+    const post = BLOG_POSTS.find((p) => p.slug === resolvedParams.slug);
     
     if (!post) {
         return {
@@ -52,8 +53,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
 }
 
-export default function BlogPostDetailPage({ params }: Props) {
-    const post = BLOG_POSTS.find((p) => p.slug === params.slug);
+export default async function BlogPostDetailPage({ params }: Props) {
+    const resolvedParams = await params;
+    const post = BLOG_POSTS.find((p) => p.slug === resolvedParams.slug);
 
     if (!post) {
         notFound();
