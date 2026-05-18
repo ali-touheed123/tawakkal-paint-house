@@ -124,10 +124,11 @@ export function Footer() {
             <ul className="space-y-3">
               {[
                 { name: 'Home', path: '/' },
+                { name: 'Painting Rates', path: '/rates' },
+                { name: 'Deals & Projects', path: '/deals' },
+                { name: 'Our Branches', path: '/branches' },
+                { name: 'Painting Advice', path: '/blog' },
                 { name: 'Track Order', path: '/track' },
-                { name: 'About Us', path: '/about' },
-                { name: 'Calculator', path: '/#calculator' },
-                { name: 'Why Choose Us', path: '/#why-choose-us' },
                 { name: 'Contact Us', path: '/contact' },
               ].map((link) => (
                 <li key={link.name}>

@@ -70,11 +70,12 @@ export function Navbar() {
   const navLinks = [
     { href: '/', label: 'Home' },
     { href: '#', label: 'Products', hasDropdown: true },
-    { href: '/about', label: 'About Us' },
-    { href: '/#why-choose-us', label: 'Why Choose Us' },
-    { href: '/#calculator', label: 'Calculator' },
-    { href: '/track', label: 'Track Order' },
-    { href: '/contact', label: 'Contact Us' },
+    { href: '/rates', label: 'Rates' },
+    { href: '/deals', label: 'Deals' },
+    { href: '/branches', label: 'Branches' },
+    { href: '/blog', label: 'Blog' },
+    { href: '/track', label: 'Track' },
+    { href: '/contact', label: 'Contact' },
   ];
 
   const productData = {
@@ -259,6 +260,14 @@ export function Navbar() {
                             Deals & Projects
                             <ChevronRight size={14} className="opacity-40 group-hover:opacity-100" />
                           </Link>
+                          {/* Static Rates & Estimator Link */}
+                          <Link
+                            href="/rates"
+                            className="flex items-center justify-between px-6 py-3 text-sm text-white/80 hover:text-gold hover:bg-white/5 transition-all border-t border-white/10"
+                          >
+                            Rates & Estimator
+                            <ChevronRight size={14} className="opacity-40 group-hover:opacity-100" />
+                          </Link>
                         </div>
                       </motion.div>
                     )}
@@ -420,6 +429,14 @@ export function Navbar() {
                                 onClick={() => setMobileMenuOpen(false)}
                               >
                                 Deals & Projects
+                              </Link>
+                              {/* Static Rates & Estimator Link for Mobile */}
+                              <Link
+                                href="/rates"
+                                className="block py-3 text-sm text-white/80 border-t border-white/10 mt-1"
+                                onClick={() => setMobileMenuOpen(false)}
+                              >
+                                Rates & Estimator
                               </Link>
                             </motion.div>
                           )}

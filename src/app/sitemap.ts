@@ -1,5 +1,7 @@
 import { MetadataRoute } from 'next';
 import { createClient } from '@supabase/supabase-js';
+import { BRANCHES_DATA, Branch } from '../data/branches';
+import { BLOG_POSTS, BlogPost } from '../data/blog';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://tawakkalpainthouse.com';
@@ -11,6 +13,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/checkout',
     '/contact',
     '/deals',
+    '/rates',
+    '/branches',
+    '/blog',
     '/profile',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
@@ -62,5 +67,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...routes, ...categoryRoutes, ...legacyCategories, ...productRoutes];
+  const branchRoutes = BRANCHES_DATA.map((branch: Branch) => ({
+    url: `${baseUrl}/branches/${branch.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.8,
+  }));
+
+  const blogRoutes = BLOG_POSTS.map((post: BlogPost) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.8,
+  }));
+
+  return [...routes, ...categoryRoutes, ...legacyCategories, ...productRoutes, ...branchRoutes, ...blogRoutes];
 }

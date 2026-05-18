@@ -9,6 +9,7 @@ import { CartToast } from "@/components/CartToast";
 import { CartSyncListener } from "@/components/CartSyncListener";
 import { LiveOrderToast } from "@/components/LiveOrderToast";
 import { Playfair_Display, DM_Sans } from 'next/font/google';
+import { BRANCHES_DATA } from '@/data/branches';
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -73,23 +74,47 @@ export default function RootLayout({
 }>) {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": "PaintStore",
+    "@id": "https://tawakkalpainthouse.com/#organization",
     "name": "Tawakkal Paint House",
+    "url": "https://tawakkalpainthouse.com",
+    "logo": "https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/logo.png",
+    "image": "https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/logo.png",
+    "description": "Karachi's most trusted paint house since 2004. Authorized dealer for Gobi's, Berger, Diamond, Saasi, Brighto, Choice, and exclusive distributor for Rozzilac.",
+    "telephone": "+923475658761",
+    "priceRange": "$$",
     "address": {
       "@type": "PostalAddress",
+      "streetAddress": "Maripur Hawksbay Road",
       "addressLocality": "Karachi",
       "addressRegion": "Sindh",
       "addressCountry": "PK"
     },
-    "telephone": "+923475658761",
-    "areaServed": {
-      "@type": "City",
-      "name": "Karachi"
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      "opens": "09:00",
+      "closes": "20:00"
     },
-    "priceRange": "$$",
-    "openingHours": "Mo-Sat 09:00-20:00",
-    "image": "https://kadkryylyzfwtxknvcic.supabase.co/storage/v1/object/public/products/logo.png",
-    "description": "Karachi's most trusted paint house since 2004. Authorized dealer for Gobi's, Berger, Diamond, Saasi, Brighto, Choice, and exclusive distributor for Rozzilac."
+    "areaServed": [
+      { "@type": "AdministrativeArea", "name": "Karachi" },
+      { "@type": "AdministrativeArea", "name": "SITE Karachi" },
+      { "@type": "AdministrativeArea", "name": "Naval Colony" },
+      { "@type": "AdministrativeArea", "name": "Balkassar" },
+      { "@type": "AdministrativeArea", "name": "Dera Ismail Khan" }
+    ],
+    "subOrganization": BRANCHES_DATA.map((branch) => ({
+      "@type": "PaintStore",
+      "name": branch.name,
+      "telephone": branch.phones[0],
+      "url": `https://tawakkalpainthouse.com/branches/${branch.slug}`,
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": branch.address,
+        "addressLocality": branch.city,
+        "addressCountry": "PK"
+      }
+    }))
   };
 
   return (
