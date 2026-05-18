@@ -2,8 +2,9 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { 
     Calculator, MessageCircle, FileText, 
-    CheckCircle2, Printer, AlertTriangle, ShieldCheck 
+    CheckCircle2, AlertTriangle, ShieldCheck 
 } from 'lucide-react';
+import PrintButton from './PrintButton';
 
 export const metadata: Metadata = {
     title: 'Official Painter\'s Rate Card & Service Guide | Tawakkal Paint House',
@@ -133,13 +134,7 @@ export default function RatesCardPage() {
                                 <MessageCircle size={15} />
                                 WhatsApp Store Owner
                             </a>
-                            <button
-                                onClick={() => typeof window !== 'undefined' && window.print()}
-                                className="flex-1 sm:flex-none border border-navy/20 hover:border-navy text-navy py-3 px-6 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all"
-                            >
-                                <Printer size={15} />
-                                Print Rate Card
-                            </button>
+                            <PrintButton />
                         </div>
                     </div>
                 </div>
