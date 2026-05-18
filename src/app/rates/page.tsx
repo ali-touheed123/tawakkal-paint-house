@@ -59,7 +59,7 @@ export default function RatesCardPage() {
                         <div className="space-y-1">
                             <h4 className="font-bold text-navy text-sm">IMPORTANT PAINTERS ANNOUNCEMENT:</h4>
                             <p className="text-xs text-gray-600 leading-relaxed font-medium">
-                                This rate card is issued for transparent and standardized client estimates. All listed rates are in **PKR per Square Feet (Sq.ft)**. Share this layout directly with property owners for pricing trust.
+                                This rate card is issued for transparent and standardized client estimates. All listed rates are in <strong className="text-navy font-bold">PKR per Square Feet (Sq.ft)</strong>. Share this layout directly with property owners for pricing trust.
                             </p>
                         </div>
                     </div>
@@ -146,8 +146,8 @@ export default function RatesCardPage() {
                             <CheckCircle2 size={16} className="text-gold" />
                             Genuine Paints Only
                         </h4>
-                        <p className="text-gray-600 text-xs">
-                            Always purchase verified factory-sealed buckets from authorized distributors. We deal directly in high-grade authentic brands like **Brighto**, **Gobi\'s**, and **Reliable** to ensure optimal coverage and durability.
+                        <p className="text-gray-600 text-xs leading-relaxed">
+                            Always purchase verified factory-sealed buckets from authorized distributors. We deal directly in high-grade authentic brands like <strong className="text-navy font-bold">Brighto</strong>, <strong className="text-navy font-bold">Gobi's</strong>, and <strong className="text-navy font-bold">Reliable</strong> to ensure optimal coverage and durability.
                         </p>
                     </div>
                     <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm space-y-2">
@@ -155,8 +155,8 @@ export default function RatesCardPage() {
                             <CheckCircle2 size={16} className="text-gold" />
                             Estimated Quantities
                         </h4>
-                        <p className="text-gray-600 text-xs">
-                            Exact material requirements can vary depending on wall absorption, coat density, and surface preparation using **Reliable Wall Putty** or standard primers. Contact our store representative for dynamic consults.
+                        <p className="text-gray-600 text-xs leading-relaxed">
+                            Exact material requirements can vary depending on wall absorption, coat density, and surface preparation using <strong className="text-navy font-bold">Reliable Wall Putty</strong> or standard primers. Contact our store representative for dynamic consults.
                         </p>
                     </div>
                 </div>
